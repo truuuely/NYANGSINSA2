@@ -246,6 +246,13 @@
 					<mainClass>org.test.int1.Main</mainClass>
 				</configuration>
 			</plugin>
+			
+			<!--메이븐 머시기...-->
+			<plugin>
+  				<artifactId>maven-war-plugin</artifactId>
+  				<version>3.2.2</version>
+			</plugin>
+			
 		</plugins>
 	</build>
 </project>
