@@ -22,15 +22,15 @@ import com.wan.nss.biz.orderDetail.OrderDetailVO;
 public class AdminController {
 
 	@Autowired
-	private MemberServiceImpl memberService;
+	private MemberService memberService;
 	@Autowired
-	private ProductServiceImpl productService;
+	private ProductService productService;
 	@Autowired
-	private OrderServiceImpl orderService;
+	private OrderService orderService;
 	@Autowired
-	private OrderDetailServiceImpl orderDetailService;
+	private OrderDetailService orderDetailService;
 	@Autowired
-	private ReviewServiceImpl reviewService;
+	private ReviewService reviewService;
 	
 	@RequestMapping(value = "/adminIndex.do") // 관리자 홈 페이지 열기
 	public String adminIndexView(MemberVO mvo, MemberDAO memberDAO, OrderVO ovo, OrderDetailVO odvo, Model model, HttpSession session, HttpServletResponse response) {
