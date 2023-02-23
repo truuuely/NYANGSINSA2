@@ -30,8 +30,8 @@ font-family: SF Pro KR, SF Pro Display, SF Pro Icons, AOS Icons, Apple Gothic,
 	left: 50%;
 	top: 50%;
 	transform: translate(-50%, -50%);
-	padding: 30px;
-	background: #6f6f6f6e;
+	padding: 12px;
+	background: #a9a9b0;
 	border-radius: 6px;
 }
 
@@ -83,31 +83,34 @@ font-family: SF Pro KR, SF Pro Display, SF Pro Icons, AOS Icons, Apple Gothic,
 
 .layerPopup a {
 	text-decoration: none;
-	color: black;
+	color: white;
 	width: 50px;
+	
 	height: 40px;
 }
 </style>
 
 </head>
-<body> 
+<body>
 
 	<!-- layer popup content -->
-	<div class="layerPopup" id="layer_popup" style="visibility: visible; ">
-		<div class="layerBox" style="width: 400px; ">
+	<div class="layerPopup" id="layer_popup" style="visibility: visible;">
+		<div class="layerBox" style="width: 400px;">
 			<!-- <h4 class="title">FineApple 공지사항</h4> -->
-			<div class="cont">
-				<p>
-					<img src="img/month.jpg" width=350 height=500 usemap="#popup" alt="event page">
-				</p>
-			</div>
+			<a href="shopDetails.do?pNum=1016">
+				<div class="cont">
+					<p>
+						<img src="img/layer_img.jpg" width=100% height=500 usemap="#popup" alt="event page">
+					</p>
+				</div>
+			</a>
 			<form name="pop_form">
 				<div id="check">
 					<input type="checkbox" name="chkbox" value="checkbox" id='chkbox'>
-					<label for="chkbox">&nbsp&nbsp오늘 하루동안 보지 않기</label>
+					<label style="color: white;" for="chkbox">&nbsp&nbsp오늘 하루동안 보지 않기</label>
 				</div>
 				<div id="close">
-					<a href="javascript:closePop();">닫기</a>
+					<a style="color: white;" href="javascript:closePop();">닫기</a>
 				</div>
 			</form>
 		</div>
@@ -138,7 +141,7 @@ font-family: SF Pro KR, SF Pro Display, SF Pro Icons, AOS Icons, Apple Gothic,
 			document.all['layer_popup'].style.visibility = "hidden";
 		}
 	</script>
-<!-- 	<script type="text/javascript">
+	<!-- 	<script type="text/javascript">
 		function popWindowOpen() {
 			$('#layerBox').draggable({scroll:false});
 		}
