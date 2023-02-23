@@ -20,7 +20,7 @@ import com.wan.nss.biz.member.MemberVO;
 public class MemberController {
 
 	@Autowired
-	private MemberServiceImpl memberService;
+	private MemberService memberService;
 
 	@RequestMapping(value = "/logout.do") // 로그아웃 수행
 	public String logoutView(HttpSession session) {
@@ -290,13 +290,6 @@ public class MemberController {
 			}
 		} else {
 			MemberVO member = memberService.selectOne(vo); // 로그인한 회원 VO를 member에 저장
-			
-//			model.addAttribute("memberId", member.getUserId()); // 아이디
-//			model.addAttribute("memberName", member.getUserName()); // 이름
-//			model.addAttribute("memberCName", member.getCatName()); // 고양이 이름
-//			model.addAttribute("memberEmail", member.getEmail()); // 이메일
-//			model.addAttribute("memberPhone", member.getPhoneNum()); // 전화번호
-//			model.addAttribute("memberAddress", member.getAddress()); // 주소
 			
 			model.addAttribute("data", member);
 

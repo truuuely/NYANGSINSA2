@@ -24,11 +24,11 @@ import com.wan.nss.biz.product.ProductVO;
 public class OrderController {
 	
 	@Autowired
-	private OrderServiceImpl orderService;
+	private OrderService orderService;
 	@Autowired
-	private OrderDetailServiceImpl orderDetailService;
+	private OrderDetailService orderDetailService;
 	@Autowired
-	private ProductServiceImpl productService;
+	private ProductService productService;
 
 	@RequestMapping(value="/buyProducts.do")
 	public String checkoutView(OrderVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
