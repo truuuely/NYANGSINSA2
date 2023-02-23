@@ -1,11 +1,14 @@
-package com.nss.product;
+package com.wan.nss.biz.product;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("ProductService")
+import com.wan.nss.product.ProductDAO;
+import com.wan.nss.product.ProductService;
+
+@Service("productService")
 public class ProductServiceImpl implements ProductService {
 	
 	@Autowired
