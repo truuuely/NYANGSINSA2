@@ -30,6 +30,13 @@ public class OrderController {
 	@Autowired
 	private ProductService productService;
 
+	// 장바구니 페이지로 이동
+	@RequestMapping(value="/shopingCart.do")
+	public String shopingCartView() {
+		return "shoping_cart.jsp";
+	}
+	
+	// 주문하기 페이지로 이동
 	@RequestMapping(value="/buyProducts.do")
 	public String checkoutView(OrderVO vo, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		
@@ -67,6 +74,7 @@ public class OrderController {
 		
 	}
 
+	// 주문하기 페이지에서 결제 및 최종 주문 수행
 	@RequestMapping(value="/insertOrder.do")
 	public String insertOrder(OrderVO ovo, OrderDetailVO odvo, ProductVO pvo, Model model, HttpSession session, HttpServletResponse response) {
 		
@@ -110,6 +118,7 @@ public class OrderController {
 		
 	}
 	
+	// 주문 내역 페이지로 이동
 	@RequestMapping(value="/orderList.do")
 	public String selectAllOrderList(OrderVO vo, Model model, HttpSession session) {
 		
@@ -138,6 +147,7 @@ public class OrderController {
 		
 	}
 	
+	// 주문 상세 내역 페이지로 이동
 	@RequestMapping(value="/orderDetailList.do")
 	public String selectAllOrderDetailList(OrderVO ovo, OrderDetailVO odvo, Model model) {
 		
