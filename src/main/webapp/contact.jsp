@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -12,31 +10,22 @@
 <meta charset="UTF-8">
 <meta name="description" content="Ogani Template">
 <meta name="keywords" content="Ogani, unica, creative, html">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>냥신사 | CONTACT</title>
 
 
 
 <!-- google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
-	rel="stylesheet"
->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
 <!-- Css Styles -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="css/font-awesome.min.css"
-	type="text/css"
->
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
 <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
 <link rel="stylesheet" href="css/nice-select.css" type="text/css">
 <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-<link rel="stylesheet" href="css/owl.carousel.min.css"
-	type="text/css"
->
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 </head>
@@ -53,13 +42,15 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+			<a href="main.do">
+				<img src="img/logo.png" alt="홈으로 가기">
+			</a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp"><i
-						class="fa fa-shopping-bag"
-					></i> <span>${fn:length(cList)}</span></a></li>
+				<li><a href="shoping_cart.jsp">
+						<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+					</a></li>
 			</ul>
 		</div>
 
@@ -77,13 +68,15 @@
 		</nav>
 		<div id="mobile-menu-wrap"></div>
 		<div class="header__top__right__social">
-			<a href="https://www.facebook.com/profile.php?id=100089405234926"><i
-				class="fa fa-facebook"
-			></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i
-				class="fa fa-instagram"
-			></i></a> <a href="https://twitter.com/nyangsinsa"><i
-				class="fa fa-twitter"
-			></i></a>
+			<a href="https://www.facebook.com/profile.php?id=100089405234926">
+				<i class="fa fa-facebook"></i>
+			</a>
+			<a href="https://www.instagram.com/nyangsinsa5/">
+				<i class="fa fa-instagram"></i>
+			</a>
+			<a href="https://twitter.com/nyangsinsa">
+				<i class="fa fa-twitter"></i>
+			</a>
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
@@ -110,13 +103,15 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a
-									href="https://www.facebook.com/profile.php?id=100089405234926"
-								><i class="fa fa-facebook"></i></a> <a
-									href="https://www.instagram.com/nyangsinsa5/"
-								><i class="fa fa-instagram"></i></a> <a
-									href="https://twitter.com/nyangsinsa"
-								><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/profile.php?id=100089405234926">
+									<i class="fa fa-facebook"></i>
+								</a>
+								<a href="https://www.instagram.com/nyangsinsa5/">
+									<i class="fa fa-instagram"></i>
+								</a>
+								<a href="https://twitter.com/nyangsinsa">
+									<i class="fa fa-twitter"></i>
+								</a>
 							</div>
 
 							<!-- 로그인 -->
@@ -131,7 +126,9 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+						<a href="main.do">
+							<img src="img/logo.png" alt="홈으로 가기">
+						</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -146,9 +143,9 @@
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp"><i
-									class="fa fa-shopping-bag"
-								></i> <span>${fn:length(cList)}</span></a></li>
+							<li><a href="shoping_cart.jsp">
+									<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -182,9 +179,7 @@
 						<div class="hero__search__form">
 							<form action="search.do">
 								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-								<input type="text" name="searchContent"
-									placeholder="필요한 거 있냥?" required
-								>
+								<input type="text" name="searchContent" placeholder="필요한 거 있냥?" required>
 								<button type="submit" class="site-btn">검색</button>
 							</form>
 						</div>
@@ -263,11 +258,7 @@
 
 	<!-- Map Begin -->
 	<div class="map">
-		<iframe
-			src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EC%97%AD%EC%82%BC%EB%8F%99%20736-7&t=&z=15&ie=UTF8&iwloc=&output=embed"
-			height="500" style="border: 0;" allowfullscreen=""
-			aria-hidden="false" tabindex="0"
-		></iframe>
+		<iframe src="https://maps.google.com/maps?q=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EA%B0%95%EB%82%A8%EA%B5%AC%20%EC%97%AD%EC%82%BC%EB%8F%99%20736-7&t=&z=15&ie=UTF8&iwloc=&output=embed" height="500" style="border: 0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
 		<div class="map-inside">
 			<i class="icon_pin"></i>
 			<div class="inside-widget">
@@ -294,19 +285,14 @@
 			<form id="contact-form">
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
-						<input type="text" id="name" name="name" placeholder="이름 입력"
-							required
-						> <input type="hidden" name="contact_number">
+						<input type="text" id="name" name="name" placeholder="이름 입력" required>
+						<input type="hidden" name="contact_number">
 					</div>
 					<div class="col-lg-6 col-md-6">
-						<input type="email" id="email2" name="email2"
-							placeholder="이메일 입력" required
-						>
+						<input type="email" id="email2" name="email2" placeholder="이메일 입력" required>
 					</div>
 					<div class="col-lg-12 text-center">
-						<textarea name="message" id="message" placeholder="의견 작성"
-							required
-						></textarea>
+						<textarea name="message" id="message" placeholder="의견 작성" required></textarea>
 						<button type="submit" class="site-btn">보내기</button>
 					</div>
 				</div>
@@ -317,64 +303,7 @@
 	<!-- Contact Form End -->
 
 	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="main.do"><img src="img/logo.png" alt="로고"></a>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<ul>
-							<li>주소: 서울 강남구 역삼동 골목길</li>
-							<li>전화: +82 02-0202-0202</li>
-							<li>이메일: nyangsinsa@gmail.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<div class="footer__widget__social">
-							<a
-								href="https://www.facebook.com/profile.php?id=100089405234926"
-							><i class="fa fa-facebook"></i></a> <a
-								href="https://www.instagram.com/nyangsinsa5/"
-							><i class="fa fa-instagram"></i></a> <a
-								href="https://twitter.com/nyangsinsa"
-							><i class="fa fa-twitter"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright 냥신사&copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"
-								></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="결제수단">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<nss:footer />
 	<!-- Footer Section End -->
 
 
@@ -391,9 +320,7 @@
 
 
 	<!-- 이메일 스크립트 -->
-	<script type="text/javascript"
-		src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"
-	></script>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
 	<script type="text/javascript">
 		(function() {
 			emailjs.init('tF1Xl-q593SoUIe7n');
@@ -422,11 +349,10 @@
 
 
 	<!-- TOP 버튼 -->
-	<div
-		style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;"
-	>
-		<a href="#"><button type="button" class="button-top">▲
-				맨위로</button></a>
+	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
+		<a href="#">
+			<button type="button" class="button-top">▲ 맨위로</button>
+		</a>
 	</div>
 </body>
 

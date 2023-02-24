@@ -81,7 +81,7 @@
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
-				<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
+				<li><i class="fa fa-envelope"></i> nyangsinsa@gmail.com</li>
 				<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
 			</ul>
 		</div>
@@ -96,7 +96,7 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__left">
 							<ul>
-								<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
+								<li><i class="fa fa-envelope"></i> nyangsinsa@gmail.com</li>
 								<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
 							</ul>
 						</div>
@@ -224,7 +224,7 @@
 				<li><i class="fa fa-comment-o"></i> 5</li>
 				<li><img style="width: 20px;" src="img/eyes.png"> 13</li>
 				<li class="heartVal"><img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> 20</li>
-				<li><img id="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
 				<img style="width: 70%; height: auto; margin-bottom: 20px;" src="img/cat2.jpg" alt="레옹이 사진">
@@ -250,62 +250,7 @@
 		댓글 (5) ▼
 	</div>
 	<div id="reply">
-		<div id="replyDetail">
-			<div class="replywriter">[작성자 : dlwjddk1010]</div>
-			<div id="replyContent">
-				<div style="font-size: 15px;" id="replyContent">어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...</div>
-			</div>
-			<ul style="font-size: 13px;" id="replyInfo">
-				<li><i class="fa fa-calendar-o"></i> 2022/12/31</li>
-			</ul>
-		</div>
-		<!--       <hr style="width: 95%">
- -->
-		<div id="rereplyDetail">
-			<img style="width: 20px;" src="img/rereply.png">
-			<div>
-				<div class="replywriter">[작성자 : hyerin00]</div>
-				<div id="replyContent">
-					<div style="font-size: 15px;" id="replyContent">very cuuuuuute</div>
-				</div>
-				<ul style="font-size: 13px;" id="replyInfo">
-					<li><i class="fa fa-calendar-o"></i> 2023/01/01</li>
-				</ul>
-			</div>
-		</div>
-		<div id="rereplyDetail">
-			<img style="width: 20px;" src="img/rereply.png">
-			<div>
-				<div class="replywriter">[작성자 : moonyong]</div>
-				<div id="replyContent">
-					<div style="font-size: 15px;" id="replyContent">왕 귀엽네여</div>
-				</div>
-				<ul style="font-size: 13px;" id="replyInfo">
-					<li><i class="fa fa-calendar-o"></i> 2022/01/02</li>
-				</ul>
-			</div>
-		</div>
-		<div id="replyDetail">
-			<div class="replywriter">[작성자 : joonyoung]</div>
-			<div id="replyContent">
-				<div style="font-size: 15px;" id="replyContent">저희 고양이가 더 귀여운디요</div>
-			</div>
-			<ul style="font-size: 13px;" id="replyInfo">
-				<li><i class="fa fa-calendar-o"></i> 2022/01/03</li>
-			</ul>
-		</div>
-		<div id="rereplyDetail">
-			<img style="width: 20px;" src="img/rereply.png">
-			<div>
-				<div class="replywriter">[작성자 : moonyong]</div>
-				<div id="replyContent">
-					<div style="font-size: 15px;" id="replyContent">아닌디요ㅗㅓㅏㅣㅏㅓㅗ호ㅓㅏㅣㅏㅓㅗㅎㄹ호ㅓㅏㅣㅏㅓㅗㅎㄹㅇㄹ호ㅓㅏㅓdfadafadfadf</div>
-				</div>
-				<ul style="font-size: 13px;" id="replyInfo">
-					<li><i class="fa fa-calendar-o"></i> 2022/01/02</li>
-				</ul>
-			</div>
-		</div>
+		<nss:list sort="reply" />
 	</div>
 
 	<div id="replywrite">
@@ -317,70 +262,7 @@
 	</div>
 
 
-
-	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="main.do">
-								<img src="img/logo.png" alt="로고">
-							</a>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<ul>
-							<li>주소: 서울 강남구 역삼동 골목길</li>
-							<li>전화: +82 02-0202-0202</li>
-							<li>이메일: nyangsinsa@gmail.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<div class="footer__widget__social">
-							<a href="https://www.facebook.com/profile.php?id=100089405234926">
-								<i class="fa fa-facebook"></i>
-							</a>
-							<a href="https://www.instagram.com/nyangsinsa5/">
-								<i class="fa fa-instagram"></i>
-							</a>
-							<a href="https://twitter.com/nyangsinsa">
-								<i class="fa fa-twitter"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright 냥신사&copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by
-								<a href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="결제수단">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- Footer Section End -->
+	<nss:footer />
 
 
 	<!--  신고하기 모달창  -->
@@ -444,6 +326,14 @@
 		</a>
 	</div>
 
+	<div id="fixshare">
+		<a href="#">
+			<button type="button" onclick="kakaoShare()" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+				<img class="shareImg" style="width: 50px; height: auto; cursor: pointer;" src="img/share.png">
+				<div style="margin-top: 15px;">공유</div>
+			</button>
+		</a>
+	</div>
 	<div id="fixheart">
 		<a href="#">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
@@ -471,7 +361,8 @@
 				modalClose();
 				//컨펌 이벤트 처리
 			});
-			$("#reportBtn").click(function() {
+			$(".reportBtn").click(function() {
+				console.log('dd');
 				$("#popup").css('display', 'flex').hide().fadeIn();
 			});
 			$("#modal-close").click(function() {
@@ -529,7 +420,7 @@
 		}
 	</script>
 
-	<script>
+	<!-- <script>
 		$(function() {
 			/* $(".reply").slice(0, 6).show(); // 초기갯수 */
 			$("#showReply").click(function(e) { // 클릭시 more
@@ -540,7 +431,7 @@
 				} */
 			});
 		});
-	</script>
+	</script> -->
 
 
 	<script type="text/javascript">
@@ -549,6 +440,49 @@
 			$(this).toggleClass('on').siblings().removeClass('on');
 			$(this).next("#reply").siblings("#reply").slideUp(300);
 		});
+	</script>
+
+	<!-- kakao sdk 호출 -->
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
+	<script type="text/javascript">
+		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+		Kakao.init('603243ecdb0757012b9f08d95c495f53');
+
+		// SDK 초기화 여부를 판단합니다.
+		console.log(Kakao.isInitialized());
+
+		function kakaoShare() {
+			Kakao.Link
+					.sendDefault({
+						objectType : 'feed',
+						content : {
+							title : '안녕안녕 헬로월드 마이크테스트',// 글제목 
+							description : '강문영 바보바보', // 글내용
+							imageUrl : 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
+							link : {
+								mobileWebUrl : 'https://www.naver.com/',
+								webUrl : 'https://www.youtube.com/watch?v=72fDsC2kX7g',
+							},
+						},
+						social : {
+							likeCount : 286, //좋아요 수
+							commentCount : 45, //댓글 수
+							sharedCount : 845, //공유 수
+						},
+
+						buttons : [
+								{
+									title : '웹으로 보기',
+									link : {
+										mobileWebUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
+										webUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
+									},
+								}, ],
+						// 카카오톡 미설치 시 카카오톡 설치 경로이동
+						installTalk : true,
+					})
+		}
 	</script>
 </body>
 

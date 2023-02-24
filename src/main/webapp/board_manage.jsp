@@ -52,6 +52,16 @@
 <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 <script src="assets/js/config.js"></script>
+<style type="text/css">
+.hhhh{
+       font-color:red;
+      }
+
+.clicked{
+     color: black;
+     font-weight: bold;
+      }
+</style>
 </head>
 
 <body>
@@ -91,45 +101,42 @@
 					> <i class="menu-icon tf-icons bx bx-user-check"></i>
 							<div data-i18n="Basic">회원관리</div>
 					</a></li>
-				<!-- 상품관리 -->
-					<li class="menu-item">
-						<a href="productManagePage.do" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-store"></i>
+
+					<!-- 상품관리 -->
+					<li class="menu-item"><a href="productManagePage.do"
+						class="menu-link"
+					> <i class="menu-icon tf-icons bx bx-store"></i>
 
 							<div data-i18n="Basic">상품관리</div>
-						</a>
-					</li>
+					</a></li>
 
 					<!-- 주문관리 -->
-					<li class="menu-item">
-						<a href="orderManagePage.do" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-receipt"></i>
+					<li class="menu-item"><a href="orderManagePage.do"
+						class="menu-link"
+					> <i class="menu-icon tf-icons bx bx-receipt"></i>
 							<div data-i18n="Basic">주문관리</div>
-						</a>
-					</li>
+					</a></li>
 
 					<!-- 리뷰관리 -->
-					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+					<li class="menu-item"><a href="reviewManagePage.do"
+						class="menu-link"
+					> <i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">리뷰관리</div>
-						</a>
-					</li>
-
+					</a></li>
+				
 					<!-- 글 관리 -->
-					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+					<li class="menu-item"><a href="reviewManagePage.do"
+						class="menu-link"
+					> <i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">게시글 관리</div>
-						</a>
-					</li>
+					</a></li>
 					<!-- 신고 관리 -->
-					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
-							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+					<li class="menu-item"><a href="reviewManagePage.do"
+						class="menu-link"> <i
+							class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">신고 관리</div>
-						</a>
-					</li>
+					</a></li>
+					
 				</ul>
          </aside>
          <!-- / Menu -->
@@ -196,23 +203,22 @@
 
                <div class="container-xxl flex-grow-1 container-p-y">
                   <h4 class="fw-bold py-3 mb-4">
-                     <span class="text-muted fw-light">관리자 메뉴 ></span> 상품 관리
+                     <span class="text-muted fw-light">관리자 메뉴 ></span> 게시글 관리
                   </h4>
 
                   <!-- Hoverable Table rows -->
                   <div class="card">
-                     <h5 class="card-header">상품 목록</h5>
+                  <h5 class="card-header">게시글 목록</a></h5> 
                      <div class="table-responsive text-nowrap">
                         <table class="table table-hover">
                            <thead>
                               <tr>
                                  <th>no.</th>
-                                 <th>카테고리</th>
-                                 <th>상품 이름</th>
-                                 <th>가격</th>
-                                 <th>할인율</th>
-                                 <th>재고</th>
-                                 <th>관리</th>
+                                 <th>작성자</th>
+                                 <th>게시글 내용</th>
+                                 <th>조회수</th>
+                                 <th>좋아요</th>
+                                 
                               </tr>
                            </thead>
                            <!-- 목록 출력부분 -->
@@ -276,12 +282,16 @@
    <script src="assets/js/main.js"></script>
 
    <!-- Page JS -->
-   <script src="js/adm_p_list.js"></script>
+   <script src="js/adm_b_list.js"></script>
 
    <!-- Place this tag in your head or just before your close body tag. -->
    <script async defer src="https://buttons.github.io/buttons.js"></script>
    
-	<!-- 리스트세팅 -->
+   <script type="text/javascript">
+   
+   </script>
+   
+   
     <script>
       $(document).ready(function() {
         console.log("확인1");

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.wan.nss.biz.member.MemberDAO;
 import com.wan.nss.biz.member.MemberServiceImpl;
@@ -22,13 +23,52 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
-	@RequestMapping(value = "/logout.do") // 로그아웃 수행
+	// 로그인 페이지로 이동
+	@RequestMapping(value="/login.do", method=RequestMethod.GET)
+	public String loginView() {
+		return "login.jsp";
+	}
+	
+	// 회원가입 페이지로 이동
+	@RequestMapping(value="/register.do", method=RequestMethod.GET)
+	public String registerView() {
+		return "register.jsp";
+	}
+	
+	// 아이디 찾기 페이지로 이동
+	@RequestMapping(value="/findId.do", method=RequestMethod.GET)
+	public String findIdView() {
+		return "find_id.jsp";
+	}
+	
+	// 비밀번호 찾기 페이지로 이동
+	@RequestMapping(value="/findPw.do", method=RequestMethod.GET)
+	public String findPwView() {
+		return "find_pw.jsp";
+	}
+	
+	// 회원정보변경 클릭시 비밀번호 확인 페이지로 이동
+	@RequestMapping(value="/checkPassword.do", method=RequestMethod.GET)
+	public String checkPasswordView() {
+		return "check_password.jsp";
+	}
+	
+	// CONTACT 페이지로 이동
+	@RequestMapping(value="/contact.do", method=RequestMethod.GET)
+	public String contactView() {
+		return "contact.jsp";
+	}
+	
+	// 로그아웃 수행
+	@RequestMapping(value = "/logout.do")
 	public String logoutView(HttpSession session) {
-		session.invalidate();
+		session.removeAttribute("memberId");
+		session.removeAttribute("memberName");
 		return "main.do";
 	}
 
-	@RequestMapping(value = "/signUp.do") // 회원가입 수행
+	// 회원가입 수행
+	@RequestMapping(value = "/signUp.do")
 	public String insertBoard(MemberVO vo, HttpServletResponse response) {
 
 		if (memberService.insertMember(vo)) { // 회원가입 성공시
@@ -49,7 +89,8 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/changePw.do") // 비밀번호 찾기 결과에서 비밀번호 변경하기
+	// 비밀번호 찾기 결과에서 비밀번호 변경하기 수행
+	@RequestMapping(value = "/changePw.do")
 	public String updateMemberChangePw(MemberVO vo, HttpServletResponse response) {
 
 		if (!memberService.updateMember(vo)) { // 업데이트 실패 시 알림창
@@ -70,7 +111,8 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/updatePw.do") // 회원정보변경에서 비밀번호 변경하기
+	// 회원정보변경에서 비밀번호 변경하기 수행
+	@RequestMapping(value = "/updatePw.do")
 	public String updateMemberPw(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
 
 		if (memberService.selectOne(vo) == null) { // 현재 비밀번호가 일치하지 않으면
@@ -99,7 +141,8 @@ public class MemberController {
 		return "profile.jsp";
 	}
 
-	@RequestMapping(value = "/updateMember.do") // 회원정보 수정 수행
+	// 회원정보 수정 수행
+	@RequestMapping(value = "/updateMember.do")
 	public String updateMemberProfile(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
 
 		String address = request.getParameter("postNum") + request.getParameter("address") + request.getParameter("addressPlus") + request.getParameter("addressDetail"); // 주소
@@ -121,7 +164,8 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/deleteMem.do") // 관리자 페이지 - 회원 삭제(강퇴)
+	// 관리자 페이지 - 회원 삭제(강퇴)
+	@RequestMapping(value = "/deleteMem.do")
 	public String deleteMember(MemberVO vo, HttpSession session, HttpServletResponse response) {
 
 		String id = (String)session.getAttribute("memberId"); // 세션의 멤버 Id 를 가져오기
@@ -153,7 +197,8 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/login.do")
+	// 로그인 수행
+	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
 	public String selectOneMemberLogin(MemberVO vo, HttpSession session, HttpServletResponse response) {
 
 		MemberVO member = memberService.selectOne(vo);
@@ -177,8 +222,8 @@ public class MemberController {
 
 	}
 
-
-	@RequestMapping(value = "/loginCheck.do") // 카카오톡으로 로그인시 회원가입되어있는지 체크
+	// 카카오톡으로 로그인시 회원가입되어있는지 체크
+	@RequestMapping(value = "/loginCheck.do")
 	public String selectOneMemberKakaoLogin(MemberVO vo, HttpSession session, Model model, HttpServletRequest request) {
 
 		MemberVO member = memberService.selectOne(vo);
@@ -199,7 +244,8 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/findId.do") // 아이디 찾기 수행
+	// 아이디 찾기 수행
+	@RequestMapping(value = "/findId.do")
 	public String selectOneMemberId(MemberVO vo, Model model, HttpServletResponse response) {
 
 		MemberVO member = memberService.selectOne(vo); // id, 이름이 담긴 멤버
@@ -222,7 +268,8 @@ public class MemberController {
 
 	}
 
-	@RequestMapping(value = "/findPw.do") // 비밀번호 찾기 수행
+	// 비밀번호 찾기 수행
+	@RequestMapping(value = "/findPw.do")
 	public String selectOneMemberPw(MemberVO vo, Model model, HttpServletResponse response) {
 
 		// 인증번호로 폰 본인 건지 확인 후,
@@ -248,6 +295,7 @@ public class MemberController {
 
 	}
 
+	// 회원정보변경 클릭시 비밀번호 확인 페이지에서 비밀번호 확인 수행
 	@RequestMapping(value = "/CheckPw.do") // 
 	public String selectOneMemberCheckPw(MemberVO vo, Model model, HttpServletResponse response) {
 
@@ -275,6 +323,7 @@ public class MemberController {
 		
 	}
 
+	// 마이페이지로 이동
 	@RequestMapping(value = "/mypage.do")
 	public String selectOneMemberMyPage(MemberVO vo, Model model, HttpSession session, HttpServletResponse response) {
 

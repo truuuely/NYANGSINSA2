@@ -110,7 +110,13 @@
 	right: 100px;
 	z-index: 1;
 }
-
+#fixshare{
+	width: 120px;
+	position: fixed;
+	z-index: 1;
+	bottom: 380px;
+	right: 75px;
+}
 #fixcomment {
 	width: 120px;
 	position: fixed;
@@ -388,6 +394,6 @@
 	text-align: center;
 }
 
-.dd {
+.show-board {
 	display: none;
 }
