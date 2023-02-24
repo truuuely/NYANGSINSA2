@@ -1,11 +1,14 @@
-package com.nss.review;
+package com.wan.nss.biz.review;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("ReviewService")
+import com.wan.nss.review.ReviewDAO;
+import com.wan.nss.review.ReviewService;
+
+@Service("reviewService")
 public class ReviewServiceImpl implements ReviewService {
 	
 	@Autowired
