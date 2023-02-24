@@ -203,7 +203,7 @@
 							</div>
 							<div class="col-md-12 form-group">
 								<button type="submit" value="submit" class="button button-login w-100">로그인</button>
-								<a id="kakao-login-btn" href="javascript:kakaoLogin()"><img src="img/kakao_login.png" alt="카카오 로그인 버튼" style="border-radius: 30px;" /></a> <br> <a href="find_id.jsp">아이디 찾기</a> &nbsp; / &nbsp; <a href="find_pw.jsp">패스워드 찾기</a>
+								<a id="kakao-login-btn" href="javascript:kakaoLogin()"><img src="img/kakao_login.png" alt="카카오 로그인 버튼" style="border-radius: 30px;" /></a> <br> <a href="find_id.do">아이디 찾기</a> &nbsp; / &nbsp; <a href="find_pw.do">패스워드 찾기</a>
 								<!-- &nbsp; / &nbsp;<a href="javascript:void(0)"
                                  onclick="kakaoLogout();"
                               > <span>카카오 로그아웃</span>

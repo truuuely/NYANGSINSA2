@@ -196,9 +196,9 @@
 							</div>
 							<br><br><br><br>
 							<div class="col-md-12 form-group">
-								<button onClick="location.href='login.jsp'" class="button button-login w-100">로그인하러 가기</button>
+								<button onClick="location.href='login.do'" class="button button-login w-100">로그인하러 가기</button>
 								<div><br></div>
-								<button  onClick="location.href='find_pw.jsp'" class="button button-login w-100">비밀번호 찾기</button>
+								<button  onClick="location.href='find_pw.do'" class="button button-login w-100">비밀번호 찾기</button>
 								
 							</div>
 							<br><br><br><br>

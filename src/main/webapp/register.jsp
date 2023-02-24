@@ -285,7 +285,7 @@
                   <div class="hover">
                      <h4>이미 회원이신가요?</h4>
                      <p>냥신사를 다시 찾아주셔서 감사합니다!</p>
-                     <a class="button button-account" href="login.jsp">로그인하기</a>
+                     <a class="button button-account" href="login.do">로그인하기</a>
                   </div>
                </div>
             </div>

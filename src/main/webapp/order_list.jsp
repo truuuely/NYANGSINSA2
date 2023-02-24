@@ -82,7 +82,7 @@
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+				<li><a href="shoping_cart.do"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
 			</ul>
 		</div>
 
@@ -95,7 +95,7 @@
 			<ul>
 				<li class="active"><a href="main.do">홈</a></li>
 				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-				<li><a href="contact.jsp">Contact</a></li>
+				<li><a href="contact.do">Contact</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
@@ -150,14 +150,14 @@
 						<ul>
 							<li class="active"><a href="main.do">홈</a></li>
 							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-							<li><a href="contact.jsp">Contact</a></li>
+							<li><a href="contact.do">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+							<li><a href="shoping_cart.do"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -242,7 +242,7 @@
 							<ul>
 								<li><a href="mypage.do">내정보</a></li>
 								<li><a href="orderList.do">주문내역</a></li>
-								<li><a href="check_password.jsp">회원정보변경</a></li>
+								<li><a href="check_password.do">회원정보변경</a></li>
 							</ul>
 						</div>
 					</div>
