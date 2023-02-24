@@ -1,5 +1,7 @@
 package com.wan.nss.biz.board;
 
+import java.util.ArrayList;
+
 public class BoardVO {
 	private int boardNum; // 글 번호
 	private int memberNum; // 글 작성자
@@ -9,11 +11,12 @@ public class BoardVO {
 	private int boardStatus; // 글 상태 (0 : 정상, 1 : 신고, 2 : 삭제)
 	private int boardView; // 조회수
 
-//	vo에만 존재하는 멤버변수들
+	// vo에만 존재하는 멤버변수들
 	private int likeCnt; // 좋아요 수
 	private String imageName; // 이미지 이름
 	private boolean isChecked; // 해당 회원이 좋아요 했으면 true, 아니면 false
 	private int replyCnt; // 댓글 수
+	private ArrayList<String> imageNames;
 
 	public int getBoardNum() {
 		return boardNum;
@@ -103,11 +106,21 @@ public class BoardVO {
 		this.replyCnt = replyCnt;
 	}
 
+	public ArrayList<String> getImageNames() {
+		return imageNames;
+	}
+
+	public void setImageNames(ArrayList<String> imageNames) {
+		this.imageNames = imageNames;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [boardNum=" + boardNum + ", memberNum=" + memberNum + ", boardTitle=" + boardTitle
 				+ ", boardContent=" + boardContent + ", boardDate=" + boardDate + ", boardStatus=" + boardStatus
 				+ ", boardView=" + boardView + ", likeCnt=" + likeCnt + ", imageName=" + imageName + ", isChecked="
-				+ isChecked + ", replyCnt=" + replyCnt + "]";
+				+ isChecked + ", replyCnt=" + replyCnt + ", imageNames=" + imageNames + "]";
 	}
+
+	
 }
