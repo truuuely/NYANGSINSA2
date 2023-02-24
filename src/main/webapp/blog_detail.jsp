@@ -290,84 +290,7 @@
 		댓글 (5) ▼
 	</div>
 	<div id="reply">
-		<div id="replyDetail">
-			<div class="replywriter">[작성자 : dlwjddk1010]</div>
-			<div id="replyContent">
-				<div style="font-size: 15px;" id="replyContent">어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...어머 너무 귀엽다...</div>
-			</div>
-			<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
-				<li style="margin-right: 4px;">
-					<i class="fa fa-calendar-o"></i>
-					2022/12/31
-				</li>
-				<img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png">
-			</ul>
-		</div>
-		<!--       <hr style="width: 95%">
- -->
-		<div id="rereplyDetail">
-			<img style="width: 20px;" src="img/rereply.png">
-			<div>
-				<div class="replywriter">[작성자 : hyerin00]</div>
-				<div id="replyContent">
-					<div style="font-size: 15px;" id="replyContent">very cuuuuuute</div>
-				</div>
-				<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
-					<li style="margin-right: 4px;">
-						<i class="fa fa-calendar-o"></i>
-						2023/01/01
-					</li>
-					<img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png">
-				</ul>
-			</div>
-		</div>
-		<div id="rereplyDetail">
-			<img style="width: 20px;" src="img/rereply.png">
-			<div>
-				<div class="replywriter">[작성자 : moonyong]</div>
-				<div id="replyContent">
-					<div style="font-size: 15px;" id="replyContent">왕 귀엽네여</div>
-				</div>
-				<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
-					<li style="margin-right: 4px;">
-						<i class="fa fa-calendar-o"></i>
-						2022/01/02
-					</li>
-					<img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png">
-				</ul>
-			</div>
-		</div>
-		<div id="replyDetail">
-			<div class="replywriter">[작성자 : joonyoung]</div>
-			<div id="replyContent">
-				<div style="font-size: 15px;" id="replyContent">저희 고양이가 더 귀여운디요</div>
-			</div>
-			<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
-				<li style="margin-right: 4px;">
-					<i class="fa fa-calendar-o"></i>
-					2022/01/03
-				</li>
-				<img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png">
-			</ul>
-		</div>
-		<div id="rereplyDetail">
-			<img style="width: 20px;" src="img/rereply.png">
-			<div>
-				<div class="replywriter">[작성자 : moonyong]</div>
-				<div id="replyContent">
-					<div style="font-size: 15px;" id="replyContent">아닌디요ㅗㅓㅏㅣㅏㅓㅗ호ㅓㅏㅣㅏㅓㅗㅎㄹ호ㅓㅏㅣㅏㅓㅗㅎㄹㅇㄹ호ㅓㅏㅓdfadafadfadf</div>
-				</div>
-				<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
-					<li style="margin-right: 4px;">
-						<i class="fa fa-calendar-o"></i>
-						2022/01/02
-					</li>
-					<li>
-						<img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png">
-					</li>
-				</ul>
-			</div>
-		</div>
+		<nss:list sort = "reply"/>
 	</div>
 
 	<div id="replywrite">
@@ -597,7 +520,7 @@
 		}
 	</script>
 
-	<script>
+	<!-- <script>
 		$(function() {
 			/* $(".reply").slice(0, 6).show(); // 초기갯수 */
 			$("#showReply").click(function(e) { // 클릭시 more
@@ -608,7 +531,7 @@
 				} */
 			});
 		});
-	</script>
+	</script> -->
 
 
 	<script type="text/javascript">
