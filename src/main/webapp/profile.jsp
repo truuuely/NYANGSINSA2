@@ -92,11 +92,15 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+			<a href="main.do">
+				<img src="img/logo.png" alt="홈으로 가기">
+			</a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+				<li><a href="shoping_cart.jsp">
+						<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+					</a></li>
 			</ul>
 		</div>
 
@@ -114,7 +118,15 @@
 		</nav>
 		<div id="mobile-menu-wrap"></div>
 		<div class="header__top__right__social">
-			<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+			<a href="https://www.facebook.com/profile.php?id=100089405234926">
+				<i class="fa fa-facebook"></i>
+			</a>
+			<a href="https://www.instagram.com/nyangsinsa5/">
+				<i class="fa fa-instagram"></i>
+			</a>
+			<a href="https://twitter.com/nyangsinsa">
+				<i class="fa fa-twitter"></i>
+			</a>
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
@@ -141,7 +153,15 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/profile.php?id=100089405234926">
+									<i class="fa fa-facebook"></i>
+								</a>
+								<a href="https://www.instagram.com/nyangsinsa5/">
+									<i class="fa fa-instagram"></i>
+								</a>
+								<a href="https://twitter.com/nyangsinsa">
+									<i class="fa fa-twitter"></i>
+								</a>
 							</div>
 
 							<!-- 로그인 -->
@@ -156,7 +176,9 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+						<a href="main.do">
+							<img src="img/logo.png" alt="홈으로 가기">
+						</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -171,7 +193,9 @@
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+							<li><a href="shoping_cart.jsp">
+									<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -265,17 +289,24 @@
 				<div class="col-lg-7 col-md-7">
 					<form action="updateMember.do" method="POST">
 						<!-- 고양이 이름 -->
-						<label class="label">고양이 이름</label> <input type="text" class="form-control" id="cName" name="cName" value="${cName}" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
+						<label class="label">고양이 이름</label>
+						<input type="text" class="form-control" id="cName" name="cName" value="${cName}" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
 						<p style="font-size: 5px;">* 변경할 고양이 이름을 입력하세요.</p>
 						<!-- 고양이 이름 -->
 
 						<!-- 전화번호 -->
-						<label class="label">전화번호</label> <input type="text" class="form-control" id="phone" name="phone" value="${phoneNum}" placeholder="전화번호 입력 " onfocus="this.placeholder = ''" onblur="this.placeholder = '전화번호 입력'" required>
+						<label class="label">전화번호</label>
+						<input type="text" class="form-control" id="phone" name="phone" value="${phoneNum}" placeholder="전화번호 입력 " onfocus="this.placeholder = ''" onblur="this.placeholder = '전화번호 입력'" required>
 						<p style="font-size: 5px;">* 변경할 전화번호를 입력하세요.</p>
 
 						<label class="label">주소</label>
 						<div class="checkout__input">
-							<input type="text" id="post" name="postNum" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly> <input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly><br> <input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly><input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly><input type="text" class="form-control" value="${address }" id="address_detail" name="addressDetail" placeholder="상세주소" required>
+							<input type="text" id="post" name="postNum" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
+							<input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
+							<br>
+							<input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
+							<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
+							<input type="text" class="form-control" value="${address }" id="address_detail" name="addressDetail" placeholder="상세주소" required>
 						</div>
 						<p style="font-size: 5px;">* 변경할 주소를 입력하세요.</p>
 						<input type="submit" value="적용" class="button-purple">
@@ -283,22 +314,25 @@
 					</form>
 					<br>
 					<br>
-<form action="updatePw.do" method="POST">
-	<!-- 기존 비밀번호 -->
-	<label class="label">현재 비밀번호 </label> <input type="password" class="form-control" id="usePw" name="prePassword" placeholder="현재 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호 입력'" required>
-	<p style="font-size: 5px;">* 현재 비밀번호를 입력하세요.</p>
-	<!-- 기존 비밀번호  -->
+					<form action="updatePw.do" method="POST">
+						<!-- 기존 비밀번호 -->
+						<label class="label">현재 비밀번호 </label>
+						<input type="password" class="form-control" id="usePw" name="prePassword" placeholder="현재 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호 입력'" required>
+						<p style="font-size: 5px;">* 현재 비밀번호를 입력하세요.</p>
+						<!-- 기존 비밀번호  -->
 
-	<label class="label">새 비밀번호</label> <input type="password" class="form-control" id="pw" name="newPassword" placeholder="변경할 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '변경할 비밀번호 입력'" required>
-	<p id="outputPw" style="font-size: 5px;">* 변경할 비밀번호를 입력하세요.</p>
+						<label class="label">새 비밀번호</label>
+						<input type="password" class="form-control" id="pw" name="newPassword" placeholder="변경할 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '변경할 비밀번호 입력'" required>
+						<p id="outputPw" style="font-size: 5px;">* 변경할 비밀번호를 입력하세요.</p>
 
-	<label class="label">새 비밀번호 재입력</label> <input type="password" class="form-control" id="pw2" placeholder="변경할 비밀번호 재입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '변경할 비밀번호 배입력'" required>
-	<p id="outputPw2" style="font-size: 5px;">* 변경할 비밀번호를 다시 입력하세요.</p>
+						<label class="label">새 비밀번호 재입력</label>
+						<input type="password" class="form-control" id="pw2" placeholder="변경할 비밀번호 재입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '변경할 비밀번호 배입력'" required>
+						<p id="outputPw2" style="font-size: 5px;">* 변경할 비밀번호를 다시 입력하세요.</p>
 
 
 
 
-	<input type="submit" value="적용" class="button-purple">
+						<input type="submit" value="적용" class="button-purple">
 
 					</form>
 
@@ -319,56 +353,7 @@
 	<!-- Blog Section End -->
 
 	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="main.do"><img src="img/logo.png" alt="로고"></a>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<ul>
-							<li>주소: 서울 강남구 역삼동 골목길</li>
-							<li>전화: +82 02-0202-0202</li>
-							<li>이메일: nyangsinsa@gmail.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<div class="footer__widget__social">
-							<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright 냥신사&copy;
-								<script>
-                           document.write(new Date().getFullYear());
-                        </script>
-								All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="결제수단">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<nss:footer />
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -383,151 +368,152 @@
 
 	<!-- 비밀번호 변경 정규식 -->
 	<script type="text/javascript">
-      const inputUsePw = document.querySelector('#usePw')
-      const inputPw = document.querySelector('#pw')
-      const inputPw2 = document.querySelector('#pw2')
+		const inputUsePw = document.querySelector('#usePw')
+		const inputPw = document.querySelector('#pw')
+		const inputPw2 = document.querySelector('#pw2')
 
-      const outputPw = document.querySelector('#outputPw')
-      const outputPw2 = document.querySelector('#outputPw2')
+		const outputPw = document.querySelector('#outputPw')
+		const outputPw2 = document.querySelector('#outputPw2')
 
-      const registerTrue = false;
-      
-      const rePw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/
+		const registerTrue = false;
 
-      var pwValid = false; // 비밀번호 정규식 일치 여부
-      var pwSame = false; // 비밀번호 확인 일치 여부
+		const rePw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/
 
-      
-      inputPw
-            .addEventListener(
-                  'input',
-                  function() {
-                     const ok = rePw.exec(this.value)
-                     if (!ok) {
-                        outputPw.textContent = `영어/숫자/특수문자를 모두 혼합하여 8자리 이상 비밀번호를 입력해주세요.`;
-                        outputPw.style.color = 'red';
-                        pwValid = false;
+		var pwValid = false; // 비밀번호 정규식 일치 여부
+		var pwSame = false; // 비밀번호 확인 일치 여부
 
-                     } else {
-                        outputPw.textContent = `사용 가능합니다.`;
-                        outputPw.style.color = '#6667AB';
-                        pwValid = true;
-                     }
-                  })
+		inputPw
+				.addEventListener(
+						'input',
+						function() {
+							const ok = rePw.exec(this.value)
+							if (!ok) {
+								outputPw.textContent = `영어/숫자/특수문자를 모두 혼합하여 8자리 이상 비밀번호를 입력해주세요.`;
+								outputPw.style.color = 'red';
+								pwValid = false;
 
-      inputPw2.addEventListener('input', function() {
-         if (inputPw.value == inputPw2.value) {
-            outputPw2.textContent = `일치합니다.`
-            outputPw2.style.color = '#6667AB'
-            inputPw.addEventListener('input', function() {
-               if (inputPw.value == "") {
-                  outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
-                  outputPw2.style.color = 'red'
-                  pwSame = false;
-               } else if (inputPw.value == inputPw2.value) {
-                  outputPw2.textContent = `일치합니다.`
-                  outputPw2.style.color = '#6667AB'
-                  pwSame = true;
-               } else {
-                  outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
-                  outputPw2.style.color = 'red'
-                  pwSame = false;
-               }
-            })
-            pwSame = true;
-         } else {
-            outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
-            outputPw2.style.color = 'red'
-            pwSame = false;
-         }
-      })
-      function profile() {
-         if (!(pwValid && pwSame)) {
-            console.log('비번' + pwValid)
-            console.log('비번재확인' + pwSame)
-            registerTrue = false;
-         } else {
-            registerTrue = true;
-            console.log(registerTrue)
-         }
-      }
-      
-         function registerCheck(){
+							} else {
+								outputPw.textContent = `사용 가능합니다.`;
+								outputPw.style.color = '#6667AB';
+								pwValid = true;
+							}
+						})
 
-               if(registerTrue){
-                  return true;
-               }else{
-                  if(!registerTrue){
-                     alert("입력한 내용을 확인해주세요"); 
-                  }
-                  return false;
-               }
-            }
-   </script>
+		inputPw2.addEventListener('input', function() {
+			if (inputPw.value == inputPw2.value) {
+				outputPw2.textContent = `일치합니다.`
+				outputPw2.style.color = '#6667AB'
+				inputPw.addEventListener('input', function() {
+					if (inputPw.value == "") {
+						outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+						outputPw2.style.color = 'red'
+						pwSame = false;
+					} else if (inputPw.value == inputPw2.value) {
+						outputPw2.textContent = `일치합니다.`
+						outputPw2.style.color = '#6667AB'
+						pwSame = true;
+					} else {
+						outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+						outputPw2.style.color = 'red'
+						pwSame = false;
+					}
+				})
+				pwSame = true;
+			} else {
+				outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+				outputPw2.style.color = 'red'
+				pwSame = false;
+			}
+		})
+		function profile() {
+			if (!(pwValid && pwSame)) {
+				console.log('비번' + pwValid)
+				console.log('비번재확인' + pwSame)
+				registerTrue = false;
+			} else {
+				registerTrue = true;
+				console.log(registerTrue)
+			}
+		}
+
+		function registerCheck() {
+
+			if (registerTrue) {
+				return true;
+			} else {
+				if (!registerTrue) {
+					alert("입력한 내용을 확인해주세요");
+				}
+				return false;
+			}
+		}
+	</script>
 
 
 	<!-- 주소 API 스크립트 -->
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
-      function sample6_execDaumPostcode() {
-         new daum.Postcode(
-               {
-                  oncomplete : function(data) {
-                     // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+		function sample6_execDaumPostcode() {
+			new daum.Postcode(
+					{
+						oncomplete : function(data) {
+							// 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
 
-                     // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                     // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                     var addr = ''; // 주소 변수
-                     var extraAddr = ''; // 참고항목 변수
+							// 각 주소의 노출 규칙에 따라 주소를 조합한다.
+							// 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+							var addr = ''; // 주소 변수
+							var extraAddr = ''; // 참고항목 변수
 
-                     //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                     if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                        addr = data.roadAddress;
-                     } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                        addr = data.jibunAddress;
-                     }
+							//사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+							if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+								addr = data.roadAddress;
+							} else { // 사용자가 지번 주소를 선택했을 경우(J)
+								addr = data.jibunAddress;
+							}
 
-                     // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                     if (data.userSelectedType === 'R') {
-                        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                        if (data.bname !== ''
-                              && /[동|로|가]$/g.test(data.bname)) {
-                           extraAddr += data.bname;
-                        }
-                        // 건물명이 있고, 공동주택일 경우 추가한다.
-                        if (data.buildingName !== ''
-                              && data.apartment === 'Y') {
-                           extraAddr += (extraAddr !== '' ? ', '
-                                 + data.buildingName
-                                 : data.buildingName);
-                        }
-                        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                        if (extraAddr !== '') {
-                           extraAddr = ' (' + extraAddr + ')';
-                        }
-                        // 조합된 참고항목을 해당 필드에 넣는다.
-                        document.getElementById("address_plus").value = extraAddr;
+							// 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+							if (data.userSelectedType === 'R') {
+								// 법정동명이 있을 경우 추가한다. (법정리는 제외)
+								// 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+								if (data.bname !== ''
+										&& /[동|로|가]$/g.test(data.bname)) {
+									extraAddr += data.bname;
+								}
+								// 건물명이 있고, 공동주택일 경우 추가한다.
+								if (data.buildingName !== ''
+										&& data.apartment === 'Y') {
+									extraAddr += (extraAddr !== '' ? ', '
+											+ data.buildingName
+											: data.buildingName);
+								}
+								// 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+								if (extraAddr !== '') {
+									extraAddr = ' (' + extraAddr + ')';
+								}
+								// 조합된 참고항목을 해당 필드에 넣는다.
+								document.getElementById("address_plus").value = extraAddr;
 
-                     } else {
-                        document.getElementById("address_plus").value = '';
-                     }
+							} else {
+								document.getElementById("address_plus").value = '';
+							}
 
-                     // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                     document.getElementById('post').value = data.zonecode;
-                     document.getElementById("address").value = addr;
-                     // 커서를 상세주소 필드로 이동한다.
-                     document.getElementById("address_detail").focus();
-                  }
-               }).open();
-      }
-   </script>
+							// 우편번호와 주소 정보를 해당 필드에 넣는다.
+							document.getElementById('post').value = data.zonecode;
+							document.getElementById("address").value = addr;
+							// 커서를 상세주소 필드로 이동한다.
+							document.getElementById("address_detail").focus();
+						}
+					}).open();
+		}
+	</script>
 	<!--  주소 스크립트 end -->
 
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
-		<a href="#"><button type="button" class="button-top">▲ 맨위로</button></a>
+		<a href="#">
+			<button type="button" class="button-top">▲ 맨위로</button>
+		</a>
 	</div>
 
 </body>

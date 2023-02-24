@@ -49,12 +49,9 @@
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li>
-					<a href="shoping_cart.jsp">
-						<i class="fa fa-shopping-bag"></i>
-						<span>${fn:length(cList)}</span>
-					</a>
-				</li>
+				<li><a href="shoping_cart.jsp">
+						<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+					</a></li>
 			</ul>
 		</div>
 
@@ -65,15 +62,9 @@
 
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
-				<li class="active">
-					<a href="main.do">홈</a>
-				</li>
-				<li>
-					<a href="shop.do?category=all&sort=sellDesc">쇼핑</a>
-				</li>
-				<li>
-					<a href="contact.jsp">Contact</a>
-				</li>
+				<li class="active"><a href="main.do">홈</a></li>
+				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
+				<li><a href="contact.jsp">Contact</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
@@ -90,10 +81,7 @@
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
-				<li>
-					<i class="fa fa-envelope"></i>
-					nyangsinsa@gmail.com
-				</li>
+				<li><i class="fa fa-envelope"></i> nyangsinsa@gmail.com</li>
 				<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
 			</ul>
 		</div>
@@ -108,10 +96,7 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__left">
 							<ul>
-								<li>
-									<i class="fa fa-envelope"></i>
-									nyangsinsa@gmail.com
-								</li>
+								<li><i class="fa fa-envelope"></i> nyangsinsa@gmail.com</li>
 								<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
 							</ul>
 						</div>
@@ -150,30 +135,19 @@
 				<div class="col-lg-6">
 					<nav class="header__menu">
 						<ul>
-							<li class="active">
-								<a href="main.do">홈</a>
-							</li>
-							<li>
-								<a href="shop.do?category=all&sort=sellDesc">쇼핑</a>
-							</li>
-							<li>
-								<a href="contact.jsp">Contact</a>
-							</li>
-							<li>
-								<a href="boardView.do">자랑해냥</a>
-							</li>
+							<li class="active"><a href="main.do">홈</a></li>
+							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
+							<li><a href="contact.jsp">Contact</a></li>
+							<li><a href="boardView.do">자랑해냥</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li>
-								<a href="shoping_cart.jsp">
-									<i class="fa fa-shopping-bag"></i>
-									<span>${fn:length(cList)}</span>
-								</a>
-							</li>
+							<li><a href="shoping_cart.jsp">
+									<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -195,22 +169,13 @@
 				<div class="col-lg-3">
 					<div class="hero__categories">
 						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i>
-							<span>메뉴</span>
+							<i class="fa fa-bars"></i> <span>메뉴</span>
 						</div>
 						<ul>
-							<li>
-								<a href="shop.do?category=all">전체</a>
-							</li>
-							<li>
-								<a href="shop.do?category=food">사료</a>
-							</li>
-							<li>
-								<a href="shop.do?category=treat">간식</a>
-							</li>
-							<li>
-								<a href="shop.do?category=sand">모래</a>
-							</li>
+							<li><a href="shop.do?category=all">전체</a></li>
+							<li><a href="shop.do?category=food">사료</a></li>
+							<li><a href="shop.do?category=treat">간식</a></li>
+							<li><a href="shop.do?category=sand">모래</a></li>
 						</ul>
 					</div>
 				</div>
@@ -250,34 +215,29 @@
 	<div id="board">
 		<div id="boardDetail">
 			<div id="title">
-				2022년 마지막 날인데도 레옹이는 계속 자네요 <br>
+				2022년 마지막 날인데도 레옹이는 계속 자네요
+				<br>
 				<div id="writer">[작성자 : dlwjddk1010]</div>
 			</div>
 			<ul id="boardInfo">
-				<li>
-					<i class="fa fa-calendar-o"></i>
-					2022/12/31
-				</li>
-				<li>
-					<i class="fa fa-comment-o"></i>
-					5
-				</li>
-				<li>
-					<img style="width: 20px;" src="img/eyes.png">
-					13
-				</li>
-				<li class="heartVal">
-					<img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png">
-					20
-				</li>
-				<li>
-					<img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png">
-				</li>
+				<li><i class="fa fa-calendar-o"></i> 2022/12/31</li>
+				<li><i class="fa fa-comment-o"></i> 5</li>
+				<li><img style="width: 20px;" src="img/eyes.png"> 13</li>
+				<li class="heartVal"><img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> 20</li>
+				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
 				<img style="width: 70%; height: auto; margin-bottom: 20px;" src="img/cat2.jpg" alt="레옹이 사진">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">
-					레옹이는 왜 이렇게 귀여울까... <br> 누워 있어도 귀엽고 그냥 귀엽고 <br> 아무리 봐도 귀엽고 <br> 너무 귀엽지 않나요 여러분 <br> 이달의 냥냥이 1등 할 수 있도록 좋아요 많이 눌러주세용!!
+					레옹이는 왜 이렇게 귀여울까...
+					<br>
+					누워 있어도 귀엽고 그냥 귀엽고
+					<br>
+					아무리 봐도 귀엽고
+					<br>
+					너무 귀엽지 않나요 여러분
+					<br>
+					이달의 냥냥이 1등 할 수 있도록 좋아요 많이 눌러주세용!!
 				</div>
 			</div>
 		</div>
@@ -290,7 +250,7 @@
 		댓글 (5) ▼
 	</div>
 	<div id="reply">
-		<nss:list sort = "reply"/>
+		<nss:list sort="reply" />
 	</div>
 
 	<div id="replywrite">
@@ -302,72 +262,7 @@
 	</div>
 
 
-
-	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="main.do">
-								<img src="img/logo.png" alt="로고">
-							</a>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<ul>
-							<li>주소: 서울 강남구 역삼동 골목길</li>
-							<li>전화: +82 02-0202-0202</li>
-							<li>이메일: nyangsinsa@gmail.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<div class="footer__widget__social">
-							<a href="https://www.facebook.com/profile.php?id=100089405234926">
-								<i class="fa fa-facebook"></i>
-							</a>
-							<a href="https://www.instagram.com/nyangsinsa5/">
-								<i class="fa fa-instagram"></i>
-							</a>
-							<a href="https://twitter.com/nyangsinsa">
-								<i class="fa fa-twitter"></i>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright 냥신사&copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with
-								<i class="fa fa-heart" aria-hidden="true"></i>
-								by
-								<a href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="결제수단">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- Footer Section End -->
+	<nss:footer />
 
 
 	<!--  신고하기 모달창  -->
@@ -387,15 +282,20 @@
 							<div style="width: 300px;">
 								<form action="" class="report-box">
 									<input type="radio" class="report-box2" name="radio" id="r1" value="0">
-									<label for="r1">욕설/부적절한 언어 입니다.</label> <br>
+									<label for="r1">욕설/부적절한 언어 입니다.</label>
+									<br>
 									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
-									<label for="r2">스팸광고/도배글 입니다.</label> <br>
+									<label for="r2">스팸광고/도배글 입니다.</label>
+									<br>
 									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
-									<label for="r2">부적절한 컨텐츠 입니다.</label> <br>
+									<label for="r2">부적절한 컨텐츠 입니다.</label>
+									<br>
 									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
-									<label for="r2">음란성 게시물 입니다.</label> <br>
+									<label for="r2">음란성 게시물 입니다.</label>
+									<br>
 									<input type="radio" class="report-box2" name="radio" id="r2" value="1">
-									<label for="r2">기타</label> <br>
+									<label for="r2">기타</label>
+									<br>
 									<input type="text" class="report-box2 report-text" name="text" disabled placeholder="사유를 작성해주세요.">
 							</div>
 
@@ -541,52 +441,49 @@
 			$(this).next("#reply").siblings("#reply").slideUp(300);
 		});
 	</script>
-	
-	  <!-- kakao sdk 호출 -->
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
-<script type="text/javascript">
-  // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-  Kakao.init('603243ecdb0757012b9f08d95c495f53');
+	<!-- kakao sdk 호출 -->
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
-  // SDK 초기화 여부를 판단합니다.
-  console.log(Kakao.isInitialized());
+	<script type="text/javascript">
+		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+		Kakao.init('603243ecdb0757012b9f08d95c495f53');
 
-  function kakaoShare() {
-    Kakao.Link.sendDefault({
-      objectType: 'feed',
-      content: {
-        title: '안녕안녕 헬로월드 마이크테스트',// 글제목 
-        description: '강문영 바보바보', // 글내용
-        imageUrl: 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
-        link: {
-          mobileWebUrl: 'https://www.naver.com/',
-          webUrl: 'https://www.youtube.com/watch?v=72fDsC2kX7g',
-        },
-      },
-      social: {
-          likeCount: 286,  //좋아요 수
-          commentCount: 45,  //댓글 수
-          sharedCount: 845,  //공유 수
-        },
-        
-      buttons: [
-        {
-          title: '웹으로 보기',
-          link: {
-            mobileWebUrl: 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
-            webUrl: 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
-          },
-        },
-      ],
-      // 카카오톡 미설치 시 카카오톡 설치 경로이동
-      installTalk: true,
-    })
-  }
+		// SDK 초기화 여부를 판단합니다.
+		console.log(Kakao.isInitialized());
 
+		function kakaoShare() {
+			Kakao.Link
+					.sendDefault({
+						objectType : 'feed',
+						content : {
+							title : '안녕안녕 헬로월드 마이크테스트',// 글제목 
+							description : '강문영 바보바보', // 글내용
+							imageUrl : 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
+							link : {
+								mobileWebUrl : 'https://www.naver.com/',
+								webUrl : 'https://www.youtube.com/watch?v=72fDsC2kX7g',
+							},
+						},
+						social : {
+							likeCount : 286, //좋아요 수
+							commentCount : 45, //댓글 수
+							sharedCount : 845, //공유 수
+						},
 
-  
-</script>
+						buttons : [
+								{
+									title : '웹으로 보기',
+									link : {
+										mobileWebUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
+										webUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
+									},
+								}, ],
+						// 카카오톡 미설치 시 카카오톡 설치 경로이동
+						installTalk : true,
+					})
+		}
+	</script>
 </body>
 
 </html>
