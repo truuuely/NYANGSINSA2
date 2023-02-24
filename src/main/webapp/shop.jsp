@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="nss" tagdir="/WEB-INF/tags/" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -45,18 +44,22 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+			<a href="main.do">
+				<img src="img/logo.png" alt="홈으로 가기">
+			</a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span id="cartCnt2"></span></a></li>
+				<li><a href="shoping_cart.jsp">
+						<i class="fa fa-shopping-bag"></i> <span id="cartCnt2"></span>
+					</a></li>
 			</ul>
 		</div>
 
-	<div class="humberger__menu__widget">
-		<!-- 로그인 -->
-		<nss:login />
-	</div>
+		<div class="humberger__menu__widget">
+			<!-- 로그인 -->
+			<nss:login />
+		</div>
 
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
@@ -66,17 +69,23 @@
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
-			<div class="header__top__right__social">
-				<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a>
-				<a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a>
-				<a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
-			</div>
-			<div class="humberger__menu__contact">
-				<ul>
-					<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
-					<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
-				</ul>
-			</div>
+		<div class="header__top__right__social">
+			<a href="https://www.facebook.com/profile.php?id=100089405234926">
+				<i class="fa fa-facebook"></i>
+			</a>
+			<a href="https://www.instagram.com/nyangsinsa5/">
+				<i class="fa fa-instagram"></i>
+			</a>
+			<a href="https://twitter.com/nyangsinsa">
+				<i class="fa fa-twitter"></i>
+			</a>
+		</div>
+		<div class="humberger__menu__contact">
+			<ul>
+				<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
+				<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
+			</ul>
+		</div>
 	</div>
 	<!-- Humberger End -->
 
@@ -96,14 +105,20 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a>
-								<a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a>
-								<a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/profile.php?id=100089405234926">
+									<i class="fa fa-facebook"></i>
+								</a>
+								<a href="https://www.instagram.com/nyangsinsa5/">
+									<i class="fa fa-instagram"></i>
+								</a>
+								<a href="https://twitter.com/nyangsinsa">
+									<i class="fa fa-twitter"></i>
+								</a>
 							</div>
-							
+
 							<!-- 로그인 -->
 							<nss:login />
-							
+
 						</div>
 					</div>
 				</div>
@@ -113,7 +128,9 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+						<a href="main.do">
+							<img src="img/logo.png" alt="홈으로 가기">
+						</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -128,7 +145,9 @@
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span id="cartCnt"></span></a></li>
+							<li><a href="shoping_cart.jsp">
+									<i class="fa fa-shopping-bag"></i> <span id="cartCnt"></span>
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -172,8 +191,9 @@
 							</div>
 							<div class="hero__search__phone__text">
 								<h5>02-0202-0202</h5>
-								
-								<span>상담 가능 시간<br>평일 09:00~18:00</span>
+
+								<span>상담 가능 시간<br>평일 09:00~18:00
+								</span>
 							</div>
 						</div>
 					</div>
@@ -207,29 +227,33 @@
 						<div class="sidebar__item">
 							<h4>카테고리</h4>
 							<ul>
-							<li><a href="shop.do?category=all">전체</a></li>
-							<li><a href="shop.do?category=food">사료</a></li>
-							<li><a href="shop.do?category=treat">간식</a></li>
-							<li><a href="shop.do?category=sand">모래</a></li>
+								<li><a href="shop.do?category=all">전체</a></li>
+								<li><a href="shop.do?category=food">사료</a></li>
+								<li><a href="shop.do?category=treat">간식</a></li>
+								<li><a href="shop.do?category=sand">모래</a></li>
 							</ul>
 						</div>
 
 						<!-- 가격 필터 슬라이드 바 부분 -->
 						<div class="sidebar__item">
 							<h4>가격 필터</h4>
-                            <input type="text" class="input-price" id="minamount">원 &nbsp; &nbsp; - 
-                            <input type="text" class="input-price" id="maxamount">원<br>
-                            <div class="price-range-wrap">
+							<input type="text" class="input-price" id="minamount">
+							원 &nbsp; &nbsp; -
+							<input type="text" class="input-price" id="maxamount">
+							원
+							<br>
+							<div class="price-range-wrap">
 								<div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="100000">
 									<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                    <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
-                                </div>
-                                <div class="range-slider">
-                                  <div style="text-align:center"><button class="button-price" type="button" onclick="javascript:setPrice()">가격 필터 적용하기</button></div>
-                                </div>
+									<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span> <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
+								</div>
+								<div class="range-slider">
+									<div style="text-align: center">
+										<button class="button-price" type="button" onclick="javascript:setPrice()">가격 필터 적용하기</button>
+									</div>
+								</div>
 							</div>
-                        </div>
+						</div>
 						<!-- 가격 필터 슬라이드 바 부분 -->
 
 						<!-- 기능 보류: 아이템 슬라이더 -->
@@ -253,8 +277,7 @@
 						<div class="row">
 							<div class="col-lg-4 col-md-5">
 								<div class="filter__sort">
-									<span>정렬</span> <select id="sort"
-										onchange="javascript:setSort()">
+									<span>정렬</span> <select id="sort" onchange="javascript:setSort()">
 										<option value="sellDesc" selected>인기순</option>
 										<option value="priceAsc">낮은 가격순</option>
 										<option value="priceDesc">높은 가격순</option>
@@ -269,9 +292,11 @@
 
 					<!-- 전체 상품 목록 출력부분(카테고리별, 정렬방식별) -->
 					<div class="row" id="dataTableBody"></div>
-					
+
 					<!-- 페이지네이션 부분 -->
-					<div class="product__pagination"><ul id="pagingul"></ul></div>
+					<div class="product__pagination">
+						<ul id="pagingul"></ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -280,60 +305,7 @@
 
 
 	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="main.do"><img src="img/logo.png" alt="로고"></a>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<ul>
-							<li>주소: 서울 강남구 역삼동 골목길</li>
-							<li>전화: +82 02-0202-0202</li>
-							<li>이메일: nyangsinsa@gmail.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<div class="footer__widget__social">
-							<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a>
-							<a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a>
-							<a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright 냥신사&copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="결제수단">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<nss:footer />
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -346,58 +318,59 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/p_list.js"></script>
-	
+
 	<!-- 리스트세팅 -->
 	<script>
 		$(document).ready(function() {
 			list("all", "sellDesc", 1, 0, 100000);
-			$.when($.ajax( "getList" )).done(function() {
-						
+			$.when($.ajax("getList")).done(function() {
+
 				$.ajax({ // ajax로 데이터 가져오기
-					type: 'POST',
-					url: 'getCartCnt',
-					success: function(data) {
-						console.log("data: "+data);
+					type : 'POST',
+					url : 'getCartCnt',
+					success : function(data) {
+						console.log("data: " + data);
 						let cartCnt = '';
 						cartCnt += data; // 장바구니 상품 개수
-						console.log("cartCnt 불러옴: "+cartCnt);
-						$('#cartCnt').text(cartCnt); 
-						$('#cartCnt2').text(cartCnt); 
+						console.log("cartCnt 불러옴: " + cartCnt);
+						$('#cartCnt').text(cartCnt);
+						$('#cartCnt2').text(cartCnt);
 					},
-					error: function(){
+					error : function() {
 						alert('error');
 					}
 				})
 			})
 		});
-		
-		function insertCart(pNum){
+
+		function insertCart(pNum) {
 			console.log(pNum);
-			window.location.href="insertCart.do?pNum="+pNum;
+			window.location.href = "insertCart.do?pNum=" + pNum;
 			setTimeout(function() {
 				$.ajax({ // ajax로 데이터 가져오기
-					type: 'POST',
-					url: 'getCartCnt',
-					success: function(data) {
-						console.log("data: "+data);
+					type : 'POST',
+					url : 'getCartCnt',
+					success : function(data) {
+						console.log("data: " + data);
 						let cartCnt = '';
 						cartCnt += data; // 장바구니 상품 개수
-						console.log("cartCnt 새로고침: "+cartCnt);
-						$('#cartCnt').text(cartCnt); 
-						$('#cartCnt2').text(cartCnt); 
+						console.log("cartCnt 새로고침: " + cartCnt);
+						$('#cartCnt').text(cartCnt);
+						$('#cartCnt2').text(cartCnt);
 					},
-					error: function(){
+					error : function() {
 						alert('error');
 					}
 				})
 			}, 300);
 		}
-	
 	</script>
 
-		<!-- TOP 버튼 -->
-	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index : 1;">
-		<a href="#"><button type="button" class="button-top">▲ 맨위로</button></a>
+	<!-- TOP 버튼 -->
+	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
+		<a href="#">
+			<button type="button" class="button-top">▲ 맨위로</button>
+		</a>
 	</div>
 
 </body>

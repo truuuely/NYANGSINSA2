@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="nss" tagdir="/WEB-INF/tags/" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -12,26 +10,19 @@
 <meta charset="UTF-8">
 <meta name="description" content="Ogani Template">
 <meta name="keywords" content="Ogani, unica, creative, html">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0"
->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>냥신사 | 주문내역</title>
 
 <!-- google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
-	rel="stylesheet"
->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
 <!-- favicon -->
 <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 <!-- Css Styles -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="css/font-awesome.min.css"
-	type="text/css"
->
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
 <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
 <link rel="stylesheet" href="css/nice-select.css" type="text/css">
 <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
@@ -75,7 +66,6 @@
 	border: none;
 	border-radius: 10px;
 }
-
 </style>
 <script type="text/javascript">
 		/* function review() {
@@ -95,18 +85,22 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+			<a href="main.do">
+				<img src="img/logo.png" alt="홈으로 가기">
+			</a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.do"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+				<li><a href="shoping_cart.do">
+						<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+					</a></li>
 			</ul>
 		</div>
 
-	<div class="humberger__menu__widget">
-		<!-- 로그인 -->
-		<nss:login />
-	</div>
+		<div class="humberger__menu__widget">
+			<!-- 로그인 -->
+			<nss:login />
+		</div>
 
 		<nav class="humberger__menu__nav mobile-menu">
 			<ul>
@@ -116,17 +110,23 @@
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
-			<div class="header__top__right__social">
-				<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a>
-				<a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a>
-				<a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
-			</div>
-			<div class="humberger__menu__contact">
-				<ul>
-					<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
-					<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
-				</ul>
-			</div>
+		<div class="header__top__right__social">
+			<a href="https://www.facebook.com/profile.php?id=100089405234926">
+				<i class="fa fa-facebook"></i>
+			</a>
+			<a href="https://www.instagram.com/nyangsinsa5/">
+				<i class="fa fa-instagram"></i>
+			</a>
+			<a href="https://twitter.com/nyangsinsa">
+				<i class="fa fa-twitter"></i>
+			</a>
+		</div>
+		<div class="humberger__menu__contact">
+			<ul>
+				<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
+				<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
+			</ul>
+		</div>
 	</div>
 	<!-- Humberger End -->
 
@@ -146,14 +146,20 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a>
-								<a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a>
-								<a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/profile.php?id=100089405234926">
+									<i class="fa fa-facebook"></i>
+								</a>
+								<a href="https://www.instagram.com/nyangsinsa5/">
+									<i class="fa fa-instagram"></i>
+								</a>
+								<a href="https://twitter.com/nyangsinsa">
+									<i class="fa fa-twitter"></i>
+								</a>
 							</div>
-							
+
 							<!-- 로그인 -->
 							<nss:login />
-							
+
 						</div>
 					</div>
 				</div>
@@ -163,7 +169,9 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+						<a href="main.do">
+							<img src="img/logo.png" alt="홈으로 가기">
+						</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -178,7 +186,9 @@
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.do"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+							<li><a href="shoping_cart.do">
+									<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -222,8 +232,9 @@
 							</div>
 							<div class="hero__search__phone__text">
 								<h5>02-0202-0202</h5>
-								
-								<span>상담 가능 시간<br>평일 09:00~18:00</span>
+
+								<span>상담 가능 시간<br>평일 09:00~18:00
+								</span>
 							</div>
 						</div>
 					</div>
@@ -287,11 +298,13 @@
 											<!-- <td class="shoping__cart__item">
 												<h5>164118</h5>
 											</td> -->
-											<td class ="detail_img"><a href="shopDetails.do?pNum=${v.pNum}"><img src = "${v.pImgUrl}" alt = "${v.pName}의 상세사진 "></a></td>
+											<td class="detail_img"><a href="shopDetails.do?pNum=${v.pNum}">
+													<img src="${v.pImgUrl}" alt="${v.pName}의 상세사진 ">
+												</a></td>
 											<td class="shoping__cart__price"><a style="color: black;" href="shopDetails.do?pNum=${v.pNum}">${v.pName}</a></td>
 											<td class="shoping__cart__total">${v.odCnt}개</td>
 											<td class="shoping__cart__total">${v.odPrice}원</td>
-											<td><input id="review" type="button" value="리뷰 작성하기" onClick = "review(${v.pNum})"></td>
+											<td><input id="review" type="button" value="리뷰 작성하기" onClick="review(${v.pNum})"></td>
 										</tr>
 									</tbody>
 								</c:forEach>
@@ -307,60 +320,7 @@
 	<!-- Blog Section End -->
 
 	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="main.do"><img src="img/logo.png" alt="로고"></a>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<ul>
-							<li>주소: 서울 강남구 역삼동 골목길</li>
-							<li>전화: +82 02-0202-0202</li>
-							<li>이메일: nyangsinsa@gmail.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-sm-6">
-					<div class="footer__widget">
-						<div class="footer__widget__social">
-							<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a>
-							<a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a>
-							<a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright 냥신사&copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="결제수단">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<nss:footer />
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -373,9 +333,11 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 
-		<!-- TOP 버튼 -->
-	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index : 1;">
-		<a href="#"><button type="button" class="button-top">▲ 맨위로</button></a>
+	<!-- TOP 버튼 -->
+	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
+		<a href="#">
+			<button type="button" class="button-top">▲ 맨위로</button>
+		</a>
 	</div>
 
 </body>
