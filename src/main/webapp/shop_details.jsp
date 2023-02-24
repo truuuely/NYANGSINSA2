@@ -328,7 +328,7 @@
                               <div class="modal-body">선택하신 상품이 장바구니에 추가되었습니다</div>
                               <div class="modal-footer">
                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">쇼핑 계속하기</button>
-                                 <a href="shoping_cart.jsp">
+                                 <a href="shoping_cart.do">
                                     <button type="button" class="btn btn-primary" style="background-color: #6667AB; border-color: #6667AB;">장바구니 확인하기</button>
                                  </a>
                               </div>

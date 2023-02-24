@@ -93,26 +93,44 @@
 					</a></li>
 
 					<!-- 상품관리 -->
-					<li class="menu-item"><a href="productManagePage.do"
-						class="menu-link"
-					> <i class="menu-icon tf-icons bx bx-store"></i>
+					<li class="menu-item">
+						<a href="productManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-store"></i>
 
 							<div data-i18n="Basic">상품관리</div>
-					</a></li>
+						</a>
+					</li>
 
 					<!-- 주문관리 -->
-					<li class="menu-item"><a href="orderManagePage.do"
-						class="menu-link"
-					> <i class="menu-icon tf-icons bx bx-receipt"></i>
+					<li class="menu-item">
+						<a href="orderManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-receipt"></i>
 							<div data-i18n="Basic">주문관리</div>
-					</a></li>
+						</a>
+					</li>
 
 					<!-- 리뷰관리 -->
-					<li class="menu-item"><a href="reviewManagePage.do"
-						class="menu-link"
-					> <i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+					<li class="menu-item">
+						<a href="reviewManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">리뷰관리</div>
-					</a></li>
+						</a>
+					</li>
+
+					<!-- 글 관리 -->
+					<li class="menu-item">
+						<a href="reviewManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+							<div data-i18n="Basic">게시글 관리</div>
+						</a>
+					</li>
+					<!-- 신고 관리 -->
+					<li class="menu-item">
+						<a href="reviewManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+							<div data-i18n="Basic">신고 관리</div>
+						</a>
+					</li>
 				</ul>
          </aside>
          <!-- / Menu -->
