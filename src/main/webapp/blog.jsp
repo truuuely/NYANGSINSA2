@@ -262,6 +262,11 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-12">
+			<div class="product__pagination blog__pagination">
+				<a id="load" style="width: 90px; height: 30px; font-size: 18px; border: none;" href="#">더보기 ▼</a>
+			</div>
+		</div>
 	</section>
 	<!-- Blog Section End -->
 	<!-- 자랑해 냥냥 끝 -->
@@ -345,11 +350,11 @@
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$(".dd").slice(0, 3).show(); // 초기갯수
+			$(".show-board").slice(0, 3).show(); // 초기갯수
 			$("#load").click(function(e) { // 클릭시 more
 				e.preventDefault();
-				$(".dd:hidden").slice(0, 3).show(); // 클릭시 more 갯수 지정
-				if ($(".dd:hidden").length < 0) { // 컨텐츠 남아있는지 확인
+				$(".show-board:hidden").slice(0, 3).show(); // 클릭시 more 갯수 지정
+				if ($(".show-board:hidden").length < 0) { // 컨텐츠 남아있는지 확인
 					alert("게시물의 끝입니다."); // 컨텐츠 없을시 alert 창 띄우기 
 				}
 			});

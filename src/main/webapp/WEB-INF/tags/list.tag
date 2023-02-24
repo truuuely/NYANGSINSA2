@@ -135,7 +135,7 @@
 <!-- 커뮤니티 전체 글 리스트 -->
 <c:if test="${sort=='community'}">
 	<c:forEach var="v" items="${bList}" begin="0" varStatus="status">
-		<div class="col-lg-4 col-md-4 col-sm-4 dd">
+		<div class="col-lg-4 col-md-4 col-sm-4 show-board">
 			<div class="blog__item">
 				<div class="blog__item__pic">
 					<img src="img/${v.imageName}" alt="고양이 사진">
@@ -170,3 +170,40 @@
 	</c:forEach>
 </c:if>
 
+
+
+<!-- 게시글 댓글 리스트  -->
+<c:if test="${sort=='reply'}">
+	<c:forEach var="v" items="${replyset}" begin="0" varStatus="status">
+		<c:set var="reply" value="${replyset.reply}" />
+		<div id="replyDetail">
+			<div class="replywriter">[작성자 : ${v.rWriter}]</div>
+			<div id="replyContent">
+				<div style="font-size: 15px;" id="replyContent">${v.replyContent}</div>
+			</div>
+			<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
+				<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.replyDate}</li>
+				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+			</ul>
+		</div>
+
+		<c:set var="rereply" value="${replyset.rereply}" />
+		<c:forEach var="v" items="${rereply}" begin="0" varStatus="status">
+			<div id="rereplyDetail">
+				<img style="width: 20px;" src="img/rereply.png">
+				<div>
+					<div class="replywriter">[작성자 : v.rWirter]</div>
+					<div id="replyContent">
+						<div style="font-size: 15px;" id="replyContent">${v.rereplyContent}</div>
+					</div>
+					<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
+						<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.rereplyDate}</li>
+						<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+					</ul>
+				</div>
+			</div>
+		</c:forEach>
+
+	</c:forEach>
+
+</c:if>
