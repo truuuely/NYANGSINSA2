@@ -1,4 +1,4 @@
-package com.nss.common;
+package com.wan.nss.common;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

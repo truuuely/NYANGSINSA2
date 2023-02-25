@@ -1,4 +1,4 @@
-package com.nss.product;
+package com.wan.nss.biz.product;
 
 import java.util.ArrayList;
 
