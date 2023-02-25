@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wan.nss.biz.order.OrderServiceImpl;
 import com.wan.nss.biz.order.OrderVO;
-import com.wan.nss.biz.orderDetail.OrderDetailDAO;
-import com.wan.nss.biz.orderDetail.OrderDetailServiceImpl;
-import com.wan.nss.biz.orderDetail.OrderDetailVO;
+import com.wan.nss.biz.orderdetail.OrderDetailDAO;
+import com.wan.nss.biz.orderdetail.OrderDetailServiceImpl;
+import com.wan.nss.biz.orderdetail.OrderDetailVO;
 import com.wan.nss.biz.product.ProductVO;
 
 @Controller

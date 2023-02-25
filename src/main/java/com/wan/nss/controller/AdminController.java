@@ -15,8 +15,8 @@ import com.wan.nss.biz.member.MemberServiceImpl;
 import com.wan.nss.biz.member.MemberVO;
 import com.wan.nss.biz.order.OrderServiceImpl;
 import com.wan.nss.biz.order.OrderVO;
-import com.wan.nss.biz.orderDetail.OrderDetailServiceImpl;
-import com.wan.nss.biz.orderDetail.OrderDetailVO;
+import com.wan.nss.biz.orderdetail.OrderDetailServiceImpl;
+import com.wan.nss.biz.orderdetail.OrderDetailVO;
 
 @Controller
 public class AdminController {

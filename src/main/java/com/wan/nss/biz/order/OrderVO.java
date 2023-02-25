@@ -1,6 +1,6 @@
-package com.wan.nss.biz.ordertable;
+package com.wan.nss.biz.order;
 
-public class OrderTableVO {
+public class OrderVO {
 	private int oNum;
 	private int mNum;
 	private String oDate;

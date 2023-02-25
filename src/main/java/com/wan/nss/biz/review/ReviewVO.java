@@ -3,7 +3,7 @@ package com.wan.nss.biz.review;
 public class ReviewVO {
 	private int rNum;
 	private int pNum;
-	private int rWriter;
+	private int memberNum;
 	private String rContent;
 	private String rDate;
 	private int rRate;
@@ -21,11 +21,11 @@ public class ReviewVO {
 	public void setpNum(int pNum) {
 		this.pNum = pNum;
 	}
-	public int getrWriter() {
-		return rWriter;
+	public int getmemberNum() {
+		return memberNum;
 	}
-	public void setrWriter(int rWriter) {
-		this.rWriter = rWriter;
+	public void setmemberNum(int memberNum) {
+		this.memberNum = memberNum;
 	}
 	public String getrContent() {
 		return rContent;
@@ -54,7 +54,7 @@ public class ReviewVO {
 	
 	@Override
 	public String toString() {
-		return "ReviewVO [rNum=" + rNum + ", pNum=" + pNum + ", rWriter=" + rWriter + ", rContent=" + rContent
+		return "ReviewVO [rNum=" + rNum + ", pNum=" + pNum + ", rWriter=" + memberNum + ", rContent=" + rContent
 				+ ", rDate=" + rDate + ", rRate=" + rRate + ", rSearchCondition=" + rSearchCondition + "]";
 	}
 	
