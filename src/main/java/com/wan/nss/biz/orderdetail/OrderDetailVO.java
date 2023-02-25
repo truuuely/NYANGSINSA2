@@ -6,7 +6,14 @@ public class OrderDetailVO {
 	private int pNum;
 	private int odCnt;
 	private int odPrice;
+	private String pName;
 	
+	public String getpName() {
+		return pName;
+	}
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
 	public int getOdNum() {
 		return odNum;
 	}
@@ -37,13 +44,11 @@ public class OrderDetailVO {
 	public void setOdPrice(int odPrice) {
 		this.odPrice = odPrice;
 	}
-	
 	@Override
 	public String toString() {
 		return "OrderDetailVO [odNum=" + odNum + ", oNum=" + oNum + ", pNum=" + pNum + ", odCnt=" + odCnt + ", odPrice="
-				+ odPrice + "]";
+				+ odPrice + ", pName=" + pName + "]";
 	}
-	
 
 }
 

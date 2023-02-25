@@ -1,4 +1,4 @@
-package com.wan.nss.biz.ordertable;
+package com.wan.nss.biz.order;
 
 import java.util.List;
 
@@ -6,33 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("orderTableService")
-public class OrderTableServiceImpl implements OrderTableService {
+public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
-	private OrderTableDAO OrderTableDAO;
+	private OrderDAO OrderTableDAO;
 
 	@Override
-	public boolean insertOrder(OrderTableVO vo) {
+	public boolean insertOrder(OrderVO vo) {
 		return OrderTableDAO.insertOrder(vo);
 	}
 
 	@Override
-	public boolean updateOrder(OrderTableVO vo) {
+	public boolean updateOrder(OrderVO vo) {
 		return OrderTableDAO.updateOrder(vo);
 	}
 
 	@Override
-	public boolean deleteOrder(OrderTableVO vo) {
+	public boolean deleteOrder(OrderVO vo) {
 		return OrderTableDAO.deleteOrder(vo);
 	}
 	
 	@Override
-	public List<OrderTableVO> selectAll(OrderTableVO vo) {
+	public List<OrderVO> selectAll(OrderVO vo) {
 		return OrderTableDAO.selectAll(vo);
 	}
 
 	@Override
-	public OrderTableVO selectOne(OrderTableVO vo) {
+	public OrderVO selectOne(OrderVO vo) {
 		return OrderTableDAO.selectOne(vo);
 	}
 
