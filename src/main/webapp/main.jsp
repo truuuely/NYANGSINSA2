@@ -114,6 +114,19 @@
 									<i class="fa fa-twitter"></i>
 								</a>
 							</div>
+							<div class="header__top__right__language">
+								<img src="img/korea.png" alt="한국">
+								<div>Korean</div>
+								<span class="arrow_carrot-down"></span>
+								<ul>
+									<li>
+										<a href="main.do?lang=en"><spring:message code="message.main.en" /></a>
+									</li>
+									<li>
+										<a href="main.do?lang=ko"><spring:message code="message.main.ko" /></a>
+									</li>
+								</ul>
+							</div>
 
 							<!-- 로그인 -->
 							<nss:login />
