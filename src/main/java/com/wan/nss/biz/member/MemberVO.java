@@ -1,17 +1,17 @@
 package com.wan.nss.biz.member;
 
 public class MemberVO {
-	private int memberNum;
-	private String memberId;
-	private String memberPw;
-	private String memberName;
-	private String catName;
-	private String phoneNum;
-	private String role;
-	private int warnCnt;
-	private String postNum;
-	private String address1;
-	private String address2;
+	private int memberNum; // 회원 번호
+	private String memberId; // 회원 아이디
+	private String memberPw; // 회원 비밀번호
+	private String memberName; // 회원 이름
+	private String catName; // 고앵쓰 이름 
+	private String phoneNum; // 전화번호
+	private String role; // 등급
+	private int warnCnt; // 경고 횟수 
+	private String postNum; // 우편번호
+	private String address1; // 기본 주소
+	private String address2; // 상세 주소
 	
 	public int getMemberNum() {
 		return memberNum;

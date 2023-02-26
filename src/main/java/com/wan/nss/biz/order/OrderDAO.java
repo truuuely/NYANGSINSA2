@@ -30,46 +30,53 @@ public class OrderDAO {
 	// 주문 삭제
 	private final String SQL_DELETE = "DELETE FROM ORDER WHERE O_NO=? ";
 
+	
+	// 주문 추가
 	public boolean insert(OrderVO vo) {
 		jdbcTemplate.update(SQL_INSERT, vo.getoNum(), vo.getoDate(), vo.getRcvName(), vo.getRcvPhoneNum(),
 				vo.getRcvAddress(), vo.getoPay());
 		return true;
 	}
 
+	// 주문 업데이트
 	public boolean update(OrderVO vo) {
 		jdbcTemplate.update(SQL_INSERT, vo.getoNum(), vo.getoDate(), vo.getRcvName(), vo.getRcvPhoneNum(),
 				vo.getRcvAddress(), vo.getoPay());
 		return true;
 	}
 
+	//주문 삭제
 	public boolean delete(OrderVO vo) {
 		jdbcTemplate.update(SQL_DELETE, vo.getoNum());
 		return true;
 	}
 
+	// 주문 총 가격
 	public OrderVO selectOne(OrderVO vo) {
+		
 		OrderDetailVO odvo = new OrderDetailVO();
 		Object[] args = { odvo.getoNum() };
 		return jdbcTemplate.queryForObject(SQL_SELECT_TOTAL_PRICE, args, new OrderRowMapper());
 	}
-
+	
+	// 
 	public ArrayList<OrderVO> selectAll(OrderVO vo) {
-		if (vo.getmNum() >= 0) {
+		if (vo.getmNum() >= 0) { // 주문 내역 보기
 			Object[] args = { vo.getmNum() };
 			return (ArrayList<OrderVO>) jdbcTemplate.query(SQL_SELECTALL_ORDER, args, new OrderRowMapper());
-		} else if (vo.getoNum() >= 0) {
-			Object[] args = { vo.getoNum() };
+		} else if (vo.getoNum() >= 0) { // 주분 번호 검색
+			Object[] args = { vo.getoNum() }; 
 			return (ArrayList<OrderVO>) jdbcTemplate.query(SQL_SEARCH_ORDER_NUM, args, new OrderRowMapper());
-		} else {
+		} else { // 주문 전체 목록 보기
 			return (ArrayList<OrderVO>) jdbcTemplate.query(SQL_SELECTALL, new OrderRowMapper());
 		}
 	}
 
-	class OrderRowMapper implements RowMapper<OrderVO> { // 스프링에서 제공해주는
+	class OrderRowMapper implements RowMapper<OrderVO> { 
 
 		@Override
 		public OrderVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			// 오버라이딩 강제
+			
 			OrderVO vo = new OrderVO();
 			vo.setmNum(rs.getInt("M_NO"));
 			vo.setoDate(rs.getString("O_DT"));

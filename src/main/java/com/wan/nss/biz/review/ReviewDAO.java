@@ -47,13 +47,13 @@ public class ReviewDAO {
 	}
 
 	public ArrayList<ReviewVO> selectAll(ReviewVO rvo) {
-		if (rvo.getpNum() >= 0) {
+		if (rvo.getpNum() >= 0) { // 제품에 대한 리뷰 전체 보기
 			Object[] args = { rvo.getpNum() };
 			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL_PRODUCT, args, new ReviewRowMapper());
-		} else if (rvo.getmemberNum() >= 0) {
+		} else if (rvo.getmemberNum() >= 0) { // 리뷰 검색
 			Object[] args = { rvo.getmemberNum() };
 			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL_SEARCH, args, new ReviewRowMapper());
-		} else {
+		} else { // 리뷰 전제 보기
 			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL, new ReviewRowMapper());
 		}
 	}

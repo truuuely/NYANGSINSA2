@@ -1,10 +1,10 @@
 package com.wan.nss.biz.image;
 
 public class ImageVO {
-   private int iNum;
-   private int TargetNum;
-   private int TypeNum;
-   private String iName;
+   private int iNum; // 이미지 PK
+   private int TargetNum; // 게시판 혹은 상품 데이터의 PK
+   private int TypeNum; // 이미지 사용하는 테이블 구분
+   private String iName; // 이미지 파일 이름
    
    public int getiNum() {
       return iNum;
