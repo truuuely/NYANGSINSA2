@@ -129,7 +129,7 @@
 
 							<!-- 아이디 -->
 							<div class="col-md-12 form-group">
-								<input type="text" style="width: 60%;" id="id" name="id" placeholder="&nbsp;아이디" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
+								<input type="text" style="width: 60%;" id="id" name="id" placeholder="&nbsp;아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
 								&nbsp;
 								<input style="color: white; border-radius: 7px;" type="button" id="idCheckBtn" onclick="checkId()" class="button button-register" value="아이디 중복체크">
 							</div>
@@ -138,13 +138,13 @@
 
 							<!-- 이름 -->
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'" required>
+								<input type="text" class="form-control" id="name" name="name" placeholder="이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'" required>
 							</div>
 							<p class="checkre" id="outputName">한글 2~6자리 이름을 입력해주세요.</p>
 
 							<!-- 고양이 이름 -->
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="cName" name="cName" placeholder="고양이 이름" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
+								<input type="text" class="form-control" id="cName" name="cName" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
 							</div>
 							<p class="checkre" id="outputcName">한글 2~6자리 고양이 이름을 입력해주세요.</p>
 
@@ -163,7 +163,7 @@
 
 							<!-- 이메일 -->
 							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="email_register" name="email" placeholder="이메일 주소" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 주소 입력'" required>
+								<input type="email" class="form-control" id="email_register" name="email" placeholder="이메일 주소 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 주소 입력'" required>
 							</div>
 
 							<!-- 전화 번호 -->
