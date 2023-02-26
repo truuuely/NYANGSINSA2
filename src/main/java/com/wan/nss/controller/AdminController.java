@@ -11,12 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wan.nss.biz.member.MemberDAO;
-import com.wan.nss.biz.member.MemberServiceImpl;
+import com.wan.nss.biz.member.MemberService;
 import com.wan.nss.biz.member.MemberVO;
-import com.wan.nss.biz.order.OrderServiceImpl;
+import com.wan.nss.biz.order.OrderService;
 import com.wan.nss.biz.order.OrderVO;
-import com.wan.nss.biz.orderdetail.OrderDetailServiceImpl;
-import com.wan.nss.biz.orderdetail.OrderDetailVO;
+import com.wan.nss.biz.orderDetail.OrderDetailService;
+import com.wan.nss.biz.orderDetail.OrderDetailVO;
+import com.wan.nss.biz.product.ProductService;
+import com.wan.nss.biz.review.ReviewService;
 
 @Controller
 public class AdminController {

@@ -1,8 +1,6 @@
-package com.nss.review;
+package com.wan.nss.biz.review;
 
 import java.util.ArrayList;
-
-import com.nss.product.ProductVO;
 
 public interface ReviewService {
 	public ArrayList<ReviewVO> selectAll(ReviewVO rvo);

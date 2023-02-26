@@ -13,11 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wan.nss.biz.order.OrderServiceImpl;
+import com.wan.nss.biz.order.OrderService;
 import com.wan.nss.biz.order.OrderVO;
-import com.wan.nss.biz.orderdetail.OrderDetailDAO;
-import com.wan.nss.biz.orderdetail.OrderDetailServiceImpl;
-import com.wan.nss.biz.orderdetail.OrderDetailVO;
+import com.wan.nss.biz.orderDetail.OrderDetailService;
+import com.wan.nss.biz.orderDetail.OrderDetailVO;
+import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 
 @Controller
@@ -74,6 +74,7 @@ public class OrderController {
 		
 	}
 
+	/*
 	// 주문하기 페이지에서 결제 및 최종 주문 수행
 	@RequestMapping(value="/insertOrder.do")
 	public String insertOrder(OrderVO ovo, OrderDetailVO odvo, ProductVO pvo, Model model, HttpSession session, HttpServletResponse response) {
@@ -106,7 +107,7 @@ public class OrderController {
 					// DB 에 업데이트
 					pvo.setpNum(cList.get(i).getpNum());
 					pvo.setpCnt(cList.get(i).getpCnt());
-					if (!productService.updateProduct(pvo)) {
+					if (!productService.update(pvo)) {
 						response.setContentType("text/html; charset=utf-8");
 						response.getWriter().println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
 						return null;
@@ -117,7 +118,9 @@ public class OrderController {
 				return "orderList.do";
 		
 	}
+	*/
 	
+	/*
 	// 주문 내역 페이지로 이동
 	@RequestMapping(value="/orderList.do")
 	public String selectAllOrderList(OrderVO vo, Model model, HttpSession session) {
@@ -127,7 +130,7 @@ public class OrderController {
 		// 현재 로그인한 회원의 주문내역을 가져와야 함
 		String userId = (String) session.getAttribute("memberId");
 
-		vo.setUserId(userId);
+		vo.setmNum(userId);
 
 		List<OrderVO> oList;
 		oList = orderService.selectAll(vo); // 현재 로그인한 회원의 주문 내역 리스트
@@ -146,6 +149,7 @@ public class OrderController {
 		return "order_list.jsp";
 		
 	}
+	*/
 	
 	// 주문 상세 내역 페이지로 이동
 	@RequestMapping(value="/orderDetailList.do")
