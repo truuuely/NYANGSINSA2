@@ -5,35 +5,35 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("orderTableService")
+@Service("orderService")
 public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
-	private OrderDAO orderTableDAO;
+	private OrderDAO orderDAO;
 
 	@Override
 	public boolean insertOrder(OrderVO vo) {
-		return orderTableDAO.insert(vo);
+		return orderDAO.insert(vo);
 	}
 
 	@Override
 	public boolean updateOrder(OrderVO vo) {
-		return orderTableDAO.update(vo);
+		return orderDAO.update(vo);
 	}
 
 	@Override
 	public boolean deleteOrder(OrderVO vo) {
-		return orderTableDAO.delete(vo);
+		return orderDAO.delete(vo);
 	}
 	
 	@Override
 	public List<OrderVO> selectAll(OrderVO vo) {
-		return orderTableDAO.selectAll(vo);
+		return orderDAO.selectAll(vo);
 	}
 
 	@Override
 	public OrderVO selectOne(OrderVO vo) {
-		return orderTableDAO.selectOne(vo);
+		return orderDAO.selectOne(vo);
 	}
 
 }
