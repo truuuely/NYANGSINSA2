@@ -50,7 +50,7 @@
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp">
+				<li><a href="shopingCart.do">
 						<i class="fa fa-shopping-bag"></i> <span id="cartCnt2"></span>
 					</a></li>
 			</ul>
@@ -65,7 +65,7 @@
 			<ul>
 				<li class="active"><a href="main.do">홈</a></li>
 				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-				<li><a href="contact.jsp">Contact</a></li>
+				<li><a href="contact.do">Contact</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
@@ -138,14 +138,14 @@
 						<ul>
 							<li class="active"><a href="main.do">홈</a></li>
 							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-							<li><a href="contact.jsp">Contact</a></li>
+							<li><a href="contact.do">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp">
+							<li><a href="shopingCart.do">
 									<i class="fa fa-shopping-bag"></i> <span id="cartCnt"></span>
 								</a></li>
 						</ul>

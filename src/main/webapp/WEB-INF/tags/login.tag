@@ -25,9 +25,9 @@
 
 <c:if test="${empty memberId}">
 		<div class="header__top__right__auth">
-			<a href="login.jsp"><i class="fa fa-user"></i><spring:message code="message.logintag.login"/></a>
+			<a href="login.do"><i class="fa fa-user"></i><spring:message code="message.logintag.login"/></a>
 		</div>
 		<div class="header__top__right__auth">
-			<a href="register.jsp"> | <spring:message code="message.logintag.signup"/></a>
+			<a href="register.do"> | <spring:message code="message.logintag.signup"/></a>
 		</div>
 </c:if>

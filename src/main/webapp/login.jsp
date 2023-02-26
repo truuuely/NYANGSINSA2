@@ -49,7 +49,7 @@
 						<div class="hover">
 							<h4><spring:message code="message.login.firstvisit" /></h4>
 							<p><spring:message code="message.login.welcom" /></p>
-							<a class="button button-account" href="register.jsp"><spring:message code="message.login.signup" /></a>
+							<a class="button button-account" href="register.do"><spring:message code="message.login.signup" /></a>
 						</div>
 					</div>
 				</div>
@@ -69,9 +69,9 @@
 									<img src="img/kakao_login.png" alt="카카오 로그인 버튼" style="border-radius: 30px;" />
 								</a>
 								<br>
-								<a href="find_id.jsp"><spring:message code="message.login.findid" /></a>
+								<a href="findId.do"><spring:message code="message.login.findid" /></a>
 								&nbsp; / &nbsp;
-								<a href="find_pw.jsp"><spring:message code="message.login.findpw" /></a>
+								<a href="findPw.do"><spring:message code="message.login.findpw" /></a>
 								<!-- &nbsp; / &nbsp;<a href="javascript:void(0)"
                            onclick="kakaoLogout();"
                         > <span>카카오 로그아웃</span>
