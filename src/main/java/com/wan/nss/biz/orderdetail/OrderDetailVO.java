@@ -1,12 +1,12 @@
 package com.wan.nss.biz.orderdetail;
 
 public class OrderDetailVO {
-	private int odNum;
-	private int oNum;
-	private int pNum;
-	private int odCnt;
-	private int odPrice;
-	private String pName;
+	private int odNum; //주문 상세 번호
+	private int oNum; // 주문 번호
+	private int pNum; // 상품 번호
+	private int odCnt; // 상세 주문 개수
+	private int odPrice; // 상세 주문 가격 
+	private String pName; // 상품 이름
 	
 	public String getpName() {
 		return pName;

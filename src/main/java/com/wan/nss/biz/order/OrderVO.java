@@ -1,13 +1,13 @@
 package com.wan.nss.biz.order;
 
 public class OrderVO {
-	private int oNum;
-	private int mNum;
-	private String oDate;
-	private String rcvName;
-	private String rcvPhoneNum;
-	private String rcvAddress;
-	private String oPay;
+	private int oNum; // 주문 번호
+	private int mNum; // 주문자 회원 번호
+	private String oDate; // 주문 날짜
+	private String rcvName; // 수령인 이름
+	private String rcvPhoneNum; // 수령인 핸드폰 번호
+	private String rcvAddress; // 수령인 주소
+	private String oPay; // 결제방법
 	private int oPrice; // 주문 당 총 결제 금액
 	private String oSearchCondition;  // 주문 내역 검색
 	
