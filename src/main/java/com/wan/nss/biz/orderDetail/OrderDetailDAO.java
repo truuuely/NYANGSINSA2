@@ -1,4 +1,4 @@
-package com.wan.nss.biz.orderdetail;
+package com.wan.nss.biz.orderDetail;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

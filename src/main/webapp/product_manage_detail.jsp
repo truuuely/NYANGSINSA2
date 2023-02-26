@@ -92,7 +92,7 @@
 					<!-- Components -->
 					<li class="menu-header small text-uppercase"><span class="menu-header-text">관리자 메뉴</span></li>
 					<!-- Cards -->
-					<li class="menu-item"><a href="member_manage.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-user-check"></i>
+					<li class="menu-item"><a href="memberManage.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-user-check"></i>
 							<div data-i18n="Basic">회원관리</div>
 					</a></li>
 

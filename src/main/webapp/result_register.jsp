@@ -65,9 +65,9 @@
 									<img src="img/kakao_login.png" alt="카카오 로그인 버튼" style="border-radius: 30px;" />
 								</a>
 								<br>
-								<a href="find_id.do">아이디 찾기</a>
+								<a href="findId.do">아이디 찾기</a>
 								&nbsp; / &nbsp;
-								<a href="find_pw.do">패스워드 찾기</a>
+								<a href="findPw.do">패스워드 찾기</a>
 								<!-- &nbsp; / &nbsp;<a href="javascript:void(0)"
                                  onclick="kakaoLogout();"
                               > <span>카카오 로그아웃</span>

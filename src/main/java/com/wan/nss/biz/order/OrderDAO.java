@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.wan.nss.biz.orderdetail.OrderDetailVO;
+import com.wan.nss.biz.orderDetail.OrderDetailVO;
 
 @Repository("orderDAO")
 public class OrderDAO {
