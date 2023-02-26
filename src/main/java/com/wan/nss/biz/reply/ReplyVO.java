@@ -11,7 +11,6 @@ public class ReplyVO {
 	private int parentNum; // 부모 댓글의 댓글 번호
 
 	private String memberId; // 댓글 작성자 id
-	private String parentId; // 부모 댓글 작성자 id
 
 	public int getReplyNum() {
 		return replyNum;
@@ -85,18 +84,11 @@ public class ReplyVO {
 		this.memberId = memberId;
 	}
 
-	public String getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
-
 	@Override
 	public String toString() {
 		return "ReplyVO [replyNum=" + replyNum + ", boardNum=" + boardNum + ", memberNum=" + memberNum + ", replyDate="
 				+ replyDate + ", replyContent=" + replyContent + ", replyStatus=" + replyStatus + ", replyStep="
-				+ replyStep + ", parentNum=" + parentNum + ", memberId=" + memberId + ", parentId=" + parentId + "]";
+				+ replyStep + ", parentNum=" + parentNum + ", memberId=" + memberId + "]";
 	}
+
 }
