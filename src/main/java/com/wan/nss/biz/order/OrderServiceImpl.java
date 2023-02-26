@@ -9,31 +9,31 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
 	
 	@Autowired
-	private OrderDAO OrderTableDAO;
+	private OrderDAO orderTableDAO;
 
 	@Override
 	public boolean insertOrder(OrderVO vo) {
-		return OrderTableDAO.insertOrder(vo);
+		return orderTableDAO.insert(vo);
 	}
 
 	@Override
 	public boolean updateOrder(OrderVO vo) {
-		return OrderTableDAO.updateOrder(vo);
+		return orderTableDAO.update(vo);
 	}
 
 	@Override
 	public boolean deleteOrder(OrderVO vo) {
-		return OrderTableDAO.deleteOrder(vo);
+		return orderTableDAO.delete(vo);
 	}
 	
 	@Override
 	public List<OrderVO> selectAll(OrderVO vo) {
-		return OrderTableDAO.selectAll(vo);
+		return orderTableDAO.selectAll(vo);
 	}
 
 	@Override
 	public OrderVO selectOne(OrderVO vo) {
-		return OrderTableDAO.selectOne(vo);
+		return orderTableDAO.selectOne(vo);
 	}
 
 }

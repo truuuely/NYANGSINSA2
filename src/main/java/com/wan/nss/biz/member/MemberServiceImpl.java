@@ -7,26 +7,26 @@ import org.springframework.stereotype.Service;
 public class MemberServiceImpl implements MemberService {
 	
 	@Autowired
-	private MemberDAO MemberDAO;
+	private MemberDAO memberDAO;
 
 	@Override
 	public boolean insertMember(MemberVO vo) {
-		return MemberDAO.insertMember(vo);
+		return memberDAO.insert(vo);
 	}
 
 	@Override
 	public boolean updateMember(MemberVO vo) {
-		return MemberDAO.updateMember(vo);
+		return memberDAO.update(vo);
 	}
 
 	@Override
 	public boolean deleteMember(MemberVO vo) {
-		return MemberDAO.deleteMember(vo);
+		return memberDAO.delete(vo);
 	}
 
 	@Override
 	public MemberVO selectOne(MemberVO vo) {
-		return MemberDAO.selectOne(vo);
+		return memberDAO.selectOne(vo);
 	}
 
 }

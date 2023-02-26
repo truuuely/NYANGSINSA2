@@ -1,4 +1,4 @@
-package com.wan.nss.biz.orderdetail;
+package com.wan.nss.biz.orderDetail;
 
 import java.util.List;
 

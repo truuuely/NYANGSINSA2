@@ -11,11 +11,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wan.nss.product.ProductService;
-import com.wan.nss.product.ProductVO;
-import com.wan.nss.review.ReviewDAO;
-import com.wan.nss.review.ReviewService;
-import com.wan.nss.review.ReviewVO;
+import com.wan.nss.biz.product.ProductService;
+import com.wan.nss.biz.product.ProductVO;
+import com.wan.nss.biz.review.ReviewDAO;
+import com.wan.nss.biz.review.ReviewService;
+import com.wan.nss.biz.review.ReviewVO;
 
 @Controller
 public class ReviewController {
@@ -26,34 +26,34 @@ public class ReviewController {
 	private ProductService productService;
 
 	//미완 사유: 문영님 isWritten 이게 뭐에요?
-	@RequestMapping(value="/reviewPage.do")
-	public String reviewView(ReviewVO rvo,ProductVO pvo,Model model,HttpSession session,
-			HttpServletResponse response) {
-		String rWriter = (String) session.getAttribute("memberId");
-		System.out.println(rvo.getpNum());
-		ArrayList<ReviewVO> rdatas = reviewService.selectAll(rvo);
-		
-		System.out.println("pNum: " + pvo.getpNum()); 	
-		pvo = productService.selectOne(pvo); // 리뷰 작성 창 세팅하기
-
-		model.addAttribute("pNum", pvo.getpNum());
-		model.addAttribute("pImgUrl", pvo.getpImgUrl());
-		model.addAttribute("pName", pvo.getpName());
-		try {
-		for (ReviewVO v : rdatas) {
-			if (v.getrWriter().equals(rWriter)) { // 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우
-				//return "isWritten"; //forward.setPath("isWritten");
-				response.getWriter().println("<SCRIPT>alert('이미 리뷰를 작성하셨습니다.'); window.close();</SCRIPT>"); // 리뷰 작성 창 닫기
-				return "order_detail.jsp";
-			}
-		}
-		}catch(Exception e) {
-			System.out.println("추가됨");
-			e.printStackTrace();
-		}
-		
-		return "review.jsp";
-	}
+//	@RequestMapping(value="/reviewPage.do")
+//	public String reviewView(ReviewVO rvo,ProductVO pvo,Model model,HttpSession session,
+//			HttpServletResponse response) {
+//		String rWriter = (String) session.getAttribute("memberId");
+//		System.out.println(rvo.getpNum());
+//		ArrayList<ReviewVO> rdatas = reviewService.selectAll(rvo);
+//		
+//		System.out.println("pNum: " + pvo.getpNum()); 	
+//		pvo = productService.selectOne(pvo); // 리뷰 작성 창 세팅하기
+//
+//		model.addAttribute("pNum", pvo.getpNum());
+//		model.addAttribute("pImgUrl", pvo. .getpImgUrl());
+//		model.addAttribute("pName", pvo.getpName());
+//		try {
+//		for (ReviewVO v : rdatas) {
+//			if (v.getrWriter().equals(rWriter)) { // 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우
+//				//return "isWritten"; //forward.setPath("isWritten");
+//				response.getWriter().println("<SCRIPT>alert('이미 리뷰를 작성하셨습니다.'); window.close();</SCRIPT>"); // 리뷰 작성 창 닫기
+//				return "order_detail.jsp";
+//			}
+//		}
+//		}catch(Exception e) {
+//			System.out.println("추가됨");
+//			e.printStackTrace();
+//		}
+//		
+//		return "review.jsp";
+//	}
 	//결합도가 높아서? 이 방법 말고 다른 방법을 찾으려고 한다?
 	/*
 	프론트 컨트롤러에 있던 창인데 결합도를 낮추려면 어떤 방향으로 가는 게 좋은가요?
