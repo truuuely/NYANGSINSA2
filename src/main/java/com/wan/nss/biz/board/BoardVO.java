@@ -16,7 +16,9 @@ public class BoardVO {
 	private String imageName; // 이미지 이름
 	private boolean isChecked; // 해당 회원이 좋아요 했으면 true, 아니면 false
 	private int replyCnt; // 댓글 수
-	private ArrayList<String> imageNames;
+	private ArrayList<String> imageNames; // 이미지 이름들
+	private String searchCondition; // 검색 카테고리
+	private String searchContent; // 검색어
 
 	public int getBoardNum() {
 		return boardNum;
@@ -114,13 +116,28 @@ public class BoardVO {
 		this.imageNames = imageNames;
 	}
 
+	public String getSearchCondition() {
+		return searchCondition;
+	}
+
+	public void setSearchCondition(String searchCondition) {
+		this.searchCondition = searchCondition;
+	}
+
+	public String getSearchContent() {
+		return searchContent;
+	}
+
+	public void setSearchContent(String searchContent) {
+		this.searchContent = searchContent;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [boardNum=" + boardNum + ", memberNum=" + memberNum + ", boardTitle=" + boardTitle
 				+ ", boardContent=" + boardContent + ", boardDate=" + boardDate + ", boardStatus=" + boardStatus
 				+ ", boardView=" + boardView + ", likeCnt=" + likeCnt + ", imageName=" + imageName + ", isChecked="
-				+ isChecked + ", replyCnt=" + replyCnt + ", imageNames=" + imageNames + "]";
+				+ isChecked + ", replyCnt=" + replyCnt + ", imageNames=" + imageNames + ", searchCondition="
+				+ searchCondition + ", searchContent=" + searchContent + "]";
 	}
-
-	
 }
