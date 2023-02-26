@@ -85,7 +85,7 @@
 						class="menu-header-text"
 					>관리자 메뉴</span></li>
 					<!-- Cards -->
-					<li class="menu-item"><a href="member_manage.do"
+					<li class="menu-item"><a href="memberManage.do"
 						class="menu-link"
 					> <i class="menu-icon tf-icons bx bx-user-check"></i>
 							<div data-i18n="Basic">회원관리</div>

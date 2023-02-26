@@ -55,7 +55,7 @@
 							<div>
 								<br>
 							</div>
-							<button onClick="location.href='find_pw.do'" class="button button-login w-100">비밀번호 찾기</button>
+							<button onClick="location.href='findPw.do'" class="button button-login w-100">비밀번호 찾기</button>
 
 						</div>
 						<br>

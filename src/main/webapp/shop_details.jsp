@@ -46,7 +46,7 @@
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp">
+				<li><a href="shopingCart.do">
 						<i class="fa fa-shopping-bag"></i><span id="cartCnt2"></span>
 					</a></li>
 			</ul>
@@ -61,7 +61,7 @@
 			<ul>
 				<li class="active"><a href="main.do">홈</a></li>
 				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-				<li><a href="contact.jsp">Contact</a></li>
+				<li><a href="contact.do">Contact</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
@@ -134,14 +134,14 @@
 						<ul>
 							<li class="active"><a href="main.do">홈</a></li>
 							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-							<li><a href="contact.jsp">Contact</a></li>
+							<li><a href="contact.do">Contact</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp">
+							<li><a href="shopingCart.do">
 									<i class="fa fa-shopping-bag"></i> <span id="cartCnt"></span>
 								</a></li>
 						</ul>
@@ -355,7 +355,7 @@
 										<div class="modal-body">선택하신 상품이 장바구니에 추가되었습니다</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">쇼핑 계속하기</button>
-											<a href="shoping_cart.do">
+											<a href="shopingCart.do">
 												<button type="button" class="btn btn-primary" style="background-color: #6667AB; border-color: #6667AB;">장바구니 확인하기</button>
 											</a>
 										</div>

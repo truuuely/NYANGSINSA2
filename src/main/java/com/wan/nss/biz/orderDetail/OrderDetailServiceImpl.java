@@ -9,31 +9,16 @@ import org.springframework.stereotype.Service;
 public class OrderDetailServiceImpl implements OrderDetailService {
 	
 	@Autowired
-	private OrderDetailDAO OrderDetailDAO;
+	private OrderDetailDAO orderDetailDAO;
 
 	@Override
 	public boolean insertOrderDetail(OrderDetailVO vo) {
-		return OrderDetailDAO.insertOrderDetail(vo);
-	}
-
-	@Override
-	public boolean updateOrderDetail(OrderDetailVO vo) {
-		return OrderDetailDAO.updateOrderDetail(vo);
-	}
-
-	@Override
-	public boolean deleteOrderDetail(OrderDetailVO vo) {
-		return OrderDetailDAO.deleteOrderDetail(vo);
+		return orderDetailDAO.insert(vo);
 	}
 	
 	@Override
 	public List<OrderDetailVO> selectAll(OrderDetailVO vo) {
-		return OrderDetailDAO.selectAll(vo);
-	}
-
-	@Override
-	public OrderDetailVO selectOne(OrderDetailVO vo) {
-		return OrderDetailDAO.selectOne(vo);
+		return orderDetailDAO.selectAll(vo);
 	}
 
 }

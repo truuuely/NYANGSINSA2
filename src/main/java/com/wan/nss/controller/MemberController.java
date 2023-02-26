@@ -13,8 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.wan.nss.biz.member.MemberDAO;
-import com.wan.nss.biz.member.MemberServiceImpl;
+import com.wan.nss.biz.member.MemberService;
 import com.wan.nss.biz.member.MemberVO;
 
 @Controller
@@ -128,7 +127,7 @@ public class MemberController {
 			}
 		}
 		String newPw = (String) request.getParameter("newPassword"); // 새 비밀번호
-		vo.setUserPw(newPw);
+		vo.setMemberPw(newPw);
 		if (!memberService.updateMember(vo)) { // 업데이트에 실패하면 알림창
 			try {
 				response.setContentType("text/html; charset=utf-8");
@@ -147,7 +146,7 @@ public class MemberController {
 
 		String address = request.getParameter("postNum") + request.getParameter("address") + request.getParameter("addressPlus") + request.getParameter("addressDetail"); // 주소
 		
-		vo.setAddress(address); // 주소를 세팅
+		vo.setAddress1(address); // 주소를 세팅
 
 		if (!memberService.updateMember(vo)) {
 			try {
@@ -215,8 +214,8 @@ public class MemberController {
 				return null;
 			}
 		} else { // 로그인 성공시
-			session.setAttribute("memberId", member.getUserId()); // 세션에 로그인한 회원의 아이디, 이름 저장
-			session.setAttribute("memberName", member.getUserName());
+			session.setAttribute("memberId", member.getMemberId()); // 세션에 로그인한 회원의 아이디, 이름 저장
+			session.setAttribute("memberName", member.getMemberName());
 			return "main.do"; // 메인으로 이동
 		}
 
@@ -231,8 +230,8 @@ public class MemberController {
 		if (member != null) { // 가입정보가 있으면 메인으로
 			// 이름, 아이디, 패스워드 (id, pw는 고유 번호)
 			// 받아서 회원 정보가 있으면 로그인
-			session.setAttribute("memberId", member.getUserId());
-			session.setAttribute("memberName", member.getUserName());
+			session.setAttribute("memberId", member.getMemberId()); // 세션에 로그인한 회원의 아이디, 이름 저장
+			session.setAttribute("memberName", member.getMemberName());
 			return "main.do";
 		} else { // 가입정보가 없으면 카카오 회원가입
 //			request.setAttribute("userName", request.getParameter("userName"));
@@ -261,8 +260,8 @@ public class MemberController {
 				return null;
 			}
 		} else { // 가입정보가 있는 경우
-			model.addAttribute("memberId", member.getUserId());
-			model.addAttribute("memberName", member.getUserName());
+			model.addAttribute("memberId", member.getMemberId());
+			model.addAttribute("memberName", member.getMemberName());
 			return "result_find_id.jsp";
 		}
 
@@ -289,7 +288,7 @@ public class MemberController {
 				return null;
 			}
 		} else {
-			model.addAttribute("memberId", member.getUserId());
+			model.addAttribute("memberId", member.getMemberId());
 			return "result_find_pw.jsp";
 		}
 
@@ -317,7 +316,7 @@ public class MemberController {
 			// 1. 프로필 사진, 2. 고양이 이름, 3. 전화번호, 4. 주소
 			model.addAttribute("cName", resMvo.getCatName());
 			model.addAttribute("phoneNum", resMvo.getPhoneNum());
-			model.addAttribute("address", resMvo.getAddress());
+			model.addAttribute("address", resMvo.getAddress1());
 			return "profile.jsp"; // 회원정보변경 페이지로 진행
 		}
 		

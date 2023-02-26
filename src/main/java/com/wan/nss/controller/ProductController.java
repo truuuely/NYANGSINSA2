@@ -7,10 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.wan.nss.product.ProductService;
-import com.wan.nss.product.ProductVO;
-import com.wan.nss.review.ReviewService;
-import com.wan.nss.review.ReviewVO;
+import com.wan.nss.biz.product.ProductService;
+import com.wan.nss.biz.product.ProductVO;
+import com.wan.nss.biz.review.ReviewService;
+import com.wan.nss.biz.review.ReviewVO;
 
 @Controller
 public class ProductController {
@@ -25,7 +25,7 @@ public class ProductController {
 	@RequestMapping(value="/main.do")
 	public String mainView(ProductVO pvo, Model model) {
 		// 신상품 데이터. pvo : category == all, sort == regiDesc
-		pvo.setCategory("all");
+		pvo.setpCategory("all");
 		pvo.setSort("regiDesc");
 		pvo.setSearchLowPrice(0);
 		pvo.setSearchHighPrice(1000000);
@@ -58,10 +58,10 @@ public class ProductController {
 
 		// 카테고리 : all, food, treat, sand
 		// 카테고리 별로 다른 페이지 
-		if(pvo.getCategory().equals("all")) {
+		if(pvo.getpCategory().equals("all")) {
 			return "shop.jsp";
 		}
-		return "shop_"+pvo.getCategory()+".jsp";
+		return "shop_"+pvo.getpCategory()+".jsp";
 	}
 
 	@RequestMapping(value="shopDetails/.do")
@@ -70,7 +70,7 @@ public class ProductController {
 		pvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set
 
 		// 카테고리 별 인기상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
-		pvo.setCategory(pvo.getCategory()); // 관련상품 가져오기 위해 카테고리 set
+		pvo.setpCategory(pvo.getpCategory()); // 관련상품 가져오기 위해 카테고리 set
 		pvo.setSort("sellDesc"); // 관련상품 가져오기 위해 정렬 set
 		pvo.setSearchLowPrice(0); 
 		pvo.setSearchHighPrice(1000000);

@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.wan.nss.product.ProductDAO;
-import com.wan.nss.product.ProductService;
-
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
 	

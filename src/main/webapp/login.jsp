@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -33,10 +34,12 @@
 </head>
 
 <body>
-		<nss:header />
+
+	<!-- 헤더(태그) -->
+	<nss:header />
 
 	<!-- ★★★★★여기에 페이지의 메인 코드를 넣어주세요★★★★★ -->
-
+	
 	<!--================Login Box Area =================-->
 	<section class="login_box_area section-margin">
 		<div class="container">
@@ -44,31 +47,31 @@
 				<div class="col-lg-6">
 					<div class="login_box_img">
 						<div class="hover">
-							<h4>냥신사가 처음이신가요?</h4>
-							<p>고양이를 사랑하는 당신! 환영합니다.</p>
-							<a class="button button-account" href="register.jsp">회원가입하기</a>
+							<h4><spring:message code="message.login.firstvisit" /></h4>
+							<p><spring:message code="message.login.welcom" /></p>
+							<a class="button button-account" href="register.do"><spring:message code="message.login.signup" /></a>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner">
-						<h3>로그인하기</h3>
+						<h3><spring:message code="message.login.logindo" /></h3>
 						<form class="row login_form" action="login.do" id="contactForm" method="POST">
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="id" name="id" placeholder="아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
+								<input type="text" class="form-control" id="id" name="id" placeholder="<spring:message code="message.login.id" />" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 입력'" required>
+								<input type="password" class="form-control" id="password" name="password" placeholder="<spring:message code="message.login.pw" />" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 입력'" required>
 							</div>
 							<div class="col-md-12 form-group">
-								<button type="submit" value="submit" class="button button-login w-100">로그인</button>
+								<button type="submit" value="submit" class="button button-login w-100"><spring:message code="message.login.login" /></button>
 								<a id="kakao-login-btn" href="javascript:kakaoLogin()">
 									<img src="img/kakao_login.png" alt="카카오 로그인 버튼" style="border-radius: 30px;" />
 								</a>
 								<br>
-								<a href="find_id.jsp">아이디 찾기</a>
+								<a href="findId.do"><spring:message code="message.login.findid" /></a>
 								&nbsp; / &nbsp;
-								<a href="find_pw.jsp">패스워드 찾기</a>
+								<a href="findPw.do"><spring:message code="message.login.findpw" /></a>
 								<!-- &nbsp; / &nbsp;<a href="javascript:void(0)"
                            onclick="kakaoLogout();"
                         > <span>카카오 로그아웃</span>
@@ -184,7 +187,7 @@
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
 		<a href="#">
-			<button type="button" class="button-top">▲ 맨위로</button>
+			<button type="button" class="button-top"><spring:message code="message.login.btntop" /></button>
 		</a>
 	</div>
 

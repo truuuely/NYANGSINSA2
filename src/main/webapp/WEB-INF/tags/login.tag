@@ -1,22 +1,23 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <c:if test="${not empty memberId}">
 	<c:if test="${memberId!='admin'}">
 			<div class="header__top__right__auth">
-				<a href="mypage.do"><i class="fa fa-user"></i> 마이페이지</a>
+				<a href="mypage.do"><i class="fa fa-user"></i> <spring:message code="message.logintag.mypage"/> </a>
 			</div>
 			<div class="header__top__right__auth">
-				<a href="logout.do"> | 로그아웃</a>
+				<a href="logout.do"> | <spring:message code="message.logintag.logout"/></a>
 			</div>
 	</c:if>
 	
 	<c:if test="${memberId=='admin'}">
 			<div class="header__top__right__auth">
-				<a href="adminIndex.do"><i class="fa fa-user"></i>관리자홈</a>
+				<a href="adminIndex.do"><i class="fa fa-user"></i><spring:message code="message.logintag.adminHome"/></a>
 			</div>
 			<div class="header__top__right__auth">
-				<a href="logout.do"> | 로그아웃</a>
+				<a href="logout.do"> | <spring:message code="message.logintag.logout"/></a>
 			</div>
 	</c:if>
 	
@@ -24,9 +25,9 @@
 
 <c:if test="${empty memberId}">
 		<div class="header__top__right__auth">
-			<a href="login.jsp"><i class="fa fa-user"></i>로그인</a>
+			<a href="login.do"><i class="fa fa-user"></i><spring:message code="message.logintag.login"/></a>
 		</div>
 		<div class="header__top__right__auth">
-			<a href="register.jsp"> | 회원가입</a>
+			<a href="register.do"> | <spring:message code="message.logintag.signup"/></a>
 		</div>
 </c:if>
