@@ -12,7 +12,7 @@ public class BoardVO {
 	private int boardView; // 조회수
 
 	// vo에만 존재하는 멤버변수들
-	private String memberId;
+	private String memberId; // 회원 id
 	private int likeCnt; // 좋아요 수
 	private String imageName; // 이미지 이름
 	private boolean isChecked; // 해당 회원이 좋아요 했으면 true, 아니면 false
@@ -77,6 +77,14 @@ public class BoardVO {
 		this.boardView = boardView;
 	}
 
+	public String getMemberId() {
+		return memberId;
+	}
+
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
+	}
+
 	public int getLikeCnt() {
 		return likeCnt;
 	}
@@ -137,8 +145,8 @@ public class BoardVO {
 	public String toString() {
 		return "BoardVO [boardNum=" + boardNum + ", memberNum=" + memberNum + ", boardTitle=" + boardTitle
 				+ ", boardContent=" + boardContent + ", boardDate=" + boardDate + ", boardStatus=" + boardStatus
-				+ ", boardView=" + boardView + ", likeCnt=" + likeCnt + ", imageName=" + imageName + ", isChecked="
-				+ isChecked + ", replyCnt=" + replyCnt + ", imageNames=" + imageNames + ", searchCondition="
-				+ searchCondition + ", searchContent=" + searchContent + "]";
+				+ ", boardView=" + boardView + ", memberId=" + memberId + ", likeCnt=" + likeCnt + ", imageName="
+				+ imageName + ", isChecked=" + isChecked + ", replyCnt=" + replyCnt + ", imageNames=" + imageNames
+				+ ", searchCondition=" + searchCondition + ", searchContent=" + searchContent + "]";
 	}
 }
