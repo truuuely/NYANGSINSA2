@@ -1,7 +1,7 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:useBean id="pvo" class="model.product.ProductVO" /> 
-<jsp:useBean id="pdao" class="model.product.ProductDAO" /> 
+<jsp:useBean id="pvo" class="com.wan.nss.biz.product.ProductVO" /> 
+<jsp:useBean id="pdao" class="com.wan.nss.biz.product.ProductDAO" /> 
 <%@ attributename= %>
 
 <div class="checkout__order__products">
