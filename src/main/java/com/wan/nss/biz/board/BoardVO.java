@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class BoardVO {
 	private int boardNum; // 글 번호
-	private int memberNum; // 글 작성자
+	private int memberNum; // 글 작성자 번호
 	private String boardTitle; // 글 제목
 	private String boardContent; // 글 내용
 	private String boardDate; // 글 작성일
@@ -12,6 +12,7 @@ public class BoardVO {
 	private int boardView; // 조회수
 
 	// vo에만 존재하는 멤버변수들
+	private String memberId;
 	private int likeCnt; // 좋아요 수
 	private String imageName; // 이미지 이름
 	private boolean isChecked; // 해당 회원이 좋아요 했으면 true, 아니면 false
