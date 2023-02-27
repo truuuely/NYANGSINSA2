@@ -79,7 +79,7 @@ CREATE TABLE BLIKE (
 
 
 /*
- * 멤버 테이블
+ * 신고 테이블
  */
 CREATE TABLE REPORT (
 	RP_NO INT PRIMARY KEY AUTO_INCREMENT COMMENT '신고 번호(PK)',
