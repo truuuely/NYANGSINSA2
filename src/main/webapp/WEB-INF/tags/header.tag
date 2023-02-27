@@ -1,7 +1,7 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!-- Page Preloder -->
 <div id="preloder">
 	<div class="loader"></div>
@@ -30,10 +30,18 @@
 
 	<nav class="humberger__menu__nav mobile-menu">
 		<ul>
-			<li class="active"><a href="main.do"><spring:message code="message.header.home" /></a></li>
-			<li><a href="shop.do?category=all&sort=sellDesc"><spring:message code="message.header.shopping" /></a></li>
-			<li><a href="contact.do"><spring:message code="message.header.contact" /></a></li>
-			<li><a href="boardView.do"><spring:message code="message.header.board" /></a></li>
+			<li class="active"><a href="main.do">
+					<spring:message code="message.header.home" />
+				</a></li>
+			<li><a href="shop.do?category=all&sort=sellDesc">
+					<spring:message code="message.header.shopping" />
+				</a></li>
+			<li><a href="contact.do">
+					<spring:message code="message.header.contact" />
+				</a></li>
+			<li><a href="boardView.do">
+					<spring:message code="message.header.board" />
+				</a></li>
 		</ul>
 	</nav>
 	<div id="mobile-menu-wrap"></div>
@@ -104,10 +112,18 @@
 			<div class="col-lg-6">
 				<nav class="header__menu">
 					<ul>
-						<li class="active"><a href="main.do"><spring:message code="message.header.home" /></a></li>
-						<li><a href="shop.do?category=all&sort=sellDesc"><spring:message code="message.header.shopping" /></a></li>
-						<li><a href="contact.do"><spring:message code="message.header.contact" /></a></li>
-						<li><a href="boardView.do"><spring:message code="message.header.board" /></a></li>
+						<li class="active"><a href="main.do">
+								<spring:message code="message.header.home" />
+							</a></li>
+						<li><a href="shop.do?category=all&sort=sellDesc">
+								<spring:message code="message.header.shopping" />
+							</a></li>
+						<li><a href="contact.do">
+								<spring:message code="message.header.contact" />
+							</a></li>
+						<li><a href="boardView.do">
+								<spring:message code="message.header.board" />
+							</a></li>
 					</ul>
 				</nav>
 			</div>
@@ -135,13 +151,21 @@
 			<div class="col-lg-3">
 				<div class="hero__categories">
 					<div class="hero__categories__all">
-						<i class="fa fa-bars"></i> <span><spring:message code="message.header.menu"/></span>
+						<i class="fa fa-bars"></i> <span><spring:message code="message.header.menu" /></span>
 					</div>
 					<ul>
-						<li><a href="shop.do?category=all"><spring:message code="message.header.categoryall" /></a></li>
-						<li><a href="shop.do?category=food"><spring:message code="message.header.categoryfood" /></a></li>
-						<li><a href="shop.do?category=treat"><spring:message code="message.header.categorytreat" /></a></li>
-						<li><a href="shop.do?category=sand"><spring:message code="message.header.categorysand" /></a></li>
+						<li><a href="shop.do?category=all">
+								<spring:message code="message.header.categoryall" />
+							</a></li>
+						<li><a href="shop.do?category=food">
+								<spring:message code="message.header.categoryfood" />
+							</a></li>
+						<li><a href="shop.do?category=treat">
+								<spring:message code="message.header.categorytreat" />
+							</a></li>
+						<li><a href="shop.do?category=sand">
+								<spring:message code="message.header.categorysand" />
+							</a></li>
 					</ul>
 				</div>
 			</div>
@@ -151,7 +175,9 @@
 						<form action="search.do">
 							<!-- <input type="hidden" name="searchCondition" value="pName">  -->
 							<input type="text" name="searchContent" placeholder="<spring:message code="message.header.searchplaceholder" />" required>
-							<button type="submit" class="site-btn"><spring:message code="message.header.search" /></button>
+							<button type="submit" class="site-btn">
+								<spring:message code="message.header.search" />
+							</button>
 						</form>
 					</div>
 					<div class="hero__search__phone">
@@ -160,8 +186,9 @@
 						</div>
 						<div class="hero__search__phone__text">
 							<h5>02-0202-0202</h5>
-							<span><spring:message code="message.header.consultation" /><br><spring:message code="message.header.consultationtime" />
-							</span>
+							<span><spring:message code="message.header.consultation" />
+								<br>
+								<spring:message code="message.header.consultationtime" /> </span>
 						</div>
 					</div>
 				</div>

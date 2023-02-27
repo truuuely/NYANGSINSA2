@@ -26,17 +26,17 @@ public class ImageDAO {
    private final String SQL_DELETE = "DELETE FROM IMAGE WHERE I_NO=?";
 
    public boolean insert(ImageVO ivo) {
-      jdbcTemplate.update(SQL_INSERT, ivo.getiName(), ivo.getTargetNum(), ivo.getTypeNum());
+      jdbcTemplate.update(SQL_INSERT, ivo.getImageName(), ivo.getTargetNum(), ivo.getTypeNum());
       return true;
    }
 
    public boolean update(ImageVO ivo) {
-      jdbcTemplate.update(SQL_UPDATE, ivo.getiName(), ivo.getTypeNum(), ivo.getiNum());
+      jdbcTemplate.update(SQL_UPDATE, ivo.getImageName(), ivo.getTypeNum(), ivo.getImageNum());
       return true;
    }
 
    public boolean delete(ImageVO ivo) {
-      jdbcTemplate.update(SQL_DELETE, ivo.getiNum());
+      jdbcTemplate.update(SQL_DELETE, ivo.getImageNum());
       return true;
    }
 
@@ -45,7 +45,7 @@ public class ImageDAO {
    }
 
    public ImageVO selectOne(ImageVO ivo) {
-      Object[] args = { ivo.getiNum() };
+      Object[] args = { ivo.getImageNum() };
       return jdbcTemplate.queryForObject(SQL_SELECTONE, args, new ImageRowMapper());
    }
 
@@ -54,8 +54,8 @@ public class ImageDAO {
       @Override
       public ImageVO mapRow(ResultSet rs, int rowNum) throws SQLException {
          ImageVO ivo = new ImageVO();
-         ivo.setiNum(rs.getInt("I_NO"));
-         ivo.setiName(rs.getString("I_NM"));
+         ivo.setImageNum(rs.getInt("I_NO"));
+         ivo.setImageName(rs.getString("I_NM"));
          ivo.setTargetNum(rs.getInt("TARGET_NO"));
          ivo.setTypeNum(rs.getInt("TYPE_NO"));
 

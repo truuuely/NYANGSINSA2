@@ -5,7 +5,7 @@ public class ProductVO {
 	private String pName; // 상품이름
 	private String pCategory; // 상품 카테고리
 	private int price; // 가격 
-	private int pStock; // 재고
+	private int pAmt; // 재고
 	private String pDetail; // 상품 상세 설명
 	private int pDcPercent; // 할인율
 	
@@ -14,7 +14,7 @@ public class ProductVO {
 	private int total; // 구매 총액
 	private int dc_price; // 할인 가격 
 	private int pCnt; // 장바구니용 임시 cnt
-	//private String pSearchCondition; // 검색 카테고리 
+	private String pSearchCondition; // 검색 카테고리 
 	private String pSearchContent; // 검색.. 어.. 
 	private String sort; // 정렬 기준 구분 하기 위해 사용
 	private String imageName; // 대표 이미지
@@ -49,11 +49,11 @@ public class ProductVO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
-	public int getpStock() {
-		return pStock;
+	public int getpAmt() {
+		return pAmt;
 	}
-	public void setpStock(int pStock) {
-		this.pStock = pStock;
+	public void setpAmt(int pAmt) {
+		this.pAmt = pAmt;
 	}
 	public String getpDetail() {
 		return pDetail;
@@ -97,12 +97,12 @@ public class ProductVO {
 	public void setpCnt(int pCnt) {
 		this.pCnt = pCnt;
 	}
-//	public String getpSearchCondition() {
-//		return pSearchCondition;
-//	}
-//	public void setpSearchCondition(String pSearchCondition) {
-//		this.pSearchCondition = pSearchCondition;
-//	}
+	public String getpSearchCondition() {
+		return pSearchCondition;
+	}
+	public void setpSearchCondition(String pSearchCondition) {
+		this.pSearchCondition = pSearchCondition;
+	}
 	public String getpSearchContent() {
 		return pSearchContent;
 	}
@@ -118,9 +118,10 @@ public class ProductVO {
 	@Override
 	public String toString() {
 		return "ProductVO [pNum=" + pNum + ", pName=" + pName + ", pCategory=" + pCategory + ", price=" + price
-				+ ", pStock=" + pStock + ", pDetail=" + pDetail + ", pDcPercent=" + pDcPercent + ", searchLowPrice="
+				+ ", pAmt=" + pAmt + ", pDetail=" + pDetail + ", pDcPercent=" + pDcPercent + ", searchLowPrice="
 				+ searchLowPrice + ", searchHighPrice=" + searchHighPrice + ", total=" + total + ", dc_price="
-				+ dc_price + ", pCnt=" + pCnt + ", pSearchContent=" + pSearchContent + ", sort=" + sort + ", imageName="
-				+ imageName + "]";
+				+ dc_price + ", pCnt=" + pCnt + ", pSearchCondition=" + pSearchCondition + ", pSearchContent="
+				+ pSearchContent + ", sort=" + sort + ", imageName=" + imageName + "]";
 	}
+
 }

@@ -2,7 +2,7 @@ package com.wan.nss.biz.order;
 
 public class OrderVO {
 	private int oNum; // 주문 번호
-	private int mNum; // 주문자 회원 번호
+	private int userNum; // 주문자 회원 번호
 	private String oDate; // 주문 날짜
 	private String rcvName; // 수령인 이름
 	private String rcvPhoneNum; // 수령인 핸드폰 번호
@@ -17,11 +17,12 @@ public class OrderVO {
 	public void setoNum(int oNum) {
 		this.oNum = oNum;
 	}
-	public int getmNum() {
-		return mNum;
+
+	public int getUserNum() {
+		return userNum;
 	}
-	public void setmNum(int mNum) {
-		this.mNum = mNum;
+	public void setUserNum(int userNum) {
+		this.userNum = userNum;
 	}
 	public String getoDate() {
 		return oDate;
@@ -65,10 +66,9 @@ public class OrderVO {
 	public void setoSearchCondition(String oSearchCondition) {
 		this.oSearchCondition = oSearchCondition;
 	}
-	
 	@Override
 	public String toString() {
-		return "OrderTableVO [oNum=" + oNum + ", mNum=" + mNum + ", oDate=" + oDate + ", rcvName=" + rcvName
+		return "OrderVO [oNum=" + oNum + ", userNum=" + userNum + ", oDate=" + oDate + ", rcvName=" + rcvName
 				+ ", rcvPhoneNum=" + rcvPhoneNum + ", rcvAddress=" + rcvAddress + ", oPay=" + oPay + ", oPrice="
 				+ oPrice + ", oSearchCondition=" + oSearchCondition + "]";
 	}
