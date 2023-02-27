@@ -10,9 +10,7 @@
 	<context:component-scan base-package="com.wan.nss.controller" />
 	
 	<!-- 에러 어노테이션 관리 (적절한 에러에 맞는 에러메서드 연결) -->
-	<!--
 	<mvc:annotation-driven></mvc:annotation-driven>
-	-->
 	
 	<!-- 에러 xml 관리 (생성자주입): 이 것을 더 많이 쓴다고 함
 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
