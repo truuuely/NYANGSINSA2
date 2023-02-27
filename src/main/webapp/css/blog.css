@@ -110,13 +110,15 @@
 	right: 100px;
 	z-index: 1;
 }
-#fixshare{
+
+#fixshare {
 	width: 120px;
 	position: fixed;
 	z-index: 1;
 	bottom: 380px;
 	right: 75px;
 }
+
 #fixcomment {
 	width: 120px;
 	position: fixed;
@@ -130,6 +132,21 @@
 	position: fixed;
 	z-index: 1;
 	bottom: 180px;
+	right: 75px;
+}
+
+#fixdelete {
+	width: 120px;
+	position: fixed;
+	z-index: 1;
+	bottom: 480px;
+	right: 75px;
+}
+#fixupdate {
+	width: 120px;
+	position: fixed;
+	z-index: 1;
+	bottom: 580px;
 	right: 75px;
 }
 
