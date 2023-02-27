@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -12,7 +13,7 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>냥신사 | 회원가입</title>
+<title><spring:message code="message.register.title" /></title>
 
 <!-- favicon -->
 <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
@@ -108,20 +109,26 @@
 				<div class="col-lg-6">
 					<div class="login_box_img">
 						<div class="hover">
-							<h4>이미 회원이신가요?</h4>
-							<p>냥신사를 다시 찾아주셔서 감사합니다!</p>
-							<a class="button button-account" href="login.do">로그인하기</a>
+							<h4>
+								<spring:message code="message.register.message.register.msg1" />
+							</h4>
+							<p>
+								<spring:message code="message.register.msg2" />
+							</p>
+							<a class="button button-account" href="login.do">
+								<spring:message code="message.register.login" />
+							</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner register_form_inner">
 						<h3>
-							회원가입하기
+							<spring:message code="message.register.join" />
 							<br>
 							<br>
 							<a href="#kakao-login-btn" style="color: black;">
-								<small><u>카카오로 회원가입 바로가기</u></small>
+								<small><u><spring:message code="message.register.kakaoshortcut" /></u></small>
 							</a>
 						</h3>
 
@@ -129,53 +136,65 @@
 
 							<!-- 아이디 -->
 							<div class="col-md-12 form-group">
-								<input type="text" style="width: 60%;" id="id" name="id" placeholder="&nbsp;아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
+								<input type="text" style="width: 60%;" id="id" name="id" placeholder="&nbsp;<spring:message code="message.register.enterid"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterid"/>'" required>
 								&nbsp;
-								<input style="color: white; border-radius: 7px;" type="button" id="idCheckBtn" onclick="checkId()" class="button button-register" value="아이디 중복체크">
+								<input style="color: white; border-radius: 7px;" type="button" id="idCheckBtn" onclick="checkId()" class="button button-register" value="<spring:message code="message.register.iddouble"/>">
 							</div>
-							<p class="checkre" align="left" id="outputId">영어/숫자가 혼합된 4~15자리 아이디를 입력해주세요.</p>
+							<p class="checkre" align="left" id="outputId">
+								<spring:message code="message.register.id" />
+							</p>
 
 
 							<!-- 이름 -->
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'" required>
+								<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="message.register.entername"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.entername"/>'" required>
 							</div>
-							<p class="checkre" id="outputName">한글 2~6자리 이름을 입력해주세요.</p>
+							<p class="checkre" id="outputName">
+								<spring:message code="message.register.name" />
+							</p>
 
 							<!-- 고양이 이름 -->
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="cName" name="cName" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
+								<input type="text" class="form-control" id="cName" name="cName" placeholder="<spring:message code="message.register.entercatname"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.entercatname"/>'" required>
 							</div>
-							<p class="checkre" id="outputcName">한글 2~6자리 고양이 이름을 입력해주세요.</p>
+							<p class="checkre" id="outputcName">
+								<spring:message code="message.register.catname" />
+							</p>
 
 							<!-- 비밀번호 -->
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 입력'" required>
+								<input type="password" class="form-control" id="password" name="password" placeholder="<spring:message code="message.register.enterpw"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterpw"/>'" required>
 							</div>
-							<p class="checkre" id="outputPw">영어/숫자/특수문자를 모두 혼합하여 8자리 이상 비밀번호를 입력해주세요.</p>
+							<p class="checkre" id="outputPw">
+								<spring:message code="message.register.enterpw" />
+							</p>
 
 							<!-- 비밀번호 확인 -->
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 재입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 재입력'" required>
+								<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="<spring:message code="message.register.reenterpw"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.reenterpw"/>'" required>
 							</div>
 
-							<p class="checkre" id="outputPw2">비밀번호를 다시 입력해주세요.</p>
+							<p class="checkre" id="outputPw2">
+								<spring:message code="message.register.pleasereenterpw" />
+							</p>
 
 							<!-- 이메일 -->
 							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="email_register" name="email" placeholder="이메일 주소 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 주소 입력'" required>
+								<input type="email" class="form-control" id="email_register" name="email" placeholder="<spring:message code="message.register.email"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.email"/>'" required>
 							</div>
 
 							<!-- 전화 번호 -->
 							<div class="col-md-12 form-group">
-								<input type="tel" style="width: 65%;" id="phone" name="phone" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
-								<input type="button" class="button button-register" style="color: white; border-radius: 7px;" value="인증번호 받기" onclick="sms()">
+								<input type="tel" style="width: 65%;" id="phone" name="phone" placeholder="<spring:message code="message.register.phone"/>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+								<input type="button" class="button button-register" style="color: white; border-radius: 7px;" value="<spring:message code="message.register.getphone"/>" onclick="sms()">
 								<div style="text-align: left; padding: 0px;">
-									<p class="checkre" id="outputPhone">본인 명의의 휴대폰 번호를 입력해주세요.</p>
+									<p class="checkre" id="outputPhone">
+										<spring:message code="message.register.phone" />
+									</p>
 								</div>
 								<div>
-									<input type="text" style="width: 65%;" placeholder="인증번호를 입력하세요" id="userCheck" required>
-									<input type="button" class="button button-register" style="color: white; border-radius: 7px;" value="인증번호 확인" onclick="smsCheck()">
+									<input type="text" style="width: 65%;" placeholder="<spring:message code="message.register.enterauthentication"/>" id="userCheck" required>
+									<input type="button" class="button button-register" style="color: white; border-radius: 7px;" value="<spring:message code="message.register.checkauthentication"/>" onclick="smsCheck()">
 								</div>
 							</div>
 							<!-- 인증번호 -->
@@ -183,43 +202,54 @@
 							<!-- 주소 -->
 							<div class="col-md-12 form-group">
 								<div>
-									<input type="text" style="width: 65%;" id="post" placeholder="우편번호" onclick="sample6_execDaumPostcode()" name="post" readonly>
-									<input type="button" style="color: white; border-radius: 7px;" class="button button-register" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
+									<input type="text" style="width: 65%;" id="post" placeholder="<spring:message code="message.register.postal"/>" onclick="sample6_execDaumPostcode()" name="post" readonly>
+									<input type="button" style="color: white; border-radius: 7px;" class="button button-register" value="<spring:message code="message.register.findpostal"/>" onclick="sample6_execDaumPostcode()" readonly>
 								</div>
-								<input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
-								<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
-								<input type="text" class="form-control" name="addressDetail" id="address_detail" placeholder="상세주소" required>
+								<input type="text" class="form-control" id="address" name="address" placeholder="<spring:message code="message.register.postal"/>" readonly>
+								<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="<spring:message code="message.register.seealso"/>" readonly>
+								<input type="text" class="form-control" name="addressDetail" id="address_detail" placeholder="<spring:message code="message.register.detailaddress"/>" required>
 							</div>
 
 							<!-- 약관 동의 전체-->
 							<div class="checkbox_group">
 								<input type="checkbox" id="check_all">
-								<label for="check_all">전체 동의</label>
+								<label for="check_all"><spring:message code="message.register.allagreement" /></label>
 								<br>
 
 								<!-- 약관 동의1 -->
 								<input type="checkbox" id="check_1" class="normal" required>
-								<label for="check_1"></label> 개인정보 처리방침 동의
-								<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal3" style="font-size: 5px;">자세히보기</a>
+								<label for="check_1"></label>
+								<spring:message code="message.register.privacyagree" />
+								<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal3" style="font-size: 5px;">
+									<spring:message code="message.register.seemore" />
+								</a>
 								<br>
 
 								<!-- 약관 동의2 -->
 								<input type="checkbox" id="check_2" class="normal" required>
-								<label for="check_2"></label>서비스 이용약관 동의
-								<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2" style="font-size: 5px;">자세히보기</a>
+								<label for="check_2"></label>
+								<spring:message code="message.register.serviceagree" />
+								<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2" style="font-size: 5px;">
+									<spring:message code="message.register.seemore" />
+								</a>
 								<br>
 
 								<!-- 약관 동의3 -->
 								<input type="checkbox" id="check_3" class="normal">
-								<label for="check_3"></label>마케팅 수신 동의(선택)
-								<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" style="font-size: 5px;">자세히보기 </a>
+								<label for="check_3"></label>
+								<spring:message code="message.register.marketingagree" />
+								<a class="btn btn-primary" data-toggle="modal" data-target="#exampleModal1" style="font-size: 5px;">
+									<spring:message code="message.register.seemore" />
+								</a>
 								<br>
 								<br>
 							</div>
 
 							<!-- 회원 가입 버튼 -->
 							<div class="col-md-12 form-group">
-								<button id="signupBtn" type="submit" value="submit" class="button button-register w-100">회원가입</button>
+								<button id="signupBtn" type="submit" value="submit" class="button button-register w-100">
+									<spring:message code="message.register.join" />
+								</button>
 								<br>
 							</div>
 
@@ -274,11 +304,11 @@
             success: function(result){
                console.log(result)
                if(id == ""){
-                  outputId.textContent = `영어/숫자가 혼합된 4~15자리 아이디를 입력해주세요.`;
+                  outputId.textContent = `<spring:message code="message.register.id"/>`;
                }
                else if(result == 1){
                   console.log(result)
-                  outputId.textContent = `사용 가능합니다.`;
+                  outputId.textContent = `<spring:message code="message.register.available"/>`;
                   outputId.style.color = '#6667AB';
                   idTrue = true;
                }
@@ -479,7 +509,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
         const ok = reId.exec(this.value)
         if (!ok) {
            idTrue = false;
-            outputId.textContent = `영어/숫자가 혼합된 4~15자리 아이디를 입력해주세요.`
+            outputId.textContent = `<spring:message code="message.register.id"/>`
             outputId.style.color = 'red'
             idValid = false; // id 플래그 false
         } else {
@@ -497,7 +527,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
     inputName.addEventListener('input', function () {
         const ok = reName.exec(this.value)
         if (!ok) {
-            outputName.textContent = `한글 2~6자리 이름을 입력해주세요.`;
+            outputName.textContent = `<spring:message code="message.register.name"/>`;
             outputName.style.color = 'red';
             nameValid = false;
         } else {
@@ -509,11 +539,11 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
     inputCnm.addEventListener('input', function () {
         const ok = reCname.exec(this.value)
         if (!ok) {
-            outputcName.textContent = `한글 2~6자리 고양이 이름을 입력해주세요.`;
+            outputcName.textContent = `<spring:message code="message.register.id"/>`;
             outputcName.style.color = 'red';
             cNameValid = false;
         } else {
-            outputcName.textContent = `사용 가능합니다.`;
+            outputcName.textContent = `<spring:message code="message.register.available"/>`;
             outputcName.style.color = '#6667AB';
             cNameValid = true;
         }
@@ -522,39 +552,39 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
       inputPw.addEventListener('input', function () {
         const ok = rePw.exec(this.value)
         if (!ok) {
-            outputPw.textContent = `영어/숫자/특수문자를 모두 혼합하여 8자리 이상 비밀번호를 입력해주세요.`;
+            outputPw.textContent = `<spring:message code="message.register.pw"/>`;
             outputPw.style.color = 'red';
             pwValid = false;
 
         } else {
-            outputPw.textContent = `사용 가능합니다.`;
+            outputPw.textContent = `<spring:message code="message.register.available"/>`;
             outputPw.style.color = '#6667AB';
             pwValid = true;
         }
     })
     
     inputPw2.addEventListener('input', function () {
-        if (inputPw.value == inputPw2.value) {
-            outputPw2.textContent = `일치합니다.`
+        if (inputPw.value == inputPw2.value) { 
+            outputPw2.textContent = `<spring:message code="message.register.mathces"/>`
             outputPw2.style.color = '#6667AB'
             inputPw.addEventListener('input', function () {
                if(inputPw.value==""){
-                    outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+                    outputPw2.textContent = `<spring:message code="message.register.reenterpws"/>` 
                         outputPw2.style.color = 'red'
                         pwSame = false;
                   }else if (inputPw.value == inputPw2.value) {
-                    outputPw2.textContent = `일치합니다.`
+                    outputPw2.textContent = `<spring:message code="message.register.mathces"/>`
                     outputPw2.style.color = '#6667AB'
                     pwSame = true;
                    } else {
-                    outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+                    outputPw2.textContent = `<spring:message code="message.register.reenterpws"/>`
                     outputPw2.style.color = 'red'
                     pwSame = false;
                    }
             })
             pwSame = true;
         } else {
-            outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+            outputPw2.textContent = `<spring:message code="message.register.reenterpws"/>`
             outputPw2.style.color = 'red'
             pwSame = false;
         }
@@ -585,12 +615,12 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
    inputPhoneNum.addEventListener('input', function () {
         const ok = rePhoneNum.exec(this.value)
         if (!ok) {
-           outputPhone.textContent = `휴대폰 번호를 확인해주세요.`;
+           outputPhone.textContent = `<spring:message code="message.register.checkphonenum"/>`; 
            outputPhone.style.color = 'red';
             phoneNumValid = false;
 
         } else {
-           outputPhone.textContent = `인증번호 전송버튼을 눌러주세요.`;
+           outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
            outputPhone.style.color = '#6667AB';
            phoneNumValid = true;
         }
@@ -622,11 +652,11 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
       }).then(function(){
          console.log("로그: 인증번호 발송 메서드 시작")
          if(!phoneNumValid){ // 전화번호 형식이 틀리다면
-            outputPhone.textContent = `휴대폰 번호를 다시 한 번 확인해주세요.`;
+            outputPhone.textContent = `<spring:message code="message.register.recheckphonenum"/>`;
               outputPhone.style.color = 'red';
          }
          else if(phoneNumValid && !isPhoneOnly){ // 전화번호 형식이 맞지만 중복이라면
-            outputPhone.textContent = `다른 휴대폰 번호를 입력해주세요.`;
+            outputPhone.textContent = `<spring:message code="message.register.otherphonenum"/>`;
               outputPhone.style.color = 'red';
          }
          else if(phoneNumValid && isPhoneOnly){ // 전화번호 형식이 맞고 중복이 아니라면
@@ -646,11 +676,11 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                          number = randNum;  //랜덤문자인증번호
                          smsTrue = true;
                          console.log(smsTrue)
-                         outputPhone.textContent = `인증번호가 전송되었습니다.`;
+                         outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
                            outputPhone.style.color = '#6667AB';
                       } 
                       else{
-                         outputPhone.textContent = `인증번호 전송이 불가능합니다.`;
+                         outputPhone.textContent = `<spring:message code="message.register.unablesendauthentication"/>`;
                            outputPhone.style.color = 'red';
                          smsTrue = false;
                       }
@@ -676,13 +706,13 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                 console.log("로그 result:["+result+"]")
                 console.log(typeof result);
                 if(result == "1"){
-                   alert("인증번호가 일치합니다!");
+                   alert("<spring:message code="message.register.matchauthentication"/>");
                    smsCheckTrue = true;
                    console.log(smsCheckTrue)
                    document.getElementById('phone').readOnly = true;
                 } 
                 else{
-                   alert("인증번호가 일치하지 않습니다.다시 입력하세요!");  //인증번호 불일치
+                   alert("<spring:message code="message.register.nomatchauthentication"/>");  //인증번호 불일치
                    smsCheckTrue = false;
                 }
              }
@@ -702,13 +732,13 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
          return true;
       }else{
          if(!smsTrue){
-            alert("휴대폰 인증을 진행해주세요"); 
+            alert("<spring:message code="message.register.confirmationphone"/>");  
          }else if(!smsCheckTrue){
-            alert("인증번호를 확인해주세요"); 
+            alert("<spring:message code="message.register.checkauthentication"/>"); 
          }else if(!registerTrue){
-            alert("입력한 내용을 확인해주세요"); 
+            alert("<spring:message code="message.register.checkenter"/>"); 
          }else if(!idTrue){
-            alert("아이디 중복을 확인해주세요"); 
+            alert("<spring:message code="message.register.checkid"/>"); 
          }
          return false;
       }
