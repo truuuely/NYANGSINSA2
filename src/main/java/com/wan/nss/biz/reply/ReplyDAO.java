@@ -47,9 +47,9 @@ public class ReplyDAO {
 	public boolean insert(ReplyVO vo) {
 		int res = 0;
 		if (vo.getParentNum() == 0) { // 댓글 작성
-			res = jdbcTemplate.update(INSERT_REPLY, vo.getBoardNum(), vo.getMemberId(), vo.getReplyContent());
+			res = jdbcTemplate.update(INSERT_REPLY, vo.getBoardNum(), vo.getUserId(), vo.getReplyContent());
 		} else {
-			res = jdbcTemplate.update(INSERT_REREPLY, vo.getBoardNum(), vo.getMemberId(), vo.getParentNum(),
+			res = jdbcTemplate.update(INSERT_REREPLY, vo.getBoardNum(), vo.getUserId(), vo.getParentNum(),
 					vo.getReplyContent());
 		}
 
@@ -103,7 +103,7 @@ class ReplyRowMapper implements RowMapper<ReplyVO> {
 		ReplyVO data = new ReplyVO();
 		data.setReplyNum(rs.getInt("RE_NO"));
 		data.setBoardNum(rs.getInt("B_NO"));
-		data.setMemberNum(rs.getInt("M_NO"));
+		data.setUserNum(rs.getInt("M_NO"));
 		data.setReplyDate(rs.getString("RE_DATE"));
 		data.setReplyContent(rs.getString("RE_CONTENT"));
 		data.setReplyStatus(rs.getInt("STATUS"));
