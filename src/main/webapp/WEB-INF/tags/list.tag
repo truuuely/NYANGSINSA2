@@ -174,7 +174,6 @@
 </c:if>
 
 
-
 <!-- 게시글 댓글 리스트  -->
 <c:if test="${sort=='reply'}">
 	<c:forEach var="v" items="${replyset}" begin="0" varStatus="status">
@@ -186,8 +185,23 @@
 			</div>
 			<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
 				<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.replyDate}</li>
+				<li>
+					<button id="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
+				<li>
 				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+				<c:if test="${v.rWriter==memberId}">
+					<li><a href="deleteReply.do">삭제</a></li>
+				</c:if>
 			</ul>
+		</div>
+		<div id="rereplywrite">
+			<form action="#" method="post" style="width: 90%;">
+				<ul>
+					<li style="float: left; list-style: none; width: 80%; margin: 10px;"><textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%; height: 50px;" name="reply" placeholder="댓글을 작성하세요" required></textarea></li>
+					<li style="float: left; list-style: none; margin-left: -10px;"><input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB; margin: 10px; width: 80%;" type="submit" value="댓글 작성"></li>
+				</ul>
+				<br>
+			</form>
 		</div>
 
 		<c:set var="rereply" value="${replyset.rereply}" />
@@ -201,23 +215,14 @@
 					</div>
 					<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
 						<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.rereplyDate}</li>
-						<li>
-							<button id="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
-						<li>
 						<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+						<c:if test="${v.rWriter==memberId}">
+							<li><a href="deleteReply.do">삭제</a></li>
+						</c:if>
 					</ul>
 				</div>
 			</div>
-			<div id="rereplywrite">
-				<form action="#" method="post" style="width: 90%;">
-					<ul>
-						<li style="float: left; list-style: none; width: 80%; margin: 10px;"><textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%; height: 50px;" name="reply" placeholder="댓글을 작성하세요" required></textarea></li>
 
-						<li style="float: left; list-style: none; margin-left: -10px;"><input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB; margin: 10px; width: 80%;" type="submit" value="댓글 작성"></li>
-					</ul>
-					<br>
-				</form>
-			</div>
 		</c:forEach>
 
 	</c:forEach>
