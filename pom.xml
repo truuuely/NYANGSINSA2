@@ -36,13 +36,13 @@
 		</dependency>
 
 		<!-- 템플릿 패턴 활용시 필요한 객체 -->
-		<!-- 필요한 객체 1) DBCP(databaseconnectionpool): 미리 커넥션을 확보, 바로 객체를 제공하게 도와줌 -->
+		<!-- 필요한 것 1) DBCP 객체 -->
+		<!-- JDBCUtil에서의 역할을 담당하는 객체 -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>
 			<artifactId>commons-dbcp</artifactId>
 			<version>1.4</version>
 		</dependency>
-
 		<!-- 필요한 것 2) Spring에서 제공하는 JDBC를 사용하겠다는 설정 -->
 		<dependency>
 			<groupId>org.springframework</groupId>

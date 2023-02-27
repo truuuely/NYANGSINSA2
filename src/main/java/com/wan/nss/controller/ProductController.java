@@ -25,6 +25,7 @@ public class ProductController {
 	@RequestMapping(value="/main.do")
 	public String mainView(ProductVO pvo, Model model) {
 		// 신상품 데이터. pvo : category == all, sort == regiDesc
+		System.out.println("	로그: main.do");
 		pvo.setpCategory("all");
 		pvo.setSort("regiDesc");
 		pvo.setSearchLowPrice(0);
