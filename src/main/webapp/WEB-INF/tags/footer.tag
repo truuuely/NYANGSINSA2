@@ -1,4 +1,5 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!-- Footer Section Begin -->
 	<footer class="footer spad">
 		<div class="container">
@@ -16,9 +17,9 @@
 				<div class="col-lg-4 col-md-4 col-sm-6">
 					<div class="footer__widget">
 						<ul>
-							<li>주소: 서울 강남구 역삼동 골목길</li>
-							<li>전화: +82 02-0202-0202</li>
-							<li>이메일: nyangsinsa@gmail.com</li>
+							<li><spring:message code="message.footer.address"/></li>
+							<li><spring:message code="message.footer.phone"/></li>
+							<li><spring:message code="message.footer.email"/></li>
 						</ul>
 					</div>
 				</div>
