@@ -3,7 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -115,16 +115,20 @@
 								</a>
 							</div>
 							<div class="header__top__right__language">
-								<img src="img/korea.png" alt="한국">
-								<div>Korean</div>
+								<c:if test="${lang=='en'}">
+									<img src="img/language.png" alt="영어">EN
+								</c:if>
+								<c:if test="${lang=='ko'}">
+									<img src="img/korea.png" alt="한국어">KO
+								</c:if>
 								<span class="arrow_carrot-down"></span>
 								<ul>
-									<li>
-										<a href="main.do?lang=en"><spring:message code="message.main.en" /></a>
-									</li>
-									<li>
-										<a href="main.do?lang=ko"><spring:message code="message.main.ko" /></a>
-									</li>
+									<li><a href="main.do?lang=en">
+											<spring:message code="message.main.en" />
+										</a></li>
+									<li><a href="main.do?lang=ko">
+											<spring:message code="message.main.ko" />
+										</a></li>
 								</ul>
 							</div>
 
@@ -179,13 +183,21 @@
 				<div class="col-lg-3">
 					<div class="hero__categories">
 						<div class="hero__categories__all">
-							<i class="fa fa-bars"></i> <span><spring:message code="message.main.menu"/></span>
+							<i class="fa fa-bars"></i> <span><spring:message code="message.main.menu" /></span>
 						</div>
 						<ul>
-							<li><a href="shop.do?category=all"><spring:message code="message.main.menuAll"/></a></li>
-							<li><a href="shop.do?category=food"><spring:message code="message.main.menuFood"/></a></li>
-							<li><a href="shop.do?category=treat"><spring:message code="message.main.menuTreat"/></a></li>
-							<li><a href="shop.do?category=sand"><spring:message code="message.main.menuSand"/></a></li>
+							<li><a href="shop.do?category=all">
+									<spring:message code="message.main.menuAll" />
+								</a></li>
+							<li><a href="shop.do?category=food">
+									<spring:message code="message.main.menuFood" />
+								</a></li>
+							<li><a href="shop.do?category=treat">
+									<spring:message code="message.main.menuTreat" />
+								</a></li>
+							<li><a href="shop.do?category=sand">
+									<spring:message code="message.main.menuSand" />
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -195,7 +207,9 @@
 							<form action="search.do" method="post">
 								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
 								<input type="text" name="searchContent" placeholder="<spring:message code="message.main.searchInput"/>" required>
-								<button type="submit" class="site-btn"><spring:message code="message.main.search"/></button>
+								<button type="submit" class="site-btn">
+									<spring:message code="message.main.search" />
+								</button>
 							</form>
 						</div>
 						<div class="hero__search__phone">
@@ -205,8 +219,7 @@
 							<div class="hero__search__phone__text">
 								<h5>02-0202-0202</h5>
 
-								<span><spring:message code="message.main.counseling"/><br><spring:message code="message.main.weekday"/> 09:00~18:00
-								</span>
+								<span><spring:message code="message.main.counseling" /> <br> <spring:message code="message.main.weekday" /> 09:00~18:00 </span>
 							</div>
 						</div>
 					</div>
@@ -236,7 +249,9 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title">
-						<h2><spring:message code="message.main.newProduct"/></h2>
+						<h2>
+							<spring:message code="message.main.newProduct" />
+						</h2>
 					</div>
 					<div class="categories__slider owl-carousel">
 						<!-- 신상품 리스트 -->
@@ -255,14 +270,16 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title">
-						<h2><spring:message code="message.main.popularProduct"/></h2>
+						<h2>
+							<spring:message code="message.main.popularProduct" />
+						</h2>
 					</div>
 					<div class="featured__controls">
 						<ul>
-							<li class="active" data-filter="*"><spring:message code="message.main.menuAll"/></li>
-							<li data-filter=".food"><spring:message code="message.main.menuFood"/></li>
-							<li data-filter=".treat"><spring:message code="message.main.menuTreat"/></li>
-							<li data-filter=".sand"><spring:message code="message.main.menuSand"/></li>
+							<li class="active" data-filter="*"><spring:message code="message.main.menuAll" /></li>
+							<li data-filter=".food"><spring:message code="message.main.menuFood" /></li>
+							<li data-filter=".treat"><spring:message code="message.main.menuTreat" /></li>
+							<li data-filter=".sand"><spring:message code="message.main.menuSand" /></li>
 						</ul>
 					</div>
 				</div>
@@ -333,7 +350,10 @@
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
 		<a href="#">
-			<button type="button" class="button-top">▲ <spring:message code="message.main.top"/></button>
+			<button type="button" class="button-top">
+				▲
+				<spring:message code="message.main.top" />
+			</button>
 		</a>
 	</div>
 
