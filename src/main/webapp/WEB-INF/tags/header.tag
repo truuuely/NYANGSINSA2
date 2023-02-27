@@ -11,7 +11,7 @@
 <div class="humberger__menu__wrapper">
 	<div class="humberger__menu__logo">
 		<a href="main.do">
-			<img src="img/logo.png" alt="홈으로 가기">
+			<img src="img/logo.png" alt="<spring:message code="message.header.img" />">
 		</a>
 	</div>
 	<div class="humberger__menu__cart">
@@ -29,10 +29,10 @@
 
 	<nav class="humberger__menu__nav mobile-menu">
 		<ul>
-			<li class="active"><a href="main.do">홈</a></li>
-			<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-			<li><a href="contact.do">Contact</a></li>
-			<li><a href="boardView.do">자랑해냥</a></li>
+			<li class="active"><a href="main.do"><spring:message code="message.header.home" /></a></li>
+			<li><a href="shop.do?category=all&sort=sellDesc"><spring:message code="message.header.shopping" /></a></li>
+			<li><a href="contact.do"><spring:message code="message.header.contact" /></a></li>
+			<li><a href="boardView.do"><spring:message code="message.header.board" /></a></li>
 		</ul>
 	</nav>
 	<div id="mobile-menu-wrap"></div>
@@ -50,7 +50,7 @@
 	<div class="humberger__menu__contact">
 		<ul>
 			<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
-			<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
+			<li><spring:message code="message.header.title" />/li>
 		</ul>
 	</div>
 </div>
@@ -65,7 +65,7 @@
 					<div class="header__top__left">
 						<ul>
 							<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
-							<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
+							<li><spring:message code="message.header.title" /></li>
 						</ul>
 					</div>
 				</div>
@@ -103,10 +103,10 @@
 			<div class="col-lg-6">
 				<nav class="header__menu">
 					<ul>
-						<li class="active"><a href="main.do">홈</a></li>
-						<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-						<li><a href="contact.do">Contact</a></li>
-						<li><a href="boardView.do">자랑해냥</a></li>
+						<li class="active"><a href="main.do"><spring:message code="message.header.home" /></a></li>
+						<li><a href="shop.do?category=all&sort=sellDesc"><spring:message code="message.header.shopping" /></a></li>
+						<li><a href="contact.do"><spring:message code="message.header.contact" /></a></li>
+						<li><a href="boardView.do"><spring:message code="message.header.board" /></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -134,13 +134,13 @@
 			<div class="col-lg-3">
 				<div class="hero__categories">
 					<div class="hero__categories__all">
-						<i class="fa fa-bars"></i> <span>메뉴</span>
+						<i class="fa fa-bars"></i> <span><spring:message code="message.header.menu"/></span>
 					</div>
 					<ul>
-						<li><a href="shop.do?category=all">전체</a></li>
-						<li><a href="shop.do?category=food">사료</a></li>
-						<li><a href="shop.do?category=treat">간식</a></li>
-						<li><a href="shop.do?category=sand">모래</a></li>
+						<li><a href="shop.do?category=all"><spring:message code="message.header.categoryall" /></a></li>
+						<li><a href="shop.do?category=food"><spring:message code="message.header.food" /></a></li>
+						<li><a href="shop.do?category=treat"><spring:message code="message.header.treat" /></a></li>
+						<li><a href="shop.do?category=sand"><spring:message code="message.header.sand" /></a></li>
 					</ul>
 				</div>
 			</div>
@@ -149,8 +149,8 @@
 					<div class="hero__search__form">
 						<form action="search.do">
 							<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-							<input type="text" name="searchContent" placeholder="필요한 거 있냥?" required>
-							<button type="submit" class="site-btn">검색</button>
+							<input type="text" name="searchContent" placeholder="<spring:message code="message.header.searchplaceholder" />" required>
+							<button type="submit" class="site-btn"><spring:message code="message.header.search" /></button>
 						</form>
 					</div>
 					<div class="hero__search__phone">
@@ -159,8 +159,7 @@
 						</div>
 						<div class="hero__search__phone__text">
 							<h5>02-0202-0202</h5>
-
-							<span>상담 가능 시간<br>평일 10:00~18:00
+							<span><spring:message code="message.header.consultation" /><br><spring:message code="message.header.message.header.consultationtime" />
 							</span>
 						</div>
 					</div>

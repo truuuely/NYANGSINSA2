@@ -129,41 +129,41 @@
 
 							<!-- 아이디 -->
 							<div class="col-md-12 form-group">
-								<input type="text" style="width: 60%;" id="id" name="id" placeholder="&nbsp;아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
+								<input type="text" style="width: 60%;" id="id" name="id" placeholder="&nbsp;<spring:message code="message.register.enterid"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterid"/>'" required>
 								&nbsp;
-								<input style="color: white; border-radius: 7px;" type="button" id="idCheckBtn" onclick="checkId()" class="button button-register" value="아이디 중복체크">
+								<input style="color: white; border-radius: 7px;" type="button" id="idCheckBtn" onclick="checkId()" class="button button-register" value="<spring:message code="message.register.iddouble"/>">
 							</div>
-							<p class="checkre" align="left" id="outputId">영어/숫자가 혼합된 4~15자리 아이디를 입력해주세요.</p>
+							<p class="checkre" align="left" id="outputId"><spring:message code="message.register.id"/></p>
 
 
 							<!-- 이름 -->
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="name" name="name" placeholder="이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'" required>
+								<input type="text" class="form-control" id="name" name="name" placeholder="<spring:message code="message.register.entername"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.entername"/>'" required>
 							</div>
-							<p class="checkre" id="outputName">한글 2~6자리 이름을 입력해주세요.</p>
+							<p class="checkre" id="outputName"><spring:message code="message.register.name"/></p>
 
 							<!-- 고양이 이름 -->
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="cName" name="cName" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
+								<input type="text" class="form-control" id="cName" name="cName" placeholder="<spring:message code="message.register.entercatname"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.entercatname"/>'" required>
 							</div>
-							<p class="checkre" id="outputcName">한글 2~6자리 고양이 이름을 입력해주세요.</p>
+							<p class="checkre" id="outputcName"><spring:message code="message.register.catname"/></p>
 
 							<!-- 비밀번호 -->
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 입력'" required>
+								<input type="password" class="form-control" id="password" name="password" placeholder="<spring:message code="message.register.enterpw"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterpw"/>'" required>
 							</div>
-							<p class="checkre" id="outputPw">영어/숫자/특수문자를 모두 혼합하여 8자리 이상 비밀번호를 입력해주세요.</p>
+							<p class="checkre" id="outputPw"><spring:message code="message.register.enterpw"/></p>
 
 							<!-- 비밀번호 확인 -->
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="비밀번호 재입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 재입력'" required>
+								<input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="<spring:message code="message.register.reenterpw"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.reenterpw"/>'" required>
 							</div>
 
-							<p class="checkre" id="outputPw2">비밀번호를 다시 입력해주세요.</p>
+							<p class="checkre" id="outputPw2"><spring:message code="message.register.pleasereenterpw"/></p>
 
 							<!-- 이메일 -->
 							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="email_register" name="email" placeholder="이메일 주소 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이메일 주소 입력'" required>
+								<input type="email" class="form-control" id="email_register" name="email" placeholder="<spring:message code="message.register.email"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.email"/>'" required>
 							</div>
 
 							<!-- 전화 번호 -->
