@@ -6,6 +6,7 @@ public class OrderDetailVO {
 	private int pNum; // 상품 번호
 	private int odCnt; // 상세 주문 개수
 	private int odPrice; // 상세 주문 가격 
+	
 	private String pName; // 상품 이름
 	
 	public String getpName() {

@@ -8,8 +8,10 @@ public class OrderVO {
 	private String rcvPhoneNum; // 수령인 핸드폰 번호
 	private String rcvAddress; // 수령인 주소
 	private String oPay; // 결제방법
+	
 	private int oPrice; // 주문 당 총 결제 금액
 	private String oSearchCondition;  // 주문 내역 검색
+	private String userId; // 회원 아이디
 	
 	public int getoNum() {
 		return oNum;
@@ -66,12 +68,19 @@ public class OrderVO {
 	public void setoSearchCondition(String oSearchCondition) {
 		this.oSearchCondition = oSearchCondition;
 	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	@Override
 	public String toString() {
 		return "OrderVO [oNum=" + oNum + ", userNum=" + userNum + ", oDate=" + oDate + ", rcvName=" + rcvName
 				+ ", rcvPhoneNum=" + rcvPhoneNum + ", rcvAddress=" + rcvAddress + ", oPay=" + oPay + ", oPrice="
-				+ oPrice + ", oSearchCondition=" + oSearchCondition + "]";
+				+ oPrice + ", oSearchCondition=" + oSearchCondition + ", userId=" + userId + "]";
 	}
+
 	
 	
 }
