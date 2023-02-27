@@ -7,6 +7,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd">
 
+	<!-- TEST -->
 	<context:component-scan base-package="com.wan.nss.biz" />
 	
 	<!-- Conn객체를 확보하는것이 어떤 JDBC에서든지 중요한 포인트이다! -->
