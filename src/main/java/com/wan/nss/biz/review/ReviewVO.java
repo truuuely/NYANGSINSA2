@@ -7,7 +7,10 @@ public class ReviewVO {
 	private String rContent; // 리뷰 내용
 	private String rDate; // 리뷰 작성일
 	private int rRate; // 리뷰 별점 
+	
 	private String rSearchCondition; // 검색..어.. 
+	private String userId; // 회원 아이디
+	
 	public int getrNum() {
 		return rNum;
 	}
@@ -50,10 +53,17 @@ public class ReviewVO {
 	public void setrSearchCondition(String rSearchCondition) {
 		this.rSearchCondition = rSearchCondition;
 	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	@Override
 	public String toString() {
 		return "ReviewVO [rNum=" + rNum + ", pNum=" + pNum + ", rWriter=" + rWriter + ", rContent=" + rContent
-				+ ", rDate=" + rDate + ", rRate=" + rRate + ", rSearchCondition=" + rSearchCondition + "]";
+				+ ", rDate=" + rDate + ", rRate=" + rRate + ", rSearchCondition=" + rSearchCondition + ", userId="
+				+ userId + "]";
 	}
 
 	

@@ -17,16 +17,22 @@ public class ReviewDAO {
 
 	// 리뷰 작성
 	private final String SQL_INSERT = "INSERT INTO REVIEW (P_NO, R_WRITER, R_CONTENT, R_DT, R_RATE) VALUES(100, ?, ?, ?, ?)";
+	
 	// 리뷰 업데이트
 	private final String SQL_UPDATE = "UPDATE REVIEW SET P_NO=?, R_WRITER=?, R_CONTENT=? WHERE R_NO= ?";
+	
 	// 리뷰 삭제
 	private final String SQL_DELETE = "DELETE FROM REVIEW WHERE R_NO=?";
+	
 	// 리뷰 전체 보기
 	private final String SQL_SELECTALL = "SELECT * FROM REVIEW ORDER BY R_NO DESC";
-	// 제품에 대한 리뷰 전체 보기
+	
+	// 제품 번호에 대한 리뷰 보기
 	private final String SQL_SELECTALL_PRODUCT = "SELECT * FROM REVIEW WHERE P_NO=? ORDER BY R_NO DESC";
-	// 내가 작성한 리뷰 보기 
-	private final String SQL_SELECTALL_REVIEW = "SELECT * FROM REVIEW";
+	
+	// 내가 작성한 리뷰 보기
+	private final String SQL_SELECTALL_USER = "SELECT * FROM REVIEW WHERE M_NO=? ORDER BY R_NO DESC";
+
 	// 리뷰 검색
 //	private final String SQL_SELECTALL_SEARCH = "SELECT * FROM REVIEW WHERE M_NO LIKE CONCAT('%',?,'%')";
 
@@ -47,15 +53,21 @@ public class ReviewDAO {
 	}
 
 	public ArrayList<ReviewVO> selectAll(ReviewVO rvo) {
-		if (rvo.getrSearchCondition() == null) { // 제품에 대한 리뷰 전체 보기
+		if (rvo.getrSearchCondition() == null) { 
+			// 전체 리뷰 보기
 			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL, new ReviewRowMapper());
-		} else if () {
-			Object[] args = { rvo.getpNum() };
+			
+	} else if (rvo.getrSearchCondition().equals("pNum")) {
+			// 제품 번호 리뷰 보기 
+			Object [] args = { rvo.getpNum() };
 			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL_PRODUCT, args, new ReviewRowMapper());
-		} else if (rvo.getrWriter() >= 0) { // 리뷰 검색
-			Object[] args = { rvo.getrWriter() };
-			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL_SEARCH, args, new ReviewRowMapper());
-		} 
+			
+	} else if (rvo.getrSearchCondition().equals("rWriter")) {
+		// 내가 쓴 리뷰 보기 
+		Object [] args = { rvo.getrWriter() };
+		return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL_USER, args, new ReviewRowMapper());
+	}
+		return null;
 	}
 
 	class ReviewRowMapper implements RowMapper<ReviewVO> {

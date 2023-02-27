@@ -12,6 +12,7 @@ public class MemberVO {
 	private String postNum; // 우편번호
 	private String address1; // 기본 주소
 	private String address2; // 상세 주소
+	
 	public int getUserNum() {
 		return userNum;
 	}
