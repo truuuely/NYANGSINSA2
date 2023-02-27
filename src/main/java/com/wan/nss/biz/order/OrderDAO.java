@@ -9,7 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.wan.nss.biz.orderDetail.OrderDetailVO;
+import com.wan.nss.biz.orderdetail.OrderDetailVO;
+
+
 
 @Repository("orderDAO")
 public class OrderDAO {
@@ -61,8 +63,8 @@ public class OrderDAO {
 	
 	// 
 	public ArrayList<OrderVO> selectAll(OrderVO vo) {
-		if (vo.getmNum() >= 0) { // 주문 내역 보기
-			Object[] args = { vo.getmNum() };
+		if (vo.getUserNum() >= 0) { // 주문 내역 보기
+			Object[] args = { vo.getUserNum() };
 			return (ArrayList<OrderVO>) jdbcTemplate.query(SQL_SELECTALL_ORDER, args, new OrderRowMapper());
 		} else if (vo.getoNum() >= 0) { // 주분 번호 검색
 			Object[] args = { vo.getoNum() }; 
@@ -78,7 +80,7 @@ public class OrderDAO {
 		public OrderVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			
 			OrderVO vo = new OrderVO();
-			vo.setmNum(rs.getInt("M_NO"));
+			vo.setUserNum(rs.getInt("M_NO"));
 			vo.setoDate(rs.getString("O_DT"));
 			vo.setoNum(rs.getInt("O_NO"));
 			vo.setoPay(rs.getString("O_PAY"));

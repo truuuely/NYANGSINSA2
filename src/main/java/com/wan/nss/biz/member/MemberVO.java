@@ -1,10 +1,10 @@
 package com.wan.nss.biz.member;
 
 public class MemberVO {
-	private int memberNum; // 회원 번호
-	private String memberId; // 회원 아이디
-	private String memberPw; // 회원 비밀번호
-	private String memberName; // 회원 이름
+	private int userNum; // 회원 번호
+	private String userId; // 회원 아이디
+	private String userPw; // 회원 비밀번호
+	private String userName; // 회원 이름
 	private String catName; // 고앵쓰 이름 
 	private String phoneNum; // 전화번호
 	private String role; // 등급
@@ -12,30 +12,29 @@ public class MemberVO {
 	private String postNum; // 우편번호
 	private String address1; // 기본 주소
 	private String address2; // 상세 주소
-	
-	public int getMemberNum() {
-		return memberNum;
+	public int getUserNum() {
+		return userNum;
 	}
-	public void setMemberNum(int memberNum) {
-		this.memberNum = memberNum;
+	public void setUserNum(int userNum) {
+		this.userNum = userNum;
 	}
-	public String getMemberId() {
-		return memberId;
+	public String getUserId() {
+		return userId;
 	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
-	public String getMemberPw() {
-		return memberPw;
+	public String getUserPw() {
+		return userPw;
 	}
-	public void setMemberPw(String memberPw) {
-		this.memberPw = memberPw;
+	public void setUserPw(String userPw) {
+		this.userPw = userPw;
 	}
-	public String getMemberName() {
-		return memberName;
+	public String getUserName() {
+		return userName;
 	}
-	public void setMemberName(String memberName) {
-		this.memberName = memberName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getCatName() {
 		return catName;
@@ -81,11 +80,12 @@ public class MemberVO {
 	}
 	@Override
 	public String toString() {
-		return "MemberVO [memberNum=" + memberNum + ", memberId=" + memberId + ", memberPw=" + memberPw
-				+ ", memberName=" + memberName + ", catName=" + catName + ", phoneNum=" + phoneNum + ", role=" + role
-				+ ", warnCnt=" + warnCnt + ", postNum=" + postNum + ", address1=" + address1 + ", address2=" + address2
-				+ "]";
+		return "MemberVO [userNum=" + userNum + ", userId=" + userId + ", userPw=" + userPw + ", userName=" + userName
+				+ ", catName=" + catName + ", phoneNum=" + phoneNum + ", role=" + role + ", warnCnt=" + warnCnt
+				+ ", postNum=" + postNum + ", address1=" + address1 + ", address2=" + address2 + "]";
 	}
+	
+
 
 
 
