@@ -10,17 +10,17 @@ public class MemberServiceImpl implements MemberService {
 	private MemberDAO memberDAO;
 
 	@Override
-	public boolean insertMember(MemberVO vo) {
+	public boolean insert(MemberVO vo) {
 		return memberDAO.insert(vo);
 	}
 
 	@Override
-	public boolean updateMember(MemberVO vo) {
+	public boolean update(MemberVO vo) {
 		return memberDAO.update(vo);
 	}
 
 	@Override
-	public boolean deleteMember(MemberVO vo) {
+	public boolean delete(MemberVO vo) {
 		return memberDAO.delete(vo);
 	}
 

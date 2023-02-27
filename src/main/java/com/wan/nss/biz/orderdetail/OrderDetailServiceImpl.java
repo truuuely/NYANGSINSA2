@@ -12,7 +12,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 	private OrderDetailDAO orderDetailDAO;
 
 	@Override
-	public boolean insertOrderDetail(OrderDetailVO vo) {
+	public boolean insert(OrderDetailVO vo) {
 		return orderDetailDAO.insert(vo);
 	}
 	

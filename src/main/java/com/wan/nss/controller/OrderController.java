@@ -74,7 +74,6 @@ public class OrderController {
 		
 	}
 
-	/*
 	// 주문하기 페이지에서 결제 및 최종 주문 수행
 	@RequestMapping(value="/insertOrder.do")
 	public String insertOrder(OrderVO ovo, OrderDetailVO odvo, ProductVO pvo, Model model, HttpSession session, HttpServletResponse response) {
@@ -83,10 +82,15 @@ public class OrderController {
 
 				// Order insert
 
-				if (!orderService.insertOrder(ovo)) { // insert 에서 실패했다면
-					response.setContentType("text/html; charset=utf-8");
-					response.getWriter().println("<script>alert('주문내역 생성 실패...관리자에게 문의하세요.');history.go(-1);</script>");
-					return "checkout.jsp";
+				if (!orderService.insert(ovo)) { // insert 에서 실패했다면
+					try {
+						response.setContentType("text/html; charset=utf-8");
+						response.getWriter()
+								.println("<script>alert('주문내역 생성 실패...관리자에게 문의하세요.');history.go(-1);</script>");
+						return "checkout.jsp";
+					} catch (Exception e) {
+						return null;
+					}
 				}
 				System.out.println("오더 인서트 성공");
 
@@ -101,16 +105,20 @@ public class OrderController {
 					cList = new ArrayList<ProductVO>();
 				}
 				for (int i = 0; i < cList.size(); i++) {
-					orderDetailService.insertOrderDetail(odvo); // 주문 상세 내역 DB에 저장
+					orderDetailService.insert(odvo); // 주문 상세 내역 DB에 저장
 
 					// 장바구니에 있는 상품들의 pNum과 pCnt(개수)를 받아서
 					// DB 에 업데이트
 					pvo.setpNum(cList.get(i).getpNum());
 					pvo.setpCnt(cList.get(i).getpCnt());
 					if (!productService.update(pvo)) {
-						response.setContentType("text/html; charset=utf-8");
-						response.getWriter().println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
-						return null;
+						try {
+							response.setContentType("text/html; charset=utf-8");
+							response.getWriter().println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
+							return null;
+						} catch (Exception e) {
+							return null;
+						}
 					}
 				}
 
@@ -118,9 +126,7 @@ public class OrderController {
 				return "orderList.do";
 		
 	}
-	*/
-	
-	/*
+
 	// 주문 내역 페이지로 이동
 	@RequestMapping(value="/orderList.do")
 	public String selectAllOrderList(OrderVO vo, Model model, HttpSession session) {
@@ -130,7 +136,7 @@ public class OrderController {
 		// 현재 로그인한 회원의 주문내역을 가져와야 함
 		String userId = (String) session.getAttribute("memberId");
 
-		vo.setmNum(userId);
+		vo.setUserId(userId);
 
 		List<OrderVO> oList;
 		oList = orderService.selectAll(vo); // 현재 로그인한 회원의 주문 내역 리스트
@@ -149,7 +155,6 @@ public class OrderController {
 		return "order_list.jsp";
 		
 	}
-	*/
 	
 	// 주문 상세 내역 페이지로 이동
 	@RequestMapping(value="/orderDetailList.do")

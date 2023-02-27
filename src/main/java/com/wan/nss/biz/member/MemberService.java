@@ -1,8 +1,8 @@
 package com.wan.nss.biz.member;
 
 public interface MemberService {
-	public boolean insertMember(MemberVO vo);
-	public boolean updateMember(MemberVO vo);
-	public boolean deleteMember(MemberVO vo);
+	public boolean insert(MemberVO vo);
+	public boolean update(MemberVO vo);
+	public boolean delete(MemberVO vo);
 	public MemberVO selectOne(MemberVO vo);
 }
