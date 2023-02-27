@@ -1,4 +1,4 @@
-package com.wan.nss.biz.orderDetail;
+package com.wan.nss.biz.orderdetail;
 
 public class OrderDetailVO {
 	private int odNum; //주문 상세 번호

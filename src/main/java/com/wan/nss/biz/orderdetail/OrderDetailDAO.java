@@ -1,4 +1,4 @@
-package com.wan.nss.biz.orderDetail;
+package com.wan.nss.biz.orderdetail;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.wan.nss.biz.product.ProductVO;
 
-@Repository("orderdetailDAO")
+@Repository("orderDetailDAO")
 public class OrderDetailDAO {
 
 	@Autowired
