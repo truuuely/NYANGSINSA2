@@ -41,7 +41,7 @@ public class ProductController {
 
 	// 파라미터별로 상이한 상품 목록들 setAttribute 하기
 	// 참고 : shopping.do?category=all&sort=sellDesc
-	@RequestMapping(value="shop/.do")
+	@RequestMapping(value="/shop.do")
 	public String shopView(ProductVO pvo,Model model) {
 
 		//사용자에게 받은 카테고리는 자동매핑하여 세팅됨

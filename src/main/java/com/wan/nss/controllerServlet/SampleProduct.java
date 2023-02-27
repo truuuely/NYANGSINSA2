@@ -7,7 +7,6 @@ import javax.servlet.annotation.WebListener;
 import com.wan.nss.biz.product.ProductDAO;
 import com.wan.nss.biz.product.ProductVO;
 
-@WebListener
 public class SampleProduct implements ServletContextListener {
 
     public SampleProduct() {
