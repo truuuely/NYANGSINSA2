@@ -13,22 +13,25 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
-import com.wan.nss.biz.image.ImageDAO;
+import com.wan.nss.biz.image.ImageService;
 import com.wan.nss.biz.image.ImageVO;
-import com.wan.nss.biz.product.ProductDAO;
+import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 
+@Controller
 public class Crawling {
 
 	static ProductVO pvo = new ProductVO();
 	static ImageVO ivo = new ImageVO();
-	static ProductDAO productDAO = new ProductDAO();
-	static ImageDAO imageDAO = new ImageDAO();
-//	@Autowired
-//	static ProductService productService;
-//	@Autowired
-//	static ImageService imageService;
+//	static ProductDAO productDAO = new ProductDAO();
+//	static ImageDAO imageDAO = new ImageDAO();
+	@Autowired
+	static ProductService productService;
+	@Autowired
+	static ImageService imageService;
 	final static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
 	final static String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
 	final static int MAX = 15;
@@ -93,8 +96,8 @@ public class Crawling {
 				String fileName = url.substring(url.lastIndexOf('/')+1, url.length()); // 소스에서 파일명 가져오기
 				System.out.println(i+" 파일네임1 "+fileName);
 				ivo.setImageName(fileName);
-//				imageService.insert(ivo);
-				imageDAO.insert(ivo);
+				imageService.insert(ivo);
+//				imageDAO.insert(ivo);
 				
 				// 폴더가 없으면 생성하기
 				File dir = new File("C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/productImg/" + i+100);
@@ -117,7 +120,7 @@ public class Crawling {
 				System.out.println(i+" 파일네임2 "+fileName2);
 				ivo.setImageName(fileName2);
 //				imageService.insert(ivo);
-				imageDAO.insert(ivo);
+//				imageDAO.insert(ivo);
 				
 				downloadFile(imgUrl2, dir + "/" + fileName); // 파일 다운로드하기
 
@@ -126,7 +129,7 @@ public class Crawling {
 				pvo.setImageName("/img/productImg/" + i+100 + fileName);
 				pvo.setpDetail(info);
 //				productService.insert(pvo);
-				productDAO.insert(pvo);
+//				productDAO.insert(pvo);
 				
 				
 			} catch (Exception e) {
