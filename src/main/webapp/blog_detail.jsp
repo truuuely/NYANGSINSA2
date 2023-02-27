@@ -258,7 +258,16 @@
 			});
 		});
 	</script> -->
-
+	
+	<script type="text/javascript">
+	
+		$("#showReReply").click(function() {
+			$("#rereplywrite").stop().slideToggle(300);
+		    $('#rereplywrite').css('display','flex'); 
+			$("#rereplywrite").toggleClass('on').siblings().removeClass('on');
+			$("#rereplywrite").siblings("#rereplywrite").slideUp(300); 
+		});
+	</script>
 
 	<script type="text/javascript">
 		$("#showReply").click(function() {
