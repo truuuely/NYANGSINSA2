@@ -14,12 +14,13 @@ public class BoardVO {
 	// vo에만 존재하는 멤버변수들
 	private String userId; // 회원 id
 	private int likeCnt; // 좋아요 수
-	private String imageName; // 이미지 이름
+	private String imageName; // 대표 이미지 이름
 	private boolean isChecked; // 해당 회원이 좋아요 했으면 true, 아니면 false
 	private int replyCnt; // 댓글 수
 	private ArrayList<String> imageNames; // 이미지 이름들
 	private String searchCondition; // 검색 카테고리
 	private String searchContent; // 검색어
+	private String catName; // top3 고양이 이름
 
 	public int getBoardNum() {
 		return boardNum;
@@ -141,12 +142,22 @@ public class BoardVO {
 		this.searchContent = searchContent;
 	}
 
+	public String getCatName() {
+		return catName;
+	}
+
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardVO [boardNum=" + boardNum + ", userNum=" + userNum + ", boardTitle=" + boardTitle
 				+ ", boardContent=" + boardContent + ", boardDate=" + boardDate + ", boardStatus=" + boardStatus
 				+ ", boardView=" + boardView + ", userId=" + userId + ", likeCnt=" + likeCnt + ", imageName="
 				+ imageName + ", isChecked=" + isChecked + ", replyCnt=" + replyCnt + ", imageNames=" + imageNames
-				+ ", searchCondition=" + searchCondition + ", searchContent=" + searchContent + "]";
+				+ ", searchCondition=" + searchCondition + ", searchContent=" + searchContent + ", catName=" + catName
+				+ "]";
 	}
+	
 }
