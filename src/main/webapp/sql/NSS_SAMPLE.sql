@@ -74,24 +74,24 @@ VALUES(104, '길냥이ㅋ', '아무리 봐도 저한테 관심있는 냥이 같�
  * 댓글 데이터
  */
 INSERT INTO REPLY
-(B_NO, M_NO, PARENT_NO, RE_DATE, RE_CONTENT, RE_STEP)
-VALUES(1, 101, null, curtime(), '안녕하세요 저도 어제 가입했어요.', 1);
+(B_NO, M_NO, PARENT_NO, RE_CONTENT, RE_STEP)
+VALUES(1, 101, null, '안녕하세요 저도 어제 가입했어요.', 1);
 
 INSERT INTO REPLY
-(B_NO, M_NO, PARENT_NO, RE_DATE, RE_CONTENT, RE_STEP)
-VALUES(1, 100, 1, curtime(), '반겨주시니 감사합니다!', 2);
+(B_NO, M_NO, PARENT_NO, RE_CONTENT, RE_STEP)
+VALUES(1, 100, 1, '반겨주시니 감사합니다!', 2);
 
 INSERT INTO REPLY
-(B_NO, M_NO, PARENT_NO, RE_DATE, RE_CONTENT, RE_STEP)
-VALUES(2, 103, null, curtime(), '좀 귀엽네요!!!', 1);
+(B_NO, M_NO, PARENT_NO, RE_CONTENT, RE_STEP)
+VALUES(2, 103, null, '좀 귀엽네요!!!', 1);
 
 INSERT INTO REPLY
-(B_NO, M_NO, PARENT_NO, RE_DATE, RE_CONTENT, RE_STEP)
-VALUES(3, 104, null, curtime(), 'ㅋ 빡치게 하지마셈;', 1);
+(B_NO, M_NO, PARENT_NO, RE_CONTENT, RE_STEP)
+VALUES(3, 104, null, 'ㅋ 빡치게 하지마셈;', 1);
 
 INSERT INTO REPLY
-(B_NO, M_NO, PARENT_NO, RE_DATE, RE_CONTENT, RE_STEP)
-VALUES(3, 103, 4, curtime(), '님 왤케 시비 거세요.. 이 분 이상해요;; 신고해야겠어요.', 2);
+(B_NO, M_NO, PARENT_NO, RE_CONTENT, RE_STEP)
+VALUES(3, 103, 4, '님 왤케 시비 거세요.. 이 분 이상해요;; 신고해야겠어요.', 2);
 
 
 
