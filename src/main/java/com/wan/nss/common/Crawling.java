@@ -1,5 +1,10 @@
 package com.wan.nss.common;
 
+import java.io.File;
+import java.io.InputStream;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,18 +13,31 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.wan.nss.biz.product.ProductDAO;
+import com.wan.nss.biz.image.ImageService;
+import com.wan.nss.biz.image.ImageVO;
+import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 
 public class Crawling {
 
 	static ProductVO pvo = new ProductVO();
-	static ProductDAO productDAO = new ProductDAO();
+	static ImageVO ivo = new ImageVO();
+	@Autowired
+	static ProductService productService;
+	@Autowired
+	static ImageService imageService;
 	final static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
 	final static String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
 	final static int MAX = 15;
 
+	public static void downloadFile(URL url, String fileName) throws Exception {
+        try (InputStream in = url.openStream()) {
+            Files.copy(in, Paths.get(fileName));
+        }
+    }
+	
 	public static void sample() {
 		List<String> urlDatas = urlDatas();
 		try {
@@ -45,19 +63,66 @@ public class Crawling {
 				String name = driver
 						.findElements(By.cssSelector("div > div > div.MuiContainer-root.jss9.MuiContainer-disableGutters > div.jss16 > div.jss17 > div.jss21 > div.jss23 > div.jss24 > div.jss57 > h2")).get(0).getText();
 				String price = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/strong")).get(0).getText();
-				String img = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
-				String img2 = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
+				
+				// 이미지 주소는 파일 다운로드를 위해 URL 객체로 만들기
+				String url = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
+				String url2 = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
+				URL imgUrl = new URL(url);
+				URL imgUrl2 = new URL(url2);
+
 				String info = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/button/div/div")).getText();
 
 				System.out.println(i+" 상품이름 "+name);
 				System.out.println(i+" 상품가격 "+price);
-				System.out.println(i+" img "+img);
-				System.out.println(i+" img2 "+img2);
+				System.out.println(i+" img "+url);
+				System.out.println(i+" img2 "+url2);
 				System.out.println(i+" 상품설명 "+info);
+				
+				
+				// 이미지 파일로 저장하기
+				
+				// images/productImages/번호/파일명
+
+				// img 멤버변수 세팅
+				// targetNum = pNum = i+1
+				ivo.setTargetNum(i+100);
+				// typeNum = 101
+				ivo.setTypeNum(101);
+				// imageName = fileName;
+				String fileName = Paths.get(url).getFileName().toString(); // 소스에서 파일명 가져오기
+				ivo.setImageName(fileName);
+				imageService.insert(ivo);
+				
+				// 폴더가 없으면 생성하기
+				File dir = new File("C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/productImg/" + i+100);
+				if ( !dir.exists() ) {
+					dir.mkdir();
+				}
+				
+				// 폴더 생성 시간 확보하기
+				try {Thread.sleep(1000);} catch (InterruptedException e) {}
+				
+				downloadFile(imgUrl, dir + "/" + fileName); // 파일 다운로드하기
+				
+				// img2 멤버변수 세팅
+				// targetNum = pNum = i+1
+				ivo.setTargetNum(i+100);
+				// typeNum = 102
+				ivo.setTypeNum(102);
+				// imageName = fileName;
+				String fileName2 = Paths.get(url2).getFileName().toString(); // 파일명 가져오기
+				ivo.setImageName(fileName2);
+				imageService.insert(ivo);
+				
+				downloadFile(imgUrl, dir + "/" + fileName); // 파일 다운로드하기
+
 				pvo.setpName(name);
 				pvo.setPrice(Integer.parseInt(price));
-
-
+				pvo.setImageName("/img/productImg/" + i+100 + fileName);
+				pvo.setpDetail(info);
+				productService.insert(pvo);
+				
+				
 			} catch (Exception e) {
 				System.out.println("크롤링 에러 발생!");
 			}

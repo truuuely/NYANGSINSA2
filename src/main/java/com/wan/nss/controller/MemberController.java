@@ -70,7 +70,7 @@ public class MemberController {
 	@RequestMapping(value = "/signUp.do")
 	public String insertBoard(MemberVO vo, HttpServletResponse response) {
 
-		if (memberService.insertMember(vo)) { // 회원가입 성공시
+		if (memberService.insert(vo)) { // 회원가입 성공시
 			return "signUpResultPage.do";
 		} else { // 회원가입 실패시
 			response.setContentType("text/html; charset=utf-8");
@@ -92,7 +92,7 @@ public class MemberController {
 	@RequestMapping(value = "/changePw.do")
 	public String updateMemberChangePw(MemberVO vo, HttpServletResponse response) {
 
-		if (!memberService.updateMember(vo)) { // 업데이트 실패 시 알림창
+		if (!memberService.update(vo)) { // 업데이트 실패 시 알림창
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				PrintWriter out = response.getWriter();
@@ -127,8 +127,8 @@ public class MemberController {
 			}
 		}
 		String newPw = (String) request.getParameter("newPassword"); // 새 비밀번호
-		vo.setMemberPw(newPw);
-		if (!memberService.updateMember(vo)) { // 업데이트에 실패하면 알림창
+		vo.setUserPw(newPw);
+		if (!memberService.update(vo)) { // 업데이트에 실패하면 알림창
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script>alert('업데이트 실패. 잠시 후 다시 시도해주세요.');</script>"); // 이전 화면으로 이동
@@ -148,7 +148,7 @@ public class MemberController {
 		
 		vo.setAddress1(address); // 주소를 세팅
 
-		if (!memberService.updateMember(vo)) {
+		if (!memberService.update(vo)) {
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script>alert('회원 정보 수정 실패. 잠시 후 다시 시도하세요');</script>"); // 이전 화면으로 이동
@@ -180,7 +180,7 @@ public class MemberController {
 			}
 		}
 		
-		if (!memberService.deleteMember(vo)) {
+		if (!memberService.delete(vo)) {
 			try {
 			response.setContentType("text/html; charset=utf-8");
 			response.getWriter().println("<SCRIPT>alert('Delete 실패. 잠시 후 다시 시도하세요.');</SCRIPT>");
@@ -214,8 +214,8 @@ public class MemberController {
 				return null;
 			}
 		} else { // 로그인 성공시
-			session.setAttribute("memberId", member.getMemberId()); // 세션에 로그인한 회원의 아이디, 이름 저장
-			session.setAttribute("memberName", member.getMemberName());
+			session.setAttribute("memberId", member.getUserId()); // 세션에 로그인한 회원의 아이디, 이름 저장
+			session.setAttribute("memberName", member.getUserName());
 			return "main.do"; // 메인으로 이동
 		}
 
@@ -230,8 +230,8 @@ public class MemberController {
 		if (member != null) { // 가입정보가 있으면 메인으로
 			// 이름, 아이디, 패스워드 (id, pw는 고유 번호)
 			// 받아서 회원 정보가 있으면 로그인
-			session.setAttribute("memberId", member.getMemberId()); // 세션에 로그인한 회원의 아이디, 이름 저장
-			session.setAttribute("memberName", member.getMemberName());
+			session.setAttribute("memberId", member.getUserId()); // 세션에 로그인한 회원의 아이디, 이름 저장
+			session.setAttribute("memberName", member.getUserName());
 			return "main.do";
 		} else { // 가입정보가 없으면 카카오 회원가입
 //			request.setAttribute("userName", request.getParameter("userName"));
@@ -260,8 +260,8 @@ public class MemberController {
 				return null;
 			}
 		} else { // 가입정보가 있는 경우
-			model.addAttribute("memberId", member.getMemberId());
-			model.addAttribute("memberName", member.getMemberName());
+			model.addAttribute("memberId", member.getUserId());
+			model.addAttribute("memberName", member.getUserName());
 			return "result_find_id.jsp";
 		}
 
@@ -288,7 +288,7 @@ public class MemberController {
 				return null;
 			}
 		} else {
-			model.addAttribute("memberId", member.getMemberId());
+			model.addAttribute("memberId", member.getUserId());
 			return "result_find_pw.jsp";
 		}
 

@@ -12,17 +12,17 @@ public class OrderServiceImpl implements OrderService {
 	private OrderDAO orderDAO;
 
 	@Override
-	public boolean insertOrder(OrderVO vo) {
+	public boolean insert(OrderVO vo) {
 		return orderDAO.insert(vo);
 	}
 
 	@Override
-	public boolean updateOrder(OrderVO vo) {
+	public boolean update(OrderVO vo) {
 		return orderDAO.update(vo);
 	}
 
 	@Override
-	public boolean deleteOrder(OrderVO vo) {
+	public boolean delete(OrderVO vo) {
 		return orderDAO.delete(vo);
 	}
 	
