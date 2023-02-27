@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class BoardVO {
 	private int boardNum; // 글 번호
-	private int memberNum; // 글 작성자 번호
+	private int userNum; // 글 작성자 번호
 	private String boardTitle; // 글 제목
 	private String boardContent; // 글 내용
 	private String boardDate; // 글 작성일
@@ -12,7 +12,7 @@ public class BoardVO {
 	private int boardView; // 조회수
 
 	// vo에만 존재하는 멤버변수들
-	private String memberId; // 회원 id
+	private String userId; // 회원 id
 	private int likeCnt; // 좋아요 수
 	private String imageName; // 이미지 이름
 	private boolean isChecked; // 해당 회원이 좋아요 했으면 true, 아니면 false
@@ -29,12 +29,12 @@ public class BoardVO {
 		this.boardNum = boardNum;
 	}
 
-	public int getMemberNum() {
-		return memberNum;
+	public int getUserNum() {
+		return userNum;
 	}
 
-	public void setMemberNum(int memberNum) {
-		this.memberNum = memberNum;
+	public void setUserNum(int userNum) {
+		this.userNum = userNum;
 	}
 
 	public String getBoardTitle() {
@@ -77,12 +77,12 @@ public class BoardVO {
 		this.boardView = boardView;
 	}
 
-	public String getMemberId() {
-		return memberId;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public int getLikeCnt() {
@@ -143,9 +143,9 @@ public class BoardVO {
 
 	@Override
 	public String toString() {
-		return "BoardVO [boardNum=" + boardNum + ", memberNum=" + memberNum + ", boardTitle=" + boardTitle
+		return "BoardVO [boardNum=" + boardNum + ", userNum=" + userNum + ", boardTitle=" + boardTitle
 				+ ", boardContent=" + boardContent + ", boardDate=" + boardDate + ", boardStatus=" + boardStatus
-				+ ", boardView=" + boardView + ", memberId=" + memberId + ", likeCnt=" + likeCnt + ", imageName="
+				+ ", boardView=" + boardView + ", userId=" + userId + ", likeCnt=" + likeCnt + ", imageName="
 				+ imageName + ", isChecked=" + isChecked + ", replyCnt=" + replyCnt + ", imageNames=" + imageNames
 				+ ", searchCondition=" + searchCondition + ", searchContent=" + searchContent + "]";
 	}
