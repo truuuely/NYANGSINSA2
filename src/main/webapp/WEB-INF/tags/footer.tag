@@ -18,8 +18,8 @@
 					<div class="footer__widget">
 						<ul>
 							<li><spring:message code="message.footer.address"/></li>
-							<li><spring:message code="message.footer.phone"/></li>
-							<li><spring:message code="message.footer.email"/></li>
+							<li><spring:message code="message.footer.phone"/> : +82 02-0202-0202</li>
+							<li><spring:message code="message.footer.email"/> : nyangsinsa@gmail.com</li>
 						</ul>
 					</div>
 				</div>

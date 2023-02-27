@@ -1,6 +1,7 @@
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!-- Page Preloder -->
 <div id="preloder">
 	<div class="loader"></div>
@@ -138,9 +139,9 @@
 					</div>
 					<ul>
 						<li><a href="shop.do?category=all"><spring:message code="message.header.categoryall" /></a></li>
-						<li><a href="shop.do?category=food"><spring:message code="message.header.food" /></a></li>
-						<li><a href="shop.do?category=treat"><spring:message code="message.header.treat" /></a></li>
-						<li><a href="shop.do?category=sand"><spring:message code="message.header.sand" /></a></li>
+						<li><a href="shop.do?category=food"><spring:message code="message.header.categoryfood" /></a></li>
+						<li><a href="shop.do?category=treat"><spring:message code="message.header.categorytreat" /></a></li>
+						<li><a href="shop.do?category=sand"><spring:message code="message.header.categorysand" /></a></li>
 					</ul>
 				</div>
 			</div>
@@ -159,7 +160,7 @@
 						</div>
 						<div class="hero__search__phone__text">
 							<h5>02-0202-0202</h5>
-							<span><spring:message code="message.header.consultation" /><br><spring:message code="message.header.message.header.consultationtime" />
+							<span><spring:message code="message.header.consultation" /><br><spring:message code="message.header.consultationtime" />
 							</span>
 						</div>
 					</div>
