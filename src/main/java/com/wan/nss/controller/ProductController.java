@@ -30,7 +30,7 @@ public class ProductController {
 	public String mainView(ProductVO pvo, Model model) {
 		// 신상품 데이터. pvo : category == all, sort == regiDesc
 		System.out.println("	로그: main.do");
-		pvo.setpCategory("all");
+		pvo.setCategory("all");
 		pvo.setpSearchCondition("new");//sort?searchCondition?
 		pvo.setSearchLowPrice(0);
 		pvo.setSearchHighPrice(1000000);
@@ -43,20 +43,11 @@ public class ProductController {
 		return "main.jsp";
 	}
 
-<<<<<<< Updated upstream
-	// 파라미터별로 상이한 상품 목록들 setAttribute 하기
-	// 참고 : shopping.do?category=all&sort=sellDesc
-	@RequestMapping(value="/shop.do")
-	public String shopView(ProductVO pvo,Model model) {
-
-		//사용자에게 받은 카테고리는 자동매핑하여 세팅됨
-=======
 	// 쇼핑페이지 이동 
 	@RequestMapping(value="/shop.do")
 	public String shopView(ProductVO pvo,Model model, HttpSession session) {
 		// 파라미터별로 상이한 상품 목록들 세팅하기: shopping.do?category=???
 		//디폴트값: 인기순, 찾을 가격 0 ~ 1000000
->>>>>>> Stashed changes
 		
 		//위의 할인상품 정렬
 		pvo.setpSearchCondition("dc"); //sort 종류: sellDesc (인기순:주문량순) / priceAsc (낮은 가격순) / priceDesc (높은 가격순) / regiDesc (최신순) //sort?searchCondition?
@@ -65,10 +56,10 @@ public class ProductController {
 
 		model.addAttribute("pList", productService.selectAll(pvo)); 
 
-		if(pvo.getpCategory().equals("all")) { //쇼핑페이지 기본 이동
+		if(pvo.getCategory().equals("all")) { //쇼핑페이지 기본 이동
 			return "shop.jsp";
 		}
-		return "shop_"+pvo.getpCategory()+".jsp"; // 카테고리 별로 다른 페이지 이동 (all, food, treat, sand)
+		return "shop_"+pvo.getCategory()+".jsp"; // 카테고리 별로 다른 페이지 이동 (all, food, treat, sand)
 	}
 
 	// 상품세부페이지 이동
@@ -80,7 +71,7 @@ public class ProductController {
 		resPvo = productService.selectOne(pvo); // 상세페이지에서 보여줄 상품num을 selectAll에 돌린 결과를 resPvo에 저장
 
 		// 관련상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
-		pvo.setpCategory(resPvo.getpCategory()); // 관련상품정보를 가져오기 위해 카테고리 set
+		pvo.setCategory(resPvo.getCategory()); // 관련상품정보를 가져오기 위해 카테고리 set
 		pvo.setpSearchCondition("sellDesc"); // 관련상품 가져오기 위해 정렬 set
 		pvo.setSearchLowPrice(0); 
 		pvo.setSearchHighPrice(1000000);
