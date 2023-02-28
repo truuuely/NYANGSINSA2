@@ -7,10 +7,9 @@
 <!-- 전체 신상품(홈 페이지) 페이지에 직접 넣었음 -->
 <c:if test="${sort=='new'}">
 	<c:forEach var="v" items="${newPList}" begin="0" varStatus="status">
-		<c:set var="img" value="${v.imageNames}"></c:set>
 		<div class="col-lg-3">
 			<a href="shopDetails.do?pNum=${v.pNum}">
-				<div class="categories__item set-bg" data-setbg="${img[0]}">
+				<div class="categories__item set-bg" data-setbg="${v.imageName}">
 					<h5>${v.pName}</h5>
 				</div>
 			</a>
@@ -21,10 +20,9 @@
 <!-- 전체 인기상품(홈 페이지) 페이지에 직접 넣었음 -->
 <c:if test="${sort=='popular'}">
 	<c:forEach var="v" items="${popPList}" begin="0" end="14" varStatus="status">
-		<c:set var="img" value="${v.imageNames}"></c:set>
 		<div class="col-lg-3 col-md-4 col-sm-6 mix ${v.category}">
 			<div class="featured__item">
-				<div class="featured__item__pic set-bg" data-setbg="${img[0]}">
+				<div class="featured__item__pic set-bg" data-setbg="${v.imageName}">
 					<ul class="featured__item__pic__hover">
 						<li><a href="javascript:void(0);" onclick="javascript:insertCart(${v.pNum});">
 								<i class="fa fa-shopping-cart"></i>
@@ -48,11 +46,10 @@
 <!-- 전체 할인상품(쇼핑 페이지) -->
 <c:if test="${sort=='dc'}">
 	<c:forEach var="v" items="${pList}" begin="0" varStatus="status">
-		<c:set var="img" value="${v.imageNames}"></c:set>
 		<c:if test="${v.pDcPercent>0}">
 			<div class="col-lg-4">
 				<div class="product__discount__item">
-					<div class="product__discount__item__pic set-bg" data-setbg="${img[0]}">
+					<div class="product__discount__item__pic set-bg" data-setbg="${v.imageName}">
 						<div class="product__discount__percent">-${v.pDcPercent}%</div>
 						<ul class="product__item__pic__hover">
 							<li><a href="javascript:void(0);" onclick="javascript:insertCart(${v.pNum});">
@@ -78,10 +75,9 @@
 <!-- 관련 상품(상품 세부정보 페이지) 페이지에 직접 넣었음 -->
 <c:if test="${sort=='related'}">
 	<c:forEach var="v" items="${pList}" begin="0" end="9" varStatus="status">
-		<c:set var="img" value="${v.imageNames}"></c:set>
 		<div class="col-lg-3 col-md-4 col-sm-6">
 			<div class="product__item">
-				<div class="product__item__pic set-bg" data-setbg="${img[0]}">
+				<div class="product__item__pic set-bg" data-setbg="${v.imageName}">
 					<ul class="product__item__pic__hover">
 						<li><a href="javascript:void(0);" onclick="javascript:insertCart(${v.pNum});">
 								<i class="fa fa-shopping-cart"></i>
@@ -150,12 +146,12 @@
 						<li><img style="width: 20px;" src="img/eyes.png" alt="조회수 아이콘"> ${v.boardView }</li>
 						<c:choose>
 							<c:when test="${v.isChecked==true}">
-								<li id="${v.boardNum}"><a href="javascript:void(0);" onclick="javascript:updateLike(${v.boardNum}, down);">
+								<li id="${v.boardNum}"><a href="javascript:void(0);" onclick="javascript:updateLike(${v.boardNum}, 'down');">
 										<img class="heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png" alt="좋아요 아이콘">
 									</a> ${v.likeCnt}</li>
 							</c:when>
 							<c:otherwise>
-								<li id="${v.boardNum}"><a href="javascript:void(0);" onclick="javascript:updateLike(${v.boardNum}, up);">
+								<li id="${v.boardNum}"><a href="javascript:void(0);" onclick="javascript:updateLike(${v.boardNum}, 'up');">
 										<img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png" alt="좋아요 아이콘">
 									</a> ${v.likeCnt}</li>
 							</c:otherwise>
@@ -193,7 +189,7 @@
 							<li>
 							<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 							<c:if test="${v.rWriter==memberId}">
-								<li style="margin-left: auto; color: #49505787; border-bottom: 1px solid #49505787;"><a href="deleteReply.do">삭제</a></li>
+								<li style="margin-left: auto; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deletecheck(${v.bNum})">삭제</a></li>
 							</c:if>
 						</ul>
 
@@ -217,7 +213,7 @@
 		<c:forEach var="v" items="${rereply}" begin="0" varStatus="status">
 			<div id="rereplyDetail">
 				<img style="width: 20px;" src="img/rereply.png">
-				<div  style="width: 100%;">
+				<div style="width: 100%;">
 					<div class="replywriter">[작성자 : v.rWirter]</div>
 					<div id="replyContent">
 						<c:choose>
@@ -233,8 +229,6 @@
 										<li style="margin-left: auto;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" href="deleteReply.do">삭제</a></li>
 									</c:if>
 								</ul>
-
-
 							</c:otherwise>
 						</c:choose>
 					</div>

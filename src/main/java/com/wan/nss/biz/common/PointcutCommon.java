@@ -1,4 +1,4 @@
-package com.wan.nss.common;
+package com.wan.nss.biz.common;
 
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
