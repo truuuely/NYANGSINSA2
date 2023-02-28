@@ -21,7 +21,7 @@ import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.review.ReviewService;
 
 @Controller
-public class AdminController {
+public class AdminController { //관리자 gnb 페이지 이동으로만 구성됨. 기능을 보고 싶다면 해당 기능에 속하는 컨트롤러를 참고!
 
 	@Autowired
 	private MemberService memberService;
@@ -89,7 +89,7 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value = "/productManagePage.do") // 관리자 페이지 회원 관리 페이지 열기
+	@RequestMapping(value = "/productManagePage.do") // 관리자 페이지 상품 관리 페이지 열기
 	public String selectAllProductManage(HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");
@@ -109,7 +109,7 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 회원 관리 페이지 열기
+	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 주문 관리 페이지 열기
 	public String selectAllorderDetailManage(HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");
@@ -129,7 +129,7 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value = "/reviewManagePage.do") // 관리자 페이지 회원 관리 페이지 열기
+	@RequestMapping(value = "/reviewManagePage.do") // 관리자 페이지 리뷰 관리 페이지 열기
 	public String selectAllReviewManage(HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");

@@ -12,17 +12,10 @@
 	<!-- 에러 어노테이션 관리 (적절한 에러에 맞는 에러메서드 연결) -->
 	<mvc:annotation-driven></mvc:annotation-driven>
 	
-	<!-- 에러 xml 관리 (생성자주입): 이 것을 더 많이 쓴다고 함
+	<!-- 에러 xml 관리 -->
 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
-		<property name="exceptionMappings">
-			<props>
-				<prop key="java.lang.ArithmeticException">error/error01.jsp</prop>
-				<prop key="java.lang.NullPointerException">error/error02.jsp</prop>
-			</props>
-		</property>
-		<property name="defaultErrorView" value="error/error03.jsp" />
+		<property name="defaultErrorView" value="error/error.jsp" />
 	</bean> 
-	 -->
 
 	<!-- 이미지 업로드 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
