@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wan.nss.biz.image.ImageVO;
 import com.wan.nss.biz.member.MemberDAO;
 import com.wan.nss.biz.member.MemberService;
 import com.wan.nss.biz.member.MemberVO;
@@ -18,10 +19,11 @@ import com.wan.nss.biz.order.OrderVO;
 import com.wan.nss.biz.orderdetail.OrderDetailService;
 import com.wan.nss.biz.orderdetail.OrderDetailVO;
 import com.wan.nss.biz.product.ProductService;
+import com.wan.nss.biz.product.ProductVO;
 import com.wan.nss.biz.review.ReviewService;
 
 @Controller
-public class AdminController { //관리자 gnb 페이지 이동으로만 구성됨. 기능을 보고 싶다면 해당 기능에 속하는 컨트롤러를 참고!
+public class AdminController { //관리자 페이지 단순 이동(View, Detail)으로만 구성됨. 기능을 보고 싶다면 해당 기능에 속하는 컨트롤러를 참고!
 
 	@Autowired
 	private MemberService memberService;
@@ -34,7 +36,8 @@ public class AdminController { //관리자 gnb 페이지 이동으로만 구성�
 	@Autowired
 	private ReviewService reviewService;
 	
-	@RequestMapping(value = "/adminIndex.do") // 관리자 홈 페이지 열기
+	// (관리자) 관리자 메인 페이지 이동
+	@RequestMapping(value = "/adminIndex.do") 
 	public String adminIndexView(MemberVO mvo, MemberDAO memberDAO, OrderVO ovo, OrderDetailVO odvo, Model model, HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");
@@ -69,7 +72,8 @@ public class AdminController { //관리자 gnb 페이지 이동으로만 구성�
 		
 	}
 	
-	@RequestMapping(value = "/memberManagePage.do") // 관리자 페이지 회원 관리 페이지 열기
+	// (관리자) 회원 관리 페이지 이동
+	@RequestMapping(value = "/memberManagePage.do") 
 	public String selectAllMemberManage(HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");
@@ -89,7 +93,8 @@ public class AdminController { //관리자 gnb 페이지 이동으로만 구성�
 		
 	}
 	
-	@RequestMapping(value = "/productManagePage.do") // 관리자 페이지 상품 관리 페이지 열기
+	// (관리자) 상품 관리 페이지 이동
+	@RequestMapping(value = "/productManagePage.do") 
 	public String selectAllProductManage(HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");
@@ -107,6 +112,14 @@ public class AdminController { //관리자 gnb 페이지 이동으로만 구성�
 			return "product_manage.jsp";
 		}
 		
+	}
+	
+	// (관리자) 상품 상세보기 페이지 이동: model에는 있으나 view에는 아직 없음
+	@RequestMapping(value="/updateProductPage.do")
+	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
+		productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
+		model.addAttribute("image",);
+		return "product_manage_detail.jsp";
 	}
 	
 	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 주문 관리 페이지 열기
@@ -129,7 +142,8 @@ public class AdminController { //관리자 gnb 페이지 이동으로만 구성�
 		
 	}
 	
-	@RequestMapping(value = "/reviewManagePage.do") // 관리자 페이지 리뷰 관리 페이지 열기
+	// (관리자) 리뷰 관리 페이지 이동
+	@RequestMapping(value = "/reviewManagePage.do") 
 	public String selectAllReviewManage(HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");
@@ -146,6 +160,51 @@ public class AdminController { //관리자 gnb 페이지 이동으로만 구성�
 		else {
 			return "review_manage.jsp";
 		}
+		
+	}
+	
+	// (관리자) 게시글 관리 페이지 이동 ()
+	@RequestMapping(value = "/boardManageView.do") 
+	public String boardManageView() {
+		
+	}
+	
+	// (관리자) 게시글 관리 페이지 이동
+	@RequestMapping(value = "/boardManageView.do") 
+	public String boardManageView() {
+		
+	}
+	
+	// (관리자) 게시글 상세보기 페이지 이동
+	@RequestMapping(value = "/selectOneBoardDetail.do") 
+	public String selectOneBoardDetail() {
+		
+	}
+	
+	// (관리자) 신고 게시글 관리 페이지 이동
+	@RequestMapping(value = "/boardManageView.do") 
+	public String boardManageView() {
+		
+	}
+	
+	// (관리자) 신고 게시글 상세보기 페이지 이동
+	@RequestMapping(value = "/boardManageView.do") 
+	public String boardManageView() {
+		
+	}
+	// (관리자) 게시글 관리 페이지 이동
+	@RequestMapping(value = "/boardManageView.do") 
+	public String boardManageView() {
+		
+	}
+	// (관리자) 게시글 관리 페이지 이동
+	@RequestMapping(value = "/boardManageView.do") 
+	public String boardManageView() {
+		
+	}
+	// (관리자) 게시글 관리 페이지 이동
+	@RequestMapping(value = "/boardManageView.do") 
+	public String boardManageView() {
 		
 	}
 	
