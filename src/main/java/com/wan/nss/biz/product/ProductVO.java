@@ -3,7 +3,7 @@ package com.wan.nss.biz.product;
 public class ProductVO {
 	private int pNum; //상품 번호
 	private String pName; // 상품이름
-	private String pCategory; // 상품 카테고리
+	private String Category; // 상품 카테고리
 	private int price; // 가격 
 	private int pAmt; // 재고
 	private String pDetail; // 상품 상세 설명
@@ -37,11 +37,11 @@ public class ProductVO {
 	public void setpName(String pName) {
 		this.pName = pName;
 	}
-	public String getpCategory() {
-		return pCategory;
+	public String getCategory() {
+		return Category;
 	}
-	public void setpCategory(String pCategory) {
-		this.pCategory = pCategory;
+	public void setpCategory(String Category) {
+		this.Category = Category;
 	}
 	public int getPrice() {
 		return price;
@@ -117,7 +117,7 @@ public class ProductVO {
 	}
 	@Override
 	public String toString() {
-		return "ProductVO [pNum=" + pNum + ", pName=" + pName + ", pCategory=" + pCategory + ", price=" + price
+		return "ProductVO [pNum=" + pNum + ", pName=" + pName + ", pCategory=" + Category + ", price=" + price
 				+ ", pAmt=" + pAmt + ", pDetail=" + pDetail + ", pDcPercent=" + pDcPercent + ", searchLowPrice="
 				+ searchLowPrice + ", searchHighPrice=" + searchHighPrice + ", total=" + total + ", dc_price="
 				+ dc_price + ", pCnt=" + pCnt + ", pSearchCondition=" + pSearchCondition + ", pSearchContent="

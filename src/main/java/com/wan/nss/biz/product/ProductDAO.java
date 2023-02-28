@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.wan.nss.biz.orderdetail.OrderDetailVO;
+
 @Repository("productDAO")
 public class ProductDAO {
 
@@ -79,7 +81,7 @@ public class ProductDAO {
 
 	// 상품 추가
 	public boolean insert(ProductVO pvo) {
-		jdbcTemplate.update(SQL_INSERT, pvo.getpName(), pvo.getpCategory(), pvo.getPrice(), pvo.getpAmt(),
+		jdbcTemplate.update(SQL_INSERT, pvo.getpName(), pvo.getCategory(), pvo.getPrice(), pvo.getpAmt(),
 				pvo.getpDetail(), pvo.getpDcPercent());
 		return true;
 	}
@@ -89,8 +91,9 @@ public class ProductDAO {
 		if (pvo.getpAmt() >= 0) {
 			jdbcTemplate.update(SQL_UPDATE_AMOUNT, pvo.getpAmt(), pvo.getpNum());
 			return true;
+			
 		} else {
-			jdbcTemplate.update(SQL_UPDATE, pvo.getpName(), pvo.getpCategory(), pvo.getPrice(), pvo.getpAmt(),
+			jdbcTemplate.update(SQL_UPDATE, pvo.getpName(), pvo.getCategory(), pvo.getPrice(), pvo.getpAmt(),
 					pvo.getpDetail(), pvo.getpDcPercent(), pvo.getpNum());
 			return true;
 		}
@@ -134,7 +137,7 @@ public class ProductDAO {
 				
 			} else if (pvo.getpSearchCondition().equals("related")) { 
 				// 관련상품
-				Object[] args = { pvo.getpCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
+				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_SELLDESC, args, new ProductRowMapper());
 				
 			} else {
@@ -143,60 +146,62 @@ public class ProductDAO {
 			}
 		}
 		else {
-			if(!pvo.getpCategory().equals("all") && pvo.getSort().equals("sellDesc")) {
+			if(!pvo.getCategory().equals("all") && pvo.getSort().equals("sellDesc")) {
 				// 카테고리가 있고  sort가 sellDesc 카테고리별 인기순
-				Object[] args = { pvo.getpCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
+				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_SELLDESC, args, new ProductRowMapper());
 		
-			}  else if(!pvo.getpCategory().equals("all") && pvo.getSort().equals("priceAsc")) {
+			}  else if(!pvo.getCategory().equals("all") && pvo.getSort().equals("priceAsc")) {
 				// 카테고리가 있고 sort가 PRICEASC 카테고리별 낮은 가격순
-				Object[] args = { pvo.getpCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
+				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_PRICEASC, args, new ProductRowMapper());
 				
-			}  else if(!pvo.getpCategory().equals("all") && pvo.getSort().equals("priceDesc")) {
+			}  else if(!pvo.getCategory().equals("all") && pvo.getSort().equals("priceDesc")) {
 				// 카테고리가 있고 sort가 CATEGORY_PRICEDESC 카테고리별 높은 가격순
-				Object[] args = { pvo.getpCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
+				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_PRICEDESC, args, new ProductRowMapper());
 				
-			}  else if(!pvo.getpCategory().equals("all") && pvo.getSort().equals("regiDesc")) {
+			}  else if(!pvo.getCategory().equals("all") && pvo.getSort().equals("regiDesc")) {
 				// 카테고리가 있고 CATEGORY_REGIDESC 카테고리별 최신순
-				Object[] args = { pvo.getpCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
+				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_REGIDESC, args, new ProductRowMapper());
 				
-			}  else if(pvo.getpCategory().equals("all") && pvo.getSort().equals("sellDesc")) {
+			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("sellDesc")) {
 				// 카테고리가 없고  sort가 sellDesc 카테고리별 인기순
 				System.out.println("	로그: SA pcategory==all sort=sellDesc");
 				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_POPULAR, args, new ProductRowMapper());
 		
-			}  else if(pvo.getpCategory().equals("all") && pvo.getSort().equals("priceAsc")) {
+			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("priceAsc")) {
 				// 카테고리가 없고 sort가 PRICEASC 카테고리별 낮은 가격순
 				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_PRODUCT_ASC, args, new ProductRowMapper());
 				
-			}  else if(pvo.getpCategory().equals("all") && pvo.getSort().equals("priceDesc")) {
+			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("priceDesc")) {
 				// 카테고리가 없고 sort가 CATEGORY_PRICEDESC 카테고리별 높은 가격순
 				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_PRODUCT_DESC, args, new ProductRowMapper());
 				
-			}  else if(pvo.getpCategory().equals("all") && pvo.getSort().equals("regiDesc")) {
+			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("regiDesc")) {
 				// 카테고리가 없고 CATEGORY_REGIDESC 카테고리별 최신순
 				System.out.println("	로그: SA pcategory==all sort=regiDesc");
 				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_NEW, args, new ProductRowMapper());
 				
 			}
-			else if (pvo.getpCategory() != null) { // 상품 카테고리별 검색
-				Object[] args = { pvo.getpCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
+			else if (pvo.getCategory() != null) {
+				// 상품 카테고리별 검색
+				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY, args, new ProductRowMapper());
+				
 			} else {
 				// 모두 해당 안되면
 				return null;
 			}
-			
 		}
+	}
 		
-		// SQL문의 where 절에 Image 테이블 TYPE_NO 컬럼이 필요한데, vo에 I_NM만 멤버변수로 가지고 있으면 불러올 수가 없을
+		 //SQL문의 where 절에 Image 테이블 TYPE_NO 컬럼이 필요한데, vo에 I_NM만 멤버변수로 가지고 있으면 불러올 수가 없을
 		// 것 같아서
 		// ImageVO 제작해서 객체화하고 typeNum 불러와서 값 넣음.
 //		if(ivo.getTypeNum()==101||ivo.getTypeNum()==102) {
@@ -204,7 +209,7 @@ public class ProductDAO {
 //			return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_IMAGE, args, new ProductRowMapper());
 //		}
 //		return null;
-	}
+//	}
 
 	// 상품 상세 검색
 	public ProductVO selectOne(ProductVO pvo) {
