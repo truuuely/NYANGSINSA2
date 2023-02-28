@@ -2,11 +2,15 @@ package com.wan.nss.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.wan.nss.biz.image.ImageVO;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 import com.wan.nss.biz.review.ReviewService;
@@ -27,86 +31,88 @@ public class ProductController {
 		// 신상품 데이터. pvo : category == all, sort == regiDesc
 		System.out.println("	로그: main.do");
 		pvo.setpCategory("all");
-		pvo.setSort("regiDesc");
+		pvo.setpSearchCondition("new");//sort?searchCondition?
 		pvo.setSearchLowPrice(0);
 		pvo.setSearchHighPrice(1000000);
 		model.addAttribute("newPList", productService.selectAll(pvo)); 
 
-		// 인기 상품. pvo : category == all, sort == sellDesc //돌려봐야 위의 내용이 아래에 그대로 적용되는지 알 거 같음
-		pvo.setSort("sellDesc");
+		// 인기 상품. pvo : category == all, sort == sellDesc
+		pvo.setpSearchCondition("popular");//sort?searchCondition?
 		model.addAttribute("popPList", productService.selectAll(pvo));
 
 		return "main.jsp";
 	}
 
+<<<<<<< Updated upstream
 	// 파라미터별로 상이한 상품 목록들 setAttribute 하기
 	// 참고 : shopping.do?category=all&sort=sellDesc
 	@RequestMapping(value="/shop.do")
 	public String shopView(ProductVO pvo,Model model) {
 
 		//사용자에게 받은 카테고리는 자동매핑하여 세팅됨
+=======
+	// 쇼핑페이지 이동 
+	@RequestMapping(value="/shop.do")
+	public String shopView(ProductVO pvo,Model model, HttpSession session) {
+		// 파라미터별로 상이한 상품 목록들 세팅하기: shopping.do?category=???
+		//디폴트값: 인기순, 찾을 가격 0 ~ 1000000
+>>>>>>> Stashed changes
 		
-		// view에서 받아온 sort :
-		// 		sellDesc (인기순:주문량순)
-		// 		priceAsc (낮은 가격순)
-		// 		priceDesc (높은 가격순)
-		// 		regiDesc (최신순)
-		pvo.setSort("regiDesc");
+		//위의 할인상품 정렬
+		pvo.setpSearchCondition("dc"); //sort 종류: sellDesc (인기순:주문량순) / priceAsc (낮은 가격순) / priceDesc (높은 가격순) / regiDesc (최신순) //sort?searchCondition?
 		pvo.setSearchLowPrice(0);
 		pvo.setSearchHighPrice(1000000);
 
-		model.addAttribute("pList", productService.selectAll(pvo)); // pdao 에서 불러오기
+		model.addAttribute("pList", productService.selectAll(pvo)); 
 
-		// 카테고리 : all, food, treat, sand
-		// 카테고리 별로 다른 페이지 
-		if(pvo.getpCategory().equals("all")) {
+		if(pvo.getpCategory().equals("all")) { //쇼핑페이지 기본 이동
 			return "shop.jsp";
 		}
-		return "shop_"+pvo.getpCategory()+".jsp";
+		return "shop_"+pvo.getpCategory()+".jsp"; // 카테고리 별로 다른 페이지 이동 (all, food, treat, sand)
 	}
 
+	// 상품세부페이지 이동
 	@RequestMapping(value="shopDetails/.do")
 	public String shopDetailView(ProductVO pvo,ReviewVO rvo,Model model) {
 		System.out.println("pNum: "+pvo.getpNum());
 		pvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set
+		ProductVO resPvo = new ProductVO();//현재 pvo
+		resPvo = productService.selectOne(pvo); // 상세페이지에서 보여줄 상품num을 selectAll에 돌린 결과를 resPvo에 저장
 
-		// 카테고리 별 인기상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
-		pvo.setpCategory(pvo.getpCategory()); // 관련상품 가져오기 위해 카테고리 set
-		pvo.setSort("sellDesc"); // 관련상품 가져오기 위해 정렬 set
+		// 관련상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
+		pvo.setpCategory(resPvo.getpCategory()); // 관련상품정보를 가져오기 위해 카테고리 set
+		pvo.setpSearchCondition("sellDesc"); // 관련상품 가져오기 위해 정렬 set
 		pvo.setSearchLowPrice(0); 
 		pvo.setSearchHighPrice(1000000);
 
 		ArrayList<ReviewVO> rList = reviewService.selectAll(rvo); // 리뷰 리스트
 		ArrayList<ProductVO> pList = productService.selectAll(pvo); // 관련 상품 리스트
 
-		model.addAttribute("pvo", pvo);
+		model.addAttribute("pvo", pvo); //해당 상품의 정보들을 보내줌
 		model.addAttribute("rList", rList);
 		model.addAttribute("pList", pList);
 
 		return "shop_details.jsp";
 	}
 
-
-	/*
-	@RequestMapping(value="/createProduct.do")
-	public String insertProduct() {
-
-		//없는 기능이므로 주석처리합니다.
-		// 1. 파라미터 받아오기 : 카테고리, 상품 이름, 가격, 재고, 설명
-		// 2. 상품 이미지 올리기 : 대표이미지(pImgUrl), 상세 이미지(pImgUrl2)
-
+	// (관리자)상품 추가 기능: model에는 있으나 view에는 아직 없음
+	@RequestMapping(value="/createProduct.do", method=RequestMethod.POST)
+	public String insertProduct(ProductVO pvo, Model model) {
+		productService.insert(pvo); //카테고리, 상품 이름, 가격, 재고, 설명 추가
+		// 2. 상품 이미지 올리기는 추후 구현 예정: 대표이미지(pImgUrl), 상세 이미지(pImgUrl2)
 		return "product_manage_insert.jsp";
 	}
-	 */
 
+	// (관리자)상품 상세보기 페이지 이동: model에는 있으나 view에는 아직 없음
 	@RequestMapping(value="/updateProductPage.do")
-	public String updateProuctView(ProductVO pvo, Model model) {
+	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
 		productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
+		model.addAttribute("image",);
 		return "product_manage_detail.jsp";
 	}
 
-	/*미완 사유: CKEditor에서 어떻게 값을 전달하는지 알지 못해서 주석처리만 함. 추후 알게 되면 주석 풀고 수정 예정
-	@RequestMapping(value="/updateProduct.do")
+	/* (관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정: model에는 있으나 view에는 아직 없음
+	@RequestMapping(value="/updateProduct.do", method=RequestMethod.POST)
 	public String updateProduct(ProductVO pvo, Model model,
 			HttpServletResponse response,HttpServletRequest request) {
 
@@ -153,8 +159,11 @@ public class ProductController {
 	//추후 보드까지 검색되게 수정 예정
 	@RequestMapping(value="/search.do")
 	public String selectAllProductSearch(ProductVO pvo,Model model) {
-		model.addAttribute("data",pvo.getpSearchContent()); //뷰에서 받은 searchContent를 그대로 뷰로 보냄
-
+		System.out.println("searchCondition: "+pvo.getpSearchCondition());
+		System.out.println("searchContent: "+pvo.getpSearchContent());
+	
+		model.addAttribute("data",productService.selectAll(pvo)); 
+	
 		return "search_result.jsp";
 	}
 

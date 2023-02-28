@@ -25,45 +25,37 @@ public class ReviewController {
 	@Autowired
 	private ProductService productService;
 
-	//미완 사유: 문영님 isWritten 이게 뭐에요?
-//	@RequestMapping(value="/reviewPage.do")
-//	public String reviewView(ReviewVO rvo,ProductVO pvo,Model model,HttpSession session,
-//			HttpServletResponse response) {
-//		String rWriter = (String) session.getAttribute("memberId");
-//		System.out.println(rvo.getpNum());
-//		ArrayList<ReviewVO> rdatas = reviewService.selectAll(rvo);
-//		
-//		System.out.println("pNum: " + pvo.getpNum()); 	
-//		pvo = productService.selectOne(pvo); // 리뷰 작성 창 세팅하기
-//
-//		model.addAttribute("pNum", pvo.getpNum());
-//		model.addAttribute("pImgUrl", pvo. .getpImgUrl());
-//		model.addAttribute("pName", pvo.getpName());
-//		try {
-//		for (ReviewVO v : rdatas) {
-//			if (v.getrWriter().equals(rWriter)) { // 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우
-//				//return "isWritten"; //forward.setPath("isWritten");
-//				response.getWriter().println("<SCRIPT>alert('이미 리뷰를 작성하셨습니다.'); window.close();</SCRIPT>"); // 리뷰 작성 창 닫기
-//				return "order_detail.jsp";
-//			}
-//		}
-//		}catch(Exception e) {
-//			System.out.println("추가됨");
-//			e.printStackTrace();
-//		}
-//		
-//		return "review.jsp";
-//	}
-	//결합도가 높아서? 이 방법 말고 다른 방법을 찾으려고 한다?
-	/*
-	프론트 컨트롤러에 있던 창인데 결합도를 낮추려면 어떤 방향으로 가는 게 좋은가요?
-	if (forward.getPath().equals("isWritten")) {
-			response.setContentType("text/html; charset=utf-8");
-			response.getWriter().println("<SCRIPT>alert('이미 리뷰를 작성하셨습니다.'); window.close();</SCRIPT>"); // 리뷰 작성 창 닫기
-			return;
-		}
-	*/
+	//리뷰 페이지 이동 (이미 쓴 리뷰를 또 쓰려고 접근하면 돌려보냄)
+	@RequestMapping(value="/reviewPage.do")
+	public String reviewView(ReviewVO rvo,ProductVO pvo,Model model,HttpSession session,
+			HttpServletResponse response) {
+		String userId = (String)session.getAttribute("userId");//로그인한 회원아이디
+	    
+		ArrayList<ReviewVO> rdatas = reviewService.selectAll(rvo); //리뷰 전체보기
+		
+		System.out.println("pNum: " + pvo.getpNum()); 	
+		pvo = productService.selectOne(pvo); // 리뷰 작성 창 세팅하기
 
+		model.addAttribute("pNum", pvo.getpNum());
+		//model.addAttribute("pImgUrl", pvo.getpImgUrl());
+		model.addAttribute("pName", pvo.getpName());
+		try {
+			
+		for (ReviewVO v : rdatas) {
+			if (v.getUserId().equals(userId)) { // 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우
+				response.getWriter().println("<SCRIPT>alert('이미 리뷰를 작성하셨습니다.'); window.close();</SCRIPT>"); // 리뷰 작성 창 닫기
+				return "order_detail.jsp";
+			}
+		}
+		}catch(Exception e) {
+			System.out.println("리뷰페이지 이동 오류");
+			e.printStackTrace();
+		}
+		
+		return "review.jsp";
+	}
+
+	// 사용자 리뷰 추가
 	@RequestMapping(value="/insertReview.do")
 	public String insertReview(ReviewVO rvo, Model model,HttpServletResponse response) {
 		response.setContentType("text/html; charset=utf-8");
@@ -82,7 +74,7 @@ public class ReviewController {
 		return "order_detail.jsp";
 	}
 
-	//당장은 안 쓰지만 관리자가 지우려고 남겨둠
+	// (관리자)리뷰 삭제
 	@RequestMapping(value="/deleteReview.do")
 	public String deleteReview(ReviewVO rvo, ReviewDAO rdao, HttpSession session,
 			HttpServletResponse response, HttpServletRequest request) {
@@ -106,7 +98,6 @@ public class ReviewController {
 			if (!reviewService.delete(rvo)) { // 리뷰 삭제 실패 시
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('Delete 실패. 잠시 후 다시 시도하세요.');</SCRIPT>");
-				//return ; //빈칸에는 추후 리뷰 상세페이지로 이동할 예정
 			}
 		}catch(Exception e) {
 			System.out.println("deleteReview 오류: delete 실패 알림창 오류");
