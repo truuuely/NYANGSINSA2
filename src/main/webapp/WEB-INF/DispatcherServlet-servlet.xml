@@ -13,9 +13,9 @@
 	<mvc:annotation-driven></mvc:annotation-driven>
 	
 	<!-- 에러 xml 관리 -->
-	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+<!-- 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="defaultErrorView" value="error/error.jsp" />
-	</bean> 
+	</bean>  -->
 
 	<!-- 이미지 업로드 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
