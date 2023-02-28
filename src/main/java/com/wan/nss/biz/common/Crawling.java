@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,8 +30,9 @@ public class Crawling {
 	@Autowired
 	private ImageDAO imageDAO = new ImageDAO();
 
-//	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-//	private final String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
+	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
+	//★★★★★ 각자 알맞게 경로 수정!!!
+	private final String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
 	private final int MAX = 15;
 
 	public void downloadFile(URL url, String fileName) throws Exception {
@@ -41,22 +43,21 @@ public class Crawling {
 	
 	public void sample() {
 		List<String> urlDatas = urlDatas();
-//		try {
-//			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
+		try {
+			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// 크롬 설정을 담은 객체 생성
-//		ChromeOptions options = new ChromeOptions();
-//
-//		// options.addArguments("headless");
-//		options.addArguments("--disable-popup-blocking"); // 팝업안띄움
-//		options.addArguments("headless"); // 브라우저 안띄움
-//		options.addArguments("--disable-gpu"); // gpu 비활성화
-//		options.addArguments("--blink-settings=imagesEnabled=false"); // 이미지 다운 안받음
+		ChromeOptions options = new ChromeOptions();
+
+		options.addArguments("--disable-popup-blocking"); // 팝업안띄움
+		options.addArguments("headless"); // 브라우저 안띄움
+		options.addArguments("--disable-gpu"); // gpu 비활성화
+		options.addArguments("--blink-settings=imagesEnabled=false"); // 이미지 다운 안받음
 
 		// WebDriver객체가 곧 하나의 브라우저 창이라 생각한다.
-		WebDriver driver = new ChromeDriver();
+		WebDriver driver = new ChromeDriver(options);
 		for (int i = 0; i < urlDatas.size(); i++) {
 			try {
 				
@@ -65,8 +66,6 @@ public class Crawling {
 				String name = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/h2")).get(0).getText();
 				// 상품 가격 크롤링
 				String price = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/s")).get(0).getText();
-				// 상품 할인율 크롤링
-				String dcPercent = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/span")).get(0).getText();
 				// 이미지 크롤링
 				// 이미지 주소는 파일 다운로드를 위해 URL 객체로 만들기
 				String url = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
@@ -76,6 +75,10 @@ public class Crawling {
 				// 상품 간단 설명 크롤링
 				String info = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/button/div/div")).getText();
 
+				// 상품 할인율 생성
+				int dcPercent;
+					dcPercent = (new Random().nextInt(6)) * 5;
+				
 				// 크롤링 데이터 확인 부분
 				System.out.println(i + 100 + ". 상품이름 :"+name);
 				System.out.println(i + 100 + ". 상품가격 :"+price);
@@ -100,6 +103,7 @@ public class Crawling {
 				// ivo insert into IMAGE
 				imageDAO.insert(ivo);
 				
+				//★★★★★ 각자 알맞게 경로 수정!!!
 				// 폴더가 없으면 생성하기
 				File dir = new File("C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/101");
 				if ( !dir.exists() ) {
@@ -110,6 +114,7 @@ public class Crawling {
 				// 폴더 생성 시간 확보하기
 				try {Thread.sleep(1000);} catch (InterruptedException e) {}
 				
+				//★★★★★ 각자 알맞게 경로 수정!!!
 				// 이미지 파일 저장하기
 				// images/productImages/번호/파일명
 				downloadFile(imgUrl, "C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일 다운로드하기
@@ -128,6 +133,7 @@ public class Crawling {
 				// ivo insert into IMAGE
 				imageDAO.insert(ivo);
 				
+				//★★★★★ 각자 알맞게 경로 수정!!!
 				// 폴더가 없으면 생성하기
 				File dir2 = new File("C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/102");
 				if ( !dir2.exists() ) {
@@ -135,6 +141,7 @@ public class Crawling {
 					dir2.mkdir();
 				}
 				
+				//★★★★★ 각자 알맞게 경로 수정!!!
 				// 이미지 파일 저장하기
 				downloadFile(imgUrl2, "C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/102/" + (i + 100) + ".jpg"); // 파일 다운로드하기
 
@@ -159,11 +166,7 @@ public class Crawling {
 				// 수량은 기본 10으로 고정
 				pvo.setpAmt(10);
 				// 할인율데이터에서 % 제거
-				String dcPercentNumOnly = dcPercent.replaceAll("%", "");
-				if(dcPercentNumOnly.equals("")) {
-					dcPercentNumOnly = "0";
-				}
-				pvo.setpDcPercent(Integer.parseInt(dcPercentNumOnly));
+				pvo.setpDcPercent(dcPercent);
 				pvo.setpDetail(info);
 				productDAO.insert(pvo);
 				
@@ -185,20 +188,20 @@ public class Crawling {
 	}
 
 	public List<String> urlDatas() {
-		/*
-		 * try { System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
-		 * } catch (Exception e) {
-		 * e.printStackTrace();
-		 * }
-		 */
+		
+		 try { 
+			 System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		 } catch (Exception e) {
+		 	e.printStackTrace();
+		 }
 
 		// 크롬 설정을 담은 객체 생성
-//		ChromeOptions options = new ChromeOptions();
-//
+		ChromeOptions options = new ChromeOptions();
+
 //		options.addArguments("headless");
 
 		// WebDriver객체가 곧 하나의 브라우저 창이라 생각한다.
-		WebDriver driver = new ChromeDriver();
+		WebDriver driver = new ChromeDriver(options);
 
 		List<String> category = new ArrayList<String>();
 		List<String> urlDatas = new ArrayList<String>();

@@ -42,9 +42,13 @@ public class OrderDetailDAO {
 			// 회원 상세 주문 내역  
 			Object[] args = { odvo.getoNum() };
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL_ONUM, args, new OrderDetailRowMapper());
+
 			
 		} else if (pvo.getCategory() != null) { 
 			// 카테고리별 상세 주문 상품 수량 및 가격 (관리자)
+
+		} else if (pvo.getCategory() != null) { // 상품 수량 및 가격 
+
 			Object[] args = { pvo.getCategory() };
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTONE_CATEGORY_CNT_SUM, args, new OrderDetailRowMapper());
 			
