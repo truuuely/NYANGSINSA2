@@ -1,17 +1,25 @@
 package com.wan.nss.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.wan.nss.biz.board.BoardService;
+import com.wan.nss.biz.board.BoardVO;
+
 @Controller
 public class BoardController {
 
-//	@RequestMapping(value="/.do")
-//	public String View() {
-//		
-//	}
-//
+	@Autowired
+	private BoardService boardService;
+	
+	@RequestMapping(value="/boardView.do")
+	public String boardView(BoardVO bvo, Model model) {
+		model.addAttribute("bList", boardService.selectAll(bvo));
+		return "board.jsp";
+	}
+
 //	@RequestMapping(value="/.do")
 //	public String insertBoard(VO vo, DAO DAO, Model model) {
 //

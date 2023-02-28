@@ -181,18 +181,27 @@
 		<div id="replyDetail">
 			<div class="replywriter">[작성자 : ${v.rWriter}]</div>
 			<div id="replyContent">
+				<c:choose>
+					<c:when test="${reply.status==3}">
+						<div style="font-size: 15px; color: #6f6f6fc4; margin-bottom: 10px;" id="replyContent">삭제된 댓글입니다.</div>
+					</c:when>
+					<c:otherwise>
+						<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
+							<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.replyDate}</li>
+							<li>
+								<button id="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
+							<li>
+							<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+							<c:if test="${v.rWriter==memberId}">
+								<li style="margin-left: auto; color: #49505787; border-bottom: 1px solid #49505787;"><a href="deleteReply.do">삭제</a></li>
+							</c:if>
+						</ul>
+
+
+					</c:otherwise>
+				</c:choose>
 				<div style="font-size: 15px;" id="replyContent">${v.replyContent}</div>
 			</div>
-			<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
-				<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.replyDate}</li>
-				<li>
-					<button id="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
-				<li>
-				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
-				<c:if test="${v.rWriter==memberId}">
-					<li><a href="deleteReply.do">삭제</a></li>
-				</c:if>
-			</ul>
 		</div>
 		<div id="rereplywrite">
 			<form action="#" method="post" style="width: 90%;">
@@ -208,18 +217,27 @@
 		<c:forEach var="v" items="${rereply}" begin="0" varStatus="status">
 			<div id="rereplyDetail">
 				<img style="width: 20px;" src="img/rereply.png">
-				<div>
+				<div  style="width: 100%;">
 					<div class="replywriter">[작성자 : v.rWirter]</div>
 					<div id="replyContent">
-						<div style="font-size: 15px;" id="replyContent">${v.rereplyContent}</div>
+						<c:choose>
+							<c:when test="${v.status==3}">
+								<div style="font-size: 15px; color: #6f6f6fc4; margin-bottom: 10px;" id="replyContent">삭제된 댓글입니다.</div>
+							</c:when>
+							<c:otherwise>
+								<div style="font-size: 15px;" id="replyContent">${v.rereplyContent}</div>
+								<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
+									<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.rereplyDate}</li>
+									<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+									<c:if test="${v.rWriter==memberId}">
+										<li style="margin-left: auto;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" href="deleteReply.do">삭제</a></li>
+									</c:if>
+								</ul>
+
+
+							</c:otherwise>
+						</c:choose>
 					</div>
-					<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
-						<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${v.rereplyDate}</li>
-						<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
-						<c:if test="${v.rWriter==memberId}">
-							<li><a href="deleteReply.do">삭제</a></li>
-						</c:if>
-					</ul>
 				</div>
 			</div>
 

@@ -1,4 +1,4 @@
-package com.wan.nss.common;
+package com.wan.nss.biz.common;
 
 import java.io.File;
 import java.io.InputStream;
@@ -14,35 +14,32 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
-import com.wan.nss.biz.image.ImageService;
+import com.wan.nss.biz.image.ImageDAO;
 import com.wan.nss.biz.image.ImageVO;
-import com.wan.nss.biz.product.ProductService;
+import com.wan.nss.biz.product.ProductDAO;
 import com.wan.nss.biz.product.ProductVO;
 
-@Controller
+@Component
 public class Crawling {
 
-	static ProductVO pvo = new ProductVO();
-	static ImageVO ivo = new ImageVO();
-//	static ProductDAO productDAO = new ProductDAO();
-//	static ImageDAO imageDAO = new ImageDAO();
 	@Autowired
-	static ProductService productService;
+	private ProductDAO productDAO = new ProductDAO();
 	@Autowired
-	static ImageService imageService;
-	final static String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-	final static String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
-	final static int MAX = 15;
+	private ImageDAO imageDAO = new ImageDAO();
 
-	public static void downloadFile(URL url, String fileName) throws Exception {
+	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
+	private final String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
+	private final int MAX = 15;
+
+	public void downloadFile(URL url, String fileName) throws Exception {
         try (InputStream in = url.openStream()) {
             Files.copy(in, Paths.get(fileName));
         }
     }
 	
-	public static void sample() {
+	public void sample() {
 		List<String> urlDatas = urlDatas();
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
@@ -62,12 +59,14 @@ public class Crawling {
 		WebDriver driver = new ChromeDriver(options);
 		for (int i = 0; i < urlDatas.size(); i++) {
 			try {
+				
 				driver.get(urlDatas.get(i));
 				// 상품 이름 크롤링
-//				String name = driver.findElements(By.cssSelector("div > div > div.MuiContainer-root.jss9.MuiContainer-disableGutters > div.jss16 > div.jss17 > div.jss21 > div.jss23 > div.jss24 > div.jss57 > h2")).get(0).getText();
 				String name = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/h2")).get(0).getText();
 				// 상품 가격 크롤링
-				String price = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/strong")).get(0).getText();
+				String price = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/s")).get(0).getText();
+				// 상품 할인율 크롤링
+				String dcPercent = driver.findElements(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/span")).get(0).getText();
 				// 이미지 크롤링
 				// 이미지 주소는 파일 다운로드를 위해 URL 객체로 만들기
 				String url = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
@@ -77,60 +76,96 @@ public class Crawling {
 				// 상품 간단 설명 크롤링
 				String info = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/button/div/div")).getText();
 
-				System.out.println(i+" 상품이름 "+name);
-				System.out.println(i+" 상품가격 "+price);
-				System.out.println(i+" img "+url);
-				System.out.println(i+" img2 "+url2);
-				System.out.println(i+" 상품설명 "+info);
+				// 크롤링 데이터 확인 부분
+				System.out.println(i + 100 + ". 상품이름 :"+name);
+				System.out.println(i + 100 + ". 상품가격 :"+price);
+				System.out.println(i + 100 + ". 상품할인율 :" + dcPercent);
+				System.out.println(i + 100 + ". imgUrl: " + url);
+				System.out.println(i + 100 + ". imgUrl2: " + url2);
+				System.out.println(i + 100 + ". 상품설명: " + info);
 				
 				
-				// 이미지 파일로 저장하기
-				// images/productImages/번호/파일명
-
+				// IMAGE 테이블에 추가
 				// img 멤버변수 세팅
+				ImageVO ivo = new ImageVO();
 				// targetNum = pNum = i+1
-				ivo.setTargetNum(i+100);
+				ivo.setTargetNum(i + 100);
 				// typeNum = 101
 				ivo.setTypeNum(101);
 				// imageName = fileName;
 				String fileName = url.substring(url.lastIndexOf('/')+1, url.length()); // 소스에서 파일명 가져오기
-				System.out.println(i+" 파일네임1 "+fileName);
+				System.out.println(i + 100 + ". 파일네임1: " + fileName);
 				ivo.setImageName(fileName);
-				imageService.insert(ivo);
-//				imageDAO.insert(ivo);
+				
+				// ivo insert into IMAGE
+				imageDAO.insert(ivo);
 				
 				// 폴더가 없으면 생성하기
-				File dir = new File("C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/productImg/" + i+100);
+				File dir = new File("C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/101");
 				if ( !dir.exists() ) {
+					System.out.println(i + 100 + ". 폴더생성시작");
 					dir.mkdir();
 				}
 				
 				// 폴더 생성 시간 확보하기
 				try {Thread.sleep(1000);} catch (InterruptedException e) {}
 				
-				downloadFile(imgUrl, dir + "/" + fileName); // 파일 다운로드하기
+				// 이미지 파일 저장하기
+				// images/productImages/번호/파일명
+				downloadFile(imgUrl, "C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일 다운로드하기
 				
+				// IMAGE 테이블에 추가
 				// img2 멤버변수 세팅
 				// targetNum = pNum = i+1
 				ivo.setTargetNum(i+100);
 				// typeNum = 102
 				ivo.setTypeNum(102);
 				// imageName = fileName;
-				String fileName2 = url2.substring(url2.lastIndexOf('/')+1, url.length()); // 파일명 가져오기
-				System.out.println(i+" 파일네임2 "+fileName2);
+				String fileName2 = url2.substring(url2.lastIndexOf('/')+1, url2.length()); // 파일명 가져오기
+				System.out.println(i + 100 + ". 파일네임2: " + fileName2);
 				ivo.setImageName(fileName2);
-//				imageService.insert(ivo);
-//				imageDAO.insert(ivo);
 				
-				downloadFile(imgUrl2, dir + "/" + fileName); // 파일 다운로드하기
+				// ivo insert into IMAGE
+				imageDAO.insert(ivo);
+				
+				// 폴더가 없으면 생성하기
+				File dir2 = new File("C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/102");
+				if ( !dir2.exists() ) {
+					System.out.println(i + 100 + ". 폴더생성시작");
+					dir2.mkdir();
+				}
+				
+				// 이미지 파일 저장하기
+				downloadFile(imgUrl2, "C:/Dev/kotddari/workspace02/NYANGSINSA2/src/main/webapp/img/102/" + (i + 100) + ".jpg"); // 파일 다운로드하기
 
+				// PRODUCT 테이블에 추가
+				ProductVO pvo = new ProductVO();
+				// pvo 멤버변수 세팅
 				pvo.setpName(name);
-				pvo.setPrice(Integer.parseInt(price));
-				pvo.setImageName("/img/productImg/" + i+100 + fileName);
+				// 카테고리 구분
+				if(i>=0 && i<=14) {
+					pvo.setCategory("사료");
+				}
+				else if(i>=15 && i<=29) {
+					pvo.setCategory("간식");
+				}
+				else if(i>=20 && i<=44) {
+					pvo.setCategory("모래");
+				}
+				// 가격데이터에서 화표 자리수 기호 제거
+				String priceNumOnly = price.replaceAll(",", "");
+				priceNumOnly = priceNumOnly.replaceAll("원", "");
+				pvo.setPrice(Integer.parseInt(priceNumOnly));
+				// 수량은 기본 10으로 고정
+				pvo.setpAmt(10);
+				// 할인율데이터에서 % 제거
+				String dcPercentNumOnly = dcPercent.replaceAll("%", "");
+				if(dcPercentNumOnly.equals("")) {
+					dcPercentNumOnly = "0";
+				}
+				pvo.setpDcPercent(Integer.parseInt(dcPercentNumOnly));
 				pvo.setpDetail(info);
-//				productService.insert(pvo);
-//				productDAO.insert(pvo);
-				
+				productDAO.insert(pvo);
 				
 			} catch (Exception e) {
 				System.out.println("크롤링 에러 발생!");
@@ -149,7 +184,7 @@ public class Crawling {
 		}
 	}
 
-	public static List<String> urlDatas() {
+	public List<String> urlDatas() {
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
 		} catch (Exception e) {
