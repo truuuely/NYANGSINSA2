@@ -45,7 +45,7 @@ public class ProductController {
       model.addAttribute("newPList", productService.selectAll(pvo)); 
 
       // 전체 인기순(판매량순): category == all, sort == sellDesc
-      pvo.setpSearchCondition("popular");
+      pvo.setSort("sellDesc");
       model.addAttribute("popPList", productService.selectAll(pvo));
 
 		return "main.jsp";
@@ -73,7 +73,6 @@ public class ProductController {
 			return "shop_"+pvo.getCategory()+".jsp"; // 카테고리 별로 다른 페이지 이동 (all, food, treat, sand)
 		}
 		return null;//nullPointException 내서 페이지 이동하려고
-		//에러 뭘 추가해야할 지 고민중
 	}
 
 	// 상품세부페이지 이동
@@ -100,7 +99,7 @@ public class ProductController {
 		return "shop_details.jsp";
 	}
 
-	// (관리자)상품 추가 기능: model에는 있으나 view에는 아직 없음
+	// (관리자) 상품 추가 기능: model에는 있으나 view에는 아직 없음
 	@RequestMapping(value="/createProduct.do", method=RequestMethod.POST)
 	public String insertProduct(ProductVO pvo, Model model) {
 		productService.insert(pvo); //카테고리, 상품 이름, 가격, 재고, 설명 추가
