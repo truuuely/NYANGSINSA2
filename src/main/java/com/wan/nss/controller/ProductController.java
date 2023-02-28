@@ -10,28 +10,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.wan.nss.biz.image.ImageVO;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 import com.wan.nss.biz.review.ReviewService;
 import com.wan.nss.biz.review.ReviewVO;
+import com.wan.nss.common.Crawling;
 
 @Controller
 public class ProductController {
 
-	@Autowired
-	private ProductService productService;
-	@Autowired
-	private ReviewService reviewService;
+   @Autowired
+   private ProductService productService;
+   @Autowired
+   private ReviewService reviewService;
+   @Autowired
+   private Crawling crawling;
 
-
-	// 멤버, 상품 
-	@RequestMapping(value="/main.do")
-	public String mainView(ProductVO pvo, Model model) {
-		// 신상품 데이터. pvo : category == all, sort == regiDesc
-		System.out.println("	로그: main.do");
+   // 멤버, 상품 
+   @RequestMapping(value="/main.do")
+   public String mainView(ProductVO pvo, Model model) {
+      // 신상품 데이터. pvo : category == all, sort == regiDesc
+      System.out.println("   로그: main.do");
+      pvo.setpSearchCondition("all");
+      if(productService.selectAll(pvo).size() < 48) {
+         crawling.sample();
+      }
 		pvo.setCategory("all");
-		pvo.setpSearchCondition("new");//sort?searchCondition?
+		pvo.setSort("regiDesc");
 		pvo.setSearchLowPrice(0);
 		pvo.setSearchHighPrice(1000000);
 		model.addAttribute("newPList", productService.selectAll(pvo)); 
@@ -43,14 +48,14 @@ public class ProductController {
 		return "main.jsp";
 	}
 
-	// 쇼핑페이지 이동 
+	// 쇼핑페이지 이동
 	@RequestMapping(value="/shop.do")
 	public String shopView(ProductVO pvo,Model model, HttpSession session) {
 		// 파라미터별로 상이한 상품 목록들 세팅하기: shopping.do?category=???
 		//디폴트값: 인기순, 찾을 가격 0 ~ 1000000
 		
-		//위의 할인상품 정렬
-		pvo.setpSearchCondition("dc"); //sort 종류: sellDesc (인기순:주문량순) / priceAsc (낮은 가격순) / priceDesc (높은 가격순) / regiDesc (최신순) //sort?searchCondition?
+		//추후 dc??
+		pvo.setSort("sellDesc"); //sort 종류: sellDesc (인기순:주문량순) / priceAsc (낮은 가격순) / priceDesc (높은 가격순) / regiDesc (최신순) 
 		pvo.setSearchLowPrice(0);
 		pvo.setSearchHighPrice(1000000);
 
@@ -63,7 +68,7 @@ public class ProductController {
 	}
 
 	// 상품세부페이지 이동
-	@RequestMapping(value="shopDetails/.do")
+	@RequestMapping(value="/shopDetails.do")
 	public String shopDetailView(ProductVO pvo,ReviewVO rvo,Model model) {
 		System.out.println("pNum: "+pvo.getpNum());
 		pvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set
@@ -92,14 +97,6 @@ public class ProductController {
 		productService.insert(pvo); //카테고리, 상품 이름, 가격, 재고, 설명 추가
 		// 2. 상품 이미지 올리기는 추후 구현 예정: 대표이미지(pImgUrl), 상세 이미지(pImgUrl2)
 		return "product_manage_insert.jsp";
-	}
-
-	// (관리자)상품 상세보기 페이지 이동: model에는 있으나 view에는 아직 없음
-	@RequestMapping(value="/updateProductPage.do")
-	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
-		productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
-		model.addAttribute("image",);
-		return "product_manage_detail.jsp";
 	}
 
 	/* (관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정: model에는 있으나 view에는 아직 없음

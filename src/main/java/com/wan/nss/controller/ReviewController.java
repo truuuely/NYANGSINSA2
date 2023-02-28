@@ -73,6 +73,12 @@ public class ReviewController {
 
 		return "order_detail.jsp";
 	}
+	
+	// 내 리뷰 모아보기 페이지
+	@RequestMapping(value = "/myReviewView.do") // 관리자 페이지 리뷰 관리 페이지 열기
+	public String myReviewView() {
+		
+	}
 
 	// (관리자)리뷰 삭제
 	@RequestMapping(value="/deleteReview.do")
