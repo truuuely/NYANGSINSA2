@@ -117,13 +117,12 @@ public class ProductDAO {
 				// 상품 전체 조회 
 				System.out.println("	로그 jdbcTemplate: " + jdbcTemplate);
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL, new ProductRowMapper());
-			}
-			else if (pvo.getpSearchCondition().equals("pName")) {
+			} else if (pvo.getpSearchCondition().equals("pName")) {
 				// 상품 이름 검색
 				Object[] args = { pvo.getpName() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_PNAME, args, new ProductRowMapper());
 			
-			}  else if (pvo.getpSearchCondition().equals("new")) { 
+			} else if (pvo.getpSearchCondition().equals("new")) { 
 				// 새상품 검색
 				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_NEW, args, new ProductRowMapper());

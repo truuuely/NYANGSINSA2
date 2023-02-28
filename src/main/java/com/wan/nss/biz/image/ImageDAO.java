@@ -16,7 +16,7 @@ public class ImageDAO {
    private JdbcTemplate jdbcTemplate;
    // 이미지 추가
    private final String SQL_INSERT = "INSERT INTO IMAGE (I_NM, TYPE_NO, TARGET_NO) VALUES(?, ?, ?)";
-   // 이미지 
+   // 이미지 번호
    private final String SQL_SELECTONE = "SELECT * FROM IMAGE WHERE I_NO = ?";
    // 이미지 전체 보기
    private final String SQL_SELECTALL = "SELECT * FROM IMAGE ORDER BY I_NO ASC";
