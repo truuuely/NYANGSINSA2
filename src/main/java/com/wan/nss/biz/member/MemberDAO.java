@@ -17,29 +17,41 @@ public class MemberDAO {
 
 	// 회원가입
 	private final String SQL_INSERT = "INSERT INTO MEMBER (M_ID, M_PW, M_NM, CAT_NM, PHONE_NO, POST_NO, ADDRESS1, ADDRESS2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+	
 	// 회원 아이디, 비밀번호 검색
 	private final String SQL_SELECTONE = "SELECT * FROM MEMBER WHERE M_ID = ? AND M_PW = ?";
+	
 	// 회원 아이디 중복 검사 할 때 필요한 것
 	private final String SQL_SELECTONE_ID = "SELECT M_ID FROM MEMBER WHERE M_ID = ? ";
+	
 	// 핸드폰 번호 중복 검사할 때 필요한 것
 	private final String SQL_SELECTONE_PHONE = "SELECT PHONE_NO FROM MEMBER WHERE PHONE_NO = ?";
+	
 	// private final String SQL_SELECTONE_MYPAGE = "SELECT * FROM MEMBER WHERE M_ID
 	// = ? "; // 회원(작성자) 아이디 검색
+	
 	// 회원 전체 목록 보기
 	private final String SQL_SELECTALL = "SELECT * FROM MEMBER";
+	
 	// 회원 (작성자) 아이디 검색
 	private final String SQL_SELECTALL_ID = "SELECT * FROM MEMBER WHERE M_ID LIKE CONCAT ('%',?,'%')";
+	
 	// 아이디 찾기 할 때 필요한 폰 번호 입력
 	private final String SQL_SELECTONE_FIND_ID = "SELECT * FROM MEMBER WHERE PHONE_NO= ?";
+	
 	// 비밀번호 찾기 할 때 필요
 	private final String SQL_SELECTONE_FIND_PW = "SELECT * FROM MEMBER WHERE M_ID = ? AND M_NM = ? AND PHONE_NO= ? ";
+	
 	// 회원정보 업데이트
 	private final String SQL_UPDATE = "UPDATE MEMBER SET M_NM = ?, CAT_NM = ?, PHONE_NO = ?, POST_NO = ? ADDRESS1 = ?, ADDRESS2 = ? WHERE M_NO = ?";
+	
 	// 회원 비밀번호 수정
 	private final String SQL_UPDATE_PW = "UPDATE MEMBER SET M_PW = ? WHERE M_ID=?";
+	
 	// 회원 삭제
 	private final String SQL_DELETE = "DELETE FROM MEMBER WHERE M_NO = ?";
 
+	
 	// 회원가입
 	public boolean insert(MemberVO vo) { 
 		jdbcTemplate.update(SQL_INSERT, vo.getUserId(), vo.getUserPw(), vo.getCatName(), vo.getPhoneNum(),

@@ -34,12 +34,16 @@ public class ProductDAO {
 
 	// 상품 이름 검색
 	private final String SQL_SELECTALL_PNAME = "SELECT * FROM PRODUCT WHERE P_NM LIKE CONCAT('%',?,'%')";
+	
 	// 상품 카테고리별
 	private final String SQL_SELECTALL_CATEGORY = "SELECT * FROM PRODUCT WHERE P_CATEGORY= ? AND P_PRICE BETWEEN ? AND ? ORDER BY P_NO DESC";
+	
 	// 새상품
 	private final String SQL_SELECTALL_NEW = "SELECT * FROM PRODUCT WHERE P_PRICE BETWEEN ? AND ? ORDER BY P_NO DESC";
+	
 	// 할인 상품 검색
 	private final String SQL_SELECTALL_DC = "SELECT * FROM PRODUCT WHERE DC_PERCENT>0";
+	
 	// 상품 대표 이미지
 	private final String SQL_SELECTALL_IMAGE = "SELECT p.P_NO, p.P_NM, p.P_CATEGORY, p.P_PRICE, p.P_AMT, p.P_DETAIL, p.DC_PERCENT, i.I_NM"
 			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND i.TYPE_NO = ?;";
@@ -113,13 +117,12 @@ public class ProductDAO {
 				// 상품 전체 조회 
 				System.out.println("	로그 jdbcTemplate: " + jdbcTemplate);
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL, new ProductRowMapper());
-			}
-			else if (pvo.getpSearchCondition().equals("pName")) {
+			} else if (pvo.getpSearchCondition().equals("pName")) {
 				// 상품 이름 검색
 				Object[] args = { pvo.getpName() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_PNAME, args, new ProductRowMapper());
 			
-			}  else if (pvo.getpSearchCondition().equals("new")) { 
+			} else if (pvo.getpSearchCondition().equals("new")) { 
 				// 새상품 검색
 				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
 				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_NEW, args, new ProductRowMapper());
