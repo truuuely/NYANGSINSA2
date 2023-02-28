@@ -11,7 +11,8 @@ let selectPage; // 보고싶은 페이지(실제로 사용자가 보고 싶은 �
 let part; // 목록 요청 매개변수(카테고리)
 
 function list(selectPage,part) {
-	
+	pageCount=5;
+	console.log(totalPage);
 	// 페이징 시작번호와 끝번호 세팅하기
 	last=first+pageCount-1;
 	if(selectPage < first) { // 보고싶은 페이지가 현재 페이징 첫 페이지보다 작을 때(즉, ◀ 버튼을 눌렀을 때)
@@ -23,8 +24,10 @@ function list(selectPage,part) {
 		last+=pageCount;
 	}
 	
+	
+	
 	console.log("dmddmd")
- 	console.log("part: "+part+"dasdasd");
+ 	console.log("part: "+part);
  	console.log("selectPage: "+selectPage);
  	
  	
@@ -48,7 +51,7 @@ function list(selectPage,part) {
 			displayData(selectPage,part); // 현재페이지인데 바뀌어서 나옴
 			 
 			// 페이징 표시 호출
-			paging(selectPage); // 그래서 저장해논 값을 넣어줌
+			paging(selectPage,part); // 그래서 저장해논 값을 넣어줌
 	
 		}
 	});
@@ -96,7 +99,10 @@ function displayData(selectPage,part) {
 					+ "<i class='bx bx-dots-vertical-rounded'></i></button>"
 					+ "<div class='dropdown-menu'><a class='dropdown-item' href='deleteMem.do?userId=" + dataList[i].userId + "'>"
 					+ "<i class='bx bx-trash me-1'></i> 삭제</a></div></div></td></tr>";
+		  		
+		  			
 		  		}
+		 
 				
 			}
 			$("#dataTableBody").html(chartHtml);
@@ -107,9 +113,10 @@ function displayData(selectPage,part) {
 
 
 // 페이지네이션 표시 함수
-function paging(currentPage) {
+function paging(currentPage,part) {
+	console.log('페이징 함수 실행5');
   if(totalData!=0){ // dataList에 데이터(상품||리뷰)가 있을 때 페이징 띄우기
-	  
+	  console.log('paging 함수 '+part);
 	  // 지정한 페이징 숫자보다 실제 페이지가 적을 경우 
 	  if(totalPage<pageCount){
 	    pageCount=totalPage; // 페이징 숫자를 줄여줌
@@ -125,25 +132,25 @@ function paging(currentPage) {
 	  let pageHtml = "";
 	
 	  if (first > 1) {
-	    pageHtml += "<a href='javascript:list("+(first-1)+")' id='prev'><li> ◀ </li></a>";
+	    pageHtml += "<a href='javascript:list("+(first-1)+",`"+part+"`)' id='prev'><li> ◀ </li></a>";
 	  }
 	
 	 //페이징 번호 표시 
 	  for (var i = first; i <= last; i++) {
 	    if (currentPage == i) {
 	      pageHtml +=
-	        "<a href='javascript:list("+i+")' id='" + i + "'><li class='on'>" + i + "</li></a>";
+	        "<a href='javascript:list("+i+",`"+part+"`)' id='" + i + "'><li class='on'>" + i + "</li></a>";
 	    } else {
-	      pageHtml += "<a href='javascript:list("+i+")' id='" + i + "'><li>" + i + "</li></a>";
+	      pageHtml += "<a href='javascript:list("+i+",`"+part+"`)' id='" + i + "'><li>" + i + "</li></a>";
 	    }
 	  }
 	
 	  if (last < totalPage) {
-	    pageHtml += "<a href='javascript:list("+(last+1)+")' id='next'><li> ▶ </li></a>";
+	    pageHtml += "<a href='javascript:list("+(last+1)+",`"+part+"`)' id='next'><li> ▶ </li></a>";
 	  }
-	  
+	 
 	  pageHtml+="<br><br>";
-	  
+	  console.log('총 페이징 수'+pageCount);
 	  $("#pagingul").html(pageHtml);
 	  
 /*	  let displayCount = "";
