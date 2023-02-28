@@ -34,6 +34,13 @@ public class AdminController { //관리자 gnb 페이지 이동으로만 구성�
 	@Autowired
 	private ReviewService reviewService;
 	
+	
+		
+	@RequestMapping(value = "/crawling.do") // 관리자 페이지 회원 관리 페이지 열기
+	public String crawling() {
+			return "crawling.jsp";
+	}
+	
 	@RequestMapping(value = "/adminIndex.do") // 관리자 홈 페이지 열기
 	public String adminIndexView(MemberVO mvo, MemberDAO memberDAO, OrderVO ovo, OrderDetailVO odvo, Model model, HttpSession session, HttpServletResponse response) {
 		

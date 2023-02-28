@@ -39,9 +39,4 @@
 		</listener-class>
 	</listener>
 	
-		<listener>
-		<listener-class>com.wan.nss.controllerServlet.SampleProduct
-		</listener-class>
-	</listener>
-	
 </web-app>
