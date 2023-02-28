@@ -384,26 +384,28 @@
 	</div>
 
 	<script type="text/javascript">
-		function updateLike(bNum, upOrDown) {
-			$.ajax({ // ajax로 데이터 가져오기
-				type : 'POST',
-				url : 'getHeartCnt.do',
-				data : {upOrDown:upOrDown}
-				success : function(data) {
-					console.log("좋아유 수 "+data)
-					$('#bNum').text(data);
-					if(upOrDown=="down"){
-						$(this).attr("src", "img/heart.png");
-						/* $(this).children('img').attr("src", "img/heart.png"); */
-					}else{
-						$(this).attr("src", "img/fullheart.png");
-					}				
-				},
-				error : function() {
-					alert('error');
-				}
-			})
+	function updateLike(bNum, upOrDown){
+		console.log('들어옴');
+		$.ajax({
+			type : 'POST',
+			url : 'getHeartCnt.do',
+			data : {upOrDown:upOrDown},
+			success : function(data){
+				console.log("좋아유 수 "+data)
+				$('#bNum').text(data);
+				if(upOrDown=="down"){
+					$(this).attr("src", "img/heart.png");
+					/* $(this).children('img').attr("src", "img/heart.png"); */
+				}else{
+					$(this).attr("src", "img/fullheart.png");
+				}			
+			},
+			error : function() {
+				alert('error');
+			}
 		})
+	}
+	
 	</script>
 
 
