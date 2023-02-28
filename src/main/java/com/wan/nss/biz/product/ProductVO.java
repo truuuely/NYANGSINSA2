@@ -3,7 +3,7 @@ package com.wan.nss.biz.product;
 public class ProductVO {
 	private int pNum; //상품 번호
 	private String pName; // 상품이름
-	private String Category; // 상품 카테고리
+	private String category; // 상품 카테고리
 	private int price; // 가격 
 	private int pAmt; // 재고
 	private String pDetail; // 상품 상세 설명
@@ -18,13 +18,6 @@ public class ProductVO {
 	private String pSearchContent; // 검색.. 어.. 
 	private String sort; // 정렬 기준 구분 하기 위해 사용
 	private String imageName; // 대표 이미지
-	
-	public String getImageName() {
-		return imageName;
-	}
-	public void setImageName(String imageName) {
-		this.imageName = imageName;
-	}
 	public int getpNum() {
 		return pNum;
 	}
@@ -38,10 +31,10 @@ public class ProductVO {
 		this.pName = pName;
 	}
 	public String getCategory() {
-		return Category;
+		return category;
 	}
-	public void setpCategory(String Category) {
-		this.Category = Category;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	public int getPrice() {
 		return price;
@@ -115,13 +108,21 @@ public class ProductVO {
 	public void setSort(String sort) {
 		this.sort = sort;
 	}
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 	@Override
 	public String toString() {
-		return "ProductVO [pNum=" + pNum + ", pName=" + pName + ", pCategory=" + Category + ", price=" + price
+		return "ProductVO [pNum=" + pNum + ", pName=" + pName + ", category=" + category + ", price=" + price
 				+ ", pAmt=" + pAmt + ", pDetail=" + pDetail + ", pDcPercent=" + pDcPercent + ", searchLowPrice="
 				+ searchLowPrice + ", searchHighPrice=" + searchHighPrice + ", total=" + total + ", dc_price="
 				+ dc_price + ", pCnt=" + pCnt + ", pSearchCondition=" + pSearchCondition + ", pSearchContent="
 				+ pSearchContent + ", sort=" + sort + ", imageName=" + imageName + "]";
 	}
 
+
+	
 }

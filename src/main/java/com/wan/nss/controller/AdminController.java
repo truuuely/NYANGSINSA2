@@ -36,8 +36,13 @@ public class AdminController { //관리자 페이지 단순 이동(View, Detail)
 	@Autowired
 	private ReviewService reviewService;
 	
-	// (관리자) 관리자 메인 페이지 이동
-	@RequestMapping(value = "/adminIndex.do") 
+	@RequestMapping(value = "/crawling.do") // 관리자 페이지 회원 관리 페이지 열기
+	public String crawling() {
+			return "crawling.jsp";
+	}
+  
+// (관리자) 관리자 메인 페이지 이동
+	@RequestMapping(value = "/adminIndex.do")
 	public String adminIndexView(MemberVO mvo, MemberDAO memberDAO, OrderVO ovo, OrderDetailVO odvo, Model model, HttpSession session, HttpServletResponse response) {
 		
 		String id = (String) session.getAttribute("memberId");

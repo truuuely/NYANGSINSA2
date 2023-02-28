@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.wan.nss.biz.orderdetail.OrderDetailVO;
 
 @Repository("productDAO")
 public class ProductDAO {
@@ -226,7 +225,7 @@ public class ProductDAO {
 			ProductVO pvo = new ProductVO();
 			pvo.setpNum(rs.getInt("P_NO"));
 			pvo.setpName(rs.getString("P_NM"));
-			pvo.setpCategory(rs.getString("P_CATEGORY"));
+			pvo.setCategory(rs.getString("P_CATEGORY"));
 			pvo.setPrice(rs.getInt("P_PRICE"));
 			pvo.setpAmt(rs.getInt("P_AMT"));
 			pvo.setpDetail(rs.getString("P_DETAIL"));
