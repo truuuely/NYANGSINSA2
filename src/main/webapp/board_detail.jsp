@@ -339,6 +339,18 @@
 					})
 		}
 	</script>
+	<script type="text/javascript">
+	var result = confirm("정말로 삭제 하시겠습니까?");
+		function deletecheck(bNum) {
+			if(result) {
+				alert("예");
+				location.href = "deleteReply.do?bNum="${bNum}"";
+			}
+			else {
+				alert("아니오");
+			}
+		}
+	</script>
 </body>
 
 </html>
