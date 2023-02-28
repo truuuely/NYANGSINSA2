@@ -189,7 +189,7 @@
 							<li>
 							<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 							<c:if test="${v.rWriter==memberId}">
-								<li style="margin-left: auto; color: #49505787; border-bottom: 1px solid #49505787;"><a href="deleteReply.do">삭제</a></li>
+								<li style="margin-left: auto; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deletecheck(${v.bNum})">삭제</a></li>
 							</c:if>
 						</ul>
 

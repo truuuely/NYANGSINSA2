@@ -29,8 +29,8 @@ public class Crawling {
 	@Autowired
 	private ImageDAO imageDAO = new ImageDAO();
 
-	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
-	private final String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
+//	private final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
+//	private final String WEB_DRIVER_PATH = "C:/Dev/kotddari/resource/chromedriver.exe"; // 드라이버
 	private final int MAX = 15;
 
 	public void downloadFile(URL url, String fileName) throws Exception {
@@ -41,22 +41,22 @@ public class Crawling {
 	
 	public void sample() {
 		List<String> urlDatas = urlDatas();
-		try {
-			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		// 크롬 설정을 담은 객체 생성
-		ChromeOptions options = new ChromeOptions();
-
-		// options.addArguments("headless");
-		options.addArguments("--disable-popup-blocking"); // 팝업안띄움
-		options.addArguments("headless"); // 브라우저 안띄움
-		options.addArguments("--disable-gpu"); // gpu 비활성화
-		options.addArguments("--blink-settings=imagesEnabled=false"); // 이미지 다운 안받음
+//		ChromeOptions options = new ChromeOptions();
+//
+//		// options.addArguments("headless");
+//		options.addArguments("--disable-popup-blocking"); // 팝업안띄움
+//		options.addArguments("headless"); // 브라우저 안띄움
+//		options.addArguments("--disable-gpu"); // gpu 비활성화
+//		options.addArguments("--blink-settings=imagesEnabled=false"); // 이미지 다운 안받음
 
 		// WebDriver객체가 곧 하나의 브라우저 창이라 생각한다.
-		WebDriver driver = new ChromeDriver(options);
+		WebDriver driver = new ChromeDriver();
 		for (int i = 0; i < urlDatas.size(); i++) {
 			try {
 				
@@ -185,19 +185,20 @@ public class Crawling {
 	}
 
 	public List<String> urlDatas() {
-		try {
-			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		/*
+		 * try { System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
+		 * } catch (Exception e) {
+		 * e.printStackTrace();
+		 * }
+		 */
 
 		// 크롬 설정을 담은 객체 생성
-		ChromeOptions options = new ChromeOptions();
-
-		//      options.addArguments("headless");
+//		ChromeOptions options = new ChromeOptions();
+//
+//		options.addArguments("headless");
 
 		// WebDriver객체가 곧 하나의 브라우저 창이라 생각한다.
-		WebDriver driver = new ChromeDriver(options);
+		WebDriver driver = new ChromeDriver();
 
 		List<String> category = new ArrayList<String>();
 		List<String> urlDatas = new ArrayList<String>();

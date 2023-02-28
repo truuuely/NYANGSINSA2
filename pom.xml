@@ -209,6 +209,14 @@
 			<version>4.7</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- 크롤링을 위한 chrome driver.exe -->
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-chromium-driver</artifactId>
+			<version>4.8.1</version>
+		</dependency>
+		
 	</dependencies>
 	<build>
 		<plugins>

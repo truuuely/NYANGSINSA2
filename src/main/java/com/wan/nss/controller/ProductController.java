@@ -10,11 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.wan.nss.biz.common.Crawling;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 import com.wan.nss.biz.review.ReviewService;
 import com.wan.nss.biz.review.ReviewVO;
-import com.wan.nss.common.Crawling;
 
 @Controller
 public class ProductController {
@@ -31,19 +31,22 @@ public class ProductController {
    public String mainView(ProductVO pvo, Model model) {
       // 신상품 데이터. pvo : category == all, sort == regiDesc
       System.out.println("   로그: main.do");
-      pvo.setpSearchCondition("all");
+      
+      // 크롤링
       if(productService.selectAll(pvo).size() < 48) {
          crawling.sample();
       }
-		pvo.setCategory("all");
-		pvo.setSort("regiDesc");
-		pvo.setSearchLowPrice(0);
-		pvo.setSearchHighPrice(1000000);
-		model.addAttribute("newPList", productService.selectAll(pvo)); 
+      
+      // 전체 최신순(등록일순): category = all,  sort = regiDesc
+      pvo.setCategory("all");
+      pvo.setSort("regiDesc");
+      pvo.setSearchLowPrice(0);
+      pvo.setSearchHighPrice(1000000);	
+      model.addAttribute("newPList", productService.selectAll(pvo)); 
 
-		// 인기 상품. pvo : category == all, sort == sellDesc
-		pvo.setpSearchCondition("popular");//sort?searchCondition?
-		model.addAttribute("popPList", productService.selectAll(pvo));
+      // 전체 인기순(판매량순): category == all, sort == sellDesc
+      pvo.setSort("sellDesc");
+      model.addAttribute("popPList", productService.selectAll(pvo));
 
 		return "main.jsp";
 	}
@@ -53,18 +56,23 @@ public class ProductController {
 	public String shopView(ProductVO pvo,Model model, HttpSession session) {
 		// 파라미터별로 상이한 상품 목록들 세팅하기: shopping.do?category=???
 		//디폴트값: 인기순, 찾을 가격 0 ~ 1000000
-		
-		//추후 dc??
+			
+		//할인상품 정렬
+		pvo.setpSearchCondition("dc");
 		pvo.setSort("sellDesc"); //sort 종류: sellDesc (인기순:주문량순) / priceAsc (낮은 가격순) / priceDesc (높은 가격순) / regiDesc (최신순) 
 		pvo.setSearchLowPrice(0);
 		pvo.setSearchHighPrice(1000000);
-
-		model.addAttribute("pList", productService.selectAll(pvo)); 
-
-		if(pvo.getCategory().equals("all")) { //쇼핑페이지 기본 이동
+		model.addAttribute("pList", productService.selectAll(pvo));
+		
+		// 쇼핑페이지 기본 이동 (shop.do?category=all)
+		if(pvo.getCategory().equals("all")) {
 			return "shop.jsp";
 		}
-		return "shop_"+pvo.getCategory()+".jsp"; // 카테고리 별로 다른 페이지 이동 (all, food, treat, sand)
+		// 카테고리별 쇼핑페이지 기본 이동 (shop.do?category=food/treat/sand)
+		else if(pvo.getCategory().equals("food")||pvo.getCategory().equals("treat")||pvo.getCategory().equals("sand")){
+			return "shop_"+pvo.getCategory()+".jsp"; // 카테고리 별로 다른 페이지 이동 (all, food, treat, sand)
+		}
+		return null;//nullPointException 내서 페이지 이동하려고
 	}
 
 	// 상품세부페이지 이동
@@ -77,7 +85,7 @@ public class ProductController {
 
 		// 관련상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
 		pvo.setCategory(resPvo.getCategory()); // 관련상품정보를 가져오기 위해 카테고리 set
-		pvo.setpSearchCondition("sellDesc"); // 관련상품 가져오기 위해 정렬 set
+		pvo.setSort("sellDesc"); // 관련상품 가져오기 위해 정렬 set
 		pvo.setSearchLowPrice(0); 
 		pvo.setSearchHighPrice(1000000);
 
@@ -91,7 +99,7 @@ public class ProductController {
 		return "shop_details.jsp";
 	}
 
-	// (관리자)상품 추가 기능: model에는 있으나 view에는 아직 없음
+	// (관리자) 상품 추가 기능: model에는 있으나 view에는 아직 없음
 	@RequestMapping(value="/createProduct.do", method=RequestMethod.POST)
 	public String insertProduct(ProductVO pvo, Model model) {
 		productService.insert(pvo); //카테고리, 상품 이름, 가격, 재고, 설명 추가

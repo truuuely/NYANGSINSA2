@@ -177,19 +177,19 @@ public class AdminController { //관리자 페이지 단순 이동(View, Detail)
 	// (관리자) 게시글 관리 페이지 이동
 	@RequestMapping(value = "/boardManageView.do") 
 	public String boardManageView() {
-		
+		return "board_manage.jsp";
 	}
 	
 	// (관리자) 게시글 상세보기 페이지 이동
 	@RequestMapping(value = "/selectOneBoardDetail.do") 
 	public String selectOneBoardDetail() {
-		
+		return "board_manage.jsp";
 	}
 	
 	// (관리자) 신고 게시글 관리 페이지 이동
 	@RequestMapping(value = "/boardManageView.do") 
 	public String boardManageView() {
-		
+		return "";
 	}
 	
 	// (관리자) 신고 게시글 상세보기 페이지 이동
