@@ -38,8 +38,8 @@ public class OrderDetailDAO {
 		if (odvo.getOdNum() >= 0) {// 상품 상세 내역 
 			Object[] args = { odvo.getoNum() };
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL_ONUM, args, new OrderDetailRowMapper());
-		} else if (pvo.getpCategory() != null) { // 상품 수량 및 가격 
-			Object[] args = { pvo.getpCategory() };
+		} else if (pvo.getCategory() != null) { // 상품 수량 및 가격 
+			Object[] args = { pvo.getCategory() };
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTONE_CATEGORY_CNT_SUM, args, new OrderDetailRowMapper());
 		} else { // 상품 전제 목록 출력
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL, new OrderDetailRowMapper());
