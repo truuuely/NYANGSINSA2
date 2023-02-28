@@ -72,6 +72,8 @@ public class ProductController {
 		else if(pvo.getCategory().equals("food")||pvo.getCategory().equals("treat")||pvo.getCategory().equals("sand")){
 			return "shop_"+pvo.getCategory()+".jsp"; // 카테고리 별로 다른 페이지 이동 (all, food, treat, sand)
 		}
+		return null;//nullPointException 내서 페이지 이동하려고
+		//에러 뭘 추가해야할 지 고민중
 	}
 
 	// 상품세부페이지 이동
