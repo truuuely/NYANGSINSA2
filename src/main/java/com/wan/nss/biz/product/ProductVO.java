@@ -122,7 +122,4 @@ public class ProductVO {
 				+ dc_price + ", pCnt=" + pCnt + ", pSearchCondition=" + pSearchCondition + ", pSearchContent="
 				+ pSearchContent + ", sort=" + sort + ", imageName=" + imageName + "]";
 	}
-
-
-	
 }

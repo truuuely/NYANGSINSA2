@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-
 @Repository("productDAO")
 public class ProductDAO {
 
@@ -17,70 +16,66 @@ public class ProductDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	// 상품 추가
-	private final String SQL_INSERT = "INSERT INTO PRODUCT (P_NM, P_CATEGORY, P_PRICE, P_STOCK, P_DETAIL, DC_PERCENT) VALUES(?, ?, ?, ?, ?, ?)";
-	// 상품 상세 검색
-	private final String SQL_SELECTONE = "SELECT * FROM PRODUCT WHERE P_NO = ?";
-	// 상품 전체 보기
-	private final String SQL_SELECTALL = "SELECT * FROM PRODUCT ORDER BY P_NO ASC";
-	
-	// 전체 상품 낮은 가격순
-	private final String SQL_SELECTALL_PRODUCT_ASC = "SELECT P_NO, P_NM, P_CATEGORY, P_DETAIL, P_AMT, DC_PERCENT, "
-			+ "P_PRICE*((100-PRODUCT.DC_PERCENT)/100) "
-			+ "AS P_PRICE FROM PRODUCT WHERE P_PRICE BETWEEN ? AND ? ORDER BY P_PRICE ASC";
-	
-	// 전체 상품 높은 가격순
-	private final String SQL_SELECTALL_PRODUCT_DESC = "SELECT P_NO, P_NM, P_CATEGORY, P_DETAIL, P_AMT, DC_PERCENT, "
-			+ "P_PRICE*((100-PRODUCT.DC_PERCENT)/100) AS P_PRICE FROM PRODUCT WHERE P_PRICE BETWEEN ? AND ? ORDER BY P_PRICE DESC";
-
-	// 상품 이름 검색
-	private final String SQL_SELECTALL_PNAME = "SELECT * FROM PRODUCT WHERE P_NM LIKE CONCAT('%',?,'%')";
-	
-	// 상품 카테고리별
-	private final String SQL_SELECTALL_CATEGORY = "SELECT * FROM PRODUCT WHERE P_CATEGORY= ? AND P_PRICE BETWEEN ? AND ? ORDER BY P_NO DESC";
-	
-	// 새상품
-	private final String SQL_SELECTALL_NEW = "SELECT * FROM PRODUCT WHERE P_PRICE BETWEEN ? AND ? ORDER BY P_NO DESC";
-	
-	// 할인 상품 검색
-	private final String SQL_SELECTALL_DC = "SELECT * FROM PRODUCT WHERE DC_PERCENT>0";
-	
-	// 상품 대표 이미지
-	private final String SQL_SELECTALL_IMAGE = "SELECT p.P_NO, p.P_NM, p.P_CATEGORY, p.P_PRICE, p.P_AMT, p.P_DETAIL, p.DC_PERCENT, i.I_NM"
-			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND i.TYPE_NO = ?;";
-	
-	// 인기 상품 검색
-	private final String SQL_SELECTALL_POPULAR = "SELECT PRODUCT.P_NO, P_CATEGORY, P_NM, P_PRICE, DC_PERCENT, P_AMT, "
-			+ " P_DETAIL, SUM(OD_CNT) FROM ORDER_DETAIL INNER JOIN PRODUCT ON ORDER_DETAIL.P_NO = PRODUCT.P_NO "
-			+ " WHERE PRODUCT.P_PRICE BETWEEN ? AND ? GROUP BY PRODUCT.P_NO, P_CATEGORY, P_NM, P_PRICE, "
-			+ " DC_PERCENT, P_AMT, P_DETAIL ORDER BY SUM(OD_CNT) DESC";
-	
-	// 상품 카테고리별 인기순
-	final String SQL_SELECTALL_CATEGORY_SELLDESC = "SELECT PRODUCT.P_NO, P_CATEGORY, P_NM, P_PRICE, DC_PERCENT, P_AMT, "
-			+ " P_DETAIL, SUM(OD_CNT) FROM ORDER_DETAIL INNER JOIN PRODUCT ON ORDER_DETAIL.P_NO = PRODUCT.P_NO AND P_CATEGORY= ?"
-			+ " WHERE PRODUCT.P_PRICE  BETWEEN ? AND ? GROUP BY PRODUCT.P_NO, P_CATEGORY, P_NM, P_PRICE, "
-			+ " DC_PERCENT, P_AMT, P_DETAIL ORDER BY SUM(OD_CNT) DESC";
-	
-	// 상품 카테고리별 낮은 가격순
-	final String SQL_SELECTALL_CATEGORY_PRICEASC = "SELECT P_NO ,P_NM, P_CATEGORY, P_DETAIL, "
-			+ " P_AMT,DC_PERCENT, P_PRICE*((100-PRODUCT.DC_PERCENT)/100) AS PRICE FROM PRODUCT WHERE P_CATEGORY= ? AND P_PRICE BETWEEN ? AND ? ORDER BY P_PRICE ASC"; // 상품
-	
-	// 상품 카테고리별 높은 가격순
-	final String SQL_SELECTALL_CATEGORY_PRICEDESC = "SELECT P_NO, P_NM, P_CATEGORY, P_DETAIL, P_AMT, DC_PERCENT,"
-			+ " P_PRICE*((100-PRODUCT.DC_PERCENT)/100) AS P_PRICE FROM PRODUCT "
-			+ " WHERE P_CATEGORY= ? AND P_PRICE BETWEEN ? AND ? ORDER BY P_PRICE DESC";
-
-	// 상품 카테고리별 최신순
-	final String SQL_SELECTALL_CATEGORY_REGIDESC = "SELECT * FROM PRODUCT WHERE P_CATEGORY= ? AND P_PRICE BETWEEN ? AND ? ORDER BY P_NO DESC";
-	
+	private final String SQL_INSERT = "INSERT INTO PRODUCT (P_NM, P_CATEGORY, P_PRICE, P_AMT, P_DETAIL, DC_PERCENT) VALUES(?, ?, ?, ?, ?, ?)";
 	// 상품 업데이트
 	private final String SQL_UPDATE = "UPDATE PRODUCT SET P_NM=?, P_CATEGORY=?, P_PRICE=?, P_DETAIL=?, DC_PERCENT=? WHERE P_NO=?";
-	
 	// 상품 재고 수량 업데이트
 	private final String SQL_UPDATE_AMOUNT = "UPDATE PRODUCT SET P_AMT = P_AMT - ? WHERE P_NO = ?";
-	
 	// 상품 삭제
 	private final String SQL_DELETE = "DELETE FROM PRODUCT WHERE P_NO=?";
-	
+
+	// 상세보기 - ? : pNum
+	private final String SQL_SELECTONE = "SELECT p.*, i.*, (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE "
+			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND TYPE_NO = 101 WHERE p.P_NO = ?";
+	// 가장 최근에 추가한 상품 pNum 가져오기
+	private final String SELECT_ONE_NEWEST = "SELECT MAX(P_NO) AS P_NO FROM PRODUCT";
+
+	// *** selectAll ***
+	// 전체 카테고리 인기순(판매량순)
+	// ? : lowPrice, highPrice
+	private final String SELECT_ALL_WHOLE_POP = "SELECT p.*, i.*, SUM(OD_CNT), (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE "
+			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND i.TYPE_NO = 101 "
+			+ " INNER JOIN ORDER_DETAIL od ON od.P_NO = p.P_NO WHERE p.P_PRICE BETWEEN ? AND ? "
+			+ " GROUP BY p.P_NO, i.I_NO ORDER BY SUM(OD_CNT) DESC";
+	// 전체 카테고리 가격순(낮은 가격순, 높은 가격순) 혹은 최신순
+	// ? : lowPrice, highPrice
+	// %s : DC_PRICE ASC || DC_PRICE DESC || P_NO DESC
+	private final String SELECT_ALL_WHOLE_SORT = "SELECT p.*, i.*, (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE "
+			+ " FROM PRODUCT p INNER JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 101) i "
+			+ " ON p.P_NO = i.TARGET_NO WHERE P_PRICE BETWEEN ? AND ? ORDER BY %s";
+
+	// 전체 할인 상품 - 홈 할인상품
+	private final String SELECT_ALL_WHOLE_DC = "SELECT p.*, i.*, SUM(od.OD_CNT), (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE "
+			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO  AND i.TYPE_NO = 101 "
+			+ " INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO WHERE DC_PERCENT != 0 "
+			+ " GROUP BY p.P_NO, i.I_NO ORDER BY SUM(od.OD_CNT) DESC";
+
+	// 카테고리별 인기순(판매량 순)
+	// ? : category, lowPrice, highPrice
+	private final String SELECT_ALL_CATEGORY_POP = "SELECT p.*, i.*, SUM(OD_CNT), (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE "
+			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND i.TYPE_NO = 101 "
+			+ " INNER JOIN ORDER_DETAIL od ON od.P_NO = p.P_NO AND P_CATEGORY = ? "
+			+ " WHERE p.P_PRICE BETWEEN ? AND ? GROUP BY p.P_NO, i.I_NO ORDER BY SUM(OD_CNT) DESC";
+
+	// 카테고리별 가격순(낮은 가격순, 높은 가격순) 혹은 최신순
+	// ? : category, lowPrice, highPrice
+	// %s : DC_PRICE ASC || DC_PRICE DESC || P_NO DESC
+	private final String SELECT_ALL_CATEGORY_SORT = "SELECT p.*, i.*, (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE "
+			+ " FROM PRODUCT p INNER JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 101) i "
+			+ " ON p.P_NO = i.TARGET_NO WHERE P_CATEGORY = ? AND P_PRICE BETWEEN ? AND ? ORDER BY %s ";
+
+	// 카테고리별 할인 상품
+	// ? : category
+	private final String SELECT_ALL_CATEGORY_DC = "SELECT p.*, i.*, SUM(od.OD_CNT), (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE "
+			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO INNER JOIN ORDER_DETAIL od "
+			+ " ON p.P_NO = od.P_NO AND TYPE_NO = 101 WHERE DC_PERCENT != 0 AND p.P_CATEGORY = ? "
+			+ " GROUP BY p.P_NO, i.I_NO ORDER BY SUM(od.OD_CNT) DESC";
+
+	// 상품 검색
+	private final String SELECT_ALL_SEARCH = "SELECT p.*, i.*, (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE, SUM(od.OD_CNT) "
+			+ " FROM PRODUCT p INNER JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 101) i "
+			+ " ON p.P_NO = i.TARGET_NO INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO "
+			+ " WHERE p.P_NM LIKE CONCAT('%', ?, '%') GROUP BY p.P_NO, i.I_NO ORDER BY SUM(od.OD_CNT) DESC";
 
 	// 상품 추가
 	public boolean insert(ProductVO pvo) {
@@ -94,7 +89,7 @@ public class ProductDAO {
 		if (pvo.getpAmt() >= 0) {
 			jdbcTemplate.update(SQL_UPDATE_AMOUNT, pvo.getpAmt(), pvo.getpNum());
 			return true;
-			
+
 		} else {
 			jdbcTemplate.update(SQL_UPDATE, pvo.getpName(), pvo.getCategory(), pvo.getPrice(), pvo.getpAmt(),
 					pvo.getpDetail(), pvo.getpDcPercent(), pvo.getpNum());
@@ -109,139 +104,114 @@ public class ProductDAO {
 	}
 
 	public ArrayList<ProductVO> selectAll(ProductVO pvo) {
-//		ImageVO ivo = new ImageVO();
-		
-		// pSearchCondition에 값이 있는 경우
-		if(pvo.getpSearchCondition() != null) {
-			if(pvo.getpSearchCondition().equals("all")) { 
-				// 상품 전체 조회 
-				System.out.println("	로그 jdbcTemplate: " + jdbcTemplate);
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL, new ProductRowMapper());
-			} else if (pvo.getpSearchCondition().equals("pName")) {
-				// 상품 이름 검색
-				Object[] args = { pvo.getpName() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_PNAME, args, new ProductRowMapper());
-			
-			} else if (pvo.getpSearchCondition().equals("new")) { 
-				// 새상품 검색
-				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_NEW, args, new ProductRowMapper());
 
-			} else if (pvo.getpSearchCondition().equals("dc")) { 
-				//할인상품 
-				Object[] args = { pvo.getpDcPercent() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_DC, args, new ProductRowMapper());
-				
-			} else if (pvo.getpSearchCondition().equals("popular")) { 
-				// 인기 상품 검색
-				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_POPULAR, args, new ProductRowMapper());
-				
-			} else if (pvo.getpSearchCondition().equals("related")) { 
-				// 관련상품
-				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_SELLDESC, args, new ProductRowMapper());
-				
-			} else {
-				// 모두 해당 안되면
-				return null;
+		if (pvo.getCategory() == null) {
+			if (pvo.getpSearchContent() != null) { // 상품 검색
+				return (ArrayList<ProductVO>) jdbcTemplate.query(SELECT_ALL_SEARCH, new ProductRowMapper(),
+						pvo.getpSearchContent());
+			}
+			return null;
+		}
+
+		if (pvo.getCategory().equals("all")) { // 전체 카테고리일 때
+			String sql = "";
+
+			if (pvo.getSort() == null) {
+				if (pvo.getpSearchCondition() != null && pvo.getpSearchCondition().equals("dc")) {
+					// 전체 할인 상품
+					return (ArrayList<ProductVO>) jdbcTemplate.query(SELECT_ALL_WHOLE_DC, new ProductRowMapper());
+				}
+			} else if (pvo.getSort().equals("sellDesc")) { // 인기순
+				return (ArrayList<ProductVO>) jdbcTemplate.query(SELECT_ALL_WHOLE_POP, new ProductRowMapper(),
+						pvo.getSearchLowPrice(), pvo.getSearchHighPrice());
+
+			} else if (pvo.getSort().equals("priceAsc")) { // 낮은 가격순
+				sql = String.format(SELECT_ALL_WHOLE_SORT, "DC_PRICE ASC");
+
+				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getSearchLowPrice(),
+						pvo.getSearchHighPrice());
+
+			} else if (pvo.getSort().equals("priceDesc")) { // 높은 가격순
+				sql = String.format(SELECT_ALL_WHOLE_SORT, "DC_PRICE DESC");
+
+				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getSearchLowPrice(),
+						pvo.getSearchHighPrice());
+
+			} else if (pvo.getSort().equals("priceDesc")) { // 최신순
+				sql = String.format(SELECT_ALL_WHOLE_SORT, "P_NO DESC");
+
+				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getSearchLowPrice(),
+						pvo.getSearchHighPrice());
+			}
+		} else { // 카테고리가 food/treat/sand 일 때
+			String sql = "";
+			if (pvo.getSort() == null) {
+				if (pvo.getpSearchCondition() != null && pvo.getpSearchCondition().equals("dc")) {
+					// 카테고리별 할인 상품
+					return (ArrayList<ProductVO>) jdbcTemplate.query(SELECT_ALL_CATEGORY_DC, new ProductRowMapper(),
+							pvo.getCategory());
+				}
+			} else if (pvo.getSort().equals("sellDesc")) { // 인기순
+				return (ArrayList<ProductVO>) jdbcTemplate.query(SELECT_ALL_CATEGORY_POP, new ProductRowMapper(),
+						pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice());
+			} else if (pvo.getSort().equals("priceAsc")) { // 낮은 가격순
+				sql = String.format(SELECT_ALL_CATEGORY_SORT, "DC_PRICE ASC");
+
+				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getCategory(),
+						pvo.getSearchLowPrice(), pvo.getSearchHighPrice());
+			} else if (pvo.getSort().equals("priceDesc")) { // 높은 가격순
+				sql = String.format(SELECT_ALL_CATEGORY_SORT, "DC_PRICE DESC");
+				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getCategory(),
+						pvo.getSearchLowPrice(), pvo.getSearchHighPrice());
+			} else if (pvo.getSort().equals("regiDesc")) { // 최신 등록순
+				sql = String.format(SELECT_ALL_CATEGORY_SORT, "P_NO DESC");
+				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getCategory(),
+						pvo.getSearchLowPrice(), pvo.getSearchHighPrice());
 			}
 		}
-		else {
-			if(!pvo.getCategory().equals("all") && pvo.getSort().equals("sellDesc")) {
-				// 카테고리가 있고  sort가 sellDesc 카테고리별 인기순
-				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_SELLDESC, args, new ProductRowMapper());
-		
-			}  else if(!pvo.getCategory().equals("all") && pvo.getSort().equals("priceAsc")) {
-				// 카테고리가 있고 sort가 PRICEASC 카테고리별 낮은 가격순
-				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_PRICEASC, args, new ProductRowMapper());
-				
-			}  else if(!pvo.getCategory().equals("all") && pvo.getSort().equals("priceDesc")) {
-				// 카테고리가 있고 sort가 CATEGORY_PRICEDESC 카테고리별 높은 가격순
-				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_PRICEDESC, args, new ProductRowMapper());
-				
-			}  else if(!pvo.getCategory().equals("all") && pvo.getSort().equals("regiDesc")) {
-				// 카테고리가 있고 CATEGORY_REGIDESC 카테고리별 최신순
-				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY_REGIDESC, args, new ProductRowMapper());
-				
-			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("sellDesc")) {
-				// 카테고리가 없고  sort가 sellDesc 카테고리별 인기순
-				System.out.println("	로그: SA pcategory==all sort=sellDesc");
-				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_POPULAR, args, new ProductRowMapper());
-		
-			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("priceAsc")) {
-				// 카테고리가 없고 sort가 PRICEASC 카테고리별 낮은 가격순
-				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_PRODUCT_ASC, args, new ProductRowMapper());
-				
-			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("priceDesc")) {
-				// 카테고리가 없고 sort가 CATEGORY_PRICEDESC 카테고리별 높은 가격순
-				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_PRODUCT_DESC, args, new ProductRowMapper());
-				
-			}  else if(pvo.getCategory().equals("all") && pvo.getSort().equals("regiDesc")) {
-				// 카테고리가 없고 CATEGORY_REGIDESC 카테고리별 최신순
-				System.out.println("	로그: SA pcategory==all sort=regiDesc");
-				Object[] args = { pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_NEW, args, new ProductRowMapper());
-				
-			}
-			else if (pvo.getCategory() != null) {
-				// 상품 카테고리별 검색
-				Object[] args = { pvo.getCategory(), pvo.getSearchLowPrice(), pvo.getSearchHighPrice() };
-				return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_CATEGORY, args, new ProductRowMapper());
-				
-			} else {
-				// 모두 해당 안되면
-				return null;
-			}
-		}
+
+		return null;
 	}
-		
-		 //SQL문의 where 절에 Image 테이블 TYPE_NO 컬럼이 필요한데, vo에 I_NM만 멤버변수로 가지고 있으면 불러올 수가 없을
-		// 것 같아서
-		// ImageVO 제작해서 객체화하고 typeNum 불러와서 값 넣음.
-//		if(ivo.getTypeNum()==101||ivo.getTypeNum()==102) {
-//			Object[] args = { ivo.getTypeNum() };
-//			return (ArrayList<ProductVO>) jdbcTemplate.query(SQL_SELECTALL_IMAGE, args, new ProductRowMapper());
-//		}
-//		return null;
-//	}
 
-	// 상품 상세 검색
 	public ProductVO selectOne(ProductVO pvo) {
-		
-		Object[] args = { pvo.getpNum() };
-		return jdbcTemplate.queryForObject(SQL_SELECTONE, args, new ProductRowMapper());
+
+		if (pvo.getpSearchCondition() == null) {
+			// 1. 상세보기 : pNum만 세팅
+			return jdbcTemplate.queryForObject(SQL_SELECTONE, new ProductRowMapper(), pvo.getpNum());
+
+		} else if (pvo.getpSearchCondition().equals("newest")) {
+			// 2. 가장 최근에 등록된 상품 번호 보기 (이미지 insert 할 때)
+			// pSearchCondition = "newest"
+			return jdbcTemplate.queryForObject(SELECT_ONE_NEWEST, (rs, rowNum) -> {
+				ProductVO data = new ProductVO();
+				data.setpNum(rs.getInt("P_NO"));
+				return data;
+			});
+		}
+		return null;
 	}
 
 	class ProductRowMapper implements RowMapper<ProductVO> {
 
 		@Override
 		public ProductVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-			System.out.println("	로그: 확인2");
 			ProductVO pvo = new ProductVO();
-			pvo.setpNum(rs.getInt("P_NO"));
-			pvo.setpName(rs.getString("P_NM"));
-			pvo.setCategory(rs.getString("P_CATEGORY"));
-			pvo.setPrice(rs.getInt("P_PRICE"));
-			pvo.setpAmt(rs.getInt("P_AMT"));
-			pvo.setpDetail(rs.getString("P_DETAIL"));
-			pvo.setpDcPercent(rs.getInt("DC_PERCENT"));
+			pvo.setpNum(rs.getInt("P_NO")); // 상품 번호
+			pvo.setpName(rs.getString("P_NM")); // 상품 이름
+			pvo.setCategory(rs.getString("P_CATEGORY")); // 카테고리
+			pvo.setPrice(rs.getInt("P_PRICE")); // 가격
+			pvo.setpAmt(rs.getInt("P_AMT")); // 재고
+			pvo.setpDetail(rs.getString("P_DETAIL")); // 상세설명
+			pvo.setpDcPercent(rs.getInt("DC_PERCENT")); // 할인율
+			pvo.setDc_price(rs.getInt("DC_PRICE")); // 할인된 가격
+			pvo.setImageName(rs.getString("I_NM")); // 상품 대표 이미지 파일 이름
 
 //         pvo.setSearchLowPrice(rs.getInt("LOWPRICE"));
 //         pvo.setSearchHighPrice(rs.getInt("HIGHPRICE"));
 //         pvo.setTotal(rs.getInt("TOTAL"));
-//         pvo.setDc_price(rs.getInt("DC_PRICE"));
 //         pvo.setpCnt(rs.getInt("PCNT"));
 //         pvo.setpSearchContent(rs.getString("CONTENT"));
 //         pvo.setSort(rs.getString("SORT"));
-//         pvo.setImageName(rs.getString("IMAGENAME"));
 			return pvo;
 		}
 	}
