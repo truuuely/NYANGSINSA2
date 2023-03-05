@@ -75,7 +75,7 @@ public class BoardDAO {
 	/*
 	 * U
 	 */
-	// 관리자 모드 : 게시글 상태 변경 (0: 정상, 1: 신고, 2: 삭제)
+	// 관리자 모드 : 게시글 상태 변경 (1: 정상, 2: 신고, 3: 삭제)
 	private final String UPDATE_ADMIN = "UPDATE BOARD SET STATUS = ? WHERE B_NO = ?;";
 	// 회원 : 게시글 수정
 	private final String UPDATE = "UPDATE BOARD SET B_TITLE = ?, B_CONTENT = ?, B_DATE = CURTIME() WHERE B_NO = ?";
@@ -125,6 +125,7 @@ public class BoardDAO {
 
 	public BoardVO selectOne(BoardVO vo) {
 		/* 주의 : 로그인 했을 경우 BoardVO의 userId에 '현재 로그인한 멤버의 아이디'를 세팅해주세요. */
+		// TODO : 가장 최근에 만들어진 게시글의 B_NO 가져오는 selectOne 만들기
 		return jdbcTemplate.queryForObject(SELECT_ONE, new BoardRowMapper(), vo.getUserId(), vo.getBoardNum());
 	}
 
@@ -146,7 +147,7 @@ public class BoardDAO {
 				data.setImageName(rs.getString("I_NM"));
 				return data;
 			});
-
+			
 		} else if (vo.getSearchContent() != null) { // 3. 글 검색
 			if (vo.getSearchCondition().equals("title")) { // 제목 검색
 				return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_SEARCH_TITLE, new BoardRowMapper(),
