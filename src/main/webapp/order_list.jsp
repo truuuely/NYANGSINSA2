@@ -102,6 +102,7 @@
 								<li><a href="mypage.do">내정보</a></li>
 								<li><a href="orderList.do">주문내역</a></li>
 								<li><a href="checkPassword.do">회원정보변경</a></li>
+								<li><a href="myreview.do">내 리뷰 모아보기</a></li>
 							</ul>
 						</div>
 					</div>
