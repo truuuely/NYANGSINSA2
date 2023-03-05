@@ -137,7 +137,7 @@ public class ProductDAO {
 				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getSearchLowPrice(),
 						pvo.getSearchHighPrice());
 
-			} else if (pvo.getSort().equals("priceDesc")) { // 최신순
+			} else if (pvo.getSort().equals("regiDesc")) { // 최신순
 				sql = String.format(SELECT_ALL_WHOLE_SORT, "P_NO DESC");
 
 				return (ArrayList<ProductVO>) jdbcTemplate.query(sql, new ProductRowMapper(), pvo.getSearchLowPrice(),
