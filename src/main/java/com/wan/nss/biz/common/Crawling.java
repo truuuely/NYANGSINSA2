@@ -32,7 +32,7 @@ public class Crawling {
 	@Autowired
 	private ImageDAO imageDAO = new ImageDAO();
 
-	final int MAX = 1; // 카테고리별로 크롤링할 상품 개수
+	final int MAX = 16; // 카테고리별로 크롤링할 상품 개수
 	List<ProductVO> datas = new ArrayList<ProductVO>(); // 크롤링 데이터 저장 배열리스트
 
 	public void downloadFile(URL url, String fileName) throws Exception {
