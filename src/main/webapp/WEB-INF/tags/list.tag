@@ -3,8 +3,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ attribute name="category"%>
 <%@ attribute name="sort"%>
-<c:set var="productImgUrl" value="webapp\img\101\"/>
-<c:set var="boardImgUrl" value="webapp\img\201\"/>
+<c:set var="productImgUrl" value="webapp/img/101/"/>
+<c:set var="boardImgUrl" value="webapp/img/201/"/>
 <!-- 전체 신상품(홈 페이지) 페이지에 직접 넣었음 -->
 <c:if test="${sort=='new'}">
 	<c:forEach var="v" items="${newPList}" begin="0" varStatus="status">
