@@ -32,7 +32,7 @@ public class Crawling {
 	@Autowired
 	private ImageDAO imageDAO = new ImageDAO();
 
-	final int MAX = 16; // 카테고리별로 크롤링할 상품 개수
+	final int MAX = 16; // ★★★ 카테고리별로 크롤링할 상품 개수 (기본값 : 16)
 	List<ProductVO> datas = new ArrayList<ProductVO>(); // 크롤링 데이터 저장 배열리스트
 
 	public void downloadFile(URL url, String fileName) throws Exception {
@@ -43,6 +43,8 @@ public class Crawling {
 	
 	public void sample(HttpServletRequest request) {
 		
+		System.out.println("	로그: Crawling.sample 시작");
+		
 		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
 		
 		String projectPath = request.getSession().getServletContext().getRealPath("/"); // 파일 경로 ".../webapp/" 까지
@@ -50,9 +52,10 @@ public class Crawling {
 		System.out.println("projectPath: " + projectPath);
 		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 
-		
-		
 		List<ProductVO> datas = sampleStep01(request); // 반환받은 url 배열리스트
+		
+		// sampleStep02 시작
+		System.out.println("	로그: sampleStep02 시작");
 		
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
@@ -69,32 +72,111 @@ public class Crawling {
 
 		// WebDriver객체가 곧 하나의 브라우저 창이라 생각한다.
 		WebDriver driver = new ChromeDriver(options);
+		
+		// 폴더가 있으면 삭제하고 생성하기
+		File dir = new File(projectPath + "NYANGSINSA2/src/main/webapp/img/101");
+		if(dir.exists()) {
+			File[] files = dir.listFiles();
+			
+			for( int i=0; i<files.length; i++){
+				if( files[i].delete() ){
+					System.out.println("101/" + files[i].getName()+" 삭제성공");
+				}else{
+					System.out.println("♥♡♥♡♥ 101/" + files[i].getName()+" 삭제실패");
+				}
+			}
+			if(dir.delete()){
+				System.out.println("101 폴더 삭제");
+			}else{
+				System.out.println("101 폴더 삭제 실패");
+			}
+		}
+
+		dir.mkdir();
+		System.out.println("101 폴더 생성");
+		
+		File dir2 = new File(projectPath + "NYANGSINSA2/src/main/webapp/img/102");
+		if(dir2.exists()) {
+			File[] files = dir2.listFiles();
+			
+			for( int i=0; i<files.length; i++){
+				if( files[i].delete() ){
+					System.out.println("102/" + files[i].getName()+" 삭제성공");
+				}else{
+					System.out.println("♥♡♥♡♥ 102/" + files[i].getName()+" 삭제실패");
+				}
+			}
+			if(dir2.delete()){
+				System.out.println("102 폴더 삭제");
+			}else{
+				System.out.println("♥♡♥♡♥ 102 폴더 삭제 실패");
+			}
+		}
+		dir2.mkdir();
+		System.out.println("102 폴더 생성");
+		
+		// 폴더 생성 시간 확보하기
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			System.out.println("폴더 생성 시간 대기중...");
+		}
+		
 		for (int i = 0; i < datas.size(); i++) { // url 배열 크기만큼 반복
-			try {
+//			try {
 
-				driver.get(datas.get(i).getSort()); // 크롤링 할 링크 연결;
-
-				// sampleStep02 시작
+				driver.get(datas.get(i).getSort()); // 크롤링할 상세 페이지 링크 연결;
+				
+				// 카테고리 구분
+				String category = "";
+				if (i >= 0 && i < MAX) {
+					category = "사료";
+				} else if (i >= MAX && i < MAX*2) {
+					category = "간식";
+				} else if (i >= MAX*2 && i < MAX*3) {
+					category = "모래";
+				}
+				datas.get(i).setCategory(category);
 				
 				// 이미지 크롤링
 				// 이미지 주소는 파일 다운로드를 위해 URL 객체로 만들기
 				// 1. 대표이미지는 sampleStep01에서 이미 저장된 것을 사용
 				String url = datas.get(i).getImageName();
+				URL imgUrl = null;
+				try {
+					imgUrl = new URL(url);
+				} catch (Exception e) {
+					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 url로 URL 객체화 실패!");
+				}
 				// 2. 상세 설명 이미지는 sampleStep01에서 가져온 상세 정보 페이지의 상세 설명 이미지를 크롤링함
-				String url2 = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
-				URL imgUrl = new URL(url);
-				URL imgUrl2 = new URL(url2);
+				String url2 = null;
+				URL imgUrl2 = null;
+				try {
+					url2 = driver
+							.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img"))
+							.getAttribute("src");
+					imgUrl2 = new URL(url2);
+				} catch (Exception e) {
+					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 url2 크롤링 실패!");
+				}
+				
 
 				// 상품 간단 설명 크롤링 + data 에 세팅하기
-				String info = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/button/div/div")).getText();
-				datas.get(i).setpDetail(info);
-
-				// sampleStep02 끝
+				String info;
+				try {
+					info = driver
+							.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/button/div/div"))
+							.getText();
+					datas.get(i).setpDetail(info);
+				} catch (Exception e) {
+					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 상세정보 크롤링 실패!");
+				}
 
 				// 크롤링 데이터 확인 부분
+				System.out.println(i + 100 + ". 상품카테고리: " + datas.get(i).getCategory());
+				System.out.println(i + 100 + ". 상품설명: " + datas.get(i).getpDetail());
 				System.out.println(i + 100 + ". imgUrl: " + url);
 				System.out.println(i + 100 + ". imgUrl2: " + url2);
-				System.out.println(i + 100 + ". 상품설명: " + info);
 				// ----------------
 
 				// 이미지1(대표 이미지) 시작
@@ -107,31 +189,23 @@ public class Crawling {
 				// typeNum = 101
 				ivo.setTypeNum(101);
 				
-				// 폴더가 없으면 생성하기
-				File dir = new File(projectPath + "NYANGSINSA2/src/main/webapp/img/101");
-				if (!dir.exists()) { // 위의 경로에 파일이 존재하니??
-					System.out.println(i + 100 + ". 폴더 생성 시작");
-					dir.mkdir();
-				}
-
-				// 폴더 생성 시간 확보하기
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-				}
-
 				// 이미지 파일 저장하기
 				// images/productImages/번호/파일명
-				try {
-					downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일 다운로드하기
-
-					// imageName = fileName;
-					String fileName = url.substring(url.lastIndexOf('/') + 1, url.length()); // 소스에서 파일명 가져오기
-					System.out.println(i + 100 + ". 파일네임1: " + fileName); // 파일 이름 확인
-					ivo.setImageName(fileName);
-				} catch (Exception e) {
-					// 다운로드 에러 발생시 default이미지로 지정
-					ivo.setImageName("default.jpg");
+				if (url != null) {
+					try {
+						downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
+						// imageName = fileName;
+						String fileName = url.substring(url.lastIndexOf('/') + 1, url.length()); // 소스에서 파일명 가져오기
+						System.out.println(i + 100 + ". 파일네임1: " + fileName); // 파일 이름 확인
+						ivo.setImageName(fileName);
+					} catch (Exception e) {
+						// 다운로드 에러 발생시 default이미지로 지정
+						System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 imgURL 다운로드 실패!");
+						ivo.setImageName("default.jsp");
+					}
+				}
+				else {
+					ivo.setImageName("default.jsp");
 				}
 
 				// ivo insert into IMAGE
@@ -148,12 +222,6 @@ public class Crawling {
 				// typeNum = 102
 				ivo.setTypeNum(102);
 				
-				// 폴더가 없으면 생성하기
-				File dir2 = new File(projectPath + "NYANGSINSA2/src/main/webapp/img/102");
-				if (!dir2.exists()) {
-					System.out.println(i + 100 + ". 폴더생성시작");
-					dir2.mkdir();
-				}
 
 				try {
 					// 이미지 파일 저장하기
@@ -164,6 +232,7 @@ public class Crawling {
 					ivo.setImageName(fileName2);
 				} catch (Exception e) {
 					// 다운로드 에러 발생시 default이미지로 지정
+					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 imgURL2 다운로드 실패!");
 					ivo.setImageName("default.jpg");
 				}
 				// ivo insert into IMAGE
@@ -174,12 +243,16 @@ public class Crawling {
 
 				// PRODUCT 테이블에 추가
 
+				// 임시 저장 데이터 비워주기
+				datas.get(i).setSort(null);
+				
 				productDAO.insert(datas.get(i));
 
-			} catch (Exception e) {
-				System.out.println("sampleStep02 에러 발생!");
-				e.printStackTrace();
-			}
+//			} catch (Exception e) {
+//				System.out.println("sampleStep02 요소 검색 실패! (해당상품VO 저장 건너뜀!)");
+//				e.printStackTrace();
+//			}
+
 		}
 		try {
 			if (driver != null) {
@@ -191,12 +264,20 @@ public class Crawling {
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
+		
+		// sampleStep02 끝
+		System.out.println("	로그: sampleStep02 끝");
+		System.out.println("	로그: Crawling.sample 끝");	
 	}
 
 // ---------------------------------------------------------------------------------------
 
 	public List<ProductVO> sampleStep01(HttpServletRequest request) { // 카테고리별 url 가져오기
+		
+		// sampleStep01 시작
+		System.out.println("	로그: sampleStep01 시작");
 
+		
 		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
 		String projectPath = request.getSession().getServletContext().getRealPath("/");
 		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
@@ -228,7 +309,6 @@ public class Crawling {
 			imgNum += a * 2;
 			driver.get(categoryDatas.get(a)); // 순차적으로 url 크롤링
 			
-			ProductVO data = new ProductVO();
 			
 			// 카테고리별 MAX만큼 상세 페이지 URL 크롤링
 			List<WebElement> el1 = driver.findElements(By.className("MuiCardActionArea-root"));
@@ -247,64 +327,50 @@ public class Crawling {
 			
 			// 카테고리별 MAX만큼 datas에 추가
 			for (int i = 0; i < MAX; i++) { 
+				ProductVO data = new ProductVO();
 				
 				try {
 					data.setSort(el1.get(i).getAttribute("href")); // 상세 페이지 주소를 sort에 임시 저장
 				} catch (Exception e) {
+					System.out.println("♥♡♥♡♥ sampleStep01 "+(MAX * a + i + 100) + "번 상세주소 크롤링 실패!");
 					data.setSort("No Detail URL");
 				}
 				try {
 				data.setpName(el2.get(i).getText());
 				} catch (Exception e) {
+					System.out.println("♥♡♥♡♥ sampleStep01 "+(MAX * a + i + 100) + "번 pName 크롤링 실패!");
 					data.setpName("No Name");
 				}
 				try {
 					// 상품 정가격 가져오기
 					String price = el3.get(i).getText();
+					System.out.println("price: " + price);
 					// 가격데이터에서 화표 자리수 기호 제거
 					String priceNumOnly = price.replaceAll(",", "");
 					priceNumOnly = priceNumOnly.replaceAll("원", "");
 					data.setPrice(Integer.parseInt(priceNumOnly));
+					System.out.println("♥♡♥♡♥ sampleStep01 "+(MAX * a + i + 100) + "번 price 크롤링 중 예외 발생! (성공 불확실!)");
 				} catch (Exception e) {
 					data.setPrice(0);
 				}
 				try {
-					// 상품 정가격 가져오기
-					String pDcPercent = el4.get(i).getText();
-					// 가격데이터에서 화표 자리수 기호 제거
-					String pDcPercentNumOnly = pDcPercent.replaceAll("%", "");
-					data.setpDcPercent(Integer.parseInt(pDcPercentNumOnly));
-				} catch (Exception e) {
-					data.setpDcPercent(0);
-				}
-				try {
 				data.setImageName(el5.get(i).getAttribute("src"));
 				} catch (Exception e) {
-					data.setImageName("default.jpg");
+					System.out.println("♥♡♥♡♥ sampleStep01 "+(MAX * a + i + 100) + "번 imageName(상품 대표 이미지 주소) 크롤링 실패!");
 				}
-				
-				// 카테고리 구분
-				String category = "";
-				if (i >= 0 && i < MAX) {
-					category = "사료";
-				} else if (i >= MAX && i < MAX*2) {
-					category = "간식";
-				} else if (i >= MAX*2 && i < MAX*3) {
-					category = "모래";
-				}
-				data.setCategory(category);
+				// 할인율 랜덤 지정
+				data.setpDcPercent((new Random().nextInt(6)) * 5);
 				
 				// 수량은 기본 10으로 고정
 				data.setpAmt(10);
 				
 				// 크롤링 데이터 확인 부분
-				System.out.println("상품번호 :" + (MAX * a + i + 100));
-				System.out.println("상품상세페이지주소 :" + data.getSort());
-				System.out.println("상품이름 :" + data.getpName());
-				System.out.println("상품가격 :" + data.getPrice());
-				System.out.println("상품할인율 :" + data.getpDcPercent());
-				System.out.println("상품카테고리 :" + data.getCategory());
-				System.out.println("상품대표이미지주소 :" + data.getImageName());
+				System.out.println("상품번호: " + (MAX * a + i + 100));
+				System.out.println("상품상세페이지주소: " + data.getSort());
+				System.out.println("상품이름: " + data.getpName());
+				System.out.println("상품가격: " + data.getPrice());
+				System.out.println("상품할인율: " + data.getpDcPercent());
+				System.out.println("상품대표이미지주소: " + data.getImageName());
 				
 				datas.add(data);
 				
@@ -321,6 +387,10 @@ public class Crawling {
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
-		return datas; // url 담은 배열리스트 반환
+		
+		// sampleStep01 끝
+		System.out.println("	로그: sampleStep01 끝");
+		
+		return datas; // sampleStep01 결과 담은 배열리스트 반환
 	}
 }
