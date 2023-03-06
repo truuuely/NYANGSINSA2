@@ -115,7 +115,7 @@ public class ProductController {
 		return "product_manage_insert.jsp";
 	}
 
-	//(관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정: model에는 있으나 view에는 아직 없음
+	//(관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정
 	@RequestMapping(value="/updateProduct.do", method=RequestMethod.POST)
 	public String updateProduct(ProductVO pvo, Model model,
 			HttpServletResponse response,HttpServletRequest request) {
@@ -158,14 +158,14 @@ public class ProductController {
 			PrintWriter out = response.getWriter();
 			response.setContentType("text/html; charset=utf-8");
 			out.println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
+			return "product_manage_datail.jsp";
 			}
 			catch(Exception e) {
 				System.out.println("실패 알람칭 띄우기 중 오류 발생");
 				e.printStackTrace();
 			}
 		}
-
-		return "redirect:product_manage_datail.jsp";
+		return "redirect:product_manage.jsp";
 	}
 
 	@RequestMapping(value="/search.do")
