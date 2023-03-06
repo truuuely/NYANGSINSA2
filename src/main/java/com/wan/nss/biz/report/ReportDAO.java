@@ -16,7 +16,7 @@ public class ReportDAO {
 
 	/*
 	 * C : 게시글, 댓글/대댓글 신고. TARGET_NO 에는 게시글 PK 혹은 댓글 PK가 들어가야 함.
-	 * 	 RP_STEP = 0(글), 1(댓글), 2(대댓글)
+	 * 	 RP_STEP = 1(글), 2(댓글), 3(대댓글)
 	 */
 	private final String INSERT = "INSERT INTO REPORT (TARGET_NO, RP_STEP, M_NO, RP_CONTENT) VALUES (?, ?, (SELECT M_NO FROM MEMBER WHERE M_ID = ?), ?)";
 
@@ -33,7 +33,7 @@ public class ReportDAO {
 	private final String DELETE = "UPDATE REPORT SET STATUS = 3 WHERE RP_NO = ?";
 
 	public boolean insert(ReportVO vo) {
-		if (jdbcTemplate.update(INSERT, vo.getTargetNum(), vo.getReportStep(), vo.getMemberId(),
+		if (jdbcTemplate.update(INSERT, vo.getTargetNum(), vo.getReportStep(), vo.getUserId(),
 				vo.getReportContent()) < 1) {
 			return false;
 		}
@@ -70,10 +70,10 @@ class ReportRowMapper implements RowMapper<ReportVO> {
 		data.setReportNum(rs.getInt("RP_NO"));
 		data.setTargetNum(rs.getInt("TARGET_NO"));
 		data.setReportStep(rs.getInt("RP_STEP"));
-		data.setMemberNum(rs.getInt("M_NO"));
+		data.setUserNum(rs.getInt("M_NO"));
 		data.setReportDate(rs.getString("RP_DATE"));
 		data.setReportContent(rs.getString("RP_CONTENT"));
-		data.setStatus(rs.getInt("STATUS"));
+		data.setReportStat(rs.getInt("STATUS"));
 		return data;
 	}
 
