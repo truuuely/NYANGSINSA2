@@ -144,7 +144,7 @@ public class BoardDAO {
 
 		if (vo.getSearchCondition() == null) { // 1. 글 전체 보기
 			// 로그인 안 한 경우 전체 좋아요가 false로 나옴
-			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId());
+			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId(), vo.getUserId());
 
 		} else if (vo.getSearchCondition().equals("top3")) { // 2. 전체 3등보기
 			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_TOP3, (rs, rowNum) -> {
