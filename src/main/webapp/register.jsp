@@ -110,7 +110,7 @@
 					<div class="login_box_img">
 						<div class="hover">
 							<h4>
-								<spring:message code="message.register.message.register.msg1" />
+								<spring:message code="message.register.msg1" />
 							</h4>
 							<p>
 								<spring:message code="message.register.msg2" />
@@ -138,7 +138,7 @@
 							<div class="col-md-12 form-group">
 								<input type="text" style="width: 60%;" id="id" name="id" placeholder="&nbsp;<spring:message code="message.register.enterid"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterid"/>'" required>
 								&nbsp;
-								<input style="color: white; border-radius: 7px;" type="button" id="idCheckBtn" onclick="checkId()" class="button button-register" value="<spring:message code="message.register.iddouble"/>">
+								<input style="color: white; border-radius: 7px; float: right;" type="button" id="idCheckBtn" onclick="checkId()" class="button button-register" value="<spring:message code="message.register.iddouble"/>">
 							</div>
 							<p class="checkre" align="left" id="outputId">
 								<spring:message code="message.register.id" />
@@ -186,7 +186,7 @@
 							<!-- 전화 번호 -->
 							<div class="col-md-12 form-group">
 								<input type="tel" style="width: 65%;" id="phone" name="phone" placeholder="<spring:message code="message.register.phone"/>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
-								<input type="button" class="button button-register" style="color: white; border-radius: 7px;" value="<spring:message code="message.register.getphone"/>" onclick="sms()">
+								<input type="button" class="button button-register" style="color: white; border-radius: 7px; float: right;" value="<spring:message code="message.register.getphone"/>" onclick="sms()">
 								<div style="text-align: left; padding: 0px;">
 									<p class="checkre" id="outputPhone">
 										<spring:message code="message.register.phone" />
@@ -569,7 +569,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             outputPw2.style.color = '#6667AB'
             inputPw.addEventListener('input', function () {
                if(inputPw.value==""){
-                    outputPw2.textContent = `<spring:message code="message.register.reenterpws"/>` 
+                    outputPw2.textContent = `<spring:message code="message.register.reenterpw"/>` 
                         outputPw2.style.color = 'red'
                         pwSame = false;
                   }else if (inputPw.value == inputPw2.value) {
@@ -577,14 +577,14 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                     outputPw2.style.color = '#6667AB'
                     pwSame = true;
                    } else {
-                    outputPw2.textContent = `<spring:message code="message.register.reenterpws"/>`
+                    outputPw2.textContent = `<spring:message code="message.register.reenterpw"/>`
                     outputPw2.style.color = 'red'
                     pwSame = false;
                    }
             })
             pwSame = true;
         } else {
-            outputPw2.textContent = `<spring:message code="message.register.reenterpws"/>`
+            outputPw2.textContent = `<spring:message code="message.register.reenterpw"/>`
             outputPw2.style.color = 'red'
             pwSame = false;
         }
