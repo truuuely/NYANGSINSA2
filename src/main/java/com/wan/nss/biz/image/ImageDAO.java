@@ -15,7 +15,7 @@ public class ImageDAO {
    @Autowired
    private JdbcTemplate jdbcTemplate;
    // 이미지 추가
-   private final String SQL_INSERT = "INSERT INTO IMAGE (I_NM, TYPE_NO, TARGET_NO) VALUES(?, ?, ?)";
+   private final String SQL_INSERT = "INSERT INTO IMAGE (TARGET_NO, TYPE_NO, I_NM) VALUES(?, ?, ?)";
    // 이미지 번호
    private final String SQL_SELECTONE = "SELECT * FROM IMAGE WHERE I_NO = ?";
    // 이미지 전체 보기
@@ -26,7 +26,7 @@ public class ImageDAO {
    private final String SQL_DELETE = "DELETE FROM IMAGE WHERE I_NO=?";
 
    public boolean insert(ImageVO ivo) {
-      jdbcTemplate.update(SQL_INSERT, ivo.getImageName(), ivo.getTargetNum(), ivo.getTypeNum());
+      jdbcTemplate.update(SQL_INSERT, ivo.getTargetNum(), ivo.getTypeNum(), ivo.getImageName());
       return true;
    }
 
