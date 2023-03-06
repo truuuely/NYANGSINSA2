@@ -69,7 +69,7 @@ public class BoardDAO {
 			+ " LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO GROUP BY bl.M_NO";
 
 	// 가장 최근에 추가한 board
-	private final String SELECT_ONE_NEWEST = "";
+	private final String SELECT_ONE_NEWEST = "SELECT MAX(B_NO) FROM BOARD";
 	
 	/*
 	 * U
