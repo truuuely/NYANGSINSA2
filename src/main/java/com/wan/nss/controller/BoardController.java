@@ -81,7 +81,10 @@ public class BoardController {
 	// 고양이 자랑 게시글 좋아요/취소 수행
 	@RequestMapping(value="/updateBlike.do")
 	public String updateLike(BlikeVO blvo, Model model) {
-		BlikeService.update(blvo);
+		// 좋아요 할 때
+		BlikeService.insert(blvo);
+		// 좋아요 취소할 때
+		BlikeService.delete(blvo);
 		return "";
 	}
 }
