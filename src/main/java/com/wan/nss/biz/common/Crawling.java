@@ -1,5 +1,8 @@
 package com.wan.nss.biz.common;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -9,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.openqa.selenium.By;
@@ -32,7 +36,7 @@ public class Crawling {
 	@Autowired
 	private ImageDAO imageDAO = new ImageDAO();
 
-	final int MAX = 16; // ★★★ 카테고리별로 크롤링할 상품 개수 (기본값 : 16)
+	final int MAX = 16; // ★★★ 카테고리별 크롤링할 상품 개수 (기본값 : 16)
 	List<ProductVO> datas = new ArrayList<ProductVO>(); // 크롤링 데이터 저장 배열리스트
 
 	public void downloadFile(URL url, String fileName) throws Exception {
@@ -123,135 +127,122 @@ public class Crawling {
 		}
 		
 		for (int i = 0; i < datas.size(); i++) { // url 배열 크기만큼 반복
-//			try {
 
-				driver.get(datas.get(i).getSort()); // 크롤링할 상세 페이지 링크 연결;
-				
-				// 카테고리 구분
-				String category = "";
-				if (i >= 0 && i < MAX) {
-					category = "사료";
-				} else if (i >= MAX && i < MAX*2) {
-					category = "간식";
-				} else if (i >= MAX*2 && i < MAX*3) {
-					category = "모래";
-				}
-				datas.get(i).setCategory(category);
-				
-				// 이미지 크롤링
-				// 이미지 주소는 파일 다운로드를 위해 URL 객체로 만들기
-				// 1. 대표이미지는 sampleStep01에서 이미 저장된 것을 사용
-				String url = datas.get(i).getImageName();
-				URL imgUrl = null;
+			System.out.println("datas.get(i)" + datas.get(i));
+			driver.get(datas.get(i).getSort()); // 크롤링할 상세 페이지 링크 연결;
+
+			// 카테고리 구분
+			String category = "";
+			if (i >= 0 && i < MAX) {
+				category = "사료";
+			} else if (i >= MAX && i < MAX * 2) {
+				category = "간식";
+			} else if (i >= MAX * 2 && i < MAX * 3) {
+				category = "모래";
+			}
+			datas.get(i).setCategory(category);
+
+			// 이미지 크롤링
+			// 이미지 주소는 파일 다운로드를 위해 URL 객체로 만들기
+			// 1. 대표이미지는 sampleStep01에서 이미 저장된 것을 사용
+//			String url = datas.get(i).getImageName();
+			URL imgUrl = null;
+			try {
+//				imgUrl = new URL(url);
+				imgUrl = new URL(datas.get(i).getImageName());
+			} catch (Exception e) {
+				System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 url로 URL 객체화 실패!");
+			}
+			// 2. 상세 설명 이미지는 sampleStep01에서 가져온 상세 정보 페이지의 상세 설명 이미지를 크롤링함
+//			String url2 = null;
+			URL imgUrl2 = null;
+			try {
+//				url2 = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
+				imgUrl2 = new URL(driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src"));
+			} catch (Exception e) {
+				System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 url2 크롤링 실패!");
+			}
+
+			// 상품 간단 설명 크롤링 + data 에 세팅하기
+			String info;
+			try {
+				info = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/button/div/div"))
+						.getText();
+				datas.get(i).setpDetail(info);
+			} catch (Exception e) {
+				System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 상세정보 크롤링 실패!");
+			}
+
+			// 크롤링 데이터 확인 부분
+			System.out.println(i + 100 + ". 상품카테고리: " + datas.get(i).getCategory());
+			System.out.println(i + 100 + ". 상품설명: " + datas.get(i).getpDetail().substring(0, 20) + "...(생략)");
+			System.out.println(i + 100 + ". imgUrl: " + imgUrl);
+			System.out.println(i + 100 + ". imgUrl2: " + imgUrl2);
+			// ----------------
+
+			// 이미지1(대표 이미지) 시작
+			// img 멤버변수 세팅
+			ImageVO ivo = new ImageVO();
+
+			// targetNum = pNum = i+1
+			ivo.setTargetNum(i + 100);
+
+			// typeNum = 101
+			ivo.setTypeNum(101);
+
+			// 이미지 파일 저장하기
+			// imgUrl이 null이 아닐 때 
+			if (imgUrl != null) {
 				try {
-					imgUrl = new URL(url);
-				} catch (Exception e) {
-					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 url로 URL 객체화 실패!");
-				}
-				// 2. 상세 설명 이미지는 sampleStep01에서 가져온 상세 정보 페이지의 상세 설명 이미지를 크롤링함
-				String url2 = null;
-				URL imgUrl2 = null;
-				try {
-					url2 = driver
-							.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img"))
-							.getAttribute("src");
-					imgUrl2 = new URL(url2);
-				} catch (Exception e) {
-					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 url2 크롤링 실패!");
-				}
-				
-
-				// 상품 간단 설명 크롤링 + data 에 세팅하기
-				String info;
-				try {
-					info = driver
-							.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/button/div/div"))
-							.getText();
-					datas.get(i).setpDetail(info);
-				} catch (Exception e) {
-					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 상세정보 크롤링 실패!");
-				}
-
-				// 크롤링 데이터 확인 부분
-				System.out.println(i + 100 + ". 상품카테고리: " + datas.get(i).getCategory());
-				System.out.println(i + 100 + ". 상품설명: " + datas.get(i).getpDetail());
-				System.out.println(i + 100 + ". imgUrl: " + url);
-				System.out.println(i + 100 + ". imgUrl2: " + url2);
-				// ----------------
-
-				// 이미지1(대표 이미지) 시작
-				// img 멤버변수 세팅
-				ImageVO ivo = new ImageVO();
-				
-				// targetNum = pNum = i+1
-				ivo.setTargetNum(i + 100);
-				
-				// typeNum = 101
-				ivo.setTypeNum(101);
-				
-				// 이미지 파일 저장하기
-				// images/productImages/번호/파일명
-				if (url != null) {
-					try {
-						downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
-						// imageName = fileName;
-						String fileName = url.substring(url.lastIndexOf('/') + 1, url.length()); // 소스에서 파일명 가져오기
-						System.out.println(i + 100 + ". 파일네임1: " + fileName); // 파일 이름 확인
-						ivo.setImageName(fileName);
-					} catch (Exception e) {
-						// 다운로드 에러 발생시 default이미지로 지정
-						System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 imgURL 다운로드 실패!");
-						ivo.setImageName("default.jsp");
-					}
-				}
-				else {
-					ivo.setImageName("default.jsp");
-				}
-
-				// ivo insert into IMAGE
-				imageDAO.insert(ivo);
-				
-				// 이미지1(대표 이미지) 끝
-				
-				
-				// 이미지2(상세 설명 이미지) 시작
-				// img2 멤버변수 세팅
-				// targetNum = pNum = i+1
-				ivo.setTargetNum(i + 100);
-				
-				// typeNum = 102
-				ivo.setTypeNum(102);
-				
-
-				try {
-					// 이미지 파일 저장하기
-					downloadFile(imgUrl2, projectPath + "NYANGSINSA2/src/main/webapp/img/102/" + (i + 100) + ".jpg"); // 파일 다운로드하기
-					// imageName = fileName;
-					String fileName2 = url2.substring(url2.lastIndexOf('/') + 1, url2.length()); // 파일명 가져오기
-					System.out.println(i + 100 + ". 파일네임2: " + fileName2);
-					ivo.setImageName(fileName2);
+					downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
+					ivo.setImageName("img/101/" + (i + 100) + ".jpg");
 				} catch (Exception e) {
 					// 다운로드 에러 발생시 default이미지로 지정
-					System.out.println("♥♡♥♡♥ sampleStep02 "+(i + 100) + "번 imgURL2 다운로드 실패!");
-					ivo.setImageName("default.jpg");
+					System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 imgURL 다운로드 실패!");
+					System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 imageName을 'img/default/101.jpg'로 설정!");
+					ivo.setImageName("img/default/101.jpg");
+
 				}
-				// ivo insert into IMAGE
-				imageDAO.insert(ivo);
-				
-				// 이미지2(대표 이미지) 끝
-				
+			}
+			
+			// ivo insert into IMAGE
+			imageDAO.insert(ivo);
 
-				// PRODUCT 테이블에 추가
+			// 이미지1(대표 이미지) 끝
 
-				// 임시 저장 데이터 비워주기
-				datas.get(i).setSort(null);
-				
-				productDAO.insert(datas.get(i));
+			// 이미지2(상세 설명 이미지) 시작
+			// img2 멤버변수 세팅
+			// targetNum = pNum = i+1
+			ivo.setTargetNum(i + 100);
 
-//			} catch (Exception e) {
-//				System.out.println("sampleStep02 요소 검색 실패! (해당상품VO 저장 건너뜀!)");
-//				e.printStackTrace();
-//			}
+			// typeNum = 102
+			ivo.setTypeNum(102);
+
+			// 이미지 파일 저장하기
+			// imgUrl이 null이 아닐 때 
+			try {
+				downloadFile(imgUrl2, projectPath + "NYANGSINSA2/src/main/webapp/img/102/" + (i + 100) + ".jpg"); // 파일
+				ivo.setImageName("img/102/" + (i + 100) + ".jpg");
+			} catch (Exception e) {
+				// 다운로드 에러 발생시 default이미지로 지정
+				System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 imgURL2 다운로드 실패!");
+				System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 imageName을 'img/default/102.jpg'로 설정!");
+				ivo.setImageName("img/default/102.jpg");
+			}
+			
+			// ivo insert into IMAGE
+			imageDAO.insert(ivo);
+
+			// 이미지2(대표 이미지) 끝
+
+			// PRODUCT 테이블에 추가
+
+			// 임시 저장 데이터 비워주기
+			datas.get(i).setSort(null);
+
+			productDAO.insert(datas.get(i));
+			
+			System.out.println("--------------------------- " + (i + 100) + "번 sampleStep02 완료 ---------------------------");
 
 		}
 		try {
@@ -373,6 +364,8 @@ public class Crawling {
 				System.out.println("상품대표이미지주소: " + data.getImageName());
 				
 				datas.add(data);
+				
+				System.out.println("--------------------------- " + (MAX * a + i + 100) + "번 sampleStep01 완료 ---------------------------");
 				
 			}
 
