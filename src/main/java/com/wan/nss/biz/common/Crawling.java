@@ -349,8 +349,8 @@ public class Crawling {
 					String priceNumOnly = price.replaceAll(",", "");
 					priceNumOnly = priceNumOnly.replaceAll("원", "");
 					data.setPrice(Integer.parseInt(priceNumOnly));
-					System.out.println("♥♡♥♡♥ sampleStep01 "+(MAX * a + i + 100) + "번 price 크롤링 중 예외 발생! (성공 불확실!)");
 				} catch (Exception e) {
+					System.out.println("♥♡♥♡♥ sampleStep01 "+(MAX * a + i + 100) + "번 price 크롤링 중 예외 발생! (성공 불확실!)");
 					data.setPrice(0);
 				}
 				try {
