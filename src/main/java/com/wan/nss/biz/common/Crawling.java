@@ -1,8 +1,5 @@
 package com.wan.nss.biz.common;
 
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.InputStream;
 import java.net.URL;
@@ -12,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 
 import org.openqa.selenium.By;
