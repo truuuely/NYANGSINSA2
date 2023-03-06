@@ -159,9 +159,9 @@
 						</c:choose>
 					</ul>
 					<h5>
-						<a href="selectOneBoard.do?boardNum=${v.boardNum}">${v.boardTitle}</a>
+						<a href="boardPostView.do?boardNum=${v.boardNum}">${v.boardTitle}</a>
 					</h5>
-					<a href="selectOneBoard.do?boardNum=${v.boardNum}" class="blog__btn">
+					<a href="boardPostView.do?boardNum=${v.boardNum}" class="blog__btn">
 						글 보기<span class="arrow_right"></span>
 					</a>
 				</div>
