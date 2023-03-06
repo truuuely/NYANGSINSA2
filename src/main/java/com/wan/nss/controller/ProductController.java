@@ -35,7 +35,7 @@ public class ProductController {
 
    // 멤버, 상품 
    @RequestMapping(value="/main.do")
-   public String mainView(ProductVO pvo, Model model) {
+   public String mainView(ProductVO pvo, Model model, HttpServletRequest request) {
       // 신상품 데이터. pvo : category == all, sort == regiDesc
       System.out.println("   로그: main.do");
       
@@ -44,7 +44,7 @@ public class ProductController {
       pvo.setSort("regiDesc");
       
       if(productService.selectAll(pvo).size() < 48) {
-         crawling.sample();
+         crawling.sample(request);
       }
       
       // 전체 최신순(등록일순): category = all,  sort = regiDesc

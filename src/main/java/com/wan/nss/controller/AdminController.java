@@ -135,7 +135,7 @@ public class AdminController { //관리자 페이지 단순 이동(View, Detail)
 	@RequestMapping(value="/updateProductPage.do")
 	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
 		productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
-		model.addAttribute("image",);
+		//model.addAttribute("image",); //오늘 수정 예정
 		return "product_manage_detail.jsp";
 	}
 	
