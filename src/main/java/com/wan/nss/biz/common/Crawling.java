@@ -47,19 +47,22 @@ public class Crawling {
 	
 	public void sample(HttpServletRequest request) {
 		
-		System.out.println("	로그: Crawling.sample 시작");
+		System.out.println("로그: Crawling.sample 시작");
+		System.out.println();
 		
 		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
 		
 		String projectPath = request.getSession().getServletContext().getRealPath("/"); // 파일 경로 ".../webapp/" 까지
 		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
 		System.out.println("projectPath: " + projectPath);
+		System.out.println();
 		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 
 		List<ProductVO> datas = sampleStep01(request); // 반환받은 url 배열리스트
 		
 		// sampleStep02 시작
-		System.out.println("	로그: sampleStep02 시작");
+		System.out.println("로그: sampleStep02 시작");
+		System.out.println();
 		
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
@@ -128,7 +131,6 @@ public class Crawling {
 		
 		for (int i = 0; i < datas.size(); i++) { // url 배열 크기만큼 반복
 
-			System.out.println("datas.get(i)" + datas.get(i));
 			driver.get(datas.get(i).getSort()); // 크롤링할 상세 페이지 링크 연결;
 
 			// 카테고리 구분
@@ -145,19 +147,15 @@ public class Crawling {
 			// 이미지 크롤링
 			// 이미지 주소는 파일 다운로드를 위해 URL 객체로 만들기
 			// 1. 대표이미지는 sampleStep01에서 이미 저장된 것을 사용
-//			String url = datas.get(i).getImageName();
 			URL imgUrl = null;
 			try {
-//				imgUrl = new URL(url);
 				imgUrl = new URL(datas.get(i).getImageName());
 			} catch (Exception e) {
 				System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 url로 URL 객체화 실패!");
 			}
 			// 2. 상세 설명 이미지는 sampleStep01에서 가져온 상세 정보 페이지의 상세 설명 이미지를 크롤링함
-//			String url2 = null;
 			URL imgUrl2 = null;
 			try {
-//				url2 = driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src");
 				imgUrl2 = new URL(driver.findElement(By.xpath("/html/body/div/div/div/div/div/div/div/div/div/div/picture/img")).getAttribute("src"));
 			} catch (Exception e) {
 				System.out.println("♥♡♥♡♥ sampleStep02 " + (i + 100) + "번 url2 크롤링 실패!");
@@ -174,10 +172,11 @@ public class Crawling {
 			}
 
 			// 크롤링 데이터 확인 부분
-			System.out.println(i + 100 + ". 상품카테고리: " + datas.get(i).getCategory());
-			System.out.println(i + 100 + ". 상품설명: " + datas.get(i).getpDetail().substring(0, 20) + "...(생략)");
-			System.out.println(i + 100 + ". imgUrl: " + imgUrl);
-			System.out.println(i + 100 + ". imgUrl2: " + imgUrl2);
+			System.out.println("상품번호: " + (i + 100));
+			System.out.println("상품카테고리: " + datas.get(i).getCategory());
+			System.out.println("상품설명: " + datas.get(i).getpDetail().substring(0, 40) + " ...");
+			System.out.println("imgUrl: " + imgUrl);
+			System.out.println("imgUrl2: " + imgUrl2);
 			// ----------------
 
 			// 이미지1(대표 이미지) 시작
@@ -242,7 +241,8 @@ public class Crawling {
 
 			productDAO.insert(datas.get(i));
 			
-			System.out.println("--------------------------- " + (i + 100) + "번 sampleStep02 완료 ---------------------------");
+			System.out.println("--------------- " + (i + 100) + "번 sampleStep02 완료 ---------------");
+			System.out.println();
 
 		}
 		try {
@@ -257,8 +257,10 @@ public class Crawling {
 		}
 		
 		// sampleStep02 끝
-		System.out.println("	로그: sampleStep02 끝");
-		System.out.println("	로그: Crawling.sample 끝");	
+		System.out.println("로그: sampleStep02 끝");
+		System.out.println();
+		System.out.println("로그: Crawling.sample 끝");	
+		System.out.println();
 	}
 
 // ---------------------------------------------------------------------------------------
@@ -266,13 +268,15 @@ public class Crawling {
 	public List<ProductVO> sampleStep01(HttpServletRequest request) { // 카테고리별 url 가져오기
 		
 		// sampleStep01 시작
-		System.out.println("	로그: sampleStep01 시작");
+		System.out.println("로그: sampleStep01 시작");
+		System.out.println();
 
 		
 		final String WEB_DRIVER_ID = "webdriver.chrome.driver"; // 드라이버 ID
 		String projectPath = request.getSession().getServletContext().getRealPath("/");
 		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
 		System.out.println("projectPath: " + projectPath);
+		System.out.println();
 		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 		
 		try {
@@ -365,7 +369,8 @@ public class Crawling {
 				
 				datas.add(data);
 				
-				System.out.println("--------------------------- " + (MAX * a + i + 100) + "번 sampleStep01 완료 ---------------------------");
+				System.out.println("------------ " + (MAX * a + i + 100) + "번 sampleStep01 완료 ------------");
+				System.out.println();
 				
 			}
 
@@ -382,7 +387,8 @@ public class Crawling {
 		}
 		
 		// sampleStep01 끝
-		System.out.println("	로그: sampleStep01 끝");
+		System.out.println("로그: sampleStep01 끝");
+		System.out.println();
 		
 		return datas; // sampleStep01 결과 담은 배열리스트 반환
 	}
