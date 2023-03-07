@@ -380,7 +380,7 @@
 
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
-		<a href="#" class="write_board">글 쓰기</a>
+		<a href="insertBoardView.do" class="write_board">글 쓰기</a>
 	</div>
 
 	<script type="text/javascript">

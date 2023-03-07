@@ -3,8 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ attribute name="category"%>
 <%@ attribute name="sort"%>
-
-<!-- 전체 신상품(홈 페이지) 페이지에 직접 넣었음 -->
+<!-- 전체 신상품(홈 페이지) -->
 <c:if test="${sort=='new'}">
 	<c:forEach var="v" items="${newPList}" begin="0" varStatus="status">
 		<div class="col-lg-3">
@@ -137,7 +136,7 @@
 		<div class="col-lg-4 col-md-4 col-sm-4 show-board">
 			<div class="blog__item">
 				<div class="blog__item__pic">
-					<img src="img/${v.imageName}" alt="고양이 사진">
+					<img src="${v.imageName}" alt="고양이 사진">
 				</div>
 				<div class="blog__item__text">
 					<ul>
@@ -158,9 +157,9 @@
 						</c:choose>
 					</ul>
 					<h5>
-						<a href="selectOneBoard.do?boardNum=${v.boardNum}">${v.boardTitle}</a>
+						<a href="boardPostView.do?boardNum=${v.boardNum}">${v.boardTitle}</a>
 					</h5>
-					<a href="selectOneBoard.do?boardNum=${v.boardNum}" class="blog__btn">
+					<a href="boardPostView.do?boardNum=${v.boardNum}" class="blog__btn">
 						글 보기<span class="arrow_right"></span>
 					</a>
 				</div>

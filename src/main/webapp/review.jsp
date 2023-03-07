@@ -50,7 +50,7 @@
 			<div class="col-lg-6">
 				<form action="insertReview.do" method="post">
 					<input type="hidden" name="pNum" value="${pNum}">
-					<img alt="리뷰쓸 상품 이미지" style="height: 200px; display: block; margin: auto;" src="${pImgUrl}"> <br> <br>
+					<img alt="리뷰쓸 상품 이미지" style="height: 200px; display: block; margin: auto;" src="${imageName}"> <br> <br>
 					<b style="font-size: 20px;">상품명 : ${pName}</b> <br> <br>
 
 					<div class="col-lg-6">
