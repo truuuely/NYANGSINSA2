@@ -1,16 +1,10 @@
 package com.wan.nss.controller.servlet;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -28,7 +22,7 @@ public class ListController {
 
 	@ResponseBody
 	@RequestMapping(value="/getList.do")
-	public JsonArray sendList(ProductVO pvo) {
+	public JsonArray sendList(ProductVO pvo, Model model) {
 		
 		System.out.println("ListController 실행 조건: ");
 		System.out.println("pSearchCondition: " + pvo.getpSearchCondition());
@@ -37,8 +31,13 @@ public class ListController {
 		System.out.println("searchLowPrice: " + pvo.getSearchLowPrice());
 		System.out.println("searchHighPrice: " + pvo.getSearchHighPrice());
 		
+		// 뷰에서 넘어온 조건으로 상품리스트 가져오기
 		ArrayList<ProductVO> list = productService.selectAll(pvo); // 결과 상품 목록
-
+		
+		// 뷰에서 전체상품 최고가 가져온 후 response에 세팅
+		pvo.setpSearchCondition("max");
+		model.addAttribute("maxPrice", productService.selectOne(pvo).getPrice());
+		
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); // JsonArry로 변경하여 반환
 
 		return datas;
