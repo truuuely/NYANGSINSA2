@@ -51,6 +51,8 @@ public class ProductController {
       pvo2.setpSearchCondition("max"); //selectOne에서 인자로 쓸 것
       pvo.setSearchHighPrice(productService.selectOne(pvo2).getDc_price());	
       
+      System.out.println("상품 개수: "+productService.selectAll(pvo).size()); //상품 개수 로그
+      
       if(productService.selectAll(pvo).size() < 48) {
          crawling.sample(request);
       }
