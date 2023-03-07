@@ -57,12 +57,14 @@ public class ProductController {
 		System.out.println("-----------------------------------------------------");
 		System.out.println("상품 개수: " + datas.size()); // 상품 개수 로그
 		if (datas.size() < 48) {
-			crawling.sample(request);
-			System.out.println("-----------------------------------------------------");
-		} else {
 			for (ProductVO v : datas) {
 				System.out.println("상품 번호: " + v.getpNum());
 			}			
+			System.out.println("-----------------------------------------------------");
+			crawling.sample(request);
+		}
+		else {
+			System.out.println("이미 크롤링 됨");
 		}
 
 		// 전체 최신순(등록일순): category = all, sort = regiDesc
@@ -88,6 +90,7 @@ public class ProductController {
 		pvo.setSearchLowPrice(0);
 		pvo2.setpSearchCondition("max"); // selectOne에서 인자로 쓸 것
 		pvo.setSearchHighPrice(productService.selectOne(pvo2).getPrice());
+		model.addAttribute("maxPrice",pvo.getSearchHighPrice());//
 		model.addAttribute("pList", productService.selectAll(pvo));
 
 		// 쇼핑페이지 기본 이동 (shop.do?category=all)

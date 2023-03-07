@@ -246,7 +246,7 @@
 							원
 							<br>
 							<div class="price-range-wrap">
-								<div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="100000">
+								<div class="price-range ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content" data-min="0" data-max="${maxPrice}">
 									<div class="ui-slider-range ui-corner-all ui-widget-header"></div>
 									<span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span> <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"></span>
 								</div>
@@ -325,7 +325,7 @@
 	<!-- 리스트세팅 -->
 	<script>
 		$(document).ready(function() {
-			list("sand", "sellDesc", 1, 0, 100000);
+			list("sand", "sellDesc", 1, 0, ${maxPrice});
 			$.when($.ajax("getList")).done(function() {
 
 				$.ajax({ // ajax로 데이터 가져오기
