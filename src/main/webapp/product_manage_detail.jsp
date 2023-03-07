@@ -205,7 +205,7 @@
 										<div class="mb-3 row">
 											<label for="html5-text-input" class="col-md-2 col-form-label">대표 이미지</label>
 											<div class="col-md-10">
-												<img src="${pvo.pImgUrl}" height="500px" alt="상품 대표 이미지" />
+												<img src="${pvo.imageName}" height="500px" alt="상품 대표 이미지" />
 											</div>
 										</div>
 										<div class="mb-3 row">

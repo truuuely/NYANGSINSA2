@@ -32,7 +32,7 @@ function cList(pNumIn, actionIn) {
 					+ "<tbody>";
 
 				for (var i = 0; i < dataList.length; i++) {
-					chartHtml += "<tr><td class='shoping__cart__item'><a href='shopDetails.do?pNum=" + dataList[i].pNum + "'><img src='" + dataList[i].pImgUrl + "' height='100px' alt='상품이미지' /></a>"
+					chartHtml += "<tr><td class='shoping__cart__item'><a href='shopDetails.do?pNum=" + dataList[i].pNum + "'><img src='" + dataList[i].imageName + "' height='100px' alt='상품이미지' /></a>"
 						+ "<a href='shopDetails.do?pNum=" + dataList[i].pNum + "'><h5>" + dataList[i].pName + "</h5></a></td><td class='shoping__cart__price'>" + dataList[i].dc_price.toLocaleString('ko-KR') + "원</td><td class='shoping__cart__quantity'>"
 						+ "<div class='quantity'>"
 						+ "<input type='button' value='-'onclick='cList(" + dataList[i].pNum + ",`-`)'>"

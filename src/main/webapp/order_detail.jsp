@@ -299,7 +299,7 @@
 												<h5>164118</h5>
 											</td> -->
 											<td class="detail_img"><a href="shopDetails.do?pNum=${v.pNum}">
-													<img src="${v.pImgUrl}" alt="${v.pName}의 상세사진 ">
+													<img src="${v.imageName}" alt="${v.pName}의 상세사진 ">
 												</a></td>
 											<td class="shoping__cart__price"><a style="color: black;" href="shopDetails.do?pNum=${v.pNum}">${v.pName}</a></td>
 											<td class="shoping__cart__total">${v.odCnt}개</td>
