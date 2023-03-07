@@ -12,10 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.board.BoardVO;
 import com.wan.nss.biz.common.Crawling;
+import com.wan.nss.biz.image.ImageService;
+import com.wan.nss.biz.image.ImageVO;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 import com.wan.nss.biz.review.ReviewService;
@@ -29,6 +32,8 @@ public class ProductController {
    @Autowired
    private ReviewService reviewService;
    @Autowired
+   private ImageService imageService;
+   @Autowired
    private BoardService boardService;
    @Autowired
    private Crawling crawling;
@@ -39,17 +44,19 @@ public class ProductController {
       // 신상품 데이터. pvo : category == all, sort == regiDesc
       System.out.println("   로그: main.do");
       
-   // 크롤링     
+      // 크롤링     
       pvo.setCategory("all");
       pvo.setSort("regiDesc");
+      pvo.setSearchLowPrice(0);
+      ProductVO pvo2 = new ProductVO();
+      pvo2.setpSearchCondition("max"); //selectOne에서 인자로 쓸 것
+      pvo.setSearchHighPrice(productService.selectOne(pvo2).getDc_price());	
       
       if(productService.selectAll(pvo).size() < 48) {
          crawling.sample(request);
       }
       
       // 전체 최신순(등록일순): category = all,  sort = regiDesc
-      pvo.setSearchLowPrice(0);
-      pvo.setSearchHighPrice(1000000);	
       model.addAttribute("newPList", productService.selectAll(pvo)); 
 
       // 전체 인기순(판매량순): category == all, sort == sellDesc
@@ -85,10 +92,10 @@ public class ProductController {
 
 	// 상품세부페이지 이동
 	@RequestMapping(value="/shopDetails.do")
-	public String shopDetailView(ProductVO pvo,ReviewVO rvo,Model model) {
+	public String shopDetailView(ProductVO pvo, ImageVO ivo, ReviewVO rvo, Model model) {
 		System.out.println("pNum: "+pvo.getpNum());
 		pvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set
-		ProductVO resPvo = new ProductVO();//현재 pvo
+		ProductVO resPvo = new ProductVO(); //현재 pvo
 		resPvo = productService.selectOne(pvo); // 상세페이지에서 보여줄 상품num을 selectAll에 돌린 결과를 resPvo에 저장
 
 		// 관련상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
@@ -100,57 +107,43 @@ public class ProductController {
 		ArrayList<ReviewVO> rList = reviewService.selectAll(rvo); // 리뷰 리스트
 		ArrayList<ProductVO> pList = productService.selectAll(pvo); // 관련 상품 리스트
 
-		model.addAttribute("pvo", pvo); //해당 상품의 정보들을 보내줌
+		model.addAttribute("pvo", resPvo); //해당 상품의 정보들을 보내줌
 		model.addAttribute("rList", rList);
 		model.addAttribute("pList", pList);
 
 		return "shop_details.jsp";
 	}
 
-	// (관리자) 상품 추가 기능: model에는 있으나 view에는 아직 없음
+	/* 안 씀 (관리자) 상품 추가 기능
 	@RequestMapping(value="/createProduct.do", method=RequestMethod.POST)
 	public String insertProduct(ProductVO pvo, Model model) {
 		productService.insert(pvo); //카테고리, 상품 이름, 가격, 재고, 설명 추가
 		// 2. 상품 이미지 올리기는 추후 구현 예정: 대표이미지(pImgUrl), 상세 이미지(pImgUrl2)
 		return "product_manage_insert.jsp";
-	}
+	}*/
 
 	//(관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정
 	@RequestMapping(value="/updateProduct.do", method=RequestMethod.POST)
-	public String updateProduct(ProductVO pvo, Model model,
+	public String updateProduct(ProductVO pvo, ImageVO ivo, Model model,
 			HttpServletResponse response,HttpServletRequest request) {
+		//@RequestParam(value="searchCondition",defaultValue="TITLE",required=false)String searchCondition
 
-		/*
-		// 관리자 모드 : 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정
+		// 관리자 모드 : 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정 (아직 안 함)
 		System.out.println("updateProduct 입장");
-
-		//파일받기 (저장공간) > 초기세팅 (업로드 확인 > bvo.setFile(fileName);) > 본섭공간 저장 > 추가 실행
+		//1. 파일 받아오기
 		
-		// 각자 이미지 저장할 위치
-		String uploadDir = this.getClass().getResource("").getPath();
+		//파일을 받기 위해 다운로드 파일 메서드 불러오기
+		crawling.downloadFile(new URL("원래 이미지 경로"), 실제로 저장할 이미지 경로); //input: Url url, String fileName
 		
+		
+		//파일받기 (저장공간) : V에서 img, img2로 줌
+		
+		//2. 세팅 (업로드 확인 > bvo.setFile(fileName) + 만약 파일의 크기가 기존 것과 동일하다면, 기존 것보다 크거나 작다면, 그렇게 조정하는 코드도 같이 넣기)
+		
+		//3. 본섭에 저장
+		
+		//4. 업데이트 실행
 
-		System.out.println(uploadDir);
-
-		// 총 100M 까지 저장 가능하게 함
-		int maxSize = 1024 * 1024 * 100;
-
-		String encoding = "UTF-8";
-
-		// 사용자가 전송한 파일정보 토대로 업로드 장소에 파일 업로드 수행할 수 있게 함
-
-		MultipartRequest multipartRequest = new MultipartRequest(request, uploadDir, maxSize, encoding, new DefaultFileRenamePolicy());
-
-		// 중복된 파일이름이 있기에 fileRealName이 실제로 서버에 저장된 경로이자 파일
-
-		//String fileRealName = multipartRequest.getFilesystemName("file");
-
-		// 디비에 업로드 메소드
-
-		//new FileDAO().upload(fileName, fileName2);
-
-		//pvo.setpImgUrl("img/"+multipartRequest.getFilesystemName("img")); // 이미지 첨부파일인데.. 어떻게 하지 수정 필요!!!!
-		*/
 		boolean flag = productService.update(pvo);
 
 		if (!flag) { // 실패 시 알림창
