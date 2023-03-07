@@ -29,6 +29,8 @@ public class ProductDAO {
 			+ " FROM PRODUCT p INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND TYPE_NO = 101 WHERE p.P_NO = ?";
 	// 가장 최근에 추가한 상품 pNum 가져오기
 	private final String SELECT_ONE_NEWEST = "SELECT MAX(P_NO) AS P_NO FROM PRODUCT";
+	// 상품 최고가 가져오기
+	private final String SELECT_ONE_MAX_PRICE = "SELECT MAX(P_PRICE * (100 - DC_PERCENT)/100) AS MAX_PRICE FROM PRODUCT";
 
 	// *** selectAll ***
 	// 전체 카테고리 인기순(판매량순)
@@ -185,6 +187,12 @@ public class ProductDAO {
 			return jdbcTemplate.queryForObject(SELECT_ONE_NEWEST, (rs, rowNum) -> { 
 				ProductVO data = new ProductVO();
 				data.setpNum(rs.getInt("P_NO"));
+				return data;
+			});
+		} else if(pvo.getpSearchCondition().equals("max")) {
+			return jdbcTemplate.queryForObject(SELECT_ONE_MAX_PRICE, (rs, rowNum) -> {
+				ProductVO data = new ProductVO();
+				data.setDc_price(rs.getInt("MAX_PRICE"));
 				return data;
 			});
 		}
