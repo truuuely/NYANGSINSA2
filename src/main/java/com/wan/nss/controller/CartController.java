@@ -121,7 +121,9 @@ public class CartController {
 		
 		// 세션에 저장된 장바구니 상품 목록 가져오기
 		ArrayList<ProductVO> cList = (ArrayList) session.getAttribute("cList");
-		
+		if(cList == null) {
+			cList = new ArrayList<>();
+		}
 		// 장바구니 상품 수량 수정하기
 		for (int i = 0; i < cList.size(); i++) {
 			if (cList.get(i).getpNum() == pNum) {
