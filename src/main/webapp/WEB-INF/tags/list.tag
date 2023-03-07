@@ -4,7 +4,7 @@
 <%@ attribute name="category"%>
 <%@ attribute name="sort"%>
 <!-- 전체 신상품(홈 페이지) -->
-<c:if test="${sort=='new'}">
+<c:if test="${sort=='regiDesc'}">
 	<c:forEach var="v" items="${newPList}" begin="0" varStatus="status">
 		<div class="col-lg-3">
 			<a href="shopDetails.do?pNum=${v.pNum}">
@@ -17,7 +17,7 @@
 </c:if>
 
 <!-- 전체 인기상품(홈 페이지) 페이지에 직접 넣었음 -->
-<c:if test="${sort=='popular'}">
+<c:if test="${sort=='sellDesc'}">
 	<c:forEach var="v" items="${popPList}" begin="0" end="14" varStatus="status">
 		<div class="col-lg-3 col-md-4 col-sm-6 mix ${v.category}">
 			<div class="featured__item">
