@@ -65,7 +65,7 @@ public class BoardDAO {
 	// 글 상세보기 + 작성자 id
 	// ? : 로그인한 아이디 or null, 선택한 글의 pk
 	private final String SELECT_ONE = "SELECT b.*, COUNT(LK_NO) AS LIKE_CNT, COUNT(RE_NO) AS REPLY_CNT, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
-			+ " FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO WHERE STATUS != 3 AND b.B_NO = ?) b "
+			+ " FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO AND b.B_NO = ?) b "
 			+ " LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO GROUP BY bl.M_NO";
 
 	// 가장 최근에 추가한 board
@@ -124,7 +124,6 @@ public class BoardDAO {
 
 	public BoardVO selectOne(BoardVO vo) {
 		/* 주의 : 로그인 했을 경우 BoardVO의 userId에 '현재 로그인한 멤버의 아이디'를 세팅해주세요. */
-		// TODO : 가장 최근에 만들어진 게시글의 B_NO 가져오는 selectOne 만들기
 
 		// 1. 상세보기 : pNum만 세팅
 		if ("newest".equals(vo.getSearchCondition())) {
@@ -145,7 +144,7 @@ public class BoardDAO {
 
 		if (vo.getSearchCondition() == null) { // 1. 글 전체 보기
 			// 로그인 안 한 경우 전체 좋아요가 false로 나옴
-			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId());
+			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId(), vo.getUserId());
 
 		} else if (vo.getSearchCondition().equals("top3")) { // 2. 전체 3등보기
 			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_TOP3, (rs, rowNum) -> {
@@ -196,8 +195,6 @@ class BoardRowMapper implements RowMapper<BoardVO> {
 		data.setImageName(rs.getString("I_NM")); // 대표 이미지 이름
 		data.setChecked(rs.getBoolean("ISCHECKED")); // 좋아요 여부
 		data.setReplyCnt(rs.getInt("REPLY_CNT")); // 댓글 수
-		// ArrayList<String> imageNames // selectOne 할 때 사진들 이름 넣어줄
-//		data.setCatName(rs.getString("CAT_NM"));
 		return data;
 	}
 }

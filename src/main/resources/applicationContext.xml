@@ -13,7 +13,7 @@
 	<!-- 스프링 JDBC에서는 Conn객체를 확보하는 역할을 담당하는 친구이름이 "DataSource" -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost/NYANGSINSA" />
+		<property name="url" value="jdbc:mysql://localhost/kim" />
 		<property name="username" value="root" />
 		<property name="password" value="1234" />
 	</bean>

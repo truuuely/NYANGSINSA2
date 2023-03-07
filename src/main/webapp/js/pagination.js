@@ -92,7 +92,7 @@ function displayData(selectPage) {
 			let eles = document.getElementsByClassName("product__item__pic set-bg");
 			
 			for (var i = 0; i < eles.length ; i++) {
-				    let url=dataList[i+(selectPage - 1) * dataPerPage].pImgUrl;
+				    let url=dataList[i+(selectPage - 1) * dataPerPage].imageName;
 				eles.item(i).style.backgroundImage="url('"+url+"')";
 			}
   }

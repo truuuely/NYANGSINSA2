@@ -224,7 +224,7 @@
 						<div class="product__details__pic__item">
 
 							<!--  메인이미지 표시 부분 -->
-							<img class="product__details__pic__item--large" src="${pvo.pImgUrl}" alt="상품 대표 이미지">
+							<img class="product__details__pic__item--large" src="${pvo.imageName}" alt="상품 대표 이미지">
 						</div>
 					</div>
 				</div>
@@ -395,7 +395,7 @@
 								<div class="product__details__tab__desc" style="max-width: 100%; text-align: center;">
 									<p>
 										<img src="img/shopDetailLine.png" />
-										<img src="${pvo.pImgUrl2}" />
+										<img src="${pvo.url}" />
 									</p>
 								</div>
 							</div>

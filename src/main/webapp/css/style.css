@@ -3868,7 +3868,7 @@ input[type="number"]::-webkit-inner-spin-button {
 .input-price {
     display: inline-block;
     text-align: right;
-	width: 100px;
+	width: 90px;
     border: none;
     color: #222;
     font-weight: 600;

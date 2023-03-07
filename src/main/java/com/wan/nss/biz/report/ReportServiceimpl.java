@@ -25,9 +25,4 @@ public class ReportServiceimpl implements ReportService {
 	public boolean update(ReportVO rvo) {
 		return reportDAO.update(rvo);
 	}
-
-	@Override
-	public boolean delete(ReportVO rvo) {
-		return reportDAO.delete(rvo);
-	}
 }
