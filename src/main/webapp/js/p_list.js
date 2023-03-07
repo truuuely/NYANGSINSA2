@@ -20,8 +20,8 @@ function list(categoryIn, sortIn, selectPageIn, lowPriceIn, highPriceIn) {
 	category = categoryIn;
 	sort = sortIn;
 	selectPage = selectPageIn;
-	lowPrice = lowPriceIn;
-	highPrice = highPriceIn;
+	searchLowPrice = lowPriceIn;
+	searchHighPrice = highPriceIn;
 
 	// 페이징 시작번호와 끝번호 세팅하기
 	last = first + pageCount - 1;
@@ -37,13 +37,13 @@ function list(categoryIn, sortIn, selectPageIn, lowPriceIn, highPriceIn) {
 	console.log("category: " + category);
 	console.log("sort: " + sort);
 	console.log("selectPage: " + selectPage);
-	console.log("lowPrice: " + lowPrice);
-	console.log("highPrice: " + highPrice);
+	console.log("lowPrice: " + searchLowPrice);
+	console.log("highPrice: " + searchHighPrice);
 
 	$.ajax({ // ajax로 데이터 가져오기
 		type: 'POST',
-		url: 'getList',
-		data: { category: category, sort: sort, lowPrice: lowPrice, highPrice: highPrice }, // category, sort 담아서 ListController Servlet에 걸리게!
+		url: 'getList.do',
+		data: { category: category, sort: sort, searchLowPrice: searchLowPrice, searchHighPrice: searchHighPrice }, // category, sort 담아서 ListController Servlet에 걸리게!
 		dataType: 'json',
 		traditional: 'true',
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -109,7 +109,7 @@ function displayData(selectPage) {
 		let eles = document.getElementsByClassName("product__item__pic set-bg");
 
 		for (var i = 0; i < eles.length; i++) {
-			let url = dataList[i + (selectPage - 1) * dataPerPage].pImgUrl;
+			let url = dataList[i + (selectPage - 1) * dataPerPage].imageName;
 			eles.item(i).style.backgroundImage = "url('" + url + "')";
 		}
 

@@ -323,7 +323,7 @@
 	<script>
 		$(document).ready(function() {
 			list("all", "sellDesc", 1, 0, 100000);
-			$.when($.ajax("getList")).done(function() {
+			$.when($.ajax("getList.do")).done(function() {
 
 				$.ajax({ // ajax로 데이터 가져오기
 					type : 'POST',
