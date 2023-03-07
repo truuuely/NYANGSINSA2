@@ -55,3 +55,6 @@ applicationContext.xml
 # img Files
 101/
 102/
+
+# Crawling
+Crawling.java
