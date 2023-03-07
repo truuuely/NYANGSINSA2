@@ -40,7 +40,7 @@ public class ProductController {
 
    // 멤버, 상품 
    @RequestMapping(value="/main.do")
-   public String mainView(ProductVO pvo, Model model, HttpServletRequest request) {
+   public String mainView(ProductVO pvo, ProductVO pvo2, Model model, HttpServletRequest request) {
       // 신상품 데이터. pvo : category == all, sort == regiDesc
       System.out.println("   로그: main.do");
       
@@ -48,7 +48,6 @@ public class ProductController {
       pvo.setCategory("all");
       pvo.setSort("regiDesc");
       pvo.setSearchLowPrice(0);
-      ProductVO pvo2 = new ProductVO();
       pvo2.setpSearchCondition("max"); //selectOne에서 인자로 쓸 것
       pvo.setSearchHighPrice(productService.selectOne(pvo2).getDc_price());	
       
@@ -68,7 +67,7 @@ public class ProductController {
 
 	// 쇼핑페이지 이동
 	@RequestMapping(value="/shop.do")
-	public String shopView(ProductVO pvo,Model model, HttpSession session) {
+	public String shopView(ProductVO pvo, ProductVO pvo2, Model model, HttpSession session) {
 		// 파라미터별로 상이한 상품 목록들 세팅하기: shopping.do?category=???
 		//디폴트값: 인기순, 찾을 가격 0 ~ 1000000
 			
@@ -76,7 +75,8 @@ public class ProductController {
 		pvo.setpSearchCondition("dc");
 		pvo.setSort("sellDesc"); //sort 종류: sellDesc (인기순:주문량순) / priceAsc (낮은 가격순) / priceDesc (높은 가격순) / regiDesc (최신순) 
 		pvo.setSearchLowPrice(0);
-		pvo.setSearchHighPrice(1000000);
+		pvo2.setpSearchCondition("max"); //selectOne에서 인자로 쓸 것
+	    pvo.setSearchHighPrice(productService.selectOne(pvo2).getDc_price());
 		model.addAttribute("pList", productService.selectAll(pvo));
 		
 		// 쇼핑페이지 기본 이동 (shop.do?category=all)
@@ -92,7 +92,7 @@ public class ProductController {
 
 	// 상품세부페이지 이동
 	@RequestMapping(value="/shopDetails.do")
-	public String shopDetailView(ProductVO pvo, ImageVO ivo, ReviewVO rvo, Model model) {
+	public String shopDetailView(ProductVO pvo, ProductVO pvo2, ImageVO ivo, ReviewVO rvo, Model model) {
 		System.out.println("pNum: "+pvo.getpNum());
 		pvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set
 		ProductVO resPvo = new ProductVO(); //현재 pvo
@@ -102,7 +102,8 @@ public class ProductController {
 		pvo.setCategory(resPvo.getCategory()); // 관련상품정보를 가져오기 위해 카테고리 set
 		pvo.setSort("sellDesc"); // 관련상품 가져오기 위해 정렬 set
 		pvo.setSearchLowPrice(0); 
-		pvo.setSearchHighPrice(1000000);
+		pvo2.setpSearchCondition("max"); //selectOne에서 인자로 쓸 것
+	    pvo.setSearchHighPrice(productService.selectOne(pvo2).getDc_price());
 
 		ArrayList<ReviewVO> rList = reviewService.selectAll(rvo); // 리뷰 리스트
 		ArrayList<ProductVO> pList = productService.selectAll(pvo); // 관련 상품 리스트
@@ -133,7 +134,7 @@ public class ProductController {
 		//1. 파일 받아오기
 		
 		//파일을 받기 위해 다운로드 파일 메서드 불러오기
-		crawling.downloadFile(new URL("원래 이미지 경로"), 실제로 저장할 이미지 경로); //input: Url url, String fileName
+		//crawling.downloadFile(new URL("원래 이미지 경로"), 실제로 저장할 이미지 경로); //input: Url url, String fileName
 		
 		
 		//파일받기 (저장공간) : V에서 img, img2로 줌
