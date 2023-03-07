@@ -88,6 +88,7 @@ public class ProductController {
 		pvo.setSearchLowPrice(0);
 		pvo2.setpSearchCondition("max"); // selectOne에서 인자로 쓸 것
 		pvo.setSearchHighPrice(productService.selectOne(pvo2).getPrice());
+		model.addAttribute("maxPrice",pvo.getSearchHighPrice());//
 		model.addAttribute("pList", productService.selectAll(pvo));
 
 		// 쇼핑페이지 기본 이동 (shop.do?category=all)
