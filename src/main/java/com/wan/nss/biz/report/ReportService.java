@@ -6,5 +6,4 @@ public interface ReportService {
 	public ArrayList<ReportVO> selectAll(ReportVO rvo);
 	public ReportVO selectOne(ReportVO rvo);
 	public boolean update(ReportVO rvo);
-	public boolean delete(ReportVO rvo);
 }
