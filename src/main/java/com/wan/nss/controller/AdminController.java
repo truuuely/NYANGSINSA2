@@ -222,13 +222,6 @@ public class AdminController { //관리자 페이지 단순 이동(View, Detail)
 		return "report_manage_detail.jsp";
 	}
 	
-	// (관리자) Report 게시글 삭제 처리
-	@RequestMapping(value = "/deleteReport.do") 
-	public String deleteReport(ReportVO rvo) {
-		reportService.delete(rvo);
-		return "report_manage.jsp";
-	}
-	
 	// (관리자) Report 게시글 신고 취소
 	@RequestMapping(value = "/updateReport.do") 
 	public String updateReport(ReportVO rvo) {
