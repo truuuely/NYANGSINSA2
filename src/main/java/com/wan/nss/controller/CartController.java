@@ -33,7 +33,7 @@ public class CartController {
 		
 	}
 	
-	// 주문하기 페이지에서 결제 및 최종 주문 수행
+	// 장바구니에 상품 추가
 	@RequestMapping(value="/insertCart.do")
 	public void insertOrder(ProductVO pvo, Model model, HttpSession session, HttpServletResponse response) {
 		
