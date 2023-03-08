@@ -493,6 +493,28 @@
             }
          })
       });
+      
+      function insertCart(pNum) {
+			console.log(pNum);
+			window.location.href = "insertCart.do?pNum=" + pNum;
+			setTimeout(function() {
+				$.ajax({ // ajax로 데이터 가져오기
+					type : 'POST',
+					url : 'getCartCnt',
+					success : function(data) {
+						console.log("data: " + data);
+						let cartCnt = '';
+						cartCnt += data; // 장바구니 상품 개수
+						console.log("cartCnt 새로고침: " + cartCnt);
+						$('#cartCnt').text(cartCnt);
+						$('#cartCnt2').text(cartCnt);
+					},
+					error : function() {
+						alert('error');
+					}
+				})
+			}, 300);
+		}
    </script>
 
 	<script type="text/javascript">
