@@ -94,7 +94,7 @@ public class CartController {
 		
 	}
 	
-	// 주문 내역 페이지로 이동
+	// 장바구니에서 상품 한 개 삭제
 	@RequestMapping(value="/deleteCart.do")
 	public void deleteCart(ProductVO pvo, Model model, HttpSession session, HttpServletResponse response) {
 		
@@ -123,7 +123,7 @@ public class CartController {
 		
 	}
 	
-	// 장바구니 업데이트
+	// 장바구니 업데이트, 장바구니 페이지 진입때도 사용
 	@ResponseBody
 	@RequestMapping(value="/updateCart.do")
 	public JsonArray updateCart(HttpSession session, HttpServletRequest request) {
