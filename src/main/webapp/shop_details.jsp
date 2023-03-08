@@ -321,6 +321,9 @@
 						<div class="product__details__price">
 							<fmt:formatNumber value="${pvo.dc_price}" pattern="#,###" />
 							원
+							<c:if test="${pvo.pDcPercent != 0}">
+								<span style="text-decoration: line-through; display: inline-block; color: #343a4057; font-size: 18px;"><fmt:formatNumber value="${pvo.price}" pattern="#,###" />원</span>
+							</c:if>
 						</div>
 
 						<p>${pvo.pDetail}</p>
