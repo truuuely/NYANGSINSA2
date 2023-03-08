@@ -45,7 +45,7 @@ public class ProductController {
 	private Crawling crawling;
 
 	// 멤버, 상품
-	@RequestMapping(value = "/main.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/main.do")
 	public String mainView(ProductVO pvo, ProductVO pvo2, Model model, HttpServletRequest request) {
 		// 신상품 데이터. pvo : category == all, sort == regiDesc
 		System.out.println("   로그: main.do");
@@ -83,7 +83,7 @@ public class ProductController {
 	}
 
 	// 쇼핑페이지 이동
-	@RequestMapping(value = "/shop.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/shop.do")
 	public String shopView(ProductVO pvo, ProductVO pvo2, Model model, HttpSession session) {
 		// 파라미터별로 상이한 상품 목록들 세팅하기: shopping.do?category=???
 		// 디폴트값: 인기순, 찾을 가격 0 ~ 1000000
@@ -111,7 +111,7 @@ public class ProductController {
 	}
 
 	// 상품세부페이지 이동: 추후 pvo2 지울 예정
-	@RequestMapping(value = "/shopDetails.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/shopDetails.do")
 	public String shopDetailView(ProductVO pvo, ProductVO pvo2, ImageVO ivo, ReviewVO rvo, Model model) {
 		System.out.println("pNum: " + pvo.getpNum());
 		pvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set
@@ -181,7 +181,7 @@ public class ProductController {
 		return "redirect:product_manage.jsp";
 	}
 
-	@RequestMapping(value = "/search.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/search.do")
 	public String selectAllProductSearch(ProductVO pvo, BoardVO bvo, Model model) {
 		System.out.println("searchCondition: " + pvo.getpSearchCondition());
 		System.out.println("searchContent: " + pvo.getpSearchContent());
