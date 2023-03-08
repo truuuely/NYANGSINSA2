@@ -85,7 +85,6 @@ public class CartController {
 			System.out.println(v.getpNum() + ": " + v.getpCnt() + "개");
 		}
 		
-		System.out.println("insertCart.do 종료");
 		try {
 			response.getWriter().println("<SCRIPT>history.go(-1)</SCRIPT>");
 		} catch (Exception e) {
@@ -114,7 +113,6 @@ public class CartController {
 		session.setAttribute("cList", cList);
 		System.out.println("로그: 갱신된 cList를 세션에 저장함!");
 
-		System.out.println("insertCart.do 종료");
 		try {
 			response.getWriter().println("<SCRIPT>history.go(-1)</SCRIPT>");
 		} catch (Exception e) {
@@ -191,8 +189,6 @@ public class CartController {
 		// ArrayList를 JsonArray 형식으로 변환
 		JsonArray datas = new Gson().toJsonTree(cList).getAsJsonArray(); // JsonArry로 변경하여 반환
 
-		System.out.println("updateCart.do 완료");
-		
 		return datas;
 		
 	}
