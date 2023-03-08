@@ -142,20 +142,47 @@ public class CartController {
 		if(cList == null) {
 			cList = new ArrayList<>();
 		}
-		// 장바구니 상품 수량 수정하기
-		for (int i = 0; i < cList.size(); i++) {
-			if (cList.get(i).getpNum() == pNum) {
-				if (action.equals("+")) { // plus 하는 경우
-					cList.get(i).setpCnt(cList.get(i).getpCnt() + 1);
-				} else if (action.equals("-")) { // minus 하는 경우
-					if (cList.get(i).getpCnt() > 1) {
-						cList.get(i).setpCnt(cList.get(i).getpCnt() - 1);
-					} else if (cList.get(i).getpCnt() == 1) {
-						cList.remove(i);
-					}
+		
+		// 삭제시
+		if(action.equals("delete")) {
+			
+			System.out.println("updateCart.do → delete 진입");
+			
+			for (int i = 0; i < cList.size(); i++) {
+				if (cList.get(i).getpNum() == pNum) { // 세션에 담긴 장바구니 가져와서 pNum이 일치하는 PVO 삭제
+					cList.remove(i);
+					System.out.println("로그: " + pNum + "번 상품 삭제");
+					break;
 				}
-				break;
 			}
+
+			System.out.println("updateCart.do → delete 완료");
+			
+		}
+		// 수량 변경시
+		else {
+			
+			System.out.println("updateCart.do → + / - 진입");
+
+			// 장바구니 상품 수량 수정하기
+			for (int i = 0; i < cList.size(); i++) {
+				if (cList.get(i).getpNum() == pNum) {
+					if (action.equals("+")) { // plus 하는 경우
+						cList.get(i).setpCnt(cList.get(i).getpCnt() + 1);
+					} else if (action.equals("-")) { // minus 하는 경우
+						if (cList.get(i).getpCnt() > 1) {
+							cList.get(i).setpCnt(cList.get(i).getpCnt() - 1);
+						} else if (cList.get(i).getpCnt() == 1) {
+							cList.remove(i);
+						}
+					}
+					System.out.println("로그: " + pNum + "번 상품 수량 수정");
+					break;
+				}
+			}
+			
+			System.out.println("updateCart.do → + / - 완료");
+
 		}
 		
 		// 수정된 장바구니 목록들을 세션에도 저장
@@ -164,6 +191,8 @@ public class CartController {
 		// ArrayList를 JsonArray 형식으로 변환
 		JsonArray datas = new Gson().toJsonTree(cList).getAsJsonArray(); // JsonArry로 변경하여 반환
 
+		System.out.println("updateCart.do 완료");
+		
 		return datas;
 		
 	}
