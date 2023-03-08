@@ -11,7 +11,7 @@ function cList(pNumIn, actionIn) {
 
 	$.ajax({ // ajax로 데이터 가져오기
 		type: 'POST',
-		url: 'updateCart',
+		url: 'updateCart.do',
 		data: { pNum: pNum, action: action }, // category, sort 담아서 ListController Servlet에 걸리게!
 		dataType: 'json',
 		traditional: 'true',
