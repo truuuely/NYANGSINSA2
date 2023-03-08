@@ -18,7 +18,17 @@ public class BoardController {
 	// 고양이 자랑 게시판 페이지 진입
 	@RequestMapping(value="/boardView.do")
 	public String boardView(BoardVO bvo, Model model) {
+		
+		System.out.println("boardView.do 진입");
+		System.out.println("bvo: ");
+		System.out.println(bvo);
+		
 		model.addAttribute("bList", boardService.selectAll(bvo));
+		
+		System.out.println("bList: ");
+		System.out.println(boardService.selectAll(bvo));
+		
+		System.out.println("boardView.do 종료");
 		return "board.jsp";
 	}
 
