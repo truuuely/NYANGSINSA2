@@ -29,12 +29,6 @@ public class OrderController {
 	private OrderDetailService orderDetailService;
 	@Autowired
 	private ProductService productService;
-
-	// 장바구니 페이지로 이동
-	@RequestMapping(value="/shopingCart.do")
-	public String shopingCartView() {
-		return "shoping_cart.jsp";
-	}
 	
 	// 주문하기 페이지로 이동
 	@RequestMapping(value="/buyProducts.do")
