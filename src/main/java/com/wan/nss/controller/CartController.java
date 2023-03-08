@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.wan.nss.biz.order.OrderVO;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 
@@ -97,11 +96,30 @@ public class CartController {
 	
 	// 주문 내역 페이지로 이동
 	@RequestMapping(value="/deleteCart.do")
-	public String selectAllOrderList(OrderVO vo, Model model, HttpSession session) {
+	public void deleteCart(ProductVO pvo, Model model, HttpSession session, HttpServletResponse response) {
 		
 		System.out.println("deleteCart.do 진입");
 
-		return "shopingCart.do";
+		ArrayList<ProductVO> cList = (ArrayList) session.getAttribute("cList"); // 세션에 담긴 장바구니 목록을 cList 객체에 저장
+		
+		for (int i = 0; i < cList.size(); i++) {
+			if (cList.get(i).getpNum() == pvo.getpNum()) { // 세션에 담긴 장바구니 가져와서 pNum이 일치하는 PVO 삭제
+				cList.remove(i);
+				System.out.println("로그: " + pvo.getpNum() + "번 상품 삭제");
+				break;
+			}
+		}
+		
+		// session에 담기
+		session.setAttribute("cList", cList);
+		System.out.println("로그: 갱신된 cList를 세션에 저장함!");
+
+		System.out.println("insertCart.do 종료");
+		try {
+			response.getWriter().println("<SCRIPT>history.go(-1)</SCRIPT>");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
