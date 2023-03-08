@@ -23,7 +23,7 @@ public class MemberController {
 	private MemberService memberService;
 
 	// 로그인 페이지로 이동
-	@RequestMapping(value="/login.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/login.do", method=RequestMethod.GET)
 	public String loginView() {
 		
 		System.out.println("login.do 진입");
@@ -33,7 +33,7 @@ public class MemberController {
 	}
 	
 	// 회원가입 페이지로 이동
-	@RequestMapping(value="/register.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/register.do", method=RequestMethod.GET)
 	public String registerView() {
 		
 		System.out.println("register.do 진입");
@@ -43,7 +43,7 @@ public class MemberController {
 	}
 	
 	// 아이디 찾기 페이지로 이동
-	@RequestMapping(value="/findId.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/findId.do", method=RequestMethod.GET)
 	public String findIdView() {
 		
 		System.out.println("findId.do 진입");
@@ -53,7 +53,7 @@ public class MemberController {
 	}
 	
 	// 비밀번호 찾기 페이지로 이동
-	@RequestMapping(value="/findPw.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/findPw.do", method=RequestMethod.GET)
 	public String findPwView() {
 		
 		System.out.println("findPw.do 진입");
@@ -63,7 +63,7 @@ public class MemberController {
 	}
 	
 	// 회원정보변경 클릭시 비밀번호 확인 페이지로 이동
-	@RequestMapping(value="/checkPassword.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/checkPassword.do", method=RequestMethod.GET)
 	public String checkPasswordView() {
 		
 		System.out.println("checkPassword.do 진입");
@@ -73,7 +73,7 @@ public class MemberController {
 	}
 	
 	// CONTACT 페이지로 이동
-	@RequestMapping(value="/contact.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/contact.do", method=RequestMethod.GET)
 	public String contactView() {
 		
 		System.out.println("contact.do 진입");
@@ -259,6 +259,7 @@ public class MemberController {
 		} else { // 로그인 성공시
 			session.setAttribute("memberId", member.getUserId()); // 세션에 로그인한 회원의 아이디, 이름 저장
 			session.setAttribute("memberName", member.getUserName());
+			System.out.println("메인으로 이동");
 			return "main.do"; // 메인으로 이동
 		}
 
