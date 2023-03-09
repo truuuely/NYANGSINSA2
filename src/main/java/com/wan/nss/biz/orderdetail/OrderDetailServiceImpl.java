@@ -21,4 +21,9 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 		return orderDetailDAO.selectAll(vo);
 	}
 
+	@Override
+	public OrderDetailVO selectOne(OrderDetailVO vo) {
+		return orderDetailDAO.selectOne(vo);
+	}
+
 }
