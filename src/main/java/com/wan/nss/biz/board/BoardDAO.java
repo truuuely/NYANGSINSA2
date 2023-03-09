@@ -134,8 +134,9 @@ public class BoardDAO {
 				data.setBoardNum(rs.getInt("B_NO"));
 				return data;
 			});
-		}
-		return jdbcTemplate.queryForObject(SELECT_ONE, (rs, rowNum) -> {
+		} 
+		Object[] args = { vo.getBoardNum(), vo.getUserId(), vo.getBoardNum() };
+		return jdbcTemplate.queryForObject(SELECT_ONE, args, (rs, rowNum) -> {
 			BoardVO data = new BoardVO();
 			data.setBoardNum(rs.getInt("B_NO"));
 			data.setUserNum(rs.getInt("M_NO"));
@@ -151,7 +152,7 @@ public class BoardDAO {
 			data.setChecked(rs.getBoolean("ISCHECKED")); // 좋아요 여부
 			data.setReplyCnt(rs.getInt("REPLY_CNT")); // 댓글 수
 			return data;
-		}, vo.getBoardNum(), vo.getUserId(), vo.getBoardNum());
+		});
 
 	}
 

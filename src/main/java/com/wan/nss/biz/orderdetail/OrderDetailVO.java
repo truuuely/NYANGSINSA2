@@ -12,14 +12,6 @@ public class OrderDetailVO {
 	// 관리자홈 도넛차트용
 	private String category; // 카테고리
 	private int sum; // 카테고리별 합계
-	private int cnt; // 카테고리별 주문 수량
-	
-	public int getCnt() {
-		return cnt;
-	}
-	public void setCnt(int cnt) {
-		this.cnt = cnt;
-	}
 	public int getOdNum() {
 		return odNum;
 	}
@@ -72,7 +64,8 @@ public class OrderDetailVO {
 	@Override
 	public String toString() {
 		return "OrderDetailVO [odNum=" + odNum + ", oNum=" + oNum + ", pNum=" + pNum + ", odCnt=" + odCnt + ", odPrice="
-				+ odPrice + ", pName=" + pName + ", category=" + category + ", sum=" + sum + ", cnt=" + cnt + "]";
+				+ odPrice + ", pName=" + pName + ", category=" + category + ", sum=" + sum + "]";
 	}
+	
 }
 

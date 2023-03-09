@@ -316,10 +316,6 @@
                   outputId.textContent = `중복된 아이디가 있습니다.`;
                   idTrue = false;
                }
-            },
-            error : function(request, status, error){
-        		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-
             }
          })
       }
@@ -518,7 +514,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             idValid = false; // id 플래그 false
         } else {
            idTrue = false;
-            outputId.textContent = `<spring:message code="message.register.checkid"/>`
+            outputId.textContent = `아이디 중복체크를 진행해주세요.`
             outputId.style.color = 'red'
             idValid = true; // id 플래그 true
         }
@@ -535,7 +531,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             outputName.style.color = 'red';
             nameValid = false;
         } else {
-            outputName.textContent = `<spring:message code="message.register.available"/>`;
+            outputName.textContent = `사용 가능합니다.`;
             outputName.style.color = '#6667AB';
             nameValid = true;
         }
@@ -646,8 +642,8 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                isPhoneOnly = true;
                }
                else if(result == -1){
-                  outputPhone.textContent = `<spring:message code="message.register.alreadynumber"/>`;
-                  outputPhone.style.color = 'red'; 
+                  outputPhone.textContent = `이미 등록된 번호입니다.`;
+                  outputPhone.style.color = 'red';
                isPhoneOnly = false;
                }
                console.log("phoneNumValid: "+phoneNumValid)
