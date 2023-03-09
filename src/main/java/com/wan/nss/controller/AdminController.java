@@ -20,6 +20,7 @@ import com.google.gson.JsonObject;
 import com.wan.nss.biz.blike.BlikeVO;
 import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.board.BoardVO;
+import com.wan.nss.biz.image.ImageService;
 import com.wan.nss.biz.image.ImageVO;
 import com.wan.nss.biz.member.MemberService;
 import com.wan.nss.biz.member.MemberVO;
@@ -29,8 +30,6 @@ import com.wan.nss.biz.orderdetail.OrderDetailService;
 import com.wan.nss.biz.orderdetail.OrderDetailVO;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
-import com.wan.nss.biz.report.ReportService;
-import com.wan.nss.biz.report.ReportVO;
 import com.wan.nss.biz.review.ReviewService;
 import com.wan.nss.biz.review.ReviewVO;
 
@@ -48,145 +47,142 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@Autowired
 	private ReviewService reviewService;
 	@Autowired
-	private ReportService reportService;
-	@Autowired
 	private BoardService boardService;
+	@Autowired
+	private ImageService imageService;
 
 	// (관리자) 관리자 메인 페이지 이동
 	@RequestMapping(value = "/adminIndex.do")
-	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session, HttpServletResponse response) {
+	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session,
+			HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
-		
+
 		System.out.println("id: " + id);
-		
+
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			
+
 			try {
-		
+
 				System.out.println("관리자 식별 불가! 관리자홈 접근 권한 없음!");
-				
+
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-				
+
 				return "main.do";
-			
+
 			} catch (Exception e) {
-			
+
 				e.printStackTrace();
-				
+
 				return null;
-			
+
 			}
-			
-		}
-		else {
+
+		} else {
 
 			System.out.println("관리자 식별 성공! 관리자홈 진입!");
-			
+
 			List<OrderVO> oList;
 			ovo.setoSearchCondition("all");
 			oList = orderService.selectAll(ovo); // 전체 주문 상품 불러오기 (관리자용)
 
 			for (int i = 0; i < oList.size(); i++) {
 				ovo.setoNum(oList.get(i).getoNum());
-				
+
 				System.out.println("orderService: " + orderService);
-				
+
 				// totalPrice : 주문 당 총 금액
 				OrderVO selectOvo = orderService.selectOne(ovo);
-				if(selectOvo != null) {
+				if (selectOvo != null) {
 					int totalPrice = selectOvo.getoPrice();
 					oList.get(i).setoPrice(totalPrice); // 불러온 주문에 총 결제금액 set
 				}
 			}
-			
+
 			System.out.println(oList);
-			
+
 			model.addAttribute("oList", oList); // 주문 내역 데이터
 			model.addAttribute("memberTotal", memberService.selectAll(mvo).size()); // 총 회원 데이터
 
 			return "admin_index.jsp";
-			
+
 		}
 
 	}
-	
+
 	// 관리자 홈 도넛차트 데이터 가져오기
-		@RequestMapping(value = "getDonutChart.do")
-		protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
-			System.out.println("getDonutChart.do 진입");
-			List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
-			
-			List<OrderVO> list2022; // 연도별 수익 넣을 list
-			List<OrderVO> list2023; // 연도별 수익 넣을 list
+	@RequestMapping(value = "getDonutChart.do")
+	protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
+		System.out.println("getDonutChart.do 진입");
+		List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
 
-			odvo.setCategory("food"); // 카테고리 지정해주고
-			odvo = orderDetailService.selectOne(odvo); // cnt / sum 받아옴
-			list.add(odvo); // 리스트에 추가
-			odvo.setCategory("treat");
-			odvo = orderDetailService.selectOne(odvo);
-			list.add(odvo);
-			odvo.setCategory("sand");
-			odvo = orderDetailService.selectOne(odvo);
-			list.add(odvo);
+		List<OrderVO> list2022; // 연도별 수익 넣을 list
+		List<OrderVO> list2023; // 연도별 수익 넣을 list
 
-			JsonArray datas = new JsonArray();
-			for (int i = 0; i < list.size(); i++) {
-				JsonObject data = new JsonObject();
-				data.addProperty("cnt", list.get(i).getOdCnt());
-				System.out.println(list.get(i).getOdCnt());
-				data.addProperty("sum", list.get(i).getSum());
-				System.out.println(list.get(i).getSum());
-				datas.add(data);
-			}
-			
-			// 연도별 수익 데이터 저장 부분 Begin
-			// 연도별 수익 저장할 변수
-			int sum2022=0;
-			int sum2023=0;
-			
-			// 2022년 수익 
-			ovo.setoDate("2022");
-			ovo.setoSearchCondition("date");
-			list2022 = orderService.selectAll(ovo);
-			
-			
-			System.out.println("list2022: "+list2022);
-			
-			for(OrderVO v : list2022) {
-				sum2022 += v.getoPrice();
-			}
-			
-			// data 리스트에 넣기
-			System.out.println("sum2022: "+sum2022);
-			JsonObject data2022 = new JsonObject();
-			data2022.addProperty("year", sum2022);
-			datas.add(data2022);
-			
-			// 2023년 수익
-			ovo.setoDate("2023");
-			ovo.setoSearchCondition("date");
-			list2023 = orderService.selectAll(ovo);
-			
-			System.out.println("list2023: "+list2023);
-			
-			for(OrderVO v : list2023) {
-				sum2023 += v.getoPrice();
-			}
-			
-			// data 리스트에 넣기
-			System.out.println("sum2023: "+sum2023);
-			JsonObject data2023 = new JsonObject();
-			data2023.addProperty("year", sum2023);
-			datas.add(data2023);
-			// 연도별 수익 데이터 저장 부분 End
+		odvo.setCategory("food"); // 카테고리 지정해주고
+		odvo = orderDetailService.selectOne(odvo); // cnt / sum 받아옴
+		list.add(odvo); // 리스트에 추가
+		odvo.setCategory("treat");
+		odvo = orderDetailService.selectOne(odvo);
+		list.add(odvo);
+		odvo.setCategory("sand");
+		odvo = orderDetailService.selectOne(odvo);
+		list.add(odvo);
 
-			
-			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
-			return datas;
+		JsonArray datas = new JsonArray();
+		for (int i = 0; i < list.size(); i++) {
+			JsonObject data = new JsonObject();
+			data.addProperty("cnt", list.get(i).getOdCnt());
+			System.out.println(list.get(i).getOdCnt());
+			data.addProperty("sum", list.get(i).getSum());
+			System.out.println(list.get(i).getSum());
+			datas.add(data);
 		}
 
+		// 연도별 수익 데이터 저장 부분 Begin
+		// 연도별 수익 저장할 변수
+		int sum2022 = 0;
+		int sum2023 = 0;
+
+		// 2022년 수익
+		ovo.setoDate("2022");
+		ovo.setoSearchCondition("date");
+		list2022 = orderService.selectAll(ovo);
+
+		System.out.println("list2022: " + list2022);
+
+		for (OrderVO v : list2022) {
+			sum2022 += v.getoPrice();
+		}
+
+		// data 리스트에 넣기
+		System.out.println("sum2022: " + sum2022);
+		JsonObject data2022 = new JsonObject();
+		data2022.addProperty("year", sum2022);
+		datas.add(data2022);
+
+		// 2023년 수익
+		ovo.setoDate("2023");
+		ovo.setoSearchCondition("date");
+		list2023 = orderService.selectAll(ovo);
+
+		System.out.println("list2023: " + list2023);
+
+		for (OrderVO v : list2023) {
+			sum2023 += v.getoPrice();
+		}
+
+		// data 리스트에 넣기
+		System.out.println("sum2023: " + sum2023);
+		JsonObject data2023 = new JsonObject();
+		data2023.addProperty("year", sum2023);
+		datas.add(data2023);
+		// 연도별 수익 데이터 저장 부분 End
+
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+		return datas;
+	}
 
 	// (관리자) 회원 관리 페이지 이동
 	@RequestMapping(value = "/memberManagePage.do")
@@ -233,7 +229,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/updateProductPage.do")
 	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
 		productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
-		// model.addAttribute("image",); //오늘 수정 예정
+
+		// 상세이미지 불러오기
+		ivo.setTargetNum(pvo.getpNum()); // 상품pk를 이미지pk에 세팅
+		ivo.setTypeNum(102);
+		ImageVO selectIvo = imageService.selectOne(ivo); // 세팅된 이미지pk를 가지고 selectOne하여 상세이미지 정보 불러오기
+		pvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 selectIvo의 imageName을 pvo의 ImageName2에 세팅
+		
+		model.addAttribute("pvo", pvo);
+		
 		return "product_manage_detail.jsp";
 	}
 
@@ -299,29 +303,6 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		return "board_manage.jsp";
 	}
 
-	// (관리자) 신고글 관리 페이지 이동
-	@RequestMapping(value = "/ReportView.do")
-	public String reportManageView(ReportVO rvo, Model model) {// rvo? vpVo? 일단 전자로 씁니다
-		model.addAttribute("userId", rvo.getUserId()); // 멤버 ID
-		model.addAttribute("rpList", reportService.selectAll(rvo)); // 나머지 정보등 꺼내쓸 수 있는 곳: 여기서 맞게 꺼내쓰세요
-		return "report_manage.jsp";
-	}
-
-	// (관리자) 신고 게시글 상세보기 페이지 이동 (확실하면 주석처리 예정)
-	@RequestMapping(value = "/reportDetailView.do")
-	public String reportDetailView(ReportVO rvo, Model model) {
-		model.addAttribute("userId", rvo.getUserId()); // 멤버 ID
-		model.addAttribute("rpList", reportService.selectOne(rvo));
-		return "report_manage_detail.jsp";
-	}
-
-	// (관리자) Report 게시글 신고 취소
-	@RequestMapping(value = "/updateReport.do")
-	public String updateReport(ReportVO rvo) {
-		reportService.update(rvo);
-		return "report_manage.jsp";
-	}
-
 	// 관리자 파트별 관리페이지
 	@ResponseBody
 	@RequestMapping(value = "/getAdminList.do")
@@ -329,24 +310,24 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		response.setCharacterEncoding("UTF-8"); // 인코딩
 
 		System.out.println("getAdminList.do 진입");
-		
+
 		// part = member, product, order, review 중 1
 		String part = request.getParameter("part");
-		
+
 		System.out.println("part: " + part);
 
 		// 파트 별로 JsonArray를 전달
 
 		List list = null;
-		
+
 		if (part.equals("member")) {
-			
+
 			MemberVO mvo = new MemberVO();
-			
+
 			list = memberService.selectAll(mvo); // 결과 상품 목록
 
 		} else if (part.equals("product")) {
-			
+
 			ProductVO pvo = new ProductVO();
 			pvo.setCategory("all");
 			pvo.setSort("regiDesc");
@@ -355,27 +336,27 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 			// 뷰에서 넘어온 조건으로 상품리스트 가져오기
 			list = productService.selectAll(pvo); // 결과 상품 목록
-			
+
 		} else if (part.equals("order")) {
-			
+
 			OrderDetailVO odvo = new OrderDetailVO();
-			
+
 			odvo.setoNum(0);
-			
+
 			list = orderDetailService.selectAll(odvo);
-			
+
 		} else if (part.equals("review")) {
-			
+
 			ReviewVO rvo = new ReviewVO();
-			
+
 			list = reviewService.selectAll(rvo);
-			
+
 		}
-		
+
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); // JsonArry로 변경하여 반환
-		
+
 		return datas;
-		
+
 	}
 
 }
