@@ -35,8 +35,6 @@
 
 <body>
 
-	<jsp:include page="layer_popup.jsp" />
-
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -214,44 +212,11 @@
 	</section>
 	<!-- Hero Section End -->
 
-
-
-	<div style="margin-bottom: 50px;" class="boast">🎉 이달의 냥냥 🎊</div>
-	<div>
-		<div style="height: 450px; border-radius: 50px; background-color: #6667ab29; padding-top: 20px;" class="container">
-			<div style="align-items: center;" class="row">
-				<div class="month2">
-					<img class="crown2" src="img/wangg2.png">
-					<br>
-					<img class="crowncat2" src="img/balbadak.jpg">
-					<div style="font-size: 25px; text-align: center; font-weight: bold;">발바닥(4세)</div>
-				</div>
-				<div class="month1">
-					<img class="crown1" src="img/wangg1.png">
-					<br>
-					<img class="crowncat1" src="img/heehee.jpg">
-					<div style="font-size: 25px; text-align: center; font-weight: bold;">곰돌이(?세)</div>
-				</div>
-				<div class="month2">
-					<img class="crown2" src="img/wangg3.png">
-					<br>
-					<img class="crowncat2" src="img/hoo.jpg">
-					<div style="font-size: 25px; text-align: center; font-weight: bold;">후추(2세)</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<br>
-	<br>
-
-	<hr style="width: 80%;">
-
 	<!-- Blog Section Begin -->
 	<!-- 자랑해 냥냥 시작 -->
 	<section style="padding-top: 60px;" class="blog spad">
 		<!-- <a style="font-size: 20px; border: 2px solid; float: right; margin-right: 20%; border-radius: 15px; background-color: #6667AB; border-color: none; color: white; padding: 8px;" href=""> 글 쓰러 가기</a> } -->
-		<div class="boast">🐾 자랑해 냥냥 🐱</div>
-
+		<div class="boast">🔍 검색 결과 🔍</div>
 
 		<div class="container">
 			<div class="row">
@@ -269,8 +234,6 @@
 		</div>
 	</section>
 	<!-- Blog Section End -->
-	<!-- 자랑해 냥냥 끝 -->
-
 
 
 	<!-- Footer Section Begin -->
@@ -350,7 +313,7 @@
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 	<script>
 		$(function() {
-			$(".show-board").slice(0, 3).show(); // 초기갯수
+			$(".show-board").slice(0, 6).show(); // 초기갯수
 			$("#load").click(function(e) { // 클릭시 more
 				e.preventDefault();
 				$(".show-board:hidden").slice(0, 3).show(); // 클릭시 more 갯수 지정
