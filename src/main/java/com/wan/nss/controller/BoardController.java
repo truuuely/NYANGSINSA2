@@ -32,9 +32,9 @@ public class BoardController {
 		
 		System.out.println("boardPostView.do 진입");
 		
-		model.addAttribute("data", boardService.selectOne(bvo));
+		model.addAttribute("board", boardService.selectOne(bvo));
 		
-		return "board_post";
+		return "board_detail.jsp";
 		
 	}
 
@@ -46,7 +46,7 @@ public class BoardController {
 		
 		model.addAttribute("bList", boardService.selectAll(bvo));
 		
-		return "";
+		return "board.jsp";
 		
 	}
 	
@@ -56,7 +56,7 @@ public class BoardController {
 		
 		System.out.println("insertBoardView.do 진입");
 		
-		return "";
+		return "insert_board.jsp";
 		
 	}
 	
@@ -69,7 +69,7 @@ public class BoardController {
 		
 		boardService.insert(bvo);
 		
-		return "";
+		return "board_detail.jsp";
 		
 	}
 	
@@ -81,7 +81,7 @@ public class BoardController {
 		
 		boardService.update(bvo);
 		
-		return "";
+		return "insert_board.jsp";
 		
 	}
 	
@@ -94,7 +94,7 @@ public class BoardController {
 		
 		boardService.update(bvo);
 		
-		return "";
+		return "board_detail.jsp";
 		
 	}
 	
@@ -106,7 +106,7 @@ public class BoardController {
 		
 		boardService.delete(bvo);
 		
-		return "";
+		return "board.jsp";
 		
 	}
 	
@@ -116,7 +116,7 @@ public class BoardController {
 		
 		System.out.println("shareBoard.do 진입");
 		
-		return "";
+		return "board_detail.jsp";
 		
 	}
 	
