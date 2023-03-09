@@ -108,7 +108,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	
 	// 관리자 홈 도넛차트 데이터 가져오기
 		@RequestMapping(value = "getDonutChart.do")
-		protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo, HttpServletRequest request, HttpServletResponse response) {
+		protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
 			System.out.println("getDonutChart.do 진입");
 			List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
 			
