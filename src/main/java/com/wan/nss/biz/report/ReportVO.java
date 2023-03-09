@@ -13,72 +13,101 @@ public class ReportVO {
 //	vo에만 존재하는 멤버 변수
 	private String userId; // 신고 당한 회원의 ID
 	private String reporterId; // 신고한 사람의 ID
+	private String procStatus; // 처리 여부
+
 	public int getReportNum() {
 		return reportNum;
 	}
+
 	public void setReportNum(int reportNum) {
 		this.reportNum = reportNum;
 	}
+
 	public int getTargetNum() {
 		return targetNum;
 	}
+
 	public void setTargetNum(int targetNum) {
 		this.targetNum = targetNum;
 	}
+
 	public int getReportStep() {
 		return reportStep;
 	}
+
 	public void setReportStep(int reportStep) {
 		this.reportStep = reportStep;
 	}
+
 	public int getUserNum() {
 		return userNum;
 	}
+
 	public void setUserNum(int userNum) {
 		this.userNum = userNum;
 	}
+
 	public int getReporterNum() {
 		return reporterNum;
 	}
+
 	public void setReporterNum(int reporterNum) {
 		this.reporterNum = reporterNum;
 	}
+
 	public String getReportDate() {
 		return reportDate;
 	}
+
 	public void setReportDate(String reportDate) {
 		this.reportDate = reportDate;
 	}
+
 	public String getReportContent() {
 		return reportContent;
 	}
+
 	public void setReportContent(String reportContent) {
 		this.reportContent = reportContent;
 	}
+
 	public int getReportStat() {
 		return reportStat;
 	}
+
 	public void setReportStat(int reportStat) {
 		this.reportStat = reportStat;
 	}
+
 	public String getUserId() {
 		return userId;
 	}
+
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+
 	public String getReporterId() {
 		return reporterId;
 	}
+
 	public void setReporterId(String reporterId) {
 		this.reporterId = reporterId;
 	}
+
+	public String getProcStatus() {
+		return procStatus;
+	}
+
+	public void setProcStatus(String procStatus) {
+		this.procStatus = procStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "ReportVO [reportNum=" + reportNum + ", targetNum=" + targetNum + ", reportStep=" + reportStep
 				+ ", userNum=" + userNum + ", reporterNum=" + reporterNum + ", reportDate=" + reportDate
 				+ ", reportContent=" + reportContent + ", reportStat=" + reportStat + ", userId=" + userId
-				+ ", reporterId=" + reporterId + "]";
+				+ ", reporterId=" + reporterId + ", procStatus=" + procStatus + "]";
 	}
-
 }
