@@ -50,7 +50,149 @@ button img {
 </head>
 
 <body>
-		<nss:header />
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
+
+	<!-- Humberger Begin -->
+	<div class="humberger__menu__overlay"></div>
+	<div class="humberger__menu__wrapper">
+		<div class="humberger__menu__logo">
+			<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+		</div>
+		<div class="humberger__menu__cart">
+			<ul>
+				<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+			</ul>
+		</div>
+
+		<div class="humberger__menu__widget">
+			<!-- 로그인 -->
+			<nss:login />
+		</div>
+
+		<nav class="humberger__menu__nav mobile-menu">
+			<ul>
+				<li class="active"><a href="main.do">홈</a></li>
+				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
+				<li><a href="contact.jsp">Contact</a></li>
+			</ul>
+		</nav>
+		<div id="mobile-menu-wrap"></div>
+		<div class="header__top__right__social">
+			<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+		</div>
+		<div class="humberger__menu__contact">
+			<ul>
+				<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
+				<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
+			</ul>
+		</div>
+	</div>
+	<!-- Humberger End -->
+
+	<!-- Header Section Begin -->
+	<header class="header">
+		<div class="header__top">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-6">
+						<div class="header__top__left">
+							<ul>
+								<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
+								<li>대한민국 최고의 반려묘 용품 쇼핑몰</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6">
+						<div class="header__top__right">
+							<div class="header__top__right__social">
+								<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+							</div>
+
+							<!-- 로그인 -->
+							<nss:login />
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="header__logo">
+						<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<nav class="header__menu">
+						<ul>
+							<li class="active"><a href="main.do">홈</a></li>
+							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
+							<li><a href="contact.jsp">Contact</a></li>
+						</ul>
+					</nav>
+				</div>
+				<div class="col-lg-3">
+					<div class="header__cart">
+						<ul>
+							<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="humberger__open">
+				<i class="fa fa-bars"></i>
+			</div>
+		</div>
+	</header>
+	<!-- Header Section End -->
+
+	<!-- Hero Section Begin index는 아래줄 section class="hero" -->
+	<section class="hero hero-normal">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="hero__categories">
+						<div class="hero__categories__all">
+							<i class="fa fa-bars"></i> <span>메뉴</span>
+						</div>
+						<ul>
+							<li><a href="shop.do?category=all">전체</a></li>
+							<li><a href="shop.do?category=food">사료</a></li>
+							<li><a href="shop.do?category=treat">간식</a></li>
+							<li><a href="shop.do?category=sand">모래</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-9">
+					<div class="hero__search">
+						<div class="hero__search__form">
+							<form action="search.do">
+								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
+								<input type="text" name="searchContent" placeholder="필요한 거 있냥?" required>
+								<button type="submit" class="site-btn">검색</button>
+							</form>
+						</div>
+						<div class="hero__search__phone">
+							<div class="hero__search__phone__icon">
+								<i class="fa fa-phone"></i>
+							</div>
+							<div class="hero__search__phone__text">
+								<h5>02-0202-0202</h5>
+
+								<span>상담 가능 시간<br>평일 09:00~18:00
+								</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Hero Section End -->
 
 	<!-- 메인 화면에는 제외 -->
 	<!-- Breadcrumb Section Begin -->
@@ -94,7 +236,7 @@ button img {
 									<p>
 										이름<span>*</span>
 									</p>
-									<input id="name" type="text" value = "${memberName }"name="name">
+									<input id="name" type="text" name="name">
 								</div>
 							</div>
 							<div class="col-lg-6" style="max-width: 100%">
@@ -102,7 +244,7 @@ button img {
 									<p>
 										번호<span>*</span>
 									</p>
-									<input id="phone" type="text" name="phone" value = "${memberPhoneNum}"placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+									<input id="phone" type="text" name="phone" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 								</div>
 							</div>
 							<div class="col-lg-6" style="max-width: 100%">
@@ -110,12 +252,7 @@ button img {
 									<p>
 										주소<span>*</span>
 									</p>
-									<input type="text" id="post" name="post" value="${memberPostNum }" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
-									<input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
-									<br>
-									<input type="text" class="form-control" id="address" name="address" value = "${memberAddress1}" placeholder="주소" readonly>
-									<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
-									<input type="text" class="form-control" id="address_detail" name="addressDetail" value = "${memberAddress2}" placeholder="상세주소" required>
+									<input type="text" id="post" name="post" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly> <input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly><br> <input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly><input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly><input type="text" class="form-control" id="address_detail" name="addressDetail" placeholder="상세주소" required>
 								</div>
 							</div>
 						</div>
@@ -135,23 +272,22 @@ button img {
 								<div class="checkout__order__total">
 									결제 예상 금액 <span> <c:set var="total" value="0" /> <c:forEach var="v" items="${cList}" begin="0" varStatus="status">
 											<c:set var="total" value="${total + v.dc_price*v.pCnt}" />
-										</c:forEach> ${total}원 <c:forEach var="v" items="${cList}" begin="0" end="0" varStatus="status">
+										</c:forEach>
+										<fmt:formatNumber value="${total}" type="currency"/> 
+										 <c:forEach var="v" items="${cList}" begin="0" end="0" varStatus="status">
 											<c:set var="orderName" value="${v.pName}" />
 										</c:forEach>
 									</span>
 								</div>
 
 								<button id="iamportPayment" type="button">
-									<img src="img/card.png" alt="카드결제버튼" style="heigth: 30px; width: 30px;">
-									카드결제
+									<img src="img/card.png" alt="카드결제버튼" style="heigth: 30px; width: 30px;"> 카드결제
 								</button>
 								<button id="iamportPayment2" type="button" style="border-radius: 20px; border: solid 1px; border-color: gray;">
-									<img src="img/kakaoPay.png" alt="카카오페이버튼" style="heigth: 50px; width: 50px;">
-									카카오페이
+									<img src="img/kakaoPay.png" alt="카카오페이버튼" style="heigth: 50px; width: 50px;"> 카카오페이
 								</button>
 								<button id="iamportPayment3" type="button">
-									<img src="img/phone_pay.png" alt="휴대폰결제버튼" style="heigth: 30px; width: 30px;">
-									휴대폰결제
+									<img src="img/phone_pay.png" alt="휴대폰결제버튼" style="heigth: 30px; width: 30px;"> 휴대폰결제
 								</button>
 								<!-- <button id="iamportPayment" type="button">카드결제</button> 
                           <button id="iamportPayment2" type="button"><img src="img/kakaopay.png" alt="카카오페이버튼"></button>
@@ -166,7 +302,56 @@ button img {
 	<!-- Checkout Section End -->
 
 	<!-- Footer Section Begin -->
-	<nss:footer />
+	<footer class="footer spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<div class="footer__about">
+						<div class="footer__about__logo">
+							<a href="main.do"><img src="img/logo.png" alt="로고"></a>
+						</div>
+
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<div class="footer__widget">
+						<ul>
+							<li>주소: 서울 강남구 역삼동 골목길</li>
+							<li>전화: +82 02-0202-0202</li>
+							<li>이메일: nyangsinsa@gmail.com</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<div class="footer__widget">
+						<div class="footer__widget__social">
+							<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="footer__copyright">
+						<div class="footer__copyright__text">
+							<p>
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+								Copyright 냥신사&copy;
+								<script>
+                           document.write(new Date().getFullYear());
+                        </script>
+								All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							</p>
+						</div>
+						<div class="footer__copyright__payment">
+							<img src="img/payment-item.png" alt="결제수단">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -324,9 +509,7 @@ button img {
 
 	<!— TOP 버튼 —>
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
-		<a href="#">
-			<button type="button" class="button-top">▲ 맨위로</button>
-		</a>
+		<a href="#"><button type="button" class="button-top">▲ 맨위로</button></a>
 	</div>
 
 
