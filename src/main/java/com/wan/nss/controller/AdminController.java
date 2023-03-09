@@ -18,7 +18,6 @@ import com.wan.nss.biz.blike.BlikeVO;
 import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.board.BoardVO;
 import com.wan.nss.biz.image.ImageVO;
-import com.wan.nss.biz.member.MemberDAO;
 import com.wan.nss.biz.member.MemberService;
 import com.wan.nss.biz.member.MemberVO;
 import com.wan.nss.biz.order.OrderService;
@@ -50,28 +49,38 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@Autowired
 	private BoardService boardService;
 
-	@RequestMapping(value = "/crawling.do") // 관리자 페이지 회원 관리 페이지 열기
-	public String crawling() {
-		return "crawling.jsp";
-	}
-
 	// (관리자) 관리자 메인 페이지 이동
 	@RequestMapping(value = "/adminIndex.do")
-	public String adminIndexView(MemberVO mvo, MemberDAO memberDAO, OrderVO ovo, OrderDetailVO odvo, Model model,
-			HttpSession session, HttpServletResponse response) {
+	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session, HttpServletResponse response) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("memberId");
+		
+		System.out.println("id: " + id);
+		
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+			
 			try {
+		
+				System.out.println("관리자 식별 불가! 관리자홈 접근 권한 없음!");
+				
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+				
 				return "main.do";
+			
 			} catch (Exception e) {
+			
 				e.printStackTrace();
+				
 				return null;
+			
 			}
-		} else {
+			
+		}
+		else {
 
+			System.out.println("관리자 식별 성공! 관리자홈 진입!");
+			
 			List<OrderVO> oList;
 			ovo.setoSearchCondition("all");
 			oList = orderService.selectAll(ovo); // 전체 주문 상품 불러오기 (관리자용)
@@ -82,20 +91,99 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 				int totalPrice = orderService.selectOne(ovo).getoPrice();
 				oList.get(i).setoPrice(totalPrice); // 불러온 주문에 총 결제금액 set
 			}
+			
 			System.out.println(oList);
+			
 			model.addAttribute("oList", oList); // 주문 내역 데이터
-			model.addAttribute("memberTotal", memberDAO.selectAll(mvo).size()); // 총 회원 데이터
+			model.addAttribute("memberTotal", memberService.selectAll(mvo).size()); // 총 회원 데이터
 
 			return "admin_index.jsp";
+			
 		}
 
 	}
+	
+//	// 관리자 홈 도넛차트 데이터 가져오기
+//		@RequestMapping(value = "getDonutChart.do")
+//		protected void sendDonutChart(OrderVO ovo, OrderDetailVO odvo, HttpServletRequest request, HttpServletResponse response) {
+//			System.out.println("getDonutChart.do 진입");
+//			ArrayList<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
+//			
+//			ArrayList<OrderVO> list2022 = new ArrayList<>(); // 연도별 수익 넣을 list
+//			ArrayList<OrderVO> list2023 = new ArrayList<>(); // 연도별 수익 넣을 list
+//
+//			odvo.setCategory("food"); // 카테고리 지정해주고
+//			odvo = orderDetailService.selectOne(odvo); // cnt / sum 받아옴
+//			list.add(odvo); // 리스트에 추가
+//			odvo.setCategory("treat");
+//			odvo = orderDetailService.selectOne(odvo);
+//			list.add(odvo);
+//			odvo.setCategory("sand");
+//			odvo = orderDetailService.selectOne(odvo);
+//			list.add(odvo);
+//
+//			JsonArray datas = new JsonArray();
+//			for (int i = 0; i < list.size(); i++) {
+//				JsonObject data = new JsonObject();
+//				data.put("cnt", list.get(i).getCnt());
+//				System.out.println(list.get(i).getCnt());
+//				data.put("sum", list.get(i).getSum());
+//				System.out.println(list.get(i).getSum());
+//				datas.add(data);
+//			}
+//			
+//			// 연도별 수익 데이터 저장 부분 Begin
+//			// 연도별 수익 저장할 변수
+//			int sum2022=0;
+//			int sum2023=0;
+//			
+//			// 2022년 수익 
+//			ovo.setoDate("2022");
+//			ovo.setoSearchCondition("date");
+//			list2022 = orderService.selectAll(ovo);
+//			
+//			
+//			System.out.println("list2022: "+list2022);
+//			
+//			for(OrderVO v : list2022) {
+//				sum2022 += v.getoPrice();
+//			}
+//			
+//			// data 리스트에 넣기
+//			System.out.println("sum2022: "+sum2022);
+//			JSONObject data2022 = new JSONObject();
+//			data2022.put("year", sum2022);
+//			datas.add(data2022);
+//			
+//			// 2023년 수익
+//			ovo.setoDate("2023");
+//			ovo.setoSearchCondition("date");
+//			list2023 = orderService.selectAll(ovo);
+//			
+//			System.out.println("list2023: "+list2023);
+//			
+//			for(OrderVO v : list2023) {
+//				sum2023 += v.getoPrice();
+//			}
+//			
+//			// data 리스트에 넣기
+//			System.out.println("sum2023: "+sum2023);
+//			JSONObject data2023 = new JSONObject();
+//			data2023.put("year", sum2023);
+//			datas.add(data2023);
+//			// 연도별 수익 데이터 저장 부분 End
+//
+//			
+//			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+//			return datas;
+//		}
+
 
 	// (관리자) 회원 관리 페이지 이동
 	@RequestMapping(value = "/memberManagePage.do")
 	public String selectAllMemberManage(HttpSession session, HttpServletResponse response) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
@@ -115,7 +203,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/productManagePage.do")
 	public String selectAllProductManage(HttpSession session, HttpServletResponse response) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
@@ -143,7 +231,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 주문 관리 페이지 열기
 	public String selectAllorderDetailManage(HttpSession session, HttpServletResponse response) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
@@ -163,7 +251,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/reviewManagePage.do")
 	public String selectAllReviewManage(HttpSession session, HttpServletResponse response) {
 
-		String id = (String) session.getAttribute("userId");
+		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
