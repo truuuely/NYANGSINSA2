@@ -160,8 +160,8 @@ public class MemberController {
 				return null;
 			}
 		}
-		String newPw = (String) request.getParameter("newPassword"); // 새 비밀번호
-		vo.setUserPw(newPw);
+		String memberPwNew = (String) request.getParameter("memberPwNew"); // 새 비밀번호
+		vo.setUserPw(memberPwNew);
 		if (!memberService.update(vo)) { // 업데이트에 실패하면 알림창
 			try {
 				response.setContentType("text/html; charset=utf-8");
