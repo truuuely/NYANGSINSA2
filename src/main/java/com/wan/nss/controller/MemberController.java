@@ -386,6 +386,7 @@ public class MemberController {
 				return null;
 			}
 		} else {
+			vo.setUserId(id);
 			MemberVO loginMvo = memberService.selectOne(vo); // 로그인한 회원 VO를 member에 저장
 			
 			model.addAttribute("memberCatName", loginMvo.getCatName());
