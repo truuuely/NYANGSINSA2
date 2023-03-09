@@ -94,7 +94,7 @@ button img {
 									<p>
 										이름<span>*</span>
 									</p>
-									<input id="name" type="text" name="name">
+									<input id="name" type="text" value = "${memberName }"name="name">
 								</div>
 							</div>
 							<div class="col-lg-6" style="max-width: 100%">
@@ -102,7 +102,7 @@ button img {
 									<p>
 										번호<span>*</span>
 									</p>
-									<input id="phone" type="text" name="phone" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+									<input id="phone" type="text" name="phone" value = "${memberPhoneNum}"placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 								</div>
 							</div>
 							<div class="col-lg-6" style="max-width: 100%">
@@ -110,12 +110,12 @@ button img {
 									<p>
 										주소<span>*</span>
 									</p>
-									<input type="text" id="post" name="post" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
+									<input type="text" id="post" name="post" value="${memberPostNum }" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
 									<input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
 									<br>
-									<input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
+									<input type="text" class="form-control" id="address" name="address" value = "${memberAddress1}" placeholder="주소" readonly>
 									<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
-									<input type="text" class="form-control" id="address_detail" name="addressDetail" placeholder="상세주소" required>
+									<input type="text" class="form-control" id="address_detail" name="addressDetail" value = "${memberAddress2}" placeholder="상세주소" required>
 								</div>
 							</div>
 						</div>
