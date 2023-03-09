@@ -18,16 +18,18 @@ public class AfterReturningAdvice {
 				
 		// 메서드네임 가져오기
 		String methodName = jp.getSignature().getName() + "()";
+		String arg = jp.getArgs()[0].toString();
+		arg = arg.substring(0, arg.indexOf(",")) + "]";
 		
 		System.out.println();
 		System.out.println("[Service 로그]");
 		System.out.println("● 수행 메서드: " + className + "." + methodName);
-//		System.out.println("● 수행 인  자: " +jp.getArgs()[0]);
-		// 결과값이 list 종류가 아니면 나오게
-//		if(!(obj instanceof List)) {
-//			System.out.println("● 수행 결과값: "+obj);
-//		}
-		System.out.println();
+		System.out.println("● 수행 인자PK: " + arg);
+
+		if(obj != null) {
+			System.out.println("● 수행 결과값: " + obj.getClass().getName());
+		}
+		System.out.println("――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――");
 		
 	}
 	

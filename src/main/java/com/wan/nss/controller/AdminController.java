@@ -90,9 +90,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 			for (int i = 0; i < oList.size(); i++) {
 				ovo.setoNum(oList.get(i).getoNum());
+				
+				System.out.println("orderService: " + orderService);
+				
 				// totalPrice : 주문 당 총 금액
-				int totalPrice = orderService.selectOne(ovo).getoPrice();
-				oList.get(i).setoPrice(totalPrice); // 불러온 주문에 총 결제금액 set
+				OrderVO selectOvo = orderService.selectOne(ovo);
+				if(selectOvo != null) {
+					int totalPrice = selectOvo.getoPrice();
+					oList.get(i).setoPrice(totalPrice); // 불러온 주문에 총 결제금액 set
+				}
 			}
 			
 			System.out.println(oList);
