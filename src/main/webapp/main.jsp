@@ -220,7 +220,7 @@
 								<button type="submit" class="site-btn">
 									<spring:message code="message.main.search" />
 								</button>
-							</form>s
+							</form>
 						</div>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">
