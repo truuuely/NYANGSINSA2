@@ -63,14 +63,14 @@ public class BoardDAO {
 			+ "GROUP BY b.B_NO, i.I_NM, bl.M_NO ORDER BY B_NO DESC";
 
 	// 글 상세보기 + 작성자 id
-	// ? : 로그인한 아이디 or null, 선택한 글의 pk
-	private final String SELECT_ONE = "SELECT b.*, COUNT(LK_NO) AS LIKE_CNT, COUNT(RE_NO) AS REPLY_CNT, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
-			+ " FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO AND b.B_NO = ?) b "
-			+ " LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO GROUP BY bl.M_NO";
+	// ? : bNum, 로그인한 아이디, bNum
+	private final String SELECT_ONE = "SELECT b.*, m.M_ID, COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, COUNT(DISTINCT r.RE_NO) AS REPLY_CNT, EXISTS(SELECT LK_NO FROM BLIKE WHERE B_NO = ? AND M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?)) AS ISCHECKED "
+			+ " FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO "
+			+ " LEFT JOIN REPLY r ON b.B_NO = r.B_NO WHERE b.B_NO = ? AND b.STATUS != 3 GROUP BY b.B_NO;";
 
 	// 가장 최근에 추가한 board
 	private final String SELECT_ONE_NEWEST = "SELECT MAX(B_NO) FROM BOARD";
-	
+
 	/*
 	 * U
 	 */
@@ -134,8 +134,25 @@ public class BoardDAO {
 				data.setBoardNum(rs.getInt("B_NO"));
 				return data;
 			});
-		}
-		return jdbcTemplate.queryForObject(SELECT_ONE, new BoardRowMapper(), vo.getUserId(), vo.getBoardNum());
+		} 
+		Object[] args = { vo.getBoardNum(), vo.getUserId(), vo.getBoardNum() };
+		return jdbcTemplate.queryForObject(SELECT_ONE, args, (rs, rowNum) -> {
+			BoardVO data = new BoardVO();
+			data.setBoardNum(rs.getInt("B_NO"));
+			data.setUserNum(rs.getInt("M_NO"));
+			data.setBoardTitle(rs.getString("B_TITLE"));
+			data.setBoardContent(rs.getString("B_CONTENT"));
+			data.setBoardDate(rs.getString("B_DATE"));
+			data.setBoardStatus(rs.getInt("STATUS"));
+			data.setBoardView(rs.getInt("B_VIEW"));
+
+			// vo에만 존재하는 멤버변수. join 사용해 set
+			data.setUserId(rs.getString("M_ID")); // 별칭으로 가져온 작성자 아이디
+			data.setLikeCnt(rs.getInt("LIKE_CNT")); // 좋아요 수
+			data.setChecked(rs.getBoolean("ISCHECKED")); // 좋아요 여부
+			data.setReplyCnt(rs.getInt("REPLY_CNT")); // 댓글 수
+			return data;
+		});
 
 	}
 
@@ -144,7 +161,8 @@ public class BoardDAO {
 
 		if (vo.getSearchCondition() == null) { // 1. 글 전체 보기
 			// 로그인 안 한 경우 전체 좋아요가 false로 나옴
-			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId(), vo.getUserId());
+			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId(),
+					vo.getUserId());
 
 		} else if (vo.getSearchCondition().equals("top3")) { // 2. 전체 3등보기
 			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_TOP3, (rs, rowNum) -> {
