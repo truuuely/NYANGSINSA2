@@ -9,12 +9,9 @@ public class OrderDetailVO {
 	
 	private String pName; // 상품 이름
 	
-	public String getpName() {
-		return pName;
-	}
-	public void setpName(String pName) {
-		this.pName = pName;
-	}
+	// 관리자홈 도넛차트용
+	private String category; // 카테고리
+	private int sum; // 카테고리별 합계
 	public int getOdNum() {
 		return odNum;
 	}
@@ -45,11 +42,30 @@ public class OrderDetailVO {
 	public void setOdPrice(int odPrice) {
 		this.odPrice = odPrice;
 	}
+	public String getpName() {
+		return pName;
+	}
+	public void setpName(String pName) {
+		this.pName = pName;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	public int getSum() {
+		return sum;
+	}
+	public void setSum(int sum) {
+		this.sum = sum;
+	}
+	
 	@Override
 	public String toString() {
 		return "OrderDetailVO [odNum=" + odNum + ", oNum=" + oNum + ", pNum=" + pNum + ", odCnt=" + odCnt + ", odPrice="
-				+ odPrice + ", pName=" + pName + "]";
+				+ odPrice + ", pName=" + pName + ", category=" + category + ", sum=" + sum + "]";
 	}
-
+	
 }
 

@@ -46,7 +46,7 @@ public class BoardController {
 		
 		model.addAttribute("bList", boardService.selectAll(bvo));
 		
-		return "board.jsp";
+		return "board_result.jsp";
 		
 	}
 	
