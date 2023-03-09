@@ -54,7 +54,7 @@ public class MemberDAO {
 	
 	// 회원가입
 	public boolean insert(MemberVO vo) { 
-		jdbcTemplate.update(SQL_INSERT, vo.getUserId(), vo.getUserPw(), vo.getCatName(), vo.getPhoneNum(),
+		jdbcTemplate.update(SQL_INSERT, vo.getUserName(), vo.getUserId(), vo.getUserPw(), vo.getCatName(), vo.getPhoneNum(),
 				vo.getPostNum(), vo.getAddress1(), vo.getAddress2());
 		return true;
 	}
