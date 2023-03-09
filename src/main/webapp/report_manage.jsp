@@ -415,24 +415,19 @@
 							<h6 class="card-header">
 								<ul class="report-menubar">
 									<li>
-										<a onclick="list(1,'product')">게시글</a>
+										<a onclick="list(1,'product');">게시글</a>
 									</li>
 									<li>
-										<a onclick="list(1,'member')">댓글</a>
+										<a onclick="list(1,'member');">댓글</a>
 									</li>
 								</ul>
 
 							</h6>
 							<div class="table-responsive text-nowrap">
 								<table class="table table-hover">
-									<thead>
-										<tr>
-											<th>no.</th>
-											<th>글 작성자</th>
-											<th>게시글 내용</th>
-											<th>신고자</th>
-											<th>신고 내용</th>
-										</tr>
+								<!-- 목록 출력 부분  -->
+									<thead id="dataTableList">
+										
 									</thead>
 									<!-- 목록 출력부분 -->
 									<tbody class="table-border-bottom-0" id="dataTableBody">
@@ -492,11 +487,13 @@
 		<div class="report-modalBox">
 			<!-- <h2 style="font-size: 30px; padding: 20px;">신고처리</h2> -->
 			<img src="img/siren.png" style="width: 40px; margin-bottom: 20px;">
-			<form action="">
+			<form id="reportForm" action="main.do" method="post">
+				<input type="hidden" id="boardNum" name="boardNum" value="">
+				<input type="hidden" id="reportNum" name="reportNum" value="">
 				<p style="font-size: 15px; margin-left: 15px; justify-content: space-around; display: flex;">
-					<select style="width: 70px; height: 30px; border: 1px solid #6667ab52; margin-right: 13px; text-align: center;">
-						<option>철회</option>
-						<option>삭제</option>
+					<select name="reportValue" style="width: 70px; height: 30px; border: 1px solid #6667ab52; margin-right: 13px; text-align: center;">
+						<option value="cancle">철회</option>
+						<option value="delete">삭제</option>
 					</select>
 				</p>
 				<div>
@@ -618,7 +615,7 @@
 
  
 
-	function close {
+	function close{
    document.querySelector(".report-modal").classList.add("report-modal-hidden");
  }
 

@@ -26,7 +26,7 @@ public class CartController {
 	// 장바구니 아이콘 수량 변경
 	@ResponseBody
 	@RequestMapping(value="/getCartCnt.do")
-	public String getCartCnt(HttpSession session) {
+	public String sendCartCnt(HttpSession session) {
 
 		System.out.println("getCartCnt.do 진입");
 		
