@@ -90,9 +90,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 			for (int i = 0; i < oList.size(); i++) {
 				ovo.setoNum(oList.get(i).getoNum());
+				
+				System.out.println("orderService: " + orderService);
+				
 				// totalPrice : 주문 당 총 금액
-				int totalPrice = orderService.selectOne(ovo).getoPrice();
-				oList.get(i).setoPrice(totalPrice); // 불러온 주문에 총 결제금액 set
+				OrderVO selectOvo = orderService.selectOne(ovo);
+				if(selectOvo != null) {
+					int totalPrice = selectOvo.getoPrice();
+					oList.get(i).setoPrice(totalPrice); // 불러온 주문에 총 결제금액 set
+				}
 			}
 			
 			System.out.println(oList);
@@ -108,7 +114,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	
 	// 관리자 홈 도넛차트 데이터 가져오기
 		@RequestMapping(value = "getDonutChart.do")
-		protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo, HttpServletRequest request, HttpServletResponse response) {
+		protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
 			System.out.println("getDonutChart.do 진입");
 			List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
 			

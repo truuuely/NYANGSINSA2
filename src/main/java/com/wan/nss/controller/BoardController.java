@@ -21,7 +21,14 @@ public class BoardController {
 		
 		System.out.println("boardView.do 진입");
 		
+		// 전체 자랑글 목록 : bList
 		model.addAttribute("bList", boardService.selectAll(bvo));
+		
+		// TOP3 자랑글 목록 : top3List
+		bvo.setSearchCondition("top3");
+		model.addAttribute("top3List", boardService.selectAll(bvo));
+		
+		System.out.println();
 		
 		return "board.jsp";
 	}
