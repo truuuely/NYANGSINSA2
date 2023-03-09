@@ -223,20 +223,20 @@
 				<div class="month2">
 					<img class="crown2" src="img/wangg2.png">
 					<br>
-					<img class="crowncat2" src="img/balbadak.jpg">
-					<div style="font-size: 25px; text-align: center; font-weight: bold;">발바닥(4세)</div>
+					<img class="crowncat2" src="${top3List[1].imageName}">
+					<div style="font-size: 25px; text-align: center; font-weight: bold;">${top3List[1].catName}</div>
 				</div>
 				<div class="month1">
 					<img class="crown1" src="img/wangg1.png">
 					<br>
-					<img class="crowncat1" src="img/heehee.jpg">
-					<div style="font-size: 25px; text-align: center; font-weight: bold;">곰돌이(?세)</div>
+					<img class="crowncat1" src="${top3List[0].imageName}">
+					<div style="font-size: 25px; text-align: center; font-weight: bold;">${top3List[0].catName}</div>
 				</div>
 				<div class="month2">
 					<img class="crown2" src="img/wangg3.png">
 					<br>
-					<img class="crowncat2" src="img/hoo.jpg">
-					<div style="font-size: 25px; text-align: center; font-weight: bold;">후추(2세)</div>
+					<img class="crowncat2" src="${top3List[2].imageName}">
+					<div style="font-size: 25px; text-align: center; font-weight: bold;">${top3List[2].catName}</div>
 				</div>
 			</div>
 		</div>

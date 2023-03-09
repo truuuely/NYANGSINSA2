@@ -222,7 +222,7 @@
 						<div class="hero__search__form">
 							<form action="search.do">
 								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-								<input type="text" name="searchContent" placeholder="필요한 거 있냥?" required>
+								<input type="text" name="pSearchContent" placeholder="필요한 거 있냥?" required>
 								<button type="submit" class="site-btn">검색</button>
 							</form>
 						</div>
