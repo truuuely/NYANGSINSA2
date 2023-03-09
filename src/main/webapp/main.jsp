@@ -173,7 +173,7 @@
 					<div class="header__cart">
 						<ul>
 							<li><a href="shopingCart.do">
-									<i class="fa fa-shopping-bag"></i> <span id="cartCnt"></span>
+									<i class="fa fa-shopping-bag"></i><span id="cartCnt"></span>
 								</a></li>
 						</ul>
 					</div>
@@ -216,11 +216,11 @@
 						<div class="hero__search__form">
 							<form action="search.do" method="post">
 								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-								<input type="text" name="searchContent" placeholder="<spring:message code="message.main.searchInput"/>" required>
+								<input type="text" name="pSearchContent" placeholder="<spring:message code="message.main.searchInput"/>" required>
 								<button type="submit" class="site-btn">
 									<spring:message code="message.main.search" />
 								</button>
-							</form>
+							</form>s
 						</div>
 						<div class="hero__search__phone">
 							<div class="hero__search__phone__icon">

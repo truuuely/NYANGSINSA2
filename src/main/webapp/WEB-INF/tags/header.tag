@@ -174,7 +174,7 @@
 					<div class="hero__search__form">
 						<form action="search.do">
 							<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-							<input type="text" name="searchContent" placeholder="<spring:message code="message.header.searchplaceholder" />" required>
+							<input type="text" name="pSearchContent" placeholder="<spring:message code="message.header.searchplaceholder" />" required>
 							<button type="submit" class="site-btn">
 								<spring:message code="message.header.search" />
 							</button>
