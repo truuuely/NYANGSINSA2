@@ -14,7 +14,6 @@ public class ReportVO {
 	private String userId; // 신고 당한 회원의 ID
 	private String reporterId; // 신고한 사람의 ID
 	private String procStatus; // 처리 여부
-	private String boardContent; // 신고당한 글의 글 내용
 
 	public int getReportNum() {
 		return reportNum;
@@ -104,19 +103,11 @@ public class ReportVO {
 		this.procStatus = procStatus;
 	}
 
-	public String getBoardContent() {
-		return boardContent;
-	}
-
-	public void setBoardContent(String boardContent) {
-		this.boardContent = boardContent;
-	}
-
 	@Override
 	public String toString() {
 		return "ReportVO [reportNum=" + reportNum + ", targetNum=" + targetNum + ", reportStep=" + reportStep
 				+ ", userNum=" + userNum + ", reporterNum=" + reporterNum + ", reportDate=" + reportDate
 				+ ", reportContent=" + reportContent + ", reportStat=" + reportStat + ", userId=" + userId
-				+ ", reporterId=" + reporterId + ", procStatus=" + procStatus + ", boardContent=" + boardContent + "]";
+				+ ", reporterId=" + reporterId + ", procStatus=" + procStatus;
 	}
 }
