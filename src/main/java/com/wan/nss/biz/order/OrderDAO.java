@@ -33,7 +33,7 @@ public class OrderDAO {
 			+ " FROM ORDER_DETAIL od INNER JOIN PRODUCT p ON od.P_NO = p.P_NO WHERE od.O_NO = ?";
 	
 	// 현재 회원이 가장 최근에 추가한 주문
-	final String SQL_SELECTONE_LATESTORDER = "SELECT O_NO FROM `ORDER` WHERE M_NO =? AND ROWNUM <=1 ORDER BY O_NO DESC";
+	final String SQL_SELECTONE_LATESTORDER = "SELECT O_NO FROM `ORDER` WHERE M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?) ORDER BY O_NO DESC LIMIT 1;";
 	
 	// 주문 연도별 주문 내역 리스트 보기 (관리자)  / searchCondtion (date) -> odate로 확인, 그 해 총 판매 금액 보내주면 됨
 	final String SQL_SELECTALL_DATE = " SELECT o.O_DT, SUM(p.P_PRICE*((100-p.DC_PERCENT)/100)*od.OD_CNT) AS TOTAL FROM `ORDER` o "
@@ -68,8 +68,14 @@ public class OrderDAO {
 					
 				} else if (vo.getoSearchCondition().equals("lastOrder")) {
 					// 현재 회원이 가장 최근에 추가한 주문
+					System.out.println("vo.getUserId(): " + vo.getUserId());
 					Object[] args = { vo.getUserId() };
-					return jdbcTemplate.queryForObject(SQL_SELECTONE_LATESTORDER, args, new OrderRowMapper());
+					return jdbcTemplate.queryForObject(SQL_SELECTONE_LATESTORDER, args, (rs, rowNum) -> {
+						OrderVO data = new OrderVO();
+						data.setoNum(rs.getInt("O_NO"));
+						return data;
+					});
+//					return jdbcTemplate.queryForObject(SQL_SELECTONE_LATESTORDER, new OrderRowMapper());
 				}
 				return null;
 			}
@@ -110,6 +116,7 @@ public class OrderDAO {
 			vo.setRcvPhoneNum(rs.getString("RCV_PHONE_NO"));
 			vo.setRcvAddress(rs.getString("RCV_ADDRESS"));
 			vo.setoNum(rs.getInt("O_NO"));
+			System.out.println("vo.getoNum(): " + vo.getoNum());
 			vo.setoPay(rs.getString("O_PAY"));
 			return vo;
 
