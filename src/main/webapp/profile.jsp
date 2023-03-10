@@ -124,23 +124,23 @@
 					<form action="updateMember.do" method="POST">
 						<!-- 고양이 이름 -->
 						<label class="label">고양이 이름</label>
-						<input type="text" class="form-control" id="cName" name="cName" value="${cName}" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
+						<input type="text" class="form-control" id="memberCatName" name="memberCatName" value="${memberCatName}" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
 						<p style="font-size: 5px;">* 변경할 고양이 이름을 입력하세요.</p>
 						<!-- 고양이 이름 -->
 
 						<!-- 전화번호 -->
 						<label class="label">전화번호</label>
-						<input type="text" class="form-control" id="phone" name="phone" value="${phoneNum}" placeholder="전화번호 입력 " onfocus="this.placeholder = ''" onblur="this.placeholder = '전화번호 입력'" required>
+						<input type="text" class="form-control" id="memberPhoneNum" name="memberPhoneNum" value="${memberPhoneNum}" placeholder="전화번호 입력 " onfocus="this.placeholder = ''" onblur="this.placeholder = '전화번호 입력'" required>
 						<p style="font-size: 5px;">* 변경할 전화번호를 입력하세요.</p>
 
 						<label class="label">주소</label>
 						<div class="checkout__input">
-							<input type="text" id="post" name="postNum" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
+							<input type="text" id="post" name="memberPostNum" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
 							<input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
 							<br>
-							<input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly>
+							<input type="text" class="form-control" id="memberAddress1" name="memberAddress1" placeholder="주소" readonly>
 							<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
-							<input type="text" class="form-control" value="${address }" id="address_detail" name="addressDetail" placeholder="상세주소" required>
+							<input type="text" class="form-control" value="${memberAddress1}" id="memberAddress2" name="addressDetail" placeholder="상세주소" required>
 						</div>
 						<p style="font-size: 5px;">* 변경할 주소를 입력하세요.</p>
 						<input type="submit" value="적용" class="button-purple">
@@ -151,12 +151,12 @@
 					<form action="updatePw.do" method="POST">
 						<!-- 기존 비밀번호 -->
 						<label class="label">현재 비밀번호 </label>
-						<input type="password" class="form-control" id="usePw" name="prePassword" placeholder="현재 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호 입력'" required>
+						<input type="password" class="form-control" id="usePw" name="memberPw" placeholder="현재 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호 입력'" required>
 						<p style="font-size: 5px;">* 현재 비밀번호를 입력하세요.</p>
 						<!-- 기존 비밀번호  -->
 
 						<label class="label">새 비밀번호</label>
-						<input type="password" class="form-control" id="pw" name="newPassword" placeholder="변경할 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '변경할 비밀번호 입력'" required>
+						<input type="password" class="form-control" id="pw" name="memberPwNew" placeholder="변경할 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '변경할 비밀번호 입력'" required>
 						<p id="outputPw" style="font-size: 5px;">* 변경할 비밀번호를 입력하세요.</p>
 
 						<label class="label">새 비밀번호 재입력</label>
@@ -333,10 +333,10 @@
 							}
 
 							// 우편번호와 주소 정보를 해당 필드에 넣는다.
-							document.getElementById('post').value = data.zonecode;
-							document.getElementById("address").value = addr;
+							document.getElementById('memberPostNum').value = data.zonecode;
+							document.getElementById("memberAddress1").value = addr;
 							// 커서를 상세주소 필드로 이동한다.
-							document.getElementById("address_detail").focus();
+							document.getElementById("memberAddress2").focus();
 						}
 					}).open();
 		}

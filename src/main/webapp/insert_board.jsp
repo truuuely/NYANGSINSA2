@@ -123,7 +123,7 @@
 					.replace(
 							'editor',
 							{
-								filebrowserUploadUrl : '${pageContext.request.contextPath}/adm/fileupload.do'
+								filebrowserUploadUrl : '${pageContext.request.contextPath}/fileupload.do'
 							});
 		});
 	</script>

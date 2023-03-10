@@ -115,12 +115,7 @@
 								<hr>
 
 								<li class="mypageli">
-									<div class="mypagedt">고영이 이름</div> <span class="mypagetext">${memberCName}</span> <br>
-								</li>
-								<hr>
-								<li class="mypageli">
-
-									<div class="mypagedt">이메일</div> <span class="mypagetext">${memberEmail}</span> <br>
+									<div class="mypagedt">고영이 이름</div> <span class="mypagetext">${memberCatName}</span> <br>
 								</li>
 								<hr>
 								<li class="mypageli">
