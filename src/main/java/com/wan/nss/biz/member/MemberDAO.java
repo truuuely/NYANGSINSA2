@@ -17,119 +17,96 @@ public class MemberDAO {
 
 	// 회원가입
 	private final String SQL_INSERT = "INSERT INTO MEMBER (M_ID, M_PW, M_NM, CAT_NM, PHONE_NO, POST_NO, ADDRESS1, ADDRESS2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-	
-	// 회원 아이디, 비밀번호 검색
-	private final String SQL_SELECTONE = "SELECT * FROM MEMBER WHERE M_ID = ? AND M_PW = ?";
-	
-	// 회원 아이디 중복 검사 할 때 필요한 것
-	private final String SQL_SELECTONE_ID = "SELECT M_ID FROM MEMBER WHERE M_ID = ? ";
-	
-	// 핸드폰 번호 중복 검사할 때 필요한 것
-	private final String SQL_SELECTONE_PHONE = "SELECT PHONE_NO FROM MEMBER WHERE PHONE_NO = ?";
-	
-	// private final String SQL_SELECTONE_MYPAGE = "SELECT * FROM MEMBER WHERE M_ID
-	// = ? "; // 회원(작성자) 아이디 검색
-	
-	// 회원 전체 목록 보기
-	private final String SQL_SELECTALL = "SELECT * FROM MEMBER";
-	
-	// 회원 (작성자) 아이디 검색
-	private final String SQL_SELECTALL_ID = "SELECT * FROM MEMBER WHERE M_ID LIKE CONCAT ('%',?,'%')";
-	
-	// 아이디 찾기 할 때 필요한 폰 번호 입력
-	private final String SQL_SELECTONE_FIND_ID = "SELECT * FROM MEMBER WHERE PHONE_NO= ?";
-	
-	// 비밀번호 찾기 할 때 필요
-	private final String SQL_SELECTONE_FIND_PW = "SELECT * FROM MEMBER WHERE M_ID = ? AND M_NM = ? AND PHONE_NO= ? ";
-	
+
 	// 회원정보 업데이트
-	private final String SQL_UPDATE = "UPDATE MEMBER SET M_NM = ?, CAT_NM = ?, PHONE_NO = ?, POST_NO = ? ADDRESS1 = ?, ADDRESS2 = ? WHERE M_NO = ?";
-	
+	private final String SQL_UPDATE = "UPDATE MEMBER SET M_NM = ?, CAT_NM = ?, PHONE_NO = ?, POST_NO = ? ADDRESS1 = ?, ADDRESS2 = ? WHERE M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?)";
+
 	// 회원 비밀번호 수정
 	private final String SQL_UPDATE_PW = "UPDATE MEMBER SET M_PW = ? WHERE M_ID=?";
-	
+
 	// 회원 삭제
 	private final String SQL_DELETE = "DELETE FROM MEMBER WHERE M_NO = ?";
 
-	
+	// 로그인
+	private final String SQL_SELECTONE = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_PW = ?";
+
+	// 아이디 중복 검사, 마이페이지 이동
+	private final String SQL_SELECTONE_ID = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? ";
+
+	// 핸드폰 번호 중복 검사
+	private final String SQL_SELECTONE_PHONE = "SELECT PHONE_NO FROM MEMBER WHERE PHONE_NO = ?";
+
+	// 회원 전체 목록 보기
+	private final String SQL_SELECTALL = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER ORDER BY M_NO DESC";
+
+	// 비밀번호 찾기 할 때 필요
+	private final String SQL_SELECTONE_FIND_PW = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_NM = ? AND PHONE_NO= ? ";
+
 	// 회원가입
-	public boolean insert(MemberVO vo) { 
-		jdbcTemplate.update(SQL_INSERT, vo.getUserId(), vo.getUserPw(), vo.getUserName(), vo.getCatName(), vo.getPhoneNum(),
-				vo.getPostNum(), vo.getAddress1(), vo.getAddress2());
+	public boolean insert(MemberVO vo) {
+		int res = jdbcTemplate.update(SQL_INSERT, vo.getUserId(), vo.getUserPw(), vo.getUserName(), vo.getCatName(),
+				vo.getPhoneNum(), vo.getPostNum(), vo.getAddress1(), vo.getAddress2());
+		if (res < 1) {
+			return false;
+		}
 		return true;
 	}
 
-	 // 회원 정보 변경
+	// 회원 정보 변경
 	public boolean update(MemberVO vo) {
 		if (vo.getUserPw() != null) {
-			jdbcTemplate.update(SQL_UPDATE_PW, vo.getUserPw(), vo.getUserId());
+			int res = jdbcTemplate.update(SQL_UPDATE_PW, vo.getUserPw(), vo.getUserId());
+			if (res < 1) {
+				return false;
+			}
 			return true;
 		} else {
-			jdbcTemplate.update(SQL_UPDATE, vo.getUserName(), vo.getCatName(), vo.getPhoneNum(), vo.getPostNum(),
-					vo.getAddress1(), vo.getAddress2(), vo.getUserNum());
+			int res = jdbcTemplate.update(SQL_UPDATE, vo.getUserName(), vo.getCatName(), vo.getPhoneNum(),
+					vo.getPostNum(), vo.getAddress1(), vo.getAddress2(), vo.getUserId());
+			if (res < 1) {
+				return false;
+			}
 			return true;
 		}
+
 	}
 
 	// 회원탈퇴, 회원 삭제
-	public boolean delete(MemberVO vo) { 
-		jdbcTemplate.update(SQL_DELETE, vo.getUserNum());
+	public boolean delete(MemberVO vo) {
+		int res = jdbcTemplate.update(SQL_DELETE, vo.getUserNum());
+		if (res < 1) {
+			return false;
+		}
 		return true;
 	}
 
-	 // 중복된 아이디가 있으면 true / 없으면 false
 	public MemberVO selectOne(MemberVO vo) {
 		try {
-			if (vo.getUserPw() != null) {
-				// 로그인할 때 필요한 아이디, 비밀번호 입력
-				// SELECETONE
-				Object[] args = { vo.getUserId(), vo.getUserPw() };
-				return jdbcTemplate.queryForObject(SQL_SELECTONE, args, new MemberRowMapper());
-			} else if (vo.getUserId() != null) {
-				// 1. 회원가입 할 때 아이디 중복 확인 / vo에 memberId만 존재
-				// SELECETONE_ID
-				return jdbcTemplate.queryForObject(SQL_SELECTONE_ID, (rs, rowNum) -> {
-					MemberVO mdata= new MemberVO();
-					mdata.setUserId(rs.getString("M_ID"));
-					return mdata;
-				});
-			} else if (vo.getPhoneNum() != null) {
-				// 2. 회원가입 할 때 핸드폰 번호 확인 / vo에 phoneNum만 존재
-				// SELECETONE_PHONE
-				return jdbcTemplate.queryForObject(SQL_SELECTONE_PHONE, (rs, rowNum) -> {
-					MemberVO mdata = new MemberVO();
-					mdata.setPhoneNum(rs.getString("PHONE_NO"));
-					return mdata;
-				});
-			} 
-		} catch (Exception e) {
-				e.printStackTrace();
+			if (vo.getUserId() != null && vo.getUserPw() != null && vo.getPhoneNum() != null) {
+				// 비밀번호 찾기. id, 이름, phoneNum 입력
+				return jdbcTemplate.queryForObject(SQL_SELECTONE_FIND_PW, new MemberRowMapper(), vo.getUserId(),
+						vo.getUserName(), vo.getPhoneNum());
 			}
+			if (vo.getUserPw() != null) {
+				// 로그인시
+				return jdbcTemplate.queryForObject(SQL_SELECTONE, new MemberRowMapper(), vo.getUserId(),
+						vo.getUserPw());
+			} else if (vo.getUserId() != null) {
+				// 회원가입시 아이디 중복 확인 & 마이페이지 회원 정보
+				return jdbcTemplate.queryForObject(SQL_SELECTONE_ID, new MemberRowMapper(), vo.getUserId());
+			} else if (vo.getPhoneNum() != null) {
+				// 휴대폰 번호 중복확인, 휴대폰 번호로 id 찾기
+				return jdbcTemplate.queryForObject(SQL_SELECTONE_PHONE, new MemberRowMapper(), vo.getPhoneNum());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
-	// 회원 ID, PW 찾기
-	public MemberVO findMember(MemberVO vo) {
-		if (vo.getUserId() != null && vo.getUserPw() != null && vo.getPhoneNum() != null) {
-			Object[] args = { vo.getUserId(), vo.getUserPw(), vo.getPhoneNum() };
-			return jdbcTemplate.queryForObject(SQL_SELECTONE_FIND_PW, args, new MemberRowMapper());
-		} else {
-			Object[] args = { vo.getPhoneNum() };
-			return jdbcTemplate.queryForObject(SQL_SELECTONE_FIND_ID, args, new MemberRowMapper());
-		}
-	}
-	
 	// 회원 아이디 검색, 회원 전체 출력
 	public ArrayList<MemberVO> selectAll(MemberVO vo) {
-		if (vo.getUserId() != null) {
-			return (ArrayList<MemberVO>) jdbcTemplate.query(SQL_SELECTALL_ID, (rs, rowNum) -> {
-				MemberVO mdata = new MemberVO();
-				mdata.setUserId(rs.getString("M_ID"));
-				return mdata;
-			});
-		} else {
-			return (ArrayList<MemberVO>) jdbcTemplate.query(SQL_SELECTALL, new MemberRowMapper());
-		}
+		return (ArrayList<MemberVO>) jdbcTemplate.query(SQL_SELECTALL, new MemberRowMapper());
 	}
 
 	class MemberRowMapper implements RowMapper<MemberVO> {
@@ -139,7 +116,6 @@ public class MemberDAO {
 			MemberVO vo = new MemberVO();
 			vo.setUserName(rs.getString("M_NM"));
 			vo.setUserId(rs.getString("M_ID"));
-			vo.setUserPw(rs.getString("M_PW"));
 			vo.setUserNum(rs.getInt("M_NO"));
 			vo.setCatName(rs.getString("CAT_NM"));
 			vo.setPhoneNum(rs.getString("PHONE_NO"));
