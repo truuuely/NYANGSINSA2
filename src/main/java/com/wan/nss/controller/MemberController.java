@@ -338,10 +338,10 @@ public class MemberController {
 	}
 
 	// 회원정보변경 클릭시 비밀번호 확인 페이지에서 비밀번호 확인 수행
-	@RequestMapping(value = "/CheckPw.do") // 
+	@RequestMapping(value = "/checkPw.do") // 
 	public String selectOneMemberCheckPw(MemberVO vo, Model model, HttpServletResponse response) {
 
-		System.out.println("CheckPw.do 진입");
+		System.out.println("checkPw.do 진입");
 
 		MemberVO loginMvo = memberService.selectOne(vo); // id, pw가 일치하는 회원이 있는경우만 not null
 
@@ -387,7 +387,12 @@ public class MemberController {
 			}
 		} else {
 			vo.setUserId(id);
+			
+			System.out.println("memberId: " + vo.getUserId());
+			
 			MemberVO loginMvo = memberService.selectOne(vo); // 로그인한 회원 VO를 member에 저장
+			
+			System.out.println("loginMvo: " + loginMvo);
 			
 			model.addAttribute("memberCatName", loginMvo.getCatName());
 			model.addAttribute("memberPhoneNum", loginMvo.getPhoneNum());
