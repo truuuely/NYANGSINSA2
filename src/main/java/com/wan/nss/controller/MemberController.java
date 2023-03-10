@@ -157,7 +157,7 @@ public class MemberController {
 	public String updateMemberPw(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("updatePw.do 진입");
-
+		
 		if (memberService.selectOne(vo) == null) { // 현재 비밀번호가 일치하지 않으면
 			try {
 				response.setContentType("text/html; charset=utf-8");
