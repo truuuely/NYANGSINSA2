@@ -108,6 +108,6 @@ public class ReportVO {
 		return "ReportVO [reportNum=" + reportNum + ", targetNum=" + targetNum + ", reportStep=" + reportStep
 				+ ", userNum=" + userNum + ", reporterNum=" + reporterNum + ", reportDate=" + reportDate
 				+ ", reportContent=" + reportContent + ", reportStat=" + reportStat + ", userId=" + userId
-				+ ", reporterId=" + reporterId + ", procStatus=" + procStatus;
+				+ ", reporterId=" + reporterId + ", procStatus=" + procStatus + "]";
 	}
 }

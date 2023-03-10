@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.wan.nss.biz.product.ProductVO;
 
 @Repository("orderDetailDAO")
 public class OrderDetailDAO {
@@ -27,6 +28,7 @@ public class OrderDetailDAO {
 
 
 	
+	
 	// 주문 상세
 	public boolean insert(OrderDetailVO odvo) {
 		jdbcTemplate.update(SQL_INSERT, odvo.getoNum(), odvo.getpNum(), odvo.getOdCnt(), odvo.getOdPrice());
@@ -34,22 +36,27 @@ public class OrderDetailDAO {
 	}
 
 	public ArrayList<OrderDetailVO> selectAll(OrderDetailVO odvo) {
+		ProductVO pvo = new ProductVO();
 
 		if (odvo.getOdNum() >= 0) {
 			// 회원 상세 주문 내역  
 			Object[] args = { odvo.getoNum() };
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL_ONUM, args, new OrderDetailRowMapper());
+
 			
-		} else if (odvo.getCategory() != null) { 
+		} else if (pvo.getCategory() != null) { 
 			// 카테고리별 상세 주문 상품 수량 및 가격 (관리자)
 
-			Object[] args = { odvo.getCategory() };
+		} else if (pvo.getCategory() != null) { // 상품 수량 및 가격 
+
+			Object[] args = { pvo.getCategory() };
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTONE_CATEGORY_CNT_SUM, args, new OrderDetailRowMapper());
 			
 		} else { 
 			// 상세 주문 전체 목록
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL, new OrderDetailRowMapper());
 		}
+		return null;
 	}
 
 	class OrderDetailRowMapper implements RowMapper<OrderDetailVO> {
@@ -62,10 +69,6 @@ public class OrderDetailDAO {
 			odvo.setpNum(rs.getInt("P_NO"));
 			odvo.setOdCnt(rs.getInt("OD_CNT"));
 			odvo.setOdPrice(rs.getInt("OD_PRICE"));
-			
-			odvo.setOdPrice(rs.getInt("SUM"));
-			odvo.setOdPrice(rs.getInt("CNT"));
-			
 
 			return odvo;
 		}
