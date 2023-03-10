@@ -96,7 +96,11 @@ public class MemberDAO {
 				return jdbcTemplate.queryForObject(SQL_SELECTONE_ID, new MemberRowMapper(), vo.getUserId());
 			} else if (vo.getPhoneNum() != null) {
 				// 휴대폰 번호 중복확인, 휴대폰 번호로 id 찾기
-				return jdbcTemplate.queryForObject(SQL_SELECTONE_PHONE, new MemberRowMapper(), vo.getPhoneNum());
+				return jdbcTemplate.queryForObject(SQL_SELECTONE_PHONE, (rs, rowNum) -> {
+					MemberVO data = new MemberVO();
+					data.setPhoneNum(rs.getString("PHONE_NO"));
+					return data;
+				}, vo.getPhoneNum());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
