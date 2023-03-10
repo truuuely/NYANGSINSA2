@@ -14,7 +14,7 @@ public class RegisterController {
 	
 	@Autowired
 	private MemberService memberService;
-	@Autowired
+//	@Autowired
 //	private SmsService smsService;
 	
 	// 아이디, 전화번호 중복 확인
