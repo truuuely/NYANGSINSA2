@@ -19,10 +19,10 @@ public class MemberDAO {
 	private final String SQL_INSERT = "INSERT INTO MEMBER (M_ID, M_PW, M_NM, CAT_NM, PHONE_NO, POST_NO, ADDRESS1, ADDRESS2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	// 회원정보 업데이트
-	private final String SQL_UPDATE = "UPDATE MEMBER SET M_NM = ?, CAT_NM = ?, PHONE_NO = ?, POST_NO = ? ADDRESS1 = ?, ADDRESS2 = ? WHERE M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?)";
+	private final String SQL_UPDATE = "UPDATE MEMBER SET M_NM = ?, CAT_NM = ?, POST_NO = ?, ADDRESS1 = ?, ADDRESS2 = ? WHERE M_ID = ?";
 
 	// 회원 비밀번호 수정
-	private final String SQL_UPDATE_PW = "UPDATE MEMBER SET M_PW = ? WHERE M_ID=?";
+	private final String SQL_UPDATE_PW = "UPDATE MEMBER SET M_PW = ? WHERE M_ID = ?";
 
 	// 회원 삭제
 	private final String SQL_DELETE = "DELETE FROM MEMBER WHERE M_NO = ?";
@@ -54,15 +54,15 @@ public class MemberDAO {
 
 	// 회원 정보 변경
 	public boolean update(MemberVO vo) {
-		if (vo.getUserPw() != null) {
+		if (vo.getUserPw() != null) { // 비밀번호 변경
 			int res = jdbcTemplate.update(SQL_UPDATE_PW, vo.getUserPw(), vo.getUserId());
 			if (res < 1) {
 				return false;
 			}
 			return true;
-		} else {
-			int res = jdbcTemplate.update(SQL_UPDATE, vo.getUserName(), vo.getCatName(), vo.getPhoneNum(),
-					vo.getPostNum(), vo.getAddress1(), vo.getAddress2(), vo.getUserId());
+		} else { // 회원정보 변경
+			int res = jdbcTemplate.update(SQL_UPDATE, vo.getUserName(), vo.getCatName(), vo.getPostNum(),
+					vo.getAddress1(), vo.getAddress2(), vo.getUserId());
 			if (res < 1) {
 				return false;
 			}
@@ -125,7 +125,7 @@ public class MemberDAO {
 			vo.setPhoneNum(rs.getString("PHONE_NO"));
 			vo.setPostNum(rs.getString("POST_NO"));
 			vo.setAddress1(rs.getString("ADDRESS1"));
-			vo.setAddress1(rs.getString("ADDRESS2"));
+			vo.setAddress2(rs.getString("ADDRESS2"));
 			vo.setWarnCnt(rs.getInt("WARN_CNT"));
 			vo.setRole(rs.getNString("ROLE"));
 
