@@ -86,11 +86,12 @@
 					</div>
 					<div class="row2" style="width: 90%; margin-left: -15px">
 						<div class="col-lg-12 col-md-12">
-							<input type="text" name="title" required> <input
-								type="hidden" name="writer" value="${member.mname}" required>
+							<input type="text" name="boardTitle" required>
+							<input type="hidden" name="writer" value="${memberId}">
+							<input type="hidden" name="userId" value="${memberId}">
 						</div>
 						<div class="col-lg-12 text-center">
-							<textarea name="content" id="editor"></textarea>
+							<textarea name="boardContent" id="editor"></textarea>
 							<button type="submit" class="site-btn" style="margin-top: 30px;">작성하기</button>
 						</div>
 					</div>

@@ -41,29 +41,20 @@
 	<div id="board">
 		<div id="boardDetail">
 			<div id="title">
-				2022년 마지막 날인데도 레옹이는 계속 자네요
+				${board.boardTitle}
 				<br>
-				<div id="writer">[작성자 : dlwjddk1010]</div>
+				<div id="writer">[작성자 : ${board.userId}]</div>
 			</div>
 			<ul id="boardInfo">
-				<li><i class="fa fa-calendar-o"></i> 2022/12/31</li>
-				<li><i class="fa fa-comment-o"></i> 5</li>
-				<li><img style="width: 20px;" src="img/eyes.png"> 13</li>
-				<li class="heartVal"><img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> 20</li>
+				<li><i class="fa fa-calendar-o"></i> ${board.boardDate}</li>
+				<li><i class="fa fa-comment-o"></i> ${board.replyCnt}</li>
+				<li><img style="width: 20px;" src="img/eyes.png"> ${board.boardView}</li>
+				<li class="heartVal"><img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> ${board.likeCnt}</li>
 				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
-				<img style="width: 70%; height: auto; margin-bottom: 20px;" src="img/cat2.jpg" alt="레옹이 사진">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">
-					레옹이는 왜 이렇게 귀여울까...
-					<br>
-					누워 있어도 귀엽고 그냥 귀엽고
-					<br>
-					아무리 봐도 귀엽고
-					<br>
-					너무 귀엽지 않나요 여러분
-					<br>
-					이달의 냥냥이 1등 할 수 있도록 좋아요 많이 눌러주세용!!
+					${board.boardContent}
 				</div>
 			</div>
 		</div>
@@ -73,7 +64,7 @@
 
 	<div id="showReply">
 		<img style="width: 20px;" src="img/replyicon.png">
-		댓글 (5) ▼
+		${board.replyCnt} ▼
 	</div>
 	<div id="reply">
 		<nss:list sort="reply" />
