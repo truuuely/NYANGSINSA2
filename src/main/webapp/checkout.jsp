@@ -59,11 +59,15 @@ button img {
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+			<a href="main.do">
+				<img src="img/logo.png" alt="홈으로 가기">
+			</a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+				<li><a href="shoping_cart.jsp">
+						<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+					</a></li>
 			</ul>
 		</div>
 
@@ -81,7 +85,15 @@ button img {
 		</nav>
 		<div id="mobile-menu-wrap"></div>
 		<div class="header__top__right__social">
-			<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+			<a href="https://www.facebook.com/profile.php?id=100089405234926">
+				<i class="fa fa-facebook"></i>
+			</a>
+			<a href="https://www.instagram.com/nyangsinsa5/">
+				<i class="fa fa-instagram"></i>
+			</a>
+			<a href="https://twitter.com/nyangsinsa">
+				<i class="fa fa-twitter"></i>
+			</a>
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
@@ -108,7 +120,15 @@ button img {
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/profile.php?id=100089405234926">
+									<i class="fa fa-facebook"></i>
+								</a>
+								<a href="https://www.instagram.com/nyangsinsa5/">
+									<i class="fa fa-instagram"></i>
+								</a>
+								<a href="https://twitter.com/nyangsinsa">
+									<i class="fa fa-twitter"></i>
+								</a>
 							</div>
 
 							<!-- 로그인 -->
@@ -123,7 +143,9 @@ button img {
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+						<a href="main.do">
+							<img src="img/logo.png" alt="홈으로 가기">
+						</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -138,7 +160,9 @@ button img {
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp"><i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+							<li><a href="shoping_cart.jsp">
+									<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -236,7 +260,7 @@ button img {
 									<p>
 										이름<span>*</span>
 									</p>
-									<input id="name" type="text" name="name">
+									<input id="name" type="text" name="name" value="${memberName }">
 								</div>
 							</div>
 							<div class="col-lg-6" style="max-width: 100%">
@@ -244,7 +268,7 @@ button img {
 									<p>
 										번호<span>*</span>
 									</p>
-									<input id="phone" type="text" name="phone" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+									<input id="phone" type="text" name="phone" value = "${memberPhoneNum}" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 								</div>
 							</div>
 							<div class="col-lg-6" style="max-width: 100%">
@@ -252,7 +276,12 @@ button img {
 									<p>
 										주소<span>*</span>
 									</p>
-									<input type="text" id="post" name="post" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly> <input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly><br> <input type="text" class="form-control" id="address" name="address" placeholder="주소" readonly><input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly><input type="text" class="form-control" id="address_detail" name="addressDetail" placeholder="상세주소" required>
+									<input type="text" id="post" name="post" value="${memberPostNum }" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
+									<input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
+									<br>
+									<input type="text" class="form-control" id="address" name="address"  value = "${memberAddress1}" placeholder="주소" readonly>
+									<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
+									<input type="text" class="form-control" id="address_detail" name="addressDetail" value = "${memberAddress2}"  placeholder="상세주소" required>
 								</div>
 							</div>
 						</div>
@@ -272,22 +301,23 @@ button img {
 								<div class="checkout__order__total">
 									결제 예상 금액 <span> <c:set var="total" value="0" /> <c:forEach var="v" items="${cList}" begin="0" varStatus="status">
 											<c:set var="total" value="${total + v.dc_price*v.pCnt}" />
-										</c:forEach>
-										<fmt:formatNumber value="${total}" type="currency"/> 
-										 <c:forEach var="v" items="${cList}" begin="0" end="0" varStatus="status">
+										</c:forEach> <fmt:formatNumber value="${total}" type="currency" /> <c:forEach var="v" items="${cList}" begin="0" end="0" varStatus="status">
 											<c:set var="orderName" value="${v.pName}" />
 										</c:forEach>
 									</span>
 								</div>
 
 								<button id="iamportPayment" type="button">
-									<img src="img/card.png" alt="카드결제버튼" style="heigth: 30px; width: 30px;"> 카드결제
+									<img src="img/card.png" alt="카드결제버튼" style="heigth: 30px; width: 30px;">
+									카드결제
 								</button>
 								<button id="iamportPayment2" type="button" style="border-radius: 20px; border: solid 1px; border-color: gray;">
-									<img src="img/kakaoPay.png" alt="카카오페이버튼" style="heigth: 50px; width: 50px;"> 카카오페이
+									<img src="img/kakaoPay.png" alt="카카오페이버튼" style="heigth: 50px; width: 50px;">
+									카카오페이
 								</button>
 								<button id="iamportPayment3" type="button">
-									<img src="img/phone_pay.png" alt="휴대폰결제버튼" style="heigth: 30px; width: 30px;"> 휴대폰결제
+									<img src="img/phone_pay.png" alt="휴대폰결제버튼" style="heigth: 30px; width: 30px;">
+									휴대폰결제
 								</button>
 								<!-- <button id="iamportPayment" type="button">카드결제</button> 
                           <button id="iamportPayment2" type="button"><img src="img/kakaopay.png" alt="카카오페이버튼"></button>
@@ -308,7 +338,9 @@ button img {
 				<div class="col-lg-4 col-md-4 col-sm-6">
 					<div class="footer__about">
 						<div class="footer__about__logo">
-							<a href="main.do"><img src="img/logo.png" alt="로고"></a>
+							<a href="main.do">
+								<img src="img/logo.png" alt="로고">
+							</a>
 						</div>
 
 					</div>
@@ -325,7 +357,15 @@ button img {
 				<div class="col-lg-4 col-md-4 col-sm-6">
 					<div class="footer__widget">
 						<div class="footer__widget__social">
-							<a href="https://www.facebook.com/profile.php?id=100089405234926"><i class="fa fa-facebook"></i></a> <a href="https://www.instagram.com/nyangsinsa5/"><i class="fa fa-instagram"></i></a> <a href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+							<a href="https://www.facebook.com/profile.php?id=100089405234926">
+								<i class="fa fa-facebook"></i>
+							</a>
+							<a href="https://www.instagram.com/nyangsinsa5/">
+								<i class="fa fa-instagram"></i>
+							</a>
+							<a href="https://twitter.com/nyangsinsa">
+								<i class="fa fa-twitter"></i>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -340,7 +380,8 @@ button img {
 								<script>
                            document.write(new Date().getFullYear());
                         </script>
-								All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+								All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by
+								<a href="https://colorlib.com" target="_blank">Colorlib</a>
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 							</p>
 						</div>
@@ -509,7 +550,9 @@ button img {
 
 	<!— TOP 버튼 —>
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
-		<a href="#"><button type="button" class="button-top">▲ 맨위로</button></a>
+		<a href="#">
+			<button type="button" class="button-top">▲ 맨위로</button>
+		</a>
 	</div>
 
 
