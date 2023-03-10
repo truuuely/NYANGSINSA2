@@ -620,7 +620,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             phoneNumValid = false;
 
         } else {
-           outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
+           outputPhone.textContent = `<spring:message code="message.register.sendauthentication1"/>`;
            outputPhone.style.color = '#6667AB';
            phoneNumValid = true;
         }
@@ -667,7 +667,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             //Sms서블릿클래스로 이동함.
             $.ajax({
                type: 'POST',
-               url: 'Sms',
+               url: 'sms.do',
                data: {userPhoneNum:userPhoneNum},
                success: function(randNum){
                       console.log("로그:인증번호["+randNum+"]")
@@ -676,7 +676,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                          number = randNum;  //랜덤문자인증번호
                          smsTrue = true;
                          console.log(smsTrue)
-                         outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
+                         outputPhone.textContent = `<spring:message code="message.register.sendauthentication2"/>`;
                            outputPhone.style.color = '#6667AB';
                       } 
                       else{
@@ -700,19 +700,19 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
           //SmsCheck서블릿클래스로 이동
           $.ajax({
              type: 'POST',
-             url: 'SmsCheck',
+             url: 'checkSms.do',
              data: {randNum:number, checkNum:checkNum},
              success: function(result){
                 console.log("로그 result:["+result+"]")
                 console.log(typeof result);
                 if(result == "1"){
-                   alert("<spring:message code="message.register.matchauthentication"/>");
+                   alert('<spring:message code="message.register.matchauthentication"/>');
                    smsCheckTrue = true;
                    console.log(smsCheckTrue)
                    document.getElementById('phone').readOnly = true;
                 } 
                 else{
-                   alert("<spring:message code="message.register.nomatchauthentication"/>");  //인증번호 불일치
+                   alert('<spring:message code="message.register.nomatchauthentication"/>');  //인증번호 불일치
                    smsCheckTrue = false;
                 }
              }

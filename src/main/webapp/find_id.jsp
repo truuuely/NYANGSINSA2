@@ -109,7 +109,7 @@
 			//Sms서블릿클래스로 이동함.
 			$.ajax({
 				type : 'POST',
-				url : 'Sms',
+				url : 'sms.do',
 				data : {
 					userPhoneNum : userPhoneNum
 				},
@@ -136,7 +136,7 @@
 			//SmsCheck서블릿클래스로 이동
 			$.ajax({
 				type : 'POST',
-				url : 'SmsCheck',
+				url : 'checkSms.do',
 				data : {
 					randNum : number,
 					checkNum : checkNum
