@@ -59,15 +59,19 @@
 	margin-left: 20px;
 }
 
-.clickTr {
-	color: black;
-	font-weight: bold;
+
+/* 활성 메뉴 항목의 스타일 */ 
+.report-menubar a.active { color: black; font-weight: bold; }
+
+
+/* 비활성 메뉴 항목 스타일 */ 
+.report-menubar a:not(.active) { color: gray; }
+
+.report-menubar a:hover {
+ 
+  cursor: pointer;
 }
 
-.clicked {
-	color: black;
-	font-weight: bold;
-}
 
 .modal-btn-box {
 	width: 100%;
@@ -413,19 +417,15 @@
 						<!-- Hoverable Table rows -->
 						<div class="card">
 							<h6 class="card-header">
-								<ul class="report-menubar">
-									<li>
-										<a onclick="list(1,'product');">게시글</a>
-									</li>
-									<li>
-										<a onclick="list(1,'member');">댓글</a>
-									</li>
+								<ul class="report-menubar"> 
+								<li> <a class="active" onclick="list(1,1);">게시글 </a> 	</li> 
+								
+								<li> <a onclick="list(1,2);">댓글</a> </li> 
 								</ul>
 
 							</h6>
 							<div class="table-responsive text-nowrap">
 								<table class="table table-hover">
-								<!-- 목록 출력 부분  -->
 									<thead id="dataTableList">
 										
 									</thead>
@@ -487,11 +487,14 @@
 		<div class="report-modalBox">
 			<!-- <h2 style="font-size: 30px; padding: 20px;">신고처리</h2> -->
 			<img src="img/siren.png" style="width: 40px; margin-bottom: 20px;">
-			<form id="reportForm" action="main.do" method="post">
-				<input type="hidden" id="boardNum" name="boardNum" value="">
+			<form id="reportForm" action="updateReport.do" method="post">
+				<input type="hidden" id="targetNum" name="targetNum" value="">
 				<input type="hidden" id="reportNum" name="reportNum" value="">
+				<input type="hidden" id="userNum" name="userNum" value="">
+				<input type="hidden" id="reporterNum" name="reporterNum" value="">
+				<input type="hidden" id="reportStep" name="reportStep" value="">
 				<p style="font-size: 15px; margin-left: 15px; justify-content: space-around; display: flex;">
-					<select name="reportValue" style="width: 70px; height: 30px; border: 1px solid #6667ab52; margin-right: 13px; text-align: center;">
+					<select name="procStatus" style="width: 70px; height: 30px; border: 1px solid #6667ab52; margin-right: 13px; text-align: center;">
 						<option value="cancle">철회</option>
 						<option value="delete">삭제</option>
 					</select>
@@ -530,14 +533,23 @@
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 
 	<script>
+
+	// 메뉴 항목 가져오기 
+	const menuItems = document.querySelectorAll('.report-menubar a');
+
+
+	// 메뉴 항목을 반복하고 클릭 이벤트 리스너 추가 
+	menuItems.forEach(item => { item.addEventListener('click', function() { // 모든 항목에서 활성 클래스 제거
+		 menuItems.forEach(item => { item.classList.remove('active'); }); // 클릭된 항목에 활성 클래스 추가 
+		 this.classList.add('active'); }); });
 	
 	//땐 글릭 시
-	$(".card-header").find("a").click(function(){
+	/* $(".card-header").find("a").click(function(){
 	console.log('gd');
 	$(".card-header").find("li").not(this).removeClass("clickTr");
 	
 	$(this).parent().addClass("clickTr");
-	});
+	}); */
 		// 글자색변경
 		/*  $(function(){
 
@@ -603,7 +615,7 @@
 	<script>
 		 $(document).ready(function() {
 			console.log("확인1");
-			list(1,'product');
+			list(1,1);
 			console.log("확인2");
 		}); 
 
