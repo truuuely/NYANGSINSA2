@@ -154,25 +154,26 @@ public class MemberController {
 
 	// 회원정보변경에서 비밀번호 변경하기 수행
 	@RequestMapping(value = "/updatePw.do")
-	public String updateMemberPw(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
+	public String updateMemberPw(MemberVO mvo, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 		
 		System.out.println("updatePw.do 진입");
+		mvo.setUserId((String)session.getAttribute("memberId"));
 		
-		if (memberService.selectOne(vo) == null) { // 현재 비밀번호가 일치하지 않으면
+		if (memberService.selectOne(mvo) == null) { // 현재 비밀번호가 일치하지 않으면
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				PrintWriter out = response.getWriter();
 				out.println("<script>alert('현재 비밀번호를 확인하세요.');</script>"); // 이전 화면으로 이동
 				out.flush();
-				return "profile.jsp";
+				return "profileView.do";
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
 			}
 		}
 		String memberPwNew = (String) request.getParameter("memberPwNew"); // 새 비밀번호
-		vo.setUserPw(memberPwNew);
-		if (!memberService.update(vo)) { // 업데이트에 실패하면 알림창
+		mvo.setUserPw(memberPwNew);
+		if (!memberService.update(mvo)) { // 업데이트에 실패하면 알림창
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script>alert('업데이트 실패. 잠시 후 다시 시도해주세요.');</script>"); // 이전 화면으로 이동
@@ -181,16 +182,18 @@ public class MemberController {
 				return null;
 			}
 		}
-		return "profile.jsp";
+		return "profileView.do";
 	}
 
 	// 회원정보 수정 수행
 	@RequestMapping(value = "/updateMember.do")
-	public String updateMemberProfile(MemberVO vo, HttpServletRequest request, HttpServletResponse response) {
+	public String updateMemberProfile(MemberVO mvo, Model model, HttpSession session, HttpServletResponse response) {
 		
 		System.out.println("updateMember.do 진입");
-
-		if (!memberService.update(vo)) {
+		
+		mvo.setUserId((String)session.getAttribute("memberId"));
+		
+		if (!memberService.update(mvo)) {
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script>alert('회원 정보 수정 실패. 잠시 후 다시 시도하세요');</script>"); // 이전 화면으로 이동
@@ -200,11 +203,38 @@ public class MemberController {
 				return null;
 			}
 		} else {
-			return "profile.jsp";
+			
+			return "profileView.do";
+			
 		}
 
 	}
-
+	
+	// 회원정보 수정 수행 성공시 다시 프로필페이지로 이동
+	@RequestMapping(value = "/profileView.do")
+		public String profileView(MemberVO searchMvo, MemberVO loginMvo, Model model, HttpSession session) {
+		
+		System.out.println("profileView.do 진입");
+		
+		System.out.println("memberId: " + session.getAttribute("memberId"));
+		
+		searchMvo.setUserId((String)session.getAttribute("memberId"));
+		System.out.println("searchMvo.userId: " + searchMvo.getUserId());
+		searchMvo.setUserPw(null);
+		
+		loginMvo = memberService.selectOne(searchMvo); // 로그인한 회원 VO를 member에 저장
+		System.out.println("loginMvo: " + loginMvo);
+		
+		model.addAttribute("memberCatName", loginMvo.getCatName());
+		model.addAttribute("memberPhoneNum", loginMvo.getPhoneNum());
+		model.addAttribute("memberPostNum", loginMvo.getPostNum());
+		model.addAttribute("memberAddress1", loginMvo.getAddress1());
+		model.addAttribute("memberAddress2", loginMvo.getAddress2());
+		
+		return "profile.jsp";
+	}
+	
+	
 	// 관리자 페이지 - 회원 삭제(강퇴)
 	@RequestMapping(value = "/deleteMem.do")
 	public String deleteMember(MemberVO vo, HttpSession session, HttpServletResponse response) {
@@ -367,14 +397,10 @@ public class MemberController {
 				return null;
 			}
 		} else {
-			// 비밀번호가 일치한다면 전달 :
-			// 1. 프로필 사진, 2. 고양이 이름, 3. 전화번호, 4. 주소
-			model.addAttribute("memberCatName", loginMvo.getCatName());
-			model.addAttribute("memberPhoneNum", loginMvo.getPhoneNum());
-			model.addAttribute("memberPostNum", loginMvo.getPostNum());
-			model.addAttribute("memberAddress1", loginMvo.getAddress1());
-			model.addAttribute("memberAddress1", loginMvo.getAddress2());
-			return "profile.jsp"; // 회원정보변경 페이지로 진행
+			
+			System.out.println("loginMvo: " + loginMvo);
+
+			return "profileView.do"; // 회원정보변경 페이지로 진행
 		}
 		
 	}
@@ -408,7 +434,7 @@ public class MemberController {
 			model.addAttribute("memberPhoneNum", loginMvo.getPhoneNum());
 			model.addAttribute("memberPostNum", loginMvo.getPostNum());
 			model.addAttribute("memberAddress1", loginMvo.getAddress1());
-			model.addAttribute("memberAddress1", loginMvo.getAddress2());
+			model.addAttribute("memberAddress2", loginMvo.getAddress2());
 
 			return "mypage.jsp";
 		}

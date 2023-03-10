@@ -96,6 +96,8 @@ public class OrderController {
 		
 		ovo.setUserId(userId);
 		
+		System.out.println("insert OrderVO: " + ovo);
+		
 		// Order insert
 
 		if (!orderService.insert(ovo)) { // insert 에서 실패했다면
@@ -112,16 +114,25 @@ public class OrderController {
 		// ovo insert 성공
 		// → odvo insert!
 
+		ovo.setoSearchCondition("lastOrder");
+		System.out.println("ovo.userId: " + ovo.getUserId());
+		
 		OrderVO thisOvo = orderService.selectOne(ovo); // 방금 추가한 ovo
-		// SELECT O_NO FROM ORDER_INFO WHERE USER_ID = ? ORDER BY O_NO DESC ;
-
+		// SELECT O_NO FROM ORDER_INFO WHERE USER_ID = ? ORDER BY O_NO DESC;
+		System.out.println("thisOvo: " + thisOvo);
+		
 		ArrayList<ProductVO> cList = (ArrayList) session.getAttribute("cList"); // 장바구니에 담긴 상품들
 		if (cList == null) {
 			cList = new ArrayList<ProductVO>();
 		}
 		for (int i = 0; i < cList.size(); i++) {
 			
+			odvo.setoNum(thisOvo.getoNum()); // oNum 세팅
+			odvo.setpNum(cList.get(i).getpNum()); // pNum 세팅
+			odvo.setOdCnt(cList.get(i).getpCnt()); // pCnt 세팅
 			odvo.setOdPrice(cList.get(i).getDc_price() * cList.get(i).getpCnt()); // 실제 결제 금액으로 odPrice 세팅
+			
+			System.out.println("insert OrderDetailVO: " + odvo);
 			
 			orderDetailService.insert(odvo); // 주문 상세 내역 DB에 저장
 
