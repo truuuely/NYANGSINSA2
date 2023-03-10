@@ -26,14 +26,14 @@ public class OrderDAO {
 	private final String SQL_SELECTALL = "SELECT * FROM `ORDER` ORDER BY O_NO DESC ";
 	
 	// 주문 완료 했을 때 해당 회원의 주문 전체 내역
-	private final String SQL_SELECTALL_ORDER = "SELECT * FROM `ORDER` WHERE M_NO =? ORDER BY O_NO DESC ";
+	private final String SQL_SELECTALL_ORDER = "SELECT * FROM `ORDER` WHERE M_NO =(SELECT M_NO FROM MEMBER WHERE M_ID = ?) ORDER BY O_NO DESC ";
 	
 	// 주문 총 가격
 	private final String SQL_SELECTONE_TOTAL_PRICE = "	SELECT SUM(PRODUCT.P_PRICE*((100-PRODUCT.DC_PERCENT)/100)*ORDER_DETAIL.OD_CNT) AS TOTAL "
 			+ " FROM ORDER_DETAIL od INNER JOIN PRODUCT p ON od.P_NO = p.P_NO WHERE od.O_NO = ?";
 	
 	// 현재 회원이 가장 최근에 추가한 주문
-	final String SQL_SELECTONE_LATESTORDER = "SELECT O_NO FROM `ORDER` WHERE M_NO =? AND ROWNUM <=1 ORDER BY O_NO DESC";
+	final String SQL_SELECTONE_LATESTORDER = "SELECT O_NO FROM `ORDER` WHERE M_NO =(SELECT M_NO FROM MEMBER WHERE M_ID = ?) AND ROWNUM <=1 ORDER BY O_NO DESC";
 	
 	// 주문 연도별 주문 내역 리스트 보기 (관리자)  / searchCondtion (date) -> odate로 확인, 그 해 총 판매 금액 보내주면 됨
 	final String SQL_SELECTALL_DATE = " SELECT o.O_DT, SUM(p.P_PRICE*((100-p.DC_PERCENT)/100)*od.OD_CNT) AS TOTAL FROM `ORDER` o "
@@ -83,7 +83,7 @@ public class OrderDAO {
 		
 			if(vo.getUserId() != null) {
 				// 주문 완료 했을 때 해당 회원의 주문 전체 내역
-				Object[] args = { vo.getUserNum() };
+				Object[] args = { vo.getUserId() };
 				return (ArrayList<OrderVO>) jdbcTemplate.query(SQL_SELECTALL_ORDER, args, new OrderRowMapper());
 
 			} else if (vo.getoSearchCondition().equals("all")) {
