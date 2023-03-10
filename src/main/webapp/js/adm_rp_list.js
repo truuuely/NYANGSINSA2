@@ -9,8 +9,12 @@ let dataList; // 표시하려하는 데이터 리스트
 let totalPage; //총 페이지 수 결정
 let selectPage; // 보고싶은 페이지(실제로 사용자가 보고 싶은 페이지)
 let part; // 목록 요청 매개변수(카테고리)
+let values; // 매개변수로 사용할 임시 객체 
+let encodedValues; // values를 json 타입으로 인코딩
+let url;
 
-function list(selectPage,part) {
+
+function list(selectPage,step) {
 	pageCount=5;
 	console.log(totalPage);
 	// 페이징 시작번호와 끝번호 세팅하기
@@ -24,16 +28,17 @@ function list(selectPage,part) {
 		last+=pageCount;
 	}
 
-
+	part="report";
 
 	console.log("dmddmd")
 	console.log("part: "+part);
 	console.log("selectPage: "+selectPage);
+	console.log("step "+step)
 
 
 	$.ajax({ // ajax로 데이터 가져오기
 		type: 'POST',
-		url: 'getAdminList',
+		url: 'getAdminList.do',
 		data: {part:part}, // category, sort 담아서 ListController Servlet에 걸리게!
 		dataType: 'json',
 		traditional: 'true',
@@ -47,11 +52,11 @@ function list(selectPage,part) {
 			totalPage = Math.ceil(totalData / dataPerPage); //총 페이지 수 결정
 
 			// 글 목록 표시 호출 (테이블 생성)
-			console.log(dataList);
-			displayData(selectPage,part); // 현재페이지인데 바뀌어서 나옴
+			console.log(dataList,step);
+			displayData(selectPage,step); // 현재페이지인데 바뀌어서 나옴
 
 			// 페이징 표시 호출
-			paging(selectPage,part); // 그래서 저장해논 값을 넣어줌
+			paging(selectPage,step); // 그래서 저장해논 값을 넣어줌
 
 		}
 	});
@@ -59,7 +64,7 @@ function list(selectPage,part) {
 
 
 //데이터 출력 부분: 현재 페이지(currentPage)와 페이지당 글 개수(dataPerPage) 반영
-function displayData(selectPage,part) {
+function displayData(selectPage,step) {
 	let listhtml = "";
 	let chartHtml = "";
 
@@ -70,20 +75,34 @@ function displayData(selectPage,part) {
 	console.log(dataList);
 	if(totalData!=0){
 		for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
-			if(part=="product"){
-				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].pNum+"</strong></td>"
-				+"<td>"+dataList[i].category+"</td>"
-				+"<td>"+(dataList[i].pName.length > 25 ? dataList[i].pName.substring(0, 25) + "..." : dataList[i].pName)+"</td>"
-				+"<td>"+dataList[i].price+"</td>"
-				+"<td>"+dataList[i].pDcPercent+"</td>"
+			if(step==1 && dataList[i].reportStat==1){
+				// 신고된 글 
+				
+				values = { targetNum: dataList[i].targetNum ,
+						   reportNum: dataList[i].reportNum ,
+						   userNum : dataList[i].userNum ,
+						   reporterNum: dataList[i].reporterNum ,
+						   reportStep: dataList[i].reoprtStep };
+				encodedValues = encodeURIComponent(JSON.stringify(values));
+				
+				url = `init(encodedValues);`;
 
+				
+				
+				console.log(dataList[i]);
+				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
+				+"<td>"+dataList[i].userId+"</td>"
+				+"<td><a href='#' onclick='newOpen("+encodedValues+");'> "+(dataList[i].content.length > 25 ? dataList[i].content.substring(0, 25) + "..." : dataList[i].content)+"</a></td>"
+				+"<td>"+dataList[i].reporterId+"</td>"
+				+"<td>"+dataList[i].reportContent+"</td>"
+					
 				+"<td>"
 				+"<div class='dropdown'>"
 				+"<button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
 				+"<i class='bx bx-dots-vertical-rounded'></i>"
 				+"</button>"
 				+"<div class='dropdown-menu'>"
-				+"<a class='dropdown-item ' href='javascript:init("+dataList[i].pNum+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a> <a class='dropdown-item' href='javascript:void(0);'><i class='bx bx-trash me-1'></i> 삭제</a>"
+				+"<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>"
 				+"</div>"
 				+"</div>"
 				+"</td>"
@@ -91,12 +110,13 @@ function displayData(selectPage,part) {
 				
 				listhtml="	<tr> 	<th>no.</th> 	<th>글 작성자</th> 	<th>게시글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
 			}
-			if(part=="member"){
-				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].userId+"</strong></td>"
-				+"<td>"+dataList[i].userName+"</td>"
-				+"<td>"+dataList[i].phoneNum+"</td>"
-				+"<td>"+dataList[i].catName+"</td>"
+			if(step==2 && dataList[i].reportStat==1){
+				// 신고된 댓글
+				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
 				+"<td>"+dataList[i].userId+"</td>"
+				+"<td><a href='#' onclick='newOpen("+encodedValues+");'> "+(dataList[i].content.length > 25 ? dataList[i].content.substring(0, 25) + "..." : dataList[i].content)+"</a></td>"
+				+"<td>"+dataList[i].reportId+"</td>"
+				+"<td>"+dataList[i].reportContent+"</td>"
 
 				+"<td>"
 				+"<div class='dropdown'>"
@@ -104,7 +124,7 @@ function displayData(selectPage,part) {
 				+"<i class='bx bx-dots-vertical-rounded'></i>"
 				+"</button>"
 				+"<div class='dropdown-menu'>"
-				+"<a class='dropdown-item ' href='javascript:init("+dataList[i].pNum+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a> <a class='dropdown-item' href='javascript:void(0);'><i class='bx bx-trash me-1'></i> 삭제</a>"
+				+"<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>"
 				+"</div>"
 				+"</div>"
 				+"</td>"
@@ -127,7 +147,7 @@ function displayData(selectPage,part) {
 
 
 //페이지네이션 표시 함수
-function paging(currentPage,part) {
+function paging(currentPage,step) {
 	console.log('페이징 함수 실행5');
 	if(totalData!=0){ // dataList에 데이터(상품||리뷰)가 있을 때 페이징 띄우기
 		console.log('paging 함수 '+part);
@@ -146,21 +166,21 @@ function paging(currentPage,part) {
 		let pageHtml = "";
 
 		if (first > 1) {
-			pageHtml += "<a href='javascript:list("+(first-1)+",`"+part+"`)' id='prev'><li> ◀ </li></a>";
+			pageHtml += "<a href='javascript:list("+(first-1)+","+step+")' id='prev'><li> ◀ </li></a>";
 		}
 
 		//페이징 번호 표시 
 		for (var i = first; i <= last; i++) {
 			if (currentPage == i) {
 				pageHtml +=
-					"<a href='javascript:list("+i+",`"+part+"`)' id='" + i + "'><li class='on'>" + i + "</li></a>";
+					"<a href='javascript:list("+i+","+step+")' id='" + i + "'><li class='on'>" + i + "</li></a>";
 			} else {
-				pageHtml += "<a href='javascript:list("+i+",`"+part+"`)' id='" + i + "'><li>" + i + "</li></a>";
+				pageHtml += "<a href='javascript:list("+i+","+step+")' id='" + i + "'><li>" + i + "</li></a>";
 			}
 		}
 
 		if (last < totalPage) {
-			pageHtml += "<a href='javascript:list("+(last+1)+",`"+part+"`)' id='next'><li> ▶ </li></a>";
+			pageHtml += "<a href='javascript:list("+(last+1)+","+step+")' id='next'><li> ▶ </li></a>";
 		}
 
 		pageHtml+="<br><br>";
@@ -178,15 +198,38 @@ function paging(currentPage,part) {
 	}
 }
 
-function init(data) {
-	console.log(data);
-	
-	var myInput = document.getElementById("boardNum");
-	myInput.value =data;
-	
-	var myForm = document.getElementById("reportForm");
-	  myForm.action = "main.do?boardNum=" + encodeURIComponent(myInput.value)+"&reportNum=" + encodeURIComponent(myInput.value);
+function proc(data) {
+	  console.log(typeof data.targetNum);
+	  console.log(typeof data.reportInput);
+	  console.log(typeof data.userNumInput);
+	  console.log( data.reporterInput);
+	  console.log( parseInt(data.boardNum));
+	  console.log(data);
+	  
+	  
+	  var targetNumInput = document.getElementById("targetNum"); // id가 boardNum 인 태그 가져와서 매개변수로 받은 boardNum 대입
+	  targetNumInput.value =parseInt(data.targetNum);
+		
+		var reportInput = document.getElementById("reportNum");  // id가 reportNum 인 태그 가져와서 매개변수로 받은 reportNum 대입
+		reportInput.value =parseInt(data.reportInput);
+		
+		var userNumInput = document.getElementById("userNum");  // id가 userNum 인 태그 가져와서 매개변수로 받은 userNum 대입
+		userNumInput.value =parseInt(data.userNumInput);
+		
+	    var reporterInput = document.getElementById("reporterNum");  // id가 reporterNum 인 태그 가져와서 매개변수로 받은 reporterNum 대입
+		   reporterInput.value =parseInt(data.reporterInput);
+		
+		var reportStepInput=document.getElementById("reportStep");
+			reportStepInput.value=parseInt(data.reportStep);
+		   
+		var reportForm = document.getElementById("reportForm");
+		reportForm.action = "updateReport.do";
 
-		document.querySelector(".report-modal").classList.remove("report-modal-hidden");
-
+			document.querySelector(".report-modal").classList.remove("report-modal-hidden");
+	  
+	};
+function newOpen(data){
+		window.open("boardPostView.do?targetNum="+data.targetNum+"&reportStep="+data.reportStep);
+		
+	
 }
