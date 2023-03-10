@@ -42,6 +42,16 @@ public class MemberController {
 		
 	}
 	
+	// 회원가입 성공시 결과 페이지로 이동
+	@RequestMapping(value = "/registerResultView.do", method=RequestMethod.GET)
+	public String registerResultView() {
+		
+		System.out.println("registerResultView.do 진입");
+		
+		return "result_register.jsp";
+		
+	}
+	
 	// 아이디 찾기 페이지로 이동
 	@RequestMapping(value = "/findId.do", method=RequestMethod.GET)
 	public String findIdView() {
@@ -101,7 +111,7 @@ public class MemberController {
 		System.out.println("signUp.do 진입");
 
 		if (memberService.insert(vo)) { // 회원가입 성공시
-			return "signUpResultPage.do";
+			return "registerResultView.do";
 		} else { // 회원가입 실패시
 			response.setContentType("text/html; charset=utf-8");
 			PrintWriter out;
