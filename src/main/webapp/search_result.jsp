@@ -259,7 +259,7 @@
 	<!-- 리스트세팅 -->
 	<script>
 		$(document).ready(function() {
-			list("${pSearchContent}", 1);
+			list(${pSearchContent}, 1);
 
 			$.when($.ajax("getList")).done(function() {
 
