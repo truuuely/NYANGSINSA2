@@ -124,13 +124,13 @@
 					<form action="updateMember.do" method="POST">
 						<!-- 고양이 이름 -->
 						<label class="label">고양이 이름</label>
-						<input type="text" class="form-control" id="cName" name="cName" value="${memberCatName}" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
+						<input type="text" class="form-control" id="cName" name="catName" value="${memberCatName}" placeholder="고양이 이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '고양이 이름 입력'" required>
 						<p style="font-size: 5px;">* 변경할 고양이 이름을 입력하세요.</p>
 						<!-- 고양이 이름 -->
 
 						<!-- 전화번호 -->
 						<label class="label">전화번호</label>
-						<input type="text" class="form-control" id="Phone" name="phone" value="${memberPhoneNum}" placeholder="전화번호 입력 " onfocus="this.placeholder = ''" onblur="this.placeholder = '전화번호 입력'" required>
+						<input type="text" class="form-control" id="Phone" name="phoneNum" value="${memberPhoneNum}" placeholder="전화번호 입력 " onfocus="this.placeholder = ''" onblur="this.placeholder = '전화번호 입력'" required>
 						<p style="font-size: 5px;">* 변경할 전화번호를 입력하세요.</p>
 
 						<label class="label">주소</label>
@@ -138,9 +138,9 @@
 							<input type="text" id="postNum" name="postNum" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
 							<input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
 							<br>
-							<input type="text" class="form-control" id="address" name="memberAddress1" placeholder="주소" readonly>
+							<input type="text" class="form-control" id="address" name="address1" placeholder="주소" readonly>
 							<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
-							<input type="text" class="form-control" value="${memberAddress1}" id="address_detail" name="addressDetail" placeholder="상세주소" required>
+							<input type="text" class="form-control" value="${memberAddress1}" id="address_detail" name="address2" placeholder="상세주소" required>
 						</div>
 						<p style="font-size: 5px;">* 변경할 주소를 입력하세요.</p>
 						<input type="submit" value="적용" class="button-purple">
@@ -151,7 +151,7 @@
 					<form action="updatePw.do" method="POST">
 						<!-- 기존 비밀번호 -->
 						<label class="label">현재 비밀번호 </label>
-						<input type="password" class="form-control" id="usePw" name="memberPw" placeholder="현재 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호 입력'" required>
+						<input type="password" class="form-control" id="usePw" name="userPw" placeholder="현재 비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '현재 비밀번호 입력'" required>
 						<p style="font-size: 5px;">* 현재 비밀번호를 입력하세요.</p>
 						<!-- 기존 비밀번호  -->
 
