@@ -10,7 +10,7 @@ import net.nurigo.java_sdk.exceptions.CoolsmsException;
 public class SmsDAO {
 
 	// 문자 전송 메서드
-	public int sendSms(SmsVO svo) {
+	public int sms(SmsVO svo) {
 		int randomNum = (int) (Math.random() * (89999)) + 10000; // 인증번호는 5자리 랜덤 숫자
 		
 		String api_key = "NCSSQY674X4XMFAJ"; // 발급받은 api_key
