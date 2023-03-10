@@ -149,7 +149,7 @@
 						console.log('폰번호 :' + userPhoneNum);
 						console.log(userName);
 						var link = 'findPw.do?phoneNum=' + userPhoneNum
-								+ '&memberId=' + userId + '&memberName='
+								+ '&userId=' + userId + '&userName='
 								+ userName;
 						location.href = link;
 					} else {
