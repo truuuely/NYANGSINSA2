@@ -14,6 +14,7 @@ public class ReportVO {
 	private String userId; // 신고 당한 회원의 ID
 	private String reporterId; // 신고한 사람의 ID
 	private String procStatus; // 처리 여부
+	private String content; // 글 내용
 
 	public int getReportNum() {
 		return reportNum;
@@ -103,11 +104,20 @@ public class ReportVO {
 		this.procStatus = procStatus;
 	}
 
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
+
 	@Override
 	public String toString() {
 		return "ReportVO [reportNum=" + reportNum + ", targetNum=" + targetNum + ", reportStep=" + reportStep
 				+ ", userNum=" + userNum + ", reporterNum=" + reporterNum + ", reportDate=" + reportDate
 				+ ", reportContent=" + reportContent + ", reportStat=" + reportStat + ", userId=" + userId
-				+ ", reporterId=" + reporterId + ", procStatus=" + procStatus + "]";
+				+ ", reporterId=" + reporterId + ", procStatus=" + procStatus + ", content=" + content + "]";
 	}
+
 }
