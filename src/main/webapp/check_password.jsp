@@ -32,7 +32,7 @@
 </head>
 
 <body>
-		<nss:header />
+	<nss:header />
 
 	<!-- 메인 화면에는 제외 -->
 	<!-- Breadcrumb Section Begin -->
@@ -77,8 +77,9 @@
 							<h2>비밀번호 확인</h2>
 						</div>
 						<div class="footer__widget">
-							<form action="updateMem.do" method="post">
+							<form action="checkPw.do" method="post">
 								<input type="password" name="userPw" placeholder="비밀번호를 입력하세요" required>
+								<input type="hidden" name="userId" value="${memberId}">
 								<button type="submit" value="submit" class="site-btn">입력</button>
 							</form>
 						</div>
