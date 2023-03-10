@@ -20,9 +20,9 @@ public class OrderDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	// 주문 추가
-	private final String SQL_INSERT = "INSERT INTO ORDER (M_NO, O_DT, RCV_NM, RCV_PHONE_NO, RCV_ADDRESS, O_PAY) VALUES((SELECT M_NO FROM MEMBER WHERE M_ID = ?), ?, ?, ?, ?, ?)";
+	private final String SQL_INSERT = "INSERT INTO ORDER (M_NO, O_DT, RCV_NM, RCV_PHONE_NO, RCV_ADDRESS, O_PAY) VALUES((SELECT M_NO FROM MEMBER WHERE M_ID = ?), NOW(), ?, ?, ?, ?)";
 	
-	// 주문 전체 목록 (관리자)
+	// 주문 전체 목록 (관리자) 
 	private final String SQL_SELECTALL = "SELECT * FROM `ORDER` ORDER BY O_NO DESC ";
 	
 	// 주문 완료 했을 때 해당 회원의 주문 전체 내역
@@ -35,7 +35,7 @@ public class OrderDAO {
 	// 현재 회원이 가장 최근에 추가한 주문
 	final String SQL_SELECTONE_LATESTORDER = "SELECT O_NO FROM `ORDER` WHERE M_NO =? AND ROWNUM <=1 ORDER BY O_NO DESC";
 	
-	// 주문 연도별 주문 내역 리스트 보기 (관리자)
+	// 주문 연도별 주문 내역 리스트 보기 (관리자)  / searchCondtion (date) -> odate로 확인, 그 해 총 판매 금액 보내주면 됨
 	final String SQL_SELECTALL_DATE = " SELECT o.O_DT, SUM(p.P_PRICE*((100-p.DC_PERCENT)/100)*od.OD_CNT) AS TOTAL FROM `ORDER` o "
 			+ " INNER JOIN ORDER_DETAIL od ON o.O_NO = od.O_NO " + "INNER JOIN PRODUCT p ON p.P_NO =od.P_NO "
 			+ "	WHERE o.O_DT " + "BETWEEN TO_DATE(?, 'YYYYMMDD') AND TO_DATE(?) " + "GROUP BY od.O_NO, o.O_DT "
@@ -46,7 +46,7 @@ public class OrderDAO {
 
 	// 주문 추가
 	public boolean insert(OrderVO vo) {
-		jdbcTemplate.update(SQL_INSERT, vo.getoNum(), vo.getoDate(), vo.getRcvName(), vo.getRcvPhoneNum(),
+		jdbcTemplate.update(SQL_INSERT, vo.getoNum(), vo.getRcvName(), vo.getRcvPhoneNum(),
 				vo.getRcvAddress(), vo.getoPay());
 		return true;
 	}
@@ -58,19 +58,23 @@ public class OrderDAO {
 	}
 
 	public OrderVO selectOne(OrderVO vo) {
-		
-		if (vo.getoSearchCondition() != null) {
-			if (vo.getoSearchCondition().equals("totalPrice")) {
-				// 주문 총 가격
-				OrderDetailVO odvo = new OrderDetailVO();
-				Object[] args = { odvo.getOdNum() };
-				return jdbcTemplate.queryForObject(SQL_SELECTONE_TOTAL_PRICE, args, new OrderRowMapper());
+		try {
+			if (vo.getoSearchCondition() != null) {
+				if (vo.getoSearchCondition().equals("totalPrice")) {
+					// 주문 총 가격
+					OrderDetailVO odvo = new OrderDetailVO();
+					Object[] args = { odvo.getOdNum() };
+					return jdbcTemplate.queryForObject(SQL_SELECTONE_TOTAL_PRICE, args, new OrderRowMapper());
 					
-			} else if (vo.getoSearchCondition().equals("lastOrder")) {
-				// 현재 회원이 가장 최근에 추가한 주문
-				Object[] args = { vo.getUserId() };
-				return jdbcTemplate.queryForObject(SQL_SELECTONE_LATESTORDER, args, new OrderRowMapper());
+				} else if (vo.getoSearchCondition().equals("lastOrder")) {
+					// 현재 회원이 가장 최근에 추가한 주문
+					Object[] args = { vo.getUserId() };
+					return jdbcTemplate.queryForObject(SQL_SELECTONE_LATESTORDER, args, new OrderRowMapper());
+				}
+				return null;
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -83,7 +87,7 @@ public class OrderDAO {
 				return (ArrayList<OrderVO>) jdbcTemplate.query(SQL_SELECTALL_ORDER, args, new OrderRowMapper());
 
 			} else if (vo.getoSearchCondition().equals("all")) {
-				// 주문 전체 내역 
+				// 주문 전체 내역 (관리자)
 				return (ArrayList<OrderVO>) jdbcTemplate.query(SQL_SELECTALL, new OrderRowMapper());	
 				
 			} else if (vo.getoSearchCondition().equals("date")) {
