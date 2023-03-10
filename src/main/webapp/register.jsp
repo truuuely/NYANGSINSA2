@@ -43,7 +43,6 @@
 	width: 450px;
 	height: 400px;
 }
-
 #tos2 { /* 불러온내용*/
 	padding-top: 5px;
 	border: 1px solid black;
@@ -51,7 +50,6 @@
 	width: 450px;
 	height: 400px;
 }
-
 #tos3 { /* 불러온내용*/
 	padding-top: 5px;
 	border: 1px solid black;
@@ -59,7 +57,6 @@
 	width: 450px;
 	height: 400px;
 }
-
 .btn-primary {
 	color: #fff;
 	background-color: white;
@@ -71,26 +68,22 @@
 	line-height: 1.667;
 	padding: 0px;
 }
-
 .btn-primary:hover {
 	color: #fff;
 	background-color: white;
 	border-color: white;
 }
-
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
 	.show>.btn-primary.dropdown-toggle {
 	background-color: white;
 	border-color: white;
 	color: #fff;
 }
-
 .checkre {
 	font-size: 8px;
 	color: red;
 	margin-left: 7%;
 }
-
 .check {
 	color: white;
 	border-radius: 20px;
@@ -316,6 +309,9 @@
                   outputId.textContent = `중복된 아이디가 있습니다.`;
                   idTrue = false;
                }
+            },
+            error : function(request, status, error){
+        		alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
             }
          })
       }
@@ -343,7 +339,6 @@
 	<script>
       Kakao.init('a4736b83f633d7309942ec1e31da7d0f'); // SDK를 초기화함 / 발급 받은 키 중 javascript키를 사용해준다.
       console.log(Kakao.isInitialized()); // sdk초기화여부판단
-
       var name = ""; //  현재 로그인한 사람
       /* 카카오 로그인  */
       function kakaoLogin() { // 카카오 로그인 버튼 클릭시 실행되는 함수  
@@ -398,7 +393,6 @@
 	</div>
 	<script type="text/javascript">
 const loremIpsum = document.getElementById("tos1")
-
 fetch("tos1.jsp") /*해당 경로의 내용 가져옴 */
     .then(response => response.text())
     .then(result => tos1.innerHTML = result)
@@ -424,7 +418,6 @@ fetch("tos1.jsp") /*해당 경로의 내용 가져옴 */
 	</div>
 	<script type="text/javascript">
 const tos2 = document.getElementById("tos2")
-
 fetch("tos2.jsp") /*해당 경로의 내용 가져옴 */
     .then(response => response.text())
     .then(result => tos2.innerHTML = result)
@@ -452,7 +445,6 @@ fetch("tos2.jsp") /*해당 경로의 내용 가져옴 */
 
 	<script type="text/javascript">
 const tos3 = document.getElementById("tos3")
-
 fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
     .then(response => response.text())
     .then(result => tos3.innerHTML = result)
@@ -468,7 +460,6 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
 	<script type="text/javascript">
    
     const form = document.querySelector('#register_form')
-
     const inputId = document.querySelector('#id')
     const inputName = document.querySelector('#name')
     const inputPw = document.querySelector('#password')
@@ -479,7 +470,6 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
     const inputPhoneNum = document.querySelector('#phone')
     
     const inputCnm = document.querySelector('#cName')
-
     const outputId = document.querySelector('#outputId')
     const outputName = document.querySelector('#outputName')
     const outputcName = document.querySelector('#outputcName')
@@ -487,13 +477,11 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
     const outputPw2 = document.querySelector('#outputPw2')
     const outputAddress = document.querySelector('#outputAddress')
     const outputPhoneNum = document.querySelector('#outputPhonNum')
-
     const reId = /^[a-z0-9]{4,15}$/
     const reName = /^[가-힣]{2,6}$/
     const reCname = /^[가-힣]{2,6}$/
     const rePw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/
     const rePhoneNum = /^01([0|1|6|7|8|9]{1})+([0-9]{3,4})+([0-9]{4})$/
-
     // 정규표현식 통과 boolean
     var idValid = false; // 아이디 정규식 일치 여부
     var nameValid = false; // 이름 정규식 일치 여부
@@ -514,7 +502,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             idValid = false; // id 플래그 false
         } else {
            idTrue = false;
-            outputId.textContent = `아이디 중복체크를 진행해주세요.`
+            outputId.textContent = `<spring:message code="message.register.checkid"/>`
             outputId.style.color = 'red'
             idValid = true; // id 플래그 true
         }
@@ -531,7 +519,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             outputName.style.color = 'red';
             nameValid = false;
         } else {
-            outputName.textContent = `사용 가능합니다.`;
+            outputName.textContent = `<spring:message code="message.register.available"/>`;
             outputName.style.color = '#6667AB';
             nameValid = true;
         }
@@ -555,7 +543,6 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             outputPw.textContent = `<spring:message code="message.register.pw"/>`;
             outputPw.style.color = 'red';
             pwValid = false;
-
         } else {
             outputPw.textContent = `<spring:message code="message.register.available"/>`;
             outputPw.style.color = '#6667AB';
@@ -589,7 +576,6 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             pwSame = false;
         }
     })
-
     
     function register(){
         if (!(idValid && nameValid && cNameValid && pwValid && pwSame)) {
@@ -605,7 +591,6 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
         }
     }
    <!-- 정규식 스크립트 end -->
-
    <!-- 문자 인증 스크립트 -->
    var number=0;  //랜덤문자인증번호 저장할 변수   
    //  var phoneCheck=0;  //인증번호 일치, 불일치 변수
@@ -618,14 +603,12 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
            outputPhone.textContent = `<spring:message code="message.register.checkphonenum"/>`; 
            outputPhone.style.color = 'red';
             phoneNumValid = false;
-
         } else {
-           outputPhone.textContent = `<spring:message code="message.register.sendauthentication1"/>`;
+           outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
            outputPhone.style.color = '#6667AB';
            phoneNumValid = true;
         }
     })
-
    
    function sms(){
       
@@ -642,8 +625,8 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                isPhoneOnly = true;
                }
                else if(result == -1){
-                  outputPhone.textContent = `이미 등록된 번호입니다.`;
-                  outputPhone.style.color = 'red';
+                  outputPhone.textContent = `<spring:message code="message.register.alreadynumber"/>`;
+                  outputPhone.style.color = 'red'; 
                isPhoneOnly = false;
                }
                console.log("phoneNumValid: "+phoneNumValid)
@@ -667,7 +650,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             //Sms서블릿클래스로 이동함.
             $.ajax({
                type: 'POST',
-               url: 'sms.do',
+               url: 'Sms',
                data: {userPhoneNum:userPhoneNum},
                success: function(randNum){
                       console.log("로그:인증번호["+randNum+"]")
@@ -676,7 +659,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                          number = randNum;  //랜덤문자인증번호
                          smsTrue = true;
                          console.log(smsTrue)
-                         outputPhone.textContent = `<spring:message code="message.register.sendauthentication2"/>`;
+                         outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
                            outputPhone.style.color = '#6667AB';
                       } 
                       else{
@@ -700,19 +683,19 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
           //SmsCheck서블릿클래스로 이동
           $.ajax({
              type: 'POST',
-             url: 'checkSms.do',
+             url: 'SmsCheck',
              data: {randNum:number, checkNum:checkNum},
              success: function(result){
                 console.log("로그 result:["+result+"]")
                 console.log(typeof result);
                 if(result == "1"){
-                   alert('<spring:message code="message.register.matchauthentication"/>');
+                   alert("<spring:message code="message.register.matchauthentication"/>");
                    smsCheckTrue = true;
                    console.log(smsCheckTrue)
                    document.getElementById('phone').readOnly = true;
                 } 
                 else{
-                   alert('<spring:message code="message.register.nomatchauthentication"/>');  //인증번호 불일치
+                   alert("<spring:message code="message.register.nomatchauthentication"/>");  //인증번호 불일치
                    smsCheckTrue = false;
                 }
              }
@@ -720,7 +703,6 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
        }
        
    <!-- 문자 인증 스크립트 end -->
-
    function registerCheck(){
       register()
       checkId()
@@ -753,19 +735,16 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
         new daum.Postcode({
             oncomplete: function(data) {
                 // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
                 // 각 주소의 노출 규칙에 따라 주소를 조합한다.
                 // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
                 var addr = ''; // 주소 변수
                 var extraAddr = ''; // 참고항목 변수
-
                 //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
                 if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
                     addr = data.roadAddress;
                 } else { // 사용자가 지번 주소를 선택했을 경우(J)
                     addr = data.jibunAddress;
                 }
-
                 // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
                 if(data.userSelectedType === 'R'){
                     // 법정동명이 있을 경우 추가한다. (법정리는 제외)
@@ -787,7 +766,6 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                 } else {
                     document.getElementById("address_plus").value = '';
                 }
-
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('post').value = data.zonecode;
                 document.getElementById("address").value = addr;
