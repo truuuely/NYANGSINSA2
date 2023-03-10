@@ -16,11 +16,6 @@ public class RegisterController {
 	@Autowired
 	private SmsService smsService;
 	
-<<<<<<< Updated upstream
-	@RequestMapping(value="/checkDuplication.do", method=RequestMethod.POST)
-	public String isDuplicated(MemberVO mvo) {
-		
-=======
 	// 아이디, 전화번호 중복 확인
 	@ResponseBody
 	@RequestMapping(value="/checkDuplication.do", method=RequestMethod.POST)
@@ -28,7 +23,6 @@ public class RegisterController {
 		
 		System.out.println("checkDuplication.do 진입");
 		
->>>>>>> Stashed changes
 		if(memberService.selectOne(mvo) == null) {
 			// 중복 없음 !
 			// 아이디 만들 수 있음
