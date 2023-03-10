@@ -8,7 +8,7 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>냥신사 | 회원정보 변경</title>
+<title>냥신사 | 카카오 회원가입</title>
 <style>
 .button-purple {
 	/* width:100%;
@@ -105,17 +105,6 @@
 											<input type="text" autocomplete="on" class="input" name="memberPhoneNum" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 										</div>
 										<p class="help">* 전화번호를 입력하세요.</p>
-									</div>
-								</div>
-							</div>
-							<div class="field">
-								<label class="label">이메일</label>
-								<div class="field-body">
-									<div class="field">
-										<div class="control">
-											<input type="email" autocomplete="on" name="email" class="input" required>
-										</div>
-										<p class="help">* 이메일을 입력하세요.</p>
 									</div>
 								</div>
 							</div>
