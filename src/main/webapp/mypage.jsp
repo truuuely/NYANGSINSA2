@@ -119,11 +119,12 @@
 								</li>
 								<hr>
 								<li class="mypageli">
-									<div class="mypagedt">전화번호</div> <span class="mypagetext">${memberPhone}</span> <br>
+									<div class="mypagedt">전화번호</div> <span class="mypagetext">${memberPhoneNum}</span> <br>
 								</li>
 								<hr>
 								<li class="mypageli">
-									<div class="mypagedt">주소</div> <span class="mypagetext">${memberAddress}</span>
+									<div class="mypagedt">주소</div> <span class="mypagetext">[우편번호] ${memberPostNum}
+									<div style = "margin-left: 30px;"> [상세주소]${memberAddress1}<br>${memberAddress2}</div></span>
 								</li>
 							</ul>
 						</div>
