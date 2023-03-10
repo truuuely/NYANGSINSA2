@@ -47,8 +47,7 @@ public class OrderDAO {
 	// 주문 추가
 	public boolean insert(OrderVO vo) {
 		System.out.println(vo);
-		jdbcTemplate.update(SQL_INSERT, vo.getUserId(), vo.getRcvName(), vo.getRcvPhoneNum(),
-				vo.getRcvAddress(), vo.getoPay());
+		jdbcTemplate.update(SQL_INSERT, vo.getUserId(), vo.getRcvName(), vo.getRcvPhoneNum(), vo.getRcvAddress(), vo.getoPay());
 		return true;
 	}
 
