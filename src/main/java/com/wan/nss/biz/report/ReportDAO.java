@@ -23,9 +23,16 @@ public class ReportDAO {
 	// R : Report 전체 보기
 	private final String SELECT_ALL = "SELECT r.*, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID FROM REPORT r INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO  = m2.M_NO ORDER BY RP_NO DESC";
 
-	// R : Report 상세보기
+	// R : 게시글 신고 상세보기
 	// ? : rpNum
-	private final String SELECT_ONE = "SELECT r.*, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID FROM REPORT r INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO  = m2.M_NO WHERE RP_NO = ?";
+	private final String SELECT_ONE_BRPT = "SELECT r.*, b.B_CONTENT, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID FROM REPORT r "
+			+ " INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO  = m2.M_NO "
+			+ " INNER JOIN BOARD b ON b.B_NO = r.TARGET_NO WHERE RP_NO = ?";
+
+	// 댓글 신고 상세보기
+	private final String SELECT_ONE_RRPT = "SELECT r.*, r2.RE_CONTENT, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID FROM REPORT r "
+			+ " INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO = m2.M_NO "
+			+ " INNER JOIN REPLY r2 ON r2.RE_NO = r.TARGET_NO WHERE RP_NO = ?";
 
 	// U : Report (처리 전 : 1, 처리 후 : 2)
 	private final String UPDATE = "UPDATE REPORT SET STATUS = ? WHERE RP_NO = ?";
@@ -43,12 +50,51 @@ public class ReportDAO {
 	}
 
 	public ReportVO selectOne(ReportVO vo) {
-		return jdbcTemplate.queryForObject(SELECT_ONE, new ReportRowMapper(), vo.getReportNum());
+		try {
+			if (vo.getReportStep() == 1) { // 게시글 신고 내용 조회
+				return jdbcTemplate.queryForObject(SELECT_ONE_BRPT, (rs, rowNum) -> {
+					ReportVO data = new ReportVO();
+					data.setReportNum(rs.getInt("RP_NO"));
+					data.setTargetNum(rs.getInt("TARGET_NO"));
+					data.setReportStep(rs.getInt("RP_STEP"));
+					data.setUserNum(rs.getInt("M_NO"));
+					data.setReporterNum(rs.getInt("RP_M_NO"));
+					data.setReportDate(rs.getString("RP_DATE"));
+					data.setReportContent(rs.getString("RP_CONTENT"));
+					data.setReportStat(rs.getInt("STATUS"));
+
+					data.setUserId(rs.getString("M_ID"));
+					data.setReporterId(rs.getString("REPORTER_ID"));
+					data.setContent(rs.getString("B_CONTENT"));
+					return data;
+				}, vo.getReportNum());
+			} else if (vo.getReportStep() <= 3) { // 댓글 및 대댓글 신고 내용 조회
+				return jdbcTemplate.queryForObject(SELECT_ONE_RRPT, (rs, rowNum) -> {
+					ReportVO data = new ReportVO();
+					data.setReportNum(rs.getInt("RP_NO"));
+					data.setTargetNum(rs.getInt("TARGET_NO"));
+					data.setReportStep(rs.getInt("RP_STEP"));
+					data.setUserNum(rs.getInt("M_NO"));
+					data.setReporterNum(rs.getInt("RP_M_NO"));
+					data.setReportDate(rs.getString("RP_DATE"));
+					data.setReportContent(rs.getString("RP_CONTENT"));
+					data.setReportStat(rs.getInt("STATUS"));
+
+					data.setUserId(rs.getString("M_ID"));
+					data.setReporterId(rs.getString("REPORTER_ID"));
+					data.setContent(rs.getString("RE_CONTENT"));
+					return data;
+				}, vo.getReportNum());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public boolean update(ReportVO vo) {
 		// status => 처리 전 : 1, 처리 후 : 2
-		if (jdbcTemplate.update(UPDATE, vo.getReportStat(),vo.getReportNum()) < 1) {
+		if (jdbcTemplate.update(UPDATE, vo.getReportStat(), vo.getReportNum()) < 1) {
 			return false;
 		}
 		return true;
