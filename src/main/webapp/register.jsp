@@ -171,11 +171,6 @@
 								<spring:message code="message.register.pleasereenterpw" />
 							</p>
 
-							<!-- 이메일 -->
-							<div class="col-md-12 form-group">
-								<input type="email" class="form-control" id="email_register" name="email" placeholder="<spring:message code="message.register.email"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.email"/>'" required>
-							</div>
-
 							<!-- 전화 번호 -->
 							<div class="col-md-12 form-group">
 								<input type="tel" style="width: 65%;" id="phone" name="phoneNum" placeholder="<spring:message code="message.register.phone"/>" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
@@ -604,7 +599,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
            outputPhone.style.color = 'red';
             phoneNumValid = false;
         } else {
-           outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
+           outputPhone.textContent = `<spring:message code="message.register.sendauthentication1"/>`;
            outputPhone.style.color = '#6667AB';
            phoneNumValid = true;
         }
@@ -650,7 +645,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             //Sms서블릿클래스로 이동함.
             $.ajax({
                type: 'POST',
-               url: 'Sms',
+               url: 'sms.do',
                data: {userPhoneNum:userPhoneNum},
                success: function(randNum){
                       console.log("로그:인증번호["+randNum+"]")
@@ -659,7 +654,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                          number = randNum;  //랜덤문자인증번호
                          smsTrue = true;
                          console.log(smsTrue)
-                         outputPhone.textContent = `<spring:message code="message.register.sendauthentication"/>`;
+                         outputPhone.textContent = `<spring:message code="message.register.sendauthentication2"/>`;
                            outputPhone.style.color = '#6667AB';
                       } 
                       else{
@@ -683,7 +678,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
           //SmsCheck서블릿클래스로 이동
           $.ajax({
              type: 'POST',
-             url: 'SmsCheck',
+             url: 'checkSms.do',
              data: {randNum:number, checkNum:checkNum},
              success: function(result){
                 console.log("로그 result:["+result+"]")
