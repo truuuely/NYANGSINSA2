@@ -77,7 +77,7 @@ public class ProductController {
 
 		// 전체 인기순(판매량순): category == all, sort == sellDesc
 		pvo.setSort("sellDesc");
-		model.addAttribute("popPList", productService.selectAll(pvo));
+		model.addAttribute("popPList", productService.selectAll(pvo)); //주문데이터가 있어야 가능 (지금 사료밖에 없음)
 
 		return "main.jsp";
 	}
@@ -114,26 +114,34 @@ public class ProductController {
 	@RequestMapping(value = "/shopDetails.do")
 	public String shopDetailView(ProductVO pvo, ProductVO pvo2, ImageVO ivo, ReviewVO rvo, Model model) {
 		System.out.println("pNum: " + pvo.getpNum());
-		pvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set
-		ProductVO resPvo = new ProductVO(); // 현재 pvo
-		resPvo = productService.selectOne(pvo); // 상세페이지에서 보여줄 상품num을 selectAll에 돌린 결과를 resPvo에 저장
+		
+		ProductVO resPvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set,  상세페이지에서 보여줄 상품num을 selectAll에 돌린 결과를 resPvo에 저장
+			
+		// 상세이미지 불러오기
+	    ivo.setTargetNum(resPvo.getpNum()); // 상품pk를 이미지pk에 세팅
+	    ivo.setTypeNum(102);
+	    ImageVO selectIvo = imageService.selectOne(ivo); // 세팅된 이미지pk를 가지고 selectOne하여 상세이미지 정보 불러오기
+	    resPvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 ivo의 imageName을 pvo의 ImageName2에 세팅		
+		System.out.println("resPvo.getImageName2: "+resPvo.getImageName2()); // 확인
 
-		//상세이미지 불러오기
-		ivo.setImageNum(pvo.getpNum());
-		imageService.selectOne(ivo);
-		resPvo.setImageName2(ivo.getImageName());
-
+		//해당 제품의 리뷰 보기
+		rvo.setrSearchCondition("pNum"); 
+		rvo.setpNum(resPvo.getpNum()); //리뷰 num을 해당 상품의 num으로 세팅
+		
 		// 관련상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
-		pvo.setCategory(resPvo.getCategory()); // 관련상품정보를 가져오기 위해 카테고리 set
+		pvo.setCategory(resPvo.getCategory());
 		pvo.setSort("sellDesc"); // 관련상품 가져오기 위해 정렬 set
 		pvo.setSearchLowPrice(0);
 		pvo2.setpSearchCondition("max"); // selectOne에서 인자로 쓸 것
 		pvo.setSearchHighPrice(productService.selectOne(pvo2).getPrice());
 
+		//이거 결과값
+		ArrayList<ReviewVO> rList = reviewService.selectAll(rvo); // 리뷰 리스트 (test - 인자: 없음 / 결과: []) 리뷰 있는 것만 찾아보기
+		ArrayList<ProductVO> pList = productService.selectAll(pvo); // 관련 상품 리스트 (test - 인자: 102, searchLowPrice=0, searchHighPrice=155000 / 결과: [null] ) //해당 카테고리의 인기를 띄워줌
 
-		ArrayList<ReviewVO> rList = reviewService.selectAll(rvo); // 리뷰 리스트
-		ArrayList<ProductVO> pList = productService.selectAll(pvo); // 관련 상품 리스트
-
+		System.out.println(rList);
+		System.out.println(pList);
+		
 		model.addAttribute("pvo", resPvo); // 해당 상품의 정보들을 보내줌
 		model.addAttribute("rList", rList);
 		model.addAttribute("pList", pList);
@@ -181,6 +189,7 @@ public class ProductController {
 		return "redirect:product_manage.jsp";
 	}
 
+	//서치가 안 됩니다.
 	@RequestMapping(value = "/search.do")
 	public String selectAllProductSearch(ProductVO pvo, BoardVO bvo, Model model) {
 		System.out.println("searchCondition: " + pvo.getpSearchCondition());
