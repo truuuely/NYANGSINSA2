@@ -78,7 +78,7 @@
 								<div class="field-body">
 									<div class="field">
 										<div class="control">
-											<input type="text" autocomplete="on" name="userName" value="${memberName}" class="input" required>
+											<input type="text" autocomplete="on" name="userName" value="${data.userName}" class="input" required>
 										</div>
 										<p class="help">* 이름을 입력하세요.</p>
 									</div>
@@ -90,8 +90,8 @@
 									<div class="field">
 										<div class="control">
 											<input type="text" autocomplete="on" name="catName" value="냥숙녀" class="input" required>
-											<input type="hidden" autocomplete="on" name="userId" value="${memberId}" class="input" required>
-											<input type="hidden" autocomplete="on" name="userPw" value="${memberPw}" class="input" required>
+											<input type="hidden" autocomplete="on" name="userId" value="${data.userId}" class="input" required>
+											<input type="hidden" autocomplete="on" name="userPw" value="${data.userId}" class="input" required>
 										</div>
 										<p class="help">* 고양이 이름을 입력하세요.</p>
 									</div>

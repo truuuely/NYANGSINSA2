@@ -130,17 +130,17 @@
 
 						<!-- 전화번호 -->
 						<label class="label">전화번호</label>
-						<input type="text" class="form-control" id="Phone" name="phoneNum" value="${memberPhoneNum}" placeholder="전화번호 입력 " onfocus="this.placeholder = ''" onblur="this.placeholder = '전화번호 입력'" required>
-						<p style="font-size: 5px;">* 변경할 전화번호를 입력하세요.</p>
+						<input type="text" class="form-control" id="Phone" name="phoneNum" value="${memberPhoneNum}"  readonly required>
+						<br>
 
 						<label class="label">주소</label>
 						<div class="checkout__input">
-							<input type="text" id="postNum" name="postNum" placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
+							<input type="text" id="postNum" name="postNum" value = "${memberPostNum}"placeholder="우편번호" onclick="sample6_execDaumPostcode()" readonly>
 							<input type="button" value="우편번호 찾기" onclick="sample6_execDaumPostcode()" readonly>
 							<br>
-							<input type="text" class="form-control" id="address" name="address1" placeholder="주소" readonly>
+							<input type="text" class="form-control" id="address" value = "${memberAddress1}" name="address1" placeholder="주소" readonly>
 							<input type="text" class="form-control" id="address_plus" name="addressPlus" placeholder="참고항목" readonly>
-							<input type="text" class="form-control" value="${memberAddress1}" id="address_detail" name="address2" placeholder="상세주소" required>
+							<input type="text" class="form-control" value="${memberAddress2}" id="address_detail" name="address2" placeholder="상세주소" required>
 						</div>
 						<p style="font-size: 5px;">* 변경할 주소를 입력하세요.</p>
 						<input type="submit" value="적용" class="button-purple">
