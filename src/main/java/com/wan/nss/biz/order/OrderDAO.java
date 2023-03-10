@@ -20,7 +20,7 @@ public class OrderDAO {
 	private JdbcTemplate jdbcTemplate;
 	
 	// 주문 추가
-	private final String SQL_INSERT = "INSERT INTO ORDER (M_NO, O_DT, RCV_NM, RCV_PHONE_NO, RCV_ADDRESS, O_PAY) VALUES((SELECT M_NO FROM MEMBER WHERE M_ID = ?), ?, ?, ?, ?)";
+	private final String SQL_INSERT = "INSERT INTO ORDER (M_NO, RCV_NM, RCV_PHONE_NO, RCV_ADDRESS, O_PAY) VALUES((SELECT M_NO FROM MEMBER WHERE M_ID = ?), ?, ?, ?, ?)";
 	
 	// 주문 전체 목록 (관리자) 
 	private final String SQL_SELECTALL = "SELECT * FROM `ORDER` ORDER BY O_NO DESC ";
