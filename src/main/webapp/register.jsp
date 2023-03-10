@@ -43,6 +43,7 @@
 	width: 450px;
 	height: 400px;
 }
+
 #tos2 { /* 불러온내용*/
 	padding-top: 5px;
 	border: 1px solid black;
@@ -50,6 +51,7 @@
 	width: 450px;
 	height: 400px;
 }
+
 #tos3 { /* 불러온내용*/
 	padding-top: 5px;
 	border: 1px solid black;
@@ -57,6 +59,7 @@
 	width: 450px;
 	height: 400px;
 }
+
 .btn-primary {
 	color: #fff;
 	background-color: white;
@@ -68,22 +71,26 @@
 	line-height: 1.667;
 	padding: 0px;
 }
+
 .btn-primary:hover {
 	color: #fff;
 	background-color: white;
 	border-color: white;
 }
+
 .btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active,
 	.show>.btn-primary.dropdown-toggle {
 	background-color: white;
 	border-color: white;
 	color: #fff;
 }
+
 .checkre {
 	font-size: 8px;
 	color: red;
 	margin-left: 7%;
 }
+
 .check {
 	color: white;
 	border-radius: 20px;
@@ -291,10 +298,9 @@
             data: {userId:id},
             success: function(result){
                console.log(result)
-               if(id == ""){
+               if(id == "" || !(reId.exec(id)) ){
                   outputId.textContent = `<spring:message code="message.register.id"/>`;
-               }
-               else if(result == 1){
+               }else if(result == 1){
                   console.log(result)
                   outputId.textContent = `<spring:message code="message.register.available"/>`;
                   outputId.style.color = '#6667AB';
@@ -472,11 +478,11 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
     const outputPw2 = document.querySelector('#outputPw2')
     const outputAddress = document.querySelector('#outputAddress')
     const outputPhoneNum = document.querySelector('#outputPhonNum')
-    const reId = /^[a-z0-9]{4,15}$/
+    const reId = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{8,16}$/
     const reName = /^[가-힣]{2,6}$/
     const reCname = /^[가-힣]{2,6}$/
     const rePw = /(?=.*\d{1,50})(?=.*[~`!@#$%\^&*()-+=]{1,50})(?=.*[a-zA-Z]{2,50}).{8,50}$/
-    const rePhoneNum = /^01([0|1|6|7|8|9]{1})+([0-9]{3,4})+([0-9]{4})$/
+    const rePhoneNum = /^01([0|1|6|7|8|9]{1})([0-9]{3,4})([0-9]{4})$/
     // 정규표현식 통과 boolean
     var idValid = false; // 아이디 정규식 일치 여부
     var nameValid = false; // 이름 정규식 일치 여부
@@ -507,6 +513,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
             console.log('idValid xxx', idValid);
         }
     })
+    
     inputName.addEventListener('input', function () {
         const ok = reName.exec(this.value)
         if (!ok) {
@@ -522,7 +529,7 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
     inputCnm.addEventListener('input', function () {
         const ok = reCname.exec(this.value)
         if (!ok) {
-            outputcName.textContent = `<spring:message code="message.register.id"/>`;
+            outputcName.textContent = `<spring:message code="message.register.catname"/>`;
             outputcName.style.color = 'red';
             cNameValid = false;
         } else {
