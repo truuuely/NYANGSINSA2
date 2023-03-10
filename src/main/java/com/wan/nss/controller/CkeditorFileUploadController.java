@@ -20,7 +20,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.google.gson.JsonObject;
 
 @Controller
-@RequestMapping("/adm/")
 public class CkeditorFileUploadController {
 
 	@RequestMapping("/fileupload.do")
