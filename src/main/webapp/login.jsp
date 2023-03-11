@@ -55,7 +55,7 @@
 				</div>
 				<div class="col-lg-6">
 					<div class="login_form_inner">
-						<h3><spring:message code="message.login.logindo" /></h3>
+						<h3><spring:message code="message.login.login" /></h3>
 						<form class="row login_form" action="login.do" id="contactForm" method="POST">
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="id" name="userId" placeholder="<spring:message code="message.login.id" />" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>

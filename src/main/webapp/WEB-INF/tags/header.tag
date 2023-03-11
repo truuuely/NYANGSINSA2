@@ -2,6 +2,7 @@
 <%@ taglib prefix="nss" tagdir="/WEB-INF/tags/"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!-- Page Preloder -->
 <div id="preloder">
 	<div class="loader"></div>
@@ -59,7 +60,8 @@
 	<div class="humberger__menu__contact">
 		<ul>
 			<li><i class="fa fa-envelope"></i>nyangsinsa@gmail.com</li>
-			<li><spring:message code="message.header.title" /><li>
+			<li><spring:message code="message.header.title" />
+			<li>
 		</ul>
 	</div>
 </div>
@@ -90,6 +92,23 @@
 							<a href="https://twitter.com/nyangsinsa">
 								<i class="fa fa-twitter"></i>
 							</a>
+						</div>
+						<div class="header__top__right__language">
+							<c:if test="${lang=='en'}">
+								<img src="img/language.png" alt="영어">EN
+                        </c:if>
+							<c:if test="${lang=='ko'}">
+								<img src="img/korea.png" alt="한국어">KO
+                        </c:if>
+							<span class="arrow_carrot-down"></span>
+							<ul>
+								<li><a href="main.do?lang=en">
+										<spring:message code="message.main.en" />
+									</a></li>
+								<li><a href="main.do?lang=ko">
+										<spring:message code="message.main.ko" />
+									</a></li>
+							</ul>
 						</div>
 
 						<!-- 로그인 -->
@@ -186,9 +205,7 @@
 						</div>
 						<div class="hero__search__phone__text">
 							<h5>02-0202-0202</h5>
-							<span><spring:message code="message.header.consultation" />
-								<br>
-								<spring:message code="message.header.consultationtime" /> </span>
+							<span><spring:message code="message.header.consultation" /> <br> <spring:message code="message.header.consultationtime" /> </span>
 						</div>
 					</div>
 				</div>
