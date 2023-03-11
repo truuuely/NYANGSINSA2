@@ -68,6 +68,7 @@
 				<li class="active"><a href="main.do">홈</a></li>
 				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
 				<li><a href="contact.do">Contact</a></li>
+				<li><a href="boardView.do">자랑해냥</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
@@ -384,28 +385,29 @@
 	</div>
 
 	<script type="text/javascript">
-	function updateLike(bNum, upOrDown){
-		console.log('들어옴');
-		$.ajax({
-			type : 'POST',
-			url : 'getHeartCnt.do',
-			data : {upOrDown:upOrDown},
-			success : function(data){
-				console.log("좋아유 수 "+data)
-				$('#bNum').text(data);
-				if(upOrDown=="down"){
-					$(this).attr("src", "img/heart.png");
-					/* $(this).children('img').attr("src", "img/heart.png"); */
-				}else{
-					$(this).attr("src", "img/fullheart.png");
-				}			
-			},
-			error : function() {
-				alert('error');
-			}
-		})
-	}
-	
+		function updateLike(bNum, upOrDown) {
+			console.log('들어옴');
+			$.ajax({
+				type : 'POST',
+				url : 'getHeartCnt.do',
+				data : {
+					upOrDown : upOrDown
+				},
+				success : function(data) {
+					console.log("좋아유 수 " + data)
+					$('#bNum').text(data);
+					if (upOrDown == "down") {
+						$(this).attr("src", "img/heart.png");
+						/* $(this).children('img').attr("src", "img/heart.png"); */
+					} else {
+						$(this).attr("src", "img/fullheart.png");
+					}
+				},
+				error : function() {
+					alert('error');
+				}
+			})
+		}
 	</script>
 
 

@@ -69,6 +69,7 @@
 				<li class="active"><a href="main.do">홈</a></li>
 				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
 				<li><a href="contact.do">Contact</a></li>
+				<li><a href="boardView.do">자랑해냥</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
@@ -142,6 +143,7 @@
 							<li class="active"><a href="main.do">홈</a></li>
 							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
 							<li><a href="contact.do">Contact</a></li>
+							<li><a href="boardView.do">자랑해냥</a></li>
 						</ul>
 					</nav>
 				</div>
@@ -280,7 +282,7 @@
 			cList(0, 0);
 			console.log("리스트세팅 완료")
 		})
-		
+
 		$(document).ready(function() {
 			$.ajax({ // ajax로 데이터 가져오기
 				type : 'POST',

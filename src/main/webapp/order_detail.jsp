@@ -107,6 +107,7 @@
 				<li class="active"><a href="main.do">홈</a></li>
 				<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
 				<li><a href="contact.do">Contact</a></li>
+				<li><a href="boardView.do">자랑해냥</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
@@ -180,6 +181,7 @@
 							<li class="active"><a href="main.do">홈</a></li>
 							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
 							<li><a href="contact.do">Contact</a></li>
+							<li><a href="boardView.do">자랑해냥</a></li>
 						</ul>
 					</nav>
 				</div>

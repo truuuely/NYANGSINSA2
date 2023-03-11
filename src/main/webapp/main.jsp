@@ -69,6 +69,9 @@
 						<spring:message code="message.main.shopping" />
 					</a></li>
 				<li><a href="contact.do">Contact</a></li>
+				<li><a href="boardView.do">
+						<spring:message code="message.main.community" />
+					</a></li>
 			</ul>
 		</nav>
 		<div id="mobile-menu-wrap"></div>
