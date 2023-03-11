@@ -45,6 +45,7 @@
 				<br>
 				<div id="writer">[작성자 : ${board.userId}]</div>
 			</div>
+			<hr>
 			<ul id="boardInfo">
 				<li><i class="fa fa-calendar-o"></i> ${board.boardDate}</li>
 				<li><i class="fa fa-comment-o"></i> ${board.replyCnt}</li>
@@ -64,14 +65,14 @@
 
 	<div id="showReply">
 		<img style="width: 20px;" src="img/replyicon.png">
-		${board.replyCnt} ▼
+		댓글 (${board.replyCnt}) ▼
 	</div>
 	<div id="reply">
 		<nss:list sort="reply" />
 	</div>
 
 	<div id="replywrite">
-		<form style="width: 100%;" action="#" method="post">
+		<form style="width: 100%;" action="insertReply.do" method="post">
 			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="reply" placeholder="댓글을 작성하세요" required></textarea>
 			<br>
 			<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;" type="submit" value="댓글 작성">

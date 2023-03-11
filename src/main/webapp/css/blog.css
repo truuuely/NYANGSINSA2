@@ -26,6 +26,8 @@
 	color: #343a40;
 	border-bottom: 1px solid #c3bcbc;
 	padding: 20px;
+	text-align: center;
+	width: 90%;
 }
 
 #writer {
@@ -142,6 +144,7 @@
 	bottom: 480px;
 	right: 75px;
 }
+
 #fixupdate {
 	width: 120px;
 	position: fixed;
