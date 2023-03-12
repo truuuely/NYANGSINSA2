@@ -14,7 +14,7 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>냥신사 | CONTACT</title>
+<title>냥신사 | 글 작성</title>
 
 <!-- google Font -->
 <link
@@ -47,20 +47,20 @@
 
 	<!-- 메인 화면에는 제외 -->
 	<!-- Breadcrumb Section Begin -->
-	<section class="breadcrumb-section set-bg" data-setbg="">
+	<!-- <section class="breadcrumb-section set-bg" data-setbg="">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="breadcrumb__text">
 						<h2>contact</h2>
-						<!-- <div class="breadcrumb__option">
+						<div class="breadcrumb__option">
                      <a href="./index.html">홈</a>
-                  </div> -->
+                  </div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</section>
+	</section> -->
 	<!-- Breadcrumb Section End -->
 
 	<!-- 자랑하기 Begin -->
