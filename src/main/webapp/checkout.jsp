@@ -295,13 +295,13 @@ button img {
 								</div>
 								<ul>
 									<c:forEach var="v" items="${cList}" begin="0" varStatus="status">
-										<li><div style="display: inline-block; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${v.pName}</div> <span style="display: inline-block;">${v.dc_price*v.pCnt}</span></li>
+										<li><div style="display: inline-block; width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${v.pName}</div> <span style="display: inline-block;"><fmt:formatNumber value="${v.dc_price*v.pCnt}" type="currency" pattern="#,###" /></span></li>
 									</c:forEach>
 								</ul>
 								<div class="checkout__order__total">
 									결제 예상 금액 <span> <c:set var="total" value="0" /> <c:forEach var="v" items="${cList}" begin="0" varStatus="status">
 											<c:set var="total" value="${total + v.dc_price*v.pCnt}" />
-										</c:forEach> <fmt:formatNumber value="${total}" type="currency" /> <c:forEach var="v" items="${cList}" begin="0" end="0" varStatus="status">
+										</c:forEach> <fmt:formatNumber value="${total}" type="currency" pattern="#,###" /> <c:forEach var="v" items="${cList}" begin="0" end="0" varStatus="status">
 											<c:set var="orderName" value="${v.pName}" />
 										</c:forEach>
 									</span>
