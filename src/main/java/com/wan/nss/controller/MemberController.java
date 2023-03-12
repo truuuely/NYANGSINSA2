@@ -24,20 +24,22 @@ public class MemberController {
 
 	// 로그인 페이지로 이동
 	@RequestMapping(value = "/login.do", method=RequestMethod.GET)
-	public String loginView() {
+	public String loginView(Model model, HttpServletRequest request) {
 		
 		System.out.println("login.do 진입");
 		
+		model.addAttribute("lang", request.getParameter("lang"));
 		return "login.jsp";
 		
 	}
 	
 	// 회원가입 페이지로 이동
 	@RequestMapping(value = "/register.do", method=RequestMethod.GET)
-	public String registerView() {
+	public String registerView(Model model, HttpServletRequest request) {
 		
 		System.out.println("register.do 진입");
 		
+		model.addAttribute("lang", request.getParameter("lang"));
 		return "register.jsp";
 		
 	}
@@ -94,19 +96,20 @@ public class MemberController {
 	
 	// 로그아웃 수행
 	@RequestMapping(value = "/logout.do")
-	public String logoutView(HttpSession session) {
+	public String logoutView(Model model, HttpServletRequest request, HttpSession session) {
 		
 		System.out.println("logout.do 진입");
 		
 		session.removeAttribute("memberId");
 		session.removeAttribute("memberName");
+		model.addAttribute("lang", request.getParameter("lang"));
 		return "main.do";
 		
 	}
 
 	// 회원가입 수행
 	@RequestMapping(value = "/signUp.do")
-	public String insertBoard(MemberVO vo, HttpServletResponse response) {
+	public String insertBoard(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("signUp.do 진입");
 
@@ -119,6 +122,8 @@ public class MemberController {
 				out = response.getWriter();
 				out.println("<SCRIPT>alert('회원가입에 실패하였습니다... nyangsinsa@gmail.com로 문의해주세요.');history.go(-1);</SCRIPT>");
 				out.flush();
+				
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "register.jsp";
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -130,7 +135,7 @@ public class MemberController {
 
 	// 비밀번호 찾기 결과에서 비밀번호 변경하기 수행
 	@RequestMapping(value = "/changePw.do")
-	public String updateMemberChangePw(MemberVO vo, HttpServletResponse response) {
+	public String updateMemberChangePw(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("changePw.do 진입");
 
@@ -147,6 +152,7 @@ public class MemberController {
 			}
 		}
 		else {
+			model.addAttribute("lang", request.getParameter("lang"));
 			return "login.jsp";
 		}
 
@@ -272,7 +278,7 @@ public class MemberController {
 
 	// 로그인 수행
 	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
-	public String selectOneMemberLogin(MemberVO vo, HttpSession session, HttpServletResponse response) {
+	public String selectOneMemberLogin(MemberVO vo, Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response) {
 		
 		System.out.println("login.do 진입");
 		
@@ -295,7 +301,10 @@ public class MemberController {
 		} else { // 로그인 성공시
 			session.setAttribute("memberId", loginMvo.getUserId()); // 세션에 로그인한 회원의 아이디, 이름 저장
 			session.setAttribute("memberName", loginMvo.getUserName());
+			
 			System.out.println("메인으로 이동");
+			
+			model.addAttribute("lang", request.getParameter("lang"));
 			return "main.do"; // 메인으로 이동
 		}
 
@@ -407,7 +416,7 @@ public class MemberController {
 
 	// 마이페이지로 이동
 	@RequestMapping(value = "/mypage.do")
-	public String selectOneMemberMyPage(MemberVO vo, Model model, HttpSession session, HttpServletResponse response) {
+	public String selectOneMemberMyPage(MemberVO vo, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("mypage.do 진입");
 
@@ -416,6 +425,8 @@ public class MemberController {
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<script>alert('로그인을 해주세요.');</script>"); // 로그인 화면으로 이동
+				
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "login.jsp";
 			} catch (Exception e) {
 				e.printStackTrace();

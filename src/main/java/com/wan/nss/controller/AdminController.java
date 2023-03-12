@@ -53,7 +53,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 관리자 메인 페이지 이동
 	@RequestMapping(value = "/adminIndex.do")
-	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session,
+	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
@@ -69,6 +69,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
 
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 
 			} catch (Exception e) {
@@ -186,13 +187,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 회원 관리 페이지 이동
 	@RequestMapping(value = "/memberManagePage.do")
-	public String selectAllMemberManage(HttpSession session, HttpServletResponse response) {
+	public String selectAllMemberManage(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+				
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -206,13 +209,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 상품 관리 페이지 이동
 	@RequestMapping(value = "/productManagePage.do")
-	public String selectAllProductManage(HttpSession session, HttpServletResponse response) {
+	public String selectAllProductManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+				
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -242,13 +247,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	}
 
 	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 주문 관리 페이지 열기
-	public String selectAllorderDetailManage(HttpSession session, HttpServletResponse response) {
+	public String selectAllorderDetailManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+				
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -262,13 +269,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 리뷰 관리 페이지 이동
 	@RequestMapping(value = "/reviewManagePage.do")
-	public String selectAllReviewManage(HttpSession session, HttpServletResponse response) {
+	public String selectAllReviewManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+				
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
 				e.printStackTrace();

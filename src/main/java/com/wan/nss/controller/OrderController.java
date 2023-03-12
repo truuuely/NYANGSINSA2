@@ -49,6 +49,7 @@ public class OrderController {
 				PrintWriter out = response.getWriter();
 				out.println("<script>alert('로그인이 필요합니다.');location.href='login.do';</script>");
 				out.flush();
+				model.addAttribute("lang", request.getParameter("lang"));
 				return "login.jsp";
 			} catch (Exception e) {
 				e.printStackTrace();
