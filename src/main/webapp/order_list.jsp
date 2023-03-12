@@ -131,7 +131,7 @@
 											</td>
 											<td class="shoping__cart__price">${v.oDate}</td>
 											<td class="shoping__cart__total">${v.oPrice}원</td>
-											<td><a href="orderDetail.do?oNum=${v.oNum}">
+											<td><a href="orderDetailList.do?oNum=${v.oNum}">
 													<input id="order_detail" type="button" value="상세보기">
 												</a></td>
 										</tr>
