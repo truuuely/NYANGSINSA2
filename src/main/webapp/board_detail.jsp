@@ -139,9 +139,6 @@
 
 
 
-
-
-
 	<!-- TOP 버튼 -->
 	<div id="fixtop">
 		<a href="#">
@@ -183,8 +180,7 @@
 		</a>
 	</div>
 
-
-	<c:if test="${board.userNum==userNum}">
+	<c:if test="${board.userNum == memberNum}">
 		<div id="fixdelete">
 			<a href="deleteBoard.do?boardNum=${board.boardNum}">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
