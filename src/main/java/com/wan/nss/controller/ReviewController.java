@@ -122,6 +122,7 @@ public class ReviewController {
 	@ResponseBody
 	@RequestMapping(value="getReviewList.do", method = RequestMethod.POST)
 	public JsonArray getReviewList(ReviewVO rvo) {
+		rvo.setrSearchCondition("pNum"); // "해당 상품의 리뷰 보기"에 걸리도록 설정
 		ArrayList<ReviewVO> list = reviewService.selectAll(rvo); // ajax로 받은 pNum을 selectAll (리뷰리스트 결과)
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); // JsonArry로 변경하여 반환
 		

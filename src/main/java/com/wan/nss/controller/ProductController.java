@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +17,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.wan.nss.biz.board.BoardService;
-import com.wan.nss.biz.board.BoardVO;
 import com.wan.nss.biz.common.Crawling;
 import com.wan.nss.biz.image.ImageService;
 import com.wan.nss.biz.image.ImageVO;
@@ -39,8 +36,6 @@ public class ProductController {
 	private ReviewService reviewService;
 	@Autowired
 	private ImageService imageService;
-	@Autowired
-	private BoardService boardService;
 	@Autowired
 	private Crawling crawling;
 
@@ -78,7 +73,8 @@ public class ProductController {
 		// 전체 인기순(판매량순): category == all, sort == sellDesc
 		pvo.setSort("sellDesc");
 		model.addAttribute("popPList", productService.selectAll(pvo)); //주문데이터가 있어야 가능 (지금 사료밖에 없음)
-
+		model.addAttribute("lang",request.getParameter("lang"));
+		
 		return "main.jsp";
 	}
 
@@ -130,25 +126,27 @@ public class ProductController {
 		
 		// 관련상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
 		pvo.setCategory(resPvo.getCategory());
-		pvo.setSort("sellDesc"); // 관련상품 가져오기 위해 정렬 set
+		pvo.setSort("sellDesc"); // 관련상품(선택된 카테고리의 인기상품들) 가져오기 위해 정렬 set
 		pvo.setSearchLowPrice(0);
 		pvo2.setpSearchCondition("max"); // selectOne에서 인자로 쓸 것
 		pvo.setSearchHighPrice(productService.selectOne(pvo2).getPrice());
 
 		//이거 결과값
-		ArrayList<ReviewVO> rList = reviewService.selectAll(rvo); // 리뷰 리스트 (test - 인자: 없음 / 결과: []) 리뷰 있는 것만 찾아보기
-		ArrayList<ProductVO> pList = productService.selectAll(pvo); // 관련 상품 리스트 (test - 인자: 102, searchLowPrice=0, searchHighPrice=155000 / 결과: [null] ) //해당 카테고리의 인기를 띄워줌
+		ArrayList<ReviewVO> rList = reviewService.selectAll(rvo); // 리뷰 리스트 
+		ArrayList<ProductVO> pList = productService.selectAll(pvo); // 관련 상품 리스트
 
 		System.out.println(rList);
 		System.out.println(pList);
 		
 		model.addAttribute("pvo", resPvo); // 해당 상품의 정보들을 보내줌
-		model.addAttribute("rList", rList);
+		model.addAttribute("rList", rList); //해당 리뷰를 받고 있음??? 뷰에서 확인을 해봐야 할 거 같음.. 이 이상으로 뭘 해줄 수가 없음
 		model.addAttribute("pList", pList);
 
 		return "shop_details.jsp";
 	}
 
+	// (관리자)상품 추가 기능: 해당 상품 관리 페이지에서 
+	
 	// (관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정
 	@RequestMapping(value = "/updateProduct.do", method = RequestMethod.POST)
 	public String updateProduct(ProductVO pvo, ImageVO ivo, Model model, HttpServletResponse response,
@@ -158,22 +156,36 @@ public class ProductController {
 
 		// 관리자 모드 : 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정 (아직 안 함)
 		System.out.println("updateProduct 입장");
-		// 1. 파일 받아오기
-
+		
+		// 1. 파일 받아오기: downloadFile()의 역할: url을 인식하고, 해당 파일을 복사 및 저장시키는 것까지 진행함
+		//업로드한 파일을 본섭에 이동시키는 것 까지 진행시킴
+		
+		
+		// 2. 현재 이미지 파일이 비어있다면 디폴트파일로 세팅하고 업로드 진행, 
+		// 아니라면 바로 업로드를 실행
+		
+		// 이미지 파일이 비어있지 않은 경우,
+		// 업로드한 파일이름 추출, 추출한 파일이름을 파일이름 vo에 set하는 과정을 빼는 이유는, 
+		// 파일이름에 targetNum와 typeNum이라는 주요정보가 포함되어있음 
+		// >> 바꾸지 않고 사진만 바꿀 예정
+		
+		// 업로드 진행
+		boolean flag = productService.update(pvo);
+		
+		///////////////////////////////////////////////
 		// 파일을 받기 위해 다운로드 파일 메서드 불러오기
 		// crawling.downloadFile(new URL("원래 이미지 경로"), 실제로 저장할 이미지 경로); //input: Url
 		// url, String fileName
 
 		// 파일받기 (저장공간) : V에서 img, img2로 줌
 
+		
 		// 2. 세팅 (업로드 확인 > bvo.setFile(fileName) + 만약 파일의 크기가 기존 것과 동일하다면, 기존 것보다 크거나
 		// 작다면, 그렇게 조정하는 코드도 같이 넣기)
 
-		// 3. 본섭에 저장
 
-		// 4. 업데이트 실행
 
-		boolean flag = productService.update(pvo);
+		
 
 		if (!flag) { // 실패 시 알림창
 			try {
@@ -189,14 +201,14 @@ public class ProductController {
 		return "redirect:product_manage.jsp";
 	}
 
-	//서치가 안 됩니다.
-	@RequestMapping(value = "/search.do")
-	public String selectAllProductSearch(ProductVO pvo, BoardVO bvo, Model model) {
-		System.out.println("searchCondition: " + pvo.getpSearchCondition());
-		System.out.println("searchContent: " + pvo.getpSearchContent());
+	//일단 원인은 찾았고, 서치가 되는지 확인 필요
+	@RequestMapping(value = "/search.do", method = RequestMethod.POST)
+	public String selectAllProductSearch(ProductVO pvo, Model model) {
+		System.out.println("pSearchCondition: " + pvo.getpSearchCondition());
+		System.out.println("pSearchContent: " + pvo.getpSearchContent());
 
-		model.addAttribute("pList", productService.selectAll(pvo)); // View님들 search.do의 data -> pList 로 변경 부탁드립니다.
-		model.addAttribute("bList", boardService.selectAll(bvo));
+		model.addAttribute("pSearchContent",pvo.getpSearchContent()); 
+		model.addAttribute("pList", productService.selectAll(pvo));
 
 		return "search_result.jsp";
 	}
@@ -227,12 +239,12 @@ public class ProductController {
 		return datas;
 	}
 
-	//SearchListController
+	//SearchListController 이게 작동을 안 한다는 이야기임
 	@ResponseBody
 	@RequestMapping(value="getSearchList.do", method = RequestMethod.POST)
 	public JsonArray getSearchList(ProductVO pvo, ProductVO pvo2, JSONArray jsonArray, Model model) {
 		// ajax가 보낸 searchContent
-		System.out.println("searchContent: "+pvo.getpSearchContent());
+		System.out.println("pSearchContent: "+pvo.getpSearchContent());
 		
 		// ajax()로 넘어온 category, sort를 세팅한 pvo를 가지고 selectAll 
 		pvo.setSearchLowPrice(0);
