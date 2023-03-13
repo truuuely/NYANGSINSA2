@@ -3,7 +3,7 @@ package com.wan.nss.biz.sms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("reviewService")
+@Service("smsService")
 public class SmsServiceImpl implements SmsService {
 	
 	@Autowired
