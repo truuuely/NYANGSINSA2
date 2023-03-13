@@ -16,14 +16,14 @@ public class OrderDetailDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	// 주문 상세 추가
+	// 주문 상세 추가 / 상품 가격 ((100 - 할인율 /100)* 상품 수량
 	private final String SQL_INSERT = "INSERT INTO ORDER_DETAIL (O_NO, P_NO, OD_CNT, OD_PRICE) VALUES(?, ?, ?, ?)";
 	// 주문 전체 목록 출력
-	private final String SQL_SELECTALL = "SELECT ORDER_DETAIL.O_NO, ORDER_DETAIL.OD_NO, PRODUCT.P_NM, ORDER_DETAIL.OD_CNT, SUM(PRODUCT.P_PRICE * ORDER_DETAIL.OD_CNT) AS TOTAL FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO GROUP BY p.P_NM, od.OD_CNT, od.O_NO, od.OD_NO ORDER BY od.O_NO DESC";
-	// 주문 상세 내역
-	private final String SQL_SELECTALL_ONUM = "SELECT ORDER_DETAIL.P_NO, ORDER_DETAIL.O_NO, PRODUCT.P_NM, ORDER_DETAIL.OD_CNT, SUM(PRODUCT.P_PRICE*ORDER_DETAIL.OD_CNT) AS TOTAL FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO AND od.O_NO = ? GROUP BY od.Pp_NO, p.P_NM, od.OD_CNT, od.O_NO";
+	private final String SQL_SELECTALL = "SELECT od.O_NO, od.OD_NO, p.P_NM, od.OD_CNT, od.OD_PRICE * od.OD_CNT AS TOTAL FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO GROUP BY p.P_NM, od.OD_CNT, od.O_NO, od.OD_NO ORDER BY od.O_NO DESC";
+	// 주문 상세 내역 
+	private final String SQL_SELECTALL_ONUM = "SELECT  od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO AND od.O_NO = ? GROUP BY od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO";
 	// 상품 수량 및 가격 (관리자) / 카테고리별 주문 수, 카테고리별 주문 수량
-	private final String SQL_SELECTONE_CATEGORY_CNT_SUM = "SELECT COUNT(ORDER_DETAIL.OD_NO) AS CNT, SUM(PRODUCT.P_PRICE * ORDER_DETAIL.OD_CNT) AS SUM FROM ORDER_DETAIL od INNER JOIN PRODUCT p ON p.P_NO = od.P_NO WHERE p.P_CATEGORY = ?";
+	private final String SQL_SELECTONE_CATEGORY_CNT_SUM = "SELECT COUNT(od.OD_NO) AS CNT, SUM(od.OD_PRICE) AS SUM FROM ORDER_DETAIL od INNER JOIN PRODUCT p ON p.P_NO = od.P_NO WHERE p.P_CATEGORY = ? ";
 	
 
 	
@@ -35,7 +35,7 @@ public class OrderDetailDAO {
 
 	public OrderDetailVO selectOne(OrderDetailVO odvo) {
 		try {
-			Object[] args = { odvo.getCategory()};
+			Object[] args = { odvo.getCategory()}; 
 			return jdbcTemplate.queryForObject(SQL_SELECTONE_CATEGORY_CNT_SUM, args, new OrderDetailRowMapper());
 			
 		} catch (Exception e) {
@@ -49,7 +49,15 @@ public class OrderDetailDAO {
 		if (odvo.getOdNum() >= 0) {
 			// 회원 상세 주문 내역  
 			Object[] args = { odvo.getoNum() };
-			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL_ONUM, args, new OrderDetailRowMapper());
+			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL_ONUM, args, (rs, rowNum) -> {
+			OrderDetailVO data = new OrderDetailVO();
+			data.setoNum(rs.getInt("O_NO"));
+			data.setpName(rs.getString("P_NM"));
+			data.setOdCnt(rs.getInt("OD_CNT"));
+			data.setOdPrice(rs.getInt("OD_PRICE"));
+			return data;
+			});
+			
 			
 		} else if (odvo.getCategory() != null) { 
 			// 카테고리별 상세 주문 상품 수량 및 가격 (관리자)
