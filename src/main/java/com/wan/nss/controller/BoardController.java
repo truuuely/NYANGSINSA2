@@ -1,5 +1,10 @@
 package com.wan.nss.controller;
 
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,11 +13,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.wan.nss.biz.blike.BlikeVO;
 import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.board.BoardVO;
+import com.wan.nss.biz.member.MemberService;
+import com.wan.nss.biz.member.MemberVO;
 
 @Controller
 public class BoardController {
 
 	@Autowired
+	private MemberService memberService;
 	private BoardService boardService;
 	
 	// 고양이 자랑 게시판 페이지 진입
@@ -59,11 +67,31 @@ public class BoardController {
 	
 	// 고양이 자랑 게시판 새 게시글 작성하기 페이지 진입
 	@RequestMapping(value="/insertBoardView.do")
-	public String insertBoardView() {
+	public String insertBoardView(MemberVO mvo, HttpSession session, HttpServletResponse response) {
+		// TODO
+		// 세션 아이디 가져와서
+		mvo.setUserId((String)session.getAttribute("memberId"));
+		// 역할 가져와서 
+		MemberVO loginMvo = memberService.selectOne(mvo);
 		
+		//차단된 회원은 보드홈으로 이동(얼럿 띄우기 : 글쓰기 기능이 차단된 회원입니다. 관리자에게 문의하세요.)
+		if(loginMvo.getRole().equals("BLOCKED")){
+			try {
+				response.setContentType("text/html; charset=utf-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('글쓰기 기능이 차단된 회원입니다. 관리자에게 문의하세요');</script>");
+				out.flush();
+				return "boardView.do";
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		}		
+		else {
 		System.out.println("insertBoardView.do 진입");
 		
 		return "insert_board.jsp";
+		}
 		
 	}
 	
