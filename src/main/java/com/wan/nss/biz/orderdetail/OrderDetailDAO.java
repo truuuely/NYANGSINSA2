@@ -9,7 +9,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
 
 
 @Repository("orderDetailDAO")
@@ -21,7 +20,7 @@ public class OrderDetailDAO {
 	// 주문 상세 추가 / 상품 가격 ((100 - 할인율 /100)* 상품 수량 -> 컨트롤러에서 해주고 있음
 	private final String SQL_INSERT = "INSERT INTO ORDER_DETAIL (O_NO, P_NO, OD_CNT, OD_PRICE) VALUES(?, ?, ?, ?)";
 	// 주문 전체 목록 출력
-	private final String SQL_SELECTALL = "SELECT od.O_NO, od.OD_NO, p.P_NM, od.OD_CNT, od.OD_PRICE * od.OD_CNT AS TOTAL FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO GROUP BY p.P_NM, od.OD_CNT, od.O_NO, od.OD_NO ORDER BY od.O_NO DESC";
+	private final String SQL_SELECTALL = "SELECT od.O_NO, od.OD_NO, p.P_NM, od.OD_CNT, p.P_NO, od.OD_PRICE * od.OD_CNT AS OD_PRICE FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO GROUP BY p.P_NM, od.OD_CNT, od.O_NO, od.OD_NO, p.P_NO ORDER BY od.O_NO DESC";
 	// 주문 상세 내역 
 	private final String SQL_SELECTALL_ONUM = "SELECT  od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO, i.I_NM FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO AND od.O_NO = ? INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND i.TYPE_NO = 101 GROUP BY od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO, i.I_NM";
 	// 상품 수량 및 가격 (관리자) / 카테고리별 주문 수량
@@ -48,8 +47,9 @@ public class OrderDetailDAO {
 	
 	public ArrayList<OrderDetailVO> selectAll(OrderDetailVO odvo) {
 
-		if (odvo.getOdNum() >= 0) {
+		if (odvo.getOdNum() > 0) {
 			// 회원 상세 주문 내역  
+			System.out.println("주문");
 			Object[] args = { odvo.getoNum() };
 			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL_ONUM, args, (rs, rowNum) -> {
 			OrderDetailVO data = new OrderDetailVO();
@@ -64,7 +64,16 @@ public class OrderDetailDAO {
 			
 		} else { 
 			// 상세 주문 전체 목록
-			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL, new OrderDetailRowMapper());
+			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTALL, (rs, rowNum) -> {
+				OrderDetailVO data = new OrderDetailVO();
+				data.setoNum(rs.getInt("O_NO"));
+				data.setpName(rs.getString("P_NM"));
+				data.setOdCnt(rs.getInt("OD_CNT"));
+				data.setOdPrice(rs.getInt("OD_PRICE"));
+				data.setpNum(rs.getInt("P_NO"));
+				data.setOdNum(rs.getInt("OD_NO"));
+				return data;
+			});
 		}
 	}
 
