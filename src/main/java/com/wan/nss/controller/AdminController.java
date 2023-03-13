@@ -178,9 +178,10 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	}
 
+
 	// (관리자) 상품 관리 페이지 이동
-	@RequestMapping(value = "/productManagePage.do")
-	public String selectAllProductManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping(value = "/adminProductDetail.do")
+	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
