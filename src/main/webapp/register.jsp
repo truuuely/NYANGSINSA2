@@ -163,7 +163,7 @@
 
 							<!-- 비밀번호 -->
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password" name="userPW" placeholder="<spring:message code="message.register.enterpw"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterpw"/>'" required>
+								<input type="password" class="form-control" id="password" name="userPw" placeholder="<spring:message code="message.register.enterpw"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterpw"/>'" required>
 							</div>
 							<p class="checkre" id="outputPw">
 								<spring:message code="message.register.enterpw" />
