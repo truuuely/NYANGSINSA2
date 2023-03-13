@@ -1,6 +1,5 @@
 package com.wan.nss.controller;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,27 +29,6 @@ public class MemberController {
 		
 		model.addAttribute("lang", request.getParameter("lang"));
 		return "login.jsp";
-		
-	}
-	
-	// 회원가입 페이지로 이동
-	@RequestMapping(value = "/register.do", method=RequestMethod.GET)
-	public String registerView(Model model, HttpServletRequest request) {
-		
-		System.out.println("register.do 진입");
-		
-		model.addAttribute("lang", request.getParameter("lang"));
-		return "register.jsp";
-		
-	}
-	
-	// 회원가입 성공시 결과 페이지로 이동
-	@RequestMapping(value = "/registerResultView.do", method=RequestMethod.GET)
-	public String registerResultView() {
-		
-		System.out.println("registerResultView.do 진입");
-		
-		return "result_register.jsp";
 		
 	}
 	
@@ -105,32 +83,6 @@ public class MemberController {
 		model.addAttribute("lang", request.getParameter("lang"));
 		return "main.do";
 		
-	}
-
-	// 회원가입 수행
-	@RequestMapping(value = "/signUp.do")
-	public String insertBoard(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
-		
-		System.out.println("signUp.do 진입");
-
-		if (memberService.insert(vo)) { // 회원가입 성공시
-			return "registerResultView.do";
-		} else { // 회원가입 실패시
-			response.setContentType("text/html; charset=utf-8");
-			PrintWriter out;
-			try {
-				out = response.getWriter();
-				out.println("<SCRIPT>alert('회원가입에 실패하였습니다... nyangsinsa@gmail.com로 문의해주세요.');history.go(-1);</SCRIPT>");
-				out.flush();
-				
-				model.addAttribute("lang", request.getParameter("lang"));
-				return "register.jsp";
-			} catch (IOException e) {
-				e.printStackTrace();
-				return null;
-			}
-		}
-
 	}
 
 	// 비밀번호 찾기 결과에서 비밀번호 변경하기 수행
