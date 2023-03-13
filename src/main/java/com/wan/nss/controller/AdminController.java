@@ -113,33 +113,23 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// 관리자 홈 도넛차트 데이터 가져오기
 	@RequestMapping(value = "getDonutChart.do")
-	protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
+	protected JsonObject sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
 		System.out.println("getDonutChart.do 진입");
 		
 		// 카테고리별 도넛 차트
 		List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
 
-		odvo.setCategory("food"); // 카테고리 지정해주고
-		odvo = orderDetailService.selectOne(odvo); // cnt / sum 받아옴
-		list.add(odvo); // 리스트에 추가
-		odvo.setCategory("treat");
-		odvo = orderDetailService.selectOne(odvo);
-		list.add(odvo);
-		odvo.setCategory("sand");
-		odvo = orderDetailService.selectOne(odvo);
-		list.add(odvo);
-
-		JsonArray datas = new JsonArray();
-		for (int i = 0; i < list.size(); i++) {
-			JsonObject data = new JsonObject();
+		String[] category = {"food", "treat", "sand"};
+		JsonObject data = new JsonObject();
+		
+		for (int i = 0; i < category.length; i++) {
 			
-			data.addProperty("cnt", list.get(i).getOdCnt());
-			System.out.println(list.get(i).getOdCnt());
+			odvo.setCategory(category[i]);
+			odvo = orderDetailService.selectOne(odvo); // cnt, sum 받아옴
 			
-			data.addProperty("sum", list.get(i).getSum());
-			System.out.println(list.get(i).getSum());
+			data.addProperty("categoryCnt" + (i+0), odvo.getOdCnt()); // categoryCnt1~
+			data.addProperty("categorySum" + (i+0), odvo.getSum()); // categorySum1~
 			
-			datas.add(data);
 		}
 
 		// 올해 작년 수익 비교 차트
@@ -148,26 +138,22 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		// 작년 수익
 		ovo.setoSearchCondition("lastYear");
-		int sumLastYear = orderService.selectOne(ovo).getoPrice();
+		int lastYearSum = orderService.selectOne(ovo).getoPrice();
 
 		// data 리스트에 넣기
-		System.out.println("sumLastYear: " + sumLastYear);
-		JsonObject dataLastYear = new JsonObject();
-		dataLastYear.addProperty("year", sumLastYear);
-		datas.add(dataLastYear);
+		System.out.println("lastYearSum: " + lastYearSum);
+		data.addProperty("lastYearSum", lastYearSum);
 
 		// 2023년 수익
 		ovo.setoSearchCondition("thisyear");
-		int sumThisYear = orderService.selectOne(ovo).getoPrice();
+		int thisyearSum = orderService.selectOne(ovo).getoPrice();
 
 		// data 리스트에 넣기
-		System.out.println("sumThisYear: " + sumThisYear);
-		JsonObject dataThisYear = new JsonObject();
-		dataLastYear.addProperty("year", sumThisYear);
-		datas.add(dataThisYear);
+		System.out.println("thisyearSum: " + thisyearSum);
+		data.addProperty("thisyearSum", thisyearSum);
 		// 연도별 수익 데이터 저장 부분 End
 
-		return datas;
+		return data;
 	}
 
 	// (관리자) 회원 관리 페이지 이동

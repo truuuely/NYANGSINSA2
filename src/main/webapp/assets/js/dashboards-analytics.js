@@ -12,13 +12,13 @@ $.ajax({ // ajax로 데이터 가져오기
 	traditional: 'true',
 	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	success: function(data) {
-		var totalCnt = data[0].cnt + data[1].cnt + data[2].cnt;  // 총 주문수
-		var foodCnt = data[0].cnt / totalCnt * 100;  // 사료 주문 %
-		var treatCnt = data[1].cnt / totalCnt * 100; // 간식 주문 %
-		var sandCnt = data[2].cnt / totalCnt * 100;  // 모래 주문 %
-		var foodSum = data[0].sum;  // 사료 총 주문 금액
-		var treatSum = data[1].sum; // 간식 총 주문 금액
-		var sandSum = data[2].sum; // 모래 총 주문 금액
+		var totalCnt = data.categoryCnt1 + data.categoryCnt2 + data.categoryCnt3;  // 총 주문수
+		var foodCnt = data.categoryCnt1 / totalCnt * 100;  // 사료 주문 %
+		var treatCnt = data.categoryCnt2 / totalCnt * 100; // 간식 주문 %
+		var sandCnt = data.categoryCnt3 / totalCnt * 100;  // 모래 주문 %
+		var foodSum = data.categorySum1;  // 사료 총 주문 금액
+		var treatSum = data.categorySum2; // 간식 총 주문 금액
+		var sandSum = data.categorySum3; // 모래 총 주문 금액
 		var categorySum = foodSum + treatSum + sandSum;
 
 		$('#foodSum').text(foodSum.toLocaleString('ko-KR') + '원');
@@ -34,9 +34,9 @@ $.ajax({ // ajax로 데이터 가져오기
 		console.log('간식:' + treatSum);
 		console.log('모래:' + sandSum);
 		console.log("data: " + data[yearDataBegin].year);
-		console.log("2023:"+data[4].year);
-		console.log("2022:"+data[3].year);
-		console.log((data[4].year - data[3].year) * 10);
+		console.log("2023:"+data.thisYearSum);
+		console.log("2022:"+data.lastYearSum);
+		console.log((data.thisYearSum - data.lastYearSum) * 10);
 
 		(function() {
 			let cardColor, headingColor, axisColor, shadeColor, borderColor;
@@ -321,10 +321,10 @@ $.ajax({ // ajax로 데이터 가져오기
 				revenueDatas.push(data[i].year); // 상수의 값을 연도별 수익 데이터가 담긴 인덱스로 변경해줘야함!
 			}
 
-			$('#revenueLastYear').text(data[3].year.toLocaleString('ko-KR')+'원');
-			$('#revenueThisYear').text(data[4].year.toLocaleString('ko-KR')+'원');
-			$('#growthRevenue').html('<b>' + (data[4].year - data[3].year).toLocaleString('ko-KR') + '원</b>');
-			$('#growthPercent').html('전년대비 <b>' + Math.round((data[4].year - data[3].year)/data[3].year*100) + '%</b>성장');
+			$('#revenueLastYear').text(data.lastYearSum.toLocaleString('ko-KR')+'원');
+			$('#revenueThisYear').text(data.thisYearSum.toLocaleString('ko-KR')+'원');
+			$('#growthRevenue').html('<b>' + (data.thisYearSum - data.lastYearSum).toLocaleString('ko-KR') + '원</b>');
+			$('#growthPercent').html('전년대비 <b>' + Math.round((data.thisYearSum - data.lastYearSum)/data.lastYearSum*100) + '%</b>성장');
 
 			growthChartOptions = {
 				series: revenueDatas,
