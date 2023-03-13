@@ -9,6 +9,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.mysql.cj.protocol.x.SyncFlushDeflaterOutputStream;
+
 
 @Repository("orderDetailDAO")
 public class OrderDetailDAO {
@@ -16,13 +18,13 @@ public class OrderDetailDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 
-	// 주문 상세 추가 / 상품 가격 ((100 - 할인율 /100)* 상품 수량
+	// 주문 상세 추가 / 상품 가격 ((100 - 할인율 /100)* 상품 수량 -> 컨트롤러에서 해주고 있음
 	private final String SQL_INSERT = "INSERT INTO ORDER_DETAIL (O_NO, P_NO, OD_CNT, OD_PRICE) VALUES(?, ?, ?, ?)";
 	// 주문 전체 목록 출력
 	private final String SQL_SELECTALL = "SELECT od.O_NO, od.OD_NO, p.P_NM, od.OD_CNT, od.OD_PRICE * od.OD_CNT AS TOTAL FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO GROUP BY p.P_NM, od.OD_CNT, od.O_NO, od.OD_NO ORDER BY od.O_NO DESC";
 	// 주문 상세 내역 
 	private final String SQL_SELECTALL_ONUM = "SELECT  od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO, i.I_NM FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO AND od.O_NO = ? INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND i.TYPE_NO = 101 GROUP BY od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO, i.I_NM";
-	// 상품 수량 및 가격 (관리자) / 카테고리별 주문 수, 카테고리별 주문 수량
+	// 상품 수량 및 가격 (관리자) / 카테고리별 주문 수량
 	private final String SQL_SELECTONE_CATEGORY_CNT_SUM = "SELECT COUNT(od.OD_NO) AS CNT, SUM(od.OD_PRICE) AS SUM FROM ORDER_DETAIL od INNER JOIN PRODUCT p ON p.P_NO = od.P_NO WHERE p.P_CATEGORY = ? ";
 	
 
@@ -39,7 +41,7 @@ public class OrderDetailDAO {
 			return jdbcTemplate.queryForObject(SQL_SELECTONE_CATEGORY_CNT_SUM, args, new OrderDetailRowMapper());
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("OdrerDetailDAO selectOne 결과 없음");
 		}
 		return null;
 	}
@@ -59,13 +61,6 @@ public class OrderDetailDAO {
 			data.setImageName(rs.getString("I_NM"));
 			return data;
 			});
-			
-			
-		} else if (odvo.getCategory() != null) { 
-			// 카테고리별 상세 주문 상품 수량 및 가격 (관리자)
-
-			Object[] args = { odvo.getCategory() };
-			return (ArrayList<OrderDetailVO>) jdbcTemplate.query(SQL_SELECTONE_CATEGORY_CNT_SUM, args, new OrderDetailRowMapper());
 			
 		} else { 
 			// 상세 주문 전체 목록
