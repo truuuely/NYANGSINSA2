@@ -90,7 +90,7 @@ public class BoardDAO {
 	 * D
 	 */
 	// 회원 : 게시글 삭제
-	private final String DELETE = "UPDATE BOARD SET STATUS = 2 WHERE B_NO = ?";
+	private final String DELETE = "UPDATE BOARD SET STATUS = 3 WHERE B_NO = ?";
 
 	public boolean insert(BoardVO vo) {
 		if (jdbcTemplate.update(INSERT, vo.getUserId(), vo.getBoardTitle(), vo.getBoardContent()) < 1) {
