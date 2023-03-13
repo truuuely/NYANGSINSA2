@@ -69,9 +69,9 @@
 									<img src="img/kakao_login.png" alt="카카오 로그인 버튼" style="border-radius: 30px;" />
 								</a>
 								<br>
-								<a href="findId.do"><spring:message code="message.login.findid" /></a>
+								<a href="findIdView.do"><spring:message code="message.login.findid" /></a>
 								&nbsp; / &nbsp;
-								<a href="findPw.do"><spring:message code="message.login.findpw" /></a>
+								<a href="findPwView.do"><spring:message code="message.login.findpw" /></a>
 								<!-- &nbsp; / &nbsp;<a href="javascript:void(0)"
                            onclick="kakaoLogout();"
                         > <span>카카오 로그아웃</span>
