@@ -80,7 +80,7 @@ public class ReviewController {
 	@RequestMapping(value = "/myReviewView.do") //View님들 myreview.do -> myReviewView.do로 수정 부탁드립니다
 	public String myReviewView(ReviewVO rvo,Model model) { 
 		model.addAttribute("rList", reviewService.selectAll(rvo));
-		return "myreview.jsp";
+		return "my_review.jsp";
 	}
 
 	// (관리자)리뷰 삭제
