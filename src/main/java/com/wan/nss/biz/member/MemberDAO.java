@@ -27,23 +27,23 @@ public class MemberDAO {
 	// 신고 당한 회원 등급 변경 
 	private final String SQL_UPDATE_ROLE = "UPDATE MEMBER m SET m.WARN_CNT =(m.WARN_CNT+1), m.`ROLE` =CASE WHEN m.WARN_CNT=3 THEN 'BLOCKED' ELSE ROLE END WHERE M_ID = ?";
 
-	// 회원 삭제
-	private final String SQL_DELETE = "DELETE FROM MEMBER WHERE M_NO = ?";
+	// 회원 삭제 처리
+	private final String SQL_DELETE = "UPDATE MEMBER SET ROLE = 'DELETED' WHERE M_NO = (SELECT M_NO FROM (SELECT M_NO FROM MEMBER WHERE M_ID = ?) m)";
 
 	// 로그인
-	private final String SQL_SELECTONE = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_PW = ?";
+	private final String SQL_SELECTONE = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_PW = ? AND ROLE != 'DELETED'";
 
 	// 아이디 중복 검사, 마이페이지 이동
-	private final String SQL_SELECTONE_ID = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? ";
+	private final String SQL_SELECTONE_ID = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ?";
 
 	// 핸드폰 번호 중복 검사
-	private final String SQL_SELECTONE_PHONE = "SELECT PHONE_NO, M_NM, M_ID FROM MEMBER WHERE PHONE_NO = ?";
+	private final String SQL_SELECTONE_PHONE = "SELECT PHONE_NO, M_NM, M_ID FROM MEMBER WHERE PHONE_NO = ? AND ROLE != 'DELETED'";
 
 	// 회원 전체 목록 보기
 	private final String SQL_SELECTALL = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER ORDER BY M_NO DESC";
 
 	// 비밀번호 찾기 할 때 필요
-	private final String SQL_SELECTONE_FIND_PW = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_NM = ? AND PHONE_NO= ? ";
+	private final String SQL_SELECTONE_FIND_PW = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_NM = ? AND PHONE_NO = ? AND ROLE != 'DELETED'";
 
 	// 회원가입
 	public boolean insert(MemberVO vo) {
@@ -82,7 +82,7 @@ public class MemberDAO {
 
 	// 회원탈퇴, 회원 삭제
 	public boolean delete(MemberVO vo) {
-		int res = jdbcTemplate.update(SQL_DELETE, vo.getUserNum());
+		int res = jdbcTemplate.update(SQL_DELETE, vo.getUserId());
 		if (res < 1) {
 			return false;
 		}
