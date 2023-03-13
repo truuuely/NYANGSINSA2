@@ -3,10 +3,12 @@ package com.wan.nss.biz.sms;
 import java.util.HashMap;
 
 import org.json.simple.JSONObject;
+import org.springframework.stereotype.Repository;
 
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
 
+@Repository("smsDAO")
 public class SmsDAO {
 
 	// 문자 전송 메서드
