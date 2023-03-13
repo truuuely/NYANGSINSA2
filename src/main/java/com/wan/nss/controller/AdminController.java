@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.wan.nss.biz.blike.BlikeVO;
@@ -120,9 +119,6 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		// 카테고리별 도넛 차트
 		List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
 
-		List<OrderVO> list2022; // 연도별 수익 넣을 list
-		List<OrderVO> list2023; // 연도별 수익 넣을 list
-
 		odvo.setCategory("food"); // 카테고리 지정해주고
 		odvo = orderDetailService.selectOne(odvo); // cnt / sum 받아옴
 		list.add(odvo); // 리스트에 추가
@@ -136,55 +132,41 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		JsonArray datas = new JsonArray();
 		for (int i = 0; i < list.size(); i++) {
 			JsonObject data = new JsonObject();
+			
 			data.addProperty("cnt", list.get(i).getOdCnt());
 			System.out.println(list.get(i).getOdCnt());
+			
 			data.addProperty("sum", list.get(i).getSum());
 			System.out.println(list.get(i).getSum());
+			
 			datas.add(data);
 		}
 
 		// 올해 작년 수익 비교 차트
 		// 연도별 수익 데이터 저장 부분 Begin
 		// 연도별 수익 저장할 변수
-		int sum2022 = 0;
-		int sum2023 = 0;
 
-		// 2022년 수익
-		ovo.setoDate("2022");
-		ovo.setoSearchCondition("year");
-		list2022 = orderService.selectAll(ovo);
-
-		System.out.println("list2022: " + list2022);
-
-		for (OrderVO v : list2022) {
-			sum2022 += v.getoPrice();
-		}
+		// 작년 수익
+		ovo.setoSearchCondition("lastYear");
+		int sumLastYear = orderService.selectOne(ovo).getoPrice();
 
 		// data 리스트에 넣기
-		System.out.println("sum2022: " + sum2022);
-		JsonObject data2022 = new JsonObject();
-		data2022.addProperty("year", sum2022);
-		datas.add(data2022);
+		System.out.println("sumLastYear: " + sumLastYear);
+		JsonObject dataLastYear = new JsonObject();
+		dataLastYear.addProperty("year", sumLastYear);
+		datas.add(dataLastYear);
 
 		// 2023년 수익
-		ovo.setoDate("2023");
-		ovo.setoSearchCondition("year");
-		list2023 = orderService.selectAll(ovo);
-
-		System.out.println("list2023: " + list2023);
-
-		for (OrderVO v : list2023) {
-			sum2023 += v.getoPrice();
-		}
+		ovo.setoSearchCondition("thisyear");
+		int sumThisYear = orderService.selectOne(ovo).getoPrice();
 
 		// data 리스트에 넣기
-		System.out.println("sum2023: " + sum2023);
-		JsonObject data2023 = new JsonObject();
-		data2023.addProperty("year", sum2023);
-		datas.add(data2023);
+		System.out.println("sumThisYear: " + sumThisYear);
+		JsonObject dataThisYear = new JsonObject();
+		dataLastYear.addProperty("year", sumThisYear);
+		datas.add(dataThisYear);
 		// 연도별 수익 데이터 저장 부분 End
 
-		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 		return datas;
 	}
 
