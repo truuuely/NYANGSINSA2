@@ -50,7 +50,14 @@
 				<li><i class="fa fa-calendar-o"></i> ${board.boardDate}</li>
 				<li><i class="fa fa-comment-o"></i> ${board.replyCnt}</li>
 				<li><img style="width: 20px;" src="img/eyes.png"> ${board.boardView}</li>
-				<li class="heartVal"><img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> ${board.likeCnt}</li>
+				<c:choose>
+					<c:when test="${board.isChecked==true}">
+						<li><img onclick="javascript:updateLike(${board.boardNum}, 'down');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png"> <span class="${board.boardNum}">${board.likeCnt}</span></li>
+					</c:when>
+					<c:otherwise>
+						<li><img onclick="javascript:updateLike(${board.boardNum}, 'up');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> <span class="${board.boardNum}">${board.likeCnt}</span></li>
+					</c:otherwise>
+				</c:choose>
 				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
@@ -132,9 +139,6 @@
 
 
 
-
-
-
 	<!-- TOP 버튼 -->
 	<div id="fixtop">
 		<a href="#">
@@ -150,11 +154,19 @@
 			</button>
 		</a>
 	</div>
+
 	<div id="fixheart">
 		<a href="#fixheart">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
-				<img class="heartImg" style="width: 50px; height: auto; cursor: pointer;" src="img/heart.png">
-				<div style="margin-top: 15px;">${board.likeCnt}</div>
+				<c:choose>
+					<c:when test="${board.isChecked==true}">
+						<img onclick="javascript:updateLike(${board.boardNum}, 'down');" class="${board.boardNum}heartImg" style="width: 50px; height: auto; cursor: pointer;" src="img/fullheart.png">
+					</c:when>
+					<c:otherwise>
+						<img onclick="javascript:updateLike(${board.boardNum}, 'up');" class="${board.boardNum}heartImg" style="width: 50px; height: auto; cursor: pointer;" src="img/heart.png">
+					</c:otherwise>
+				</c:choose>
+				<div class="${board.boardNum}" style="margin-top: 15px;">${board.likeCnt}</div>
 			</button>
 		</a>
 	</div>
@@ -163,13 +175,12 @@
 		<a href="#replywrite">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 				<img style="width: 50px; height: auto; cursor: pointer;" src="img/replyicon.png">
-				<div style="margin-top: 15px;">5</div>
+				<div style="margin-top: 15px;">${board.replyCnt}</div>
 			</button>
 		</a>
 	</div>
 
-
-	<c:if test="${board.userNum==userNum}">
+	<c:if test="${board.userNum == memberNum}">
 		<div id="fixdelete">
 			<a href="deleteBoard.do?boardNum=${board.boardNum}">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
@@ -255,10 +266,9 @@
 			})
 		}
 	</script>
-	
+
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
-			
 			console.log('들어옴');
 			$.ajax({
 				type : 'POST',
@@ -268,13 +278,13 @@
 					boardNum : bNum
 				},
 				success : function(data) {
-					var id = '#'+bNum+'heartImg';
+					var id = '.'+bNum+'heartImg';
 					console.log("좋아유 수 " + data)
 					console.log("넘버 " +'#'+bNum)
 					console.log("업다운 " +upOrDown)
-					console.log("이미지 아이디 " +'#'+bNum+'heartImg')
+					console.log("이미지 아이디 " +'.'+bNum+'heartImg')
 					console.log($(id).attr('src'));
-					$('#'+bNum+'').text(data);
+					$('.'+bNum+'').text(data);
 					if (upOrDown == 'down') {
 						$(id).attr({src:'img/heart.png'});
 						/* $(this).children('img').attr("src", "img/heart.png"); */

@@ -50,8 +50,10 @@ public class BoardController {
 
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
-	public String boardPostView(BoardVO bvo, Model model) {
+	public String boardPostView(BoardVO bvo, Model model, HttpSession session) {
 
+		boardService.update(bvo);
+		bvo.setUserId((String) session.getAttribute("memberId"));
 		System.out.println("boardPostView.do 진입");
 
 		model.addAttribute("board", boardService.selectOne(bvo));
