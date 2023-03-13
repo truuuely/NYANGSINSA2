@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.board.BoardVO;
+import com.wan.nss.biz.reply.ReplyService;
 import com.wan.nss.biz.reply.ReplyVO;
 import com.wan.nss.biz.report.ReportService;
 import com.wan.nss.biz.report.ReportVO;
@@ -24,7 +25,7 @@ public class ReportController {
 	// ()
 	@RequestMapping(value = "/insertReport")
 	public String insertReport() {
-
+		return null;
 	}
 
 	// (관리자) 신고글 관리 페이지 이동
