@@ -285,11 +285,13 @@ public class MemberController {
 
 	// 아이디 찾기 수행
 	@RequestMapping(value = "/findId.do")
-	public String selectOneMemberId(MemberVO vo, Model model, HttpServletResponse response) {
+	public String selectOneMemberId(MemberVO mvo, Model model, HttpServletResponse response) {
 		
 		System.out.println("findId.do 진입");
 
-		MemberVO loginMvo = memberService.selectOne(vo); // id, 이름이 담긴 멤버
+		MemberVO loginMvo = memberService.selectOne(mvo); // id, 이름이 담긴 멤버
+		System.out.println("loginMvo: " + loginMvo);
+		
 		if (loginMvo == null) { // 가입정보가 없는 경우
 			try {
 				response.setContentType("text/html; charset=utf-8");
