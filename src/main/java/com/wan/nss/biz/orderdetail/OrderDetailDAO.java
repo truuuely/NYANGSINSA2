@@ -21,7 +21,7 @@ public class OrderDetailDAO {
 	// 주문 전체 목록 출력
 	private final String SQL_SELECTALL = "SELECT od.O_NO, od.OD_NO, p.P_NM, od.OD_CNT, od.OD_PRICE * od.OD_CNT AS TOTAL FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO GROUP BY p.P_NM, od.OD_CNT, od.O_NO, od.OD_NO ORDER BY od.O_NO DESC";
 	// 주문 상세 내역 
-	private final String SQL_SELECTALL_ONUM = "SELECT  od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO AND od.O_NO = ? GROUP BY od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO";
+	private final String SQL_SELECTALL_ONUM = "SELECT  od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO, i.I_NM FROM PRODUCT p INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO AND od.O_NO = ? INNER JOIN IMAGE i ON p.P_NO = i.TARGET_NO AND i.TYPE_NO = 101 GROUP BY od.O_NO, p.P_NM, od.OD_CNT, od.OD_PRICE, p.P_NO, i.I_NM";
 	// 상품 수량 및 가격 (관리자) / 카테고리별 주문 수, 카테고리별 주문 수량
 	private final String SQL_SELECTONE_CATEGORY_CNT_SUM = "SELECT COUNT(od.OD_NO) AS CNT, SUM(od.OD_PRICE) AS SUM FROM ORDER_DETAIL od INNER JOIN PRODUCT p ON p.P_NO = od.P_NO WHERE p.P_CATEGORY = ? ";
 	
@@ -55,6 +55,8 @@ public class OrderDetailDAO {
 			data.setpName(rs.getString("P_NM"));
 			data.setOdCnt(rs.getInt("OD_CNT"));
 			data.setOdPrice(rs.getInt("OD_PRICE"));
+			data.setpNum(rs.getInt("P_NO"));
+			data.setImageName(rs.getString("I_NM"));
 			return data;
 			});
 			

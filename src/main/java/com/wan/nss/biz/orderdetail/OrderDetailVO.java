@@ -8,7 +8,7 @@ public class OrderDetailVO {
 	private int odPrice; // 상세 주문 가격 
 	
 	private String pName; // 상품 이름
-	
+	private String imageName; // 이미지 이름
 	// 관리자홈 도넛차트용
 	private String category; // 카테고리
 	private int sum; // 카테고리별 합계
@@ -60,12 +60,18 @@ public class OrderDetailVO {
 	public void setSum(int sum) {
 		this.sum = sum;
 	}
-	
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 	@Override
 	public String toString() {
 		return "OrderDetailVO [odNum=" + odNum + ", oNum=" + oNum + ", pNum=" + pNum + ", odCnt=" + odCnt + ", odPrice="
-				+ odPrice + ", pName=" + pName + ", category=" + category + ", sum=" + sum + "]";
+				+ odPrice + ", pName=" + pName + ", imageName=" + imageName + ", category=" + category + ", sum=" + sum
+				+ "]";
 	}
-	
+
 }
 
