@@ -123,14 +123,14 @@
 
 					<!-- 글 관리 -->
 					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
+						<a href="boardManageView.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">게시글 관리</div>
 						</a>
 					</li>
 					<!-- 신고 관리 -->
 					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
+						<a href="reportManageView.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">신고 관리</div>
 						</a>
