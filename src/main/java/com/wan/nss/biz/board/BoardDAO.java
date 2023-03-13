@@ -24,12 +24,17 @@ public class BoardDAO {
 	 * R
 	 */
 	// (사용자의 좋아요 여부 표시된) 삭제되지 않은 게시글 전체 가져오기
-	private final String SELECT_ALL = "SELECT b.*, COUNT(LK_NO) AS LIKE_CNT, COUNT(RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
+//	SELECT * FROM BOARD ORDER BY B_NO DESC; 
+	private final String SELECT_ALL = "SELECT b.*, COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, COUNT(RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
 			+ " FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO WHERE STATUS != 3) b "
 			+ " LEFT JOIN (SELECT * FROM REPLY WHERE STATUS != 3) r ON b.B_NO = r.B_NO "
 			+ " LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO "
 			+ " LEFT JOIN (SELECT * FROM BLIKE WHERE M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?)) bl "
 			+ " ON b.B_NO = bl.B_NO GROUP BY b.B_NO, i.I_NM, bl.M_NO ORDER BY b.B_NO DESC";
+
+	// 관리자 게시글 관리
+	private final String SELECT_ALL_ADMIN = "SELECT b.B_NO, b.M_NO, m.M_ID, b.B_TITLE, b.B_CONTENT, b.B_DATE, b.STATUS, b.B_VIEW FROM BOARD b "
+			+ " INNER JOIN `MEMBER` m ON b.M_NO = m.M_NO ORDER BY B_NO DESC";
 
 	// TOP3 : 좋아요 많이 받은 글의 작성자의 고양이, 글의 대표 사진 가져오기
 	private final String SELECT_ALL_TOP3 = "SELECT m.CAT_NM, b.B_NO, b.B_VIEW, COUNT(LK_NO) AS LIKE_CNT, COUNT(RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM "
@@ -180,8 +185,24 @@ public class BoardDAO {
 
 		if (vo.getSearchCondition() == null) { // 1. 글 전체 보기
 			// 로그인 안 한 경우 전체 좋아요가 false로 나옴
+			System.out.println("BoardDAO  전체 보기");
 			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId(),
 					vo.getUserId());
+
+		}
+		if (vo.getSearchCondition().equals("admin")) { // 관리자 : 게시글 관리
+			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_ADMIN, (rs, rowNum) -> {
+				BoardVO data = new BoardVO();
+				data.setBoardNum(rs.getInt("B_NO"));
+				data.setUserNum(rs.getInt("M_NO"));
+				data.setUserId(rs.getString("M_ID"));
+				data.setBoardTitle(rs.getString("B_TITLE"));
+				data.setBoardContent(rs.getString("B_CONTENT"));
+				data.setBoardDate(rs.getString("B_DATE"));
+				data.setBoardStatus(rs.getInt("STATUS"));
+				data.setBoardView(rs.getInt("B_VIEW"));
+				return data;
+			});
 
 		} else if (vo.getSearchCondition().equals("top3")) { // 2. 전체 3등보기
 			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_TOP3, (rs, rowNum) -> {
