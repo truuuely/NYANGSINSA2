@@ -1,9 +1,15 @@
 package com.wan.nss.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.wan.nss.biz.member.MemberService;
@@ -19,9 +25,30 @@ public class RegisterController {
 	@Autowired
 	private SmsService smsService;
 	
+	// 회원가입 페이지로 이동
+	@RequestMapping(value = "/register.do")
+	public String registerView(Model model, HttpServletRequest request) {
+		
+		System.out.println("register.do 진입");
+		
+		model.addAttribute("lang", request.getParameter("lang"));
+		return "register.jsp";
+		
+	}
+	
+	// 회원가입 성공시 결과 페이지로 이동
+	@RequestMapping(value = "/registerResultView.do")
+	public String registerResultView() {
+		
+		System.out.println("registerResultView.do 진입");
+		
+		return "result_register.jsp";
+		
+	}
+	
 	// 아이디, 전화번호 중복 확인
 	@ResponseBody
-	@RequestMapping(value="/checkDuplication.do", method=RequestMethod.POST)
+	@RequestMapping(value="/checkDuplication.do")
 	public String isDuplicated(MemberVO mvo) {
 		
 		System.out.println("checkDuplication.do 진입");
@@ -40,6 +67,7 @@ public class RegisterController {
 	}
 	
 	// 회원가입시 문자 인증 번호 발송
+	@ResponseBody
 	@RequestMapping(value="/sms.do")
 	public String sendSms(SmsVO svo) {
 		
@@ -55,6 +83,7 @@ public class RegisterController {
 	}
 	
 	// 회원가입시 문자 인증 번호 확인
+	@ResponseBody
 	@RequestMapping(value="/checkSms.do")
 	public String checkSms(SmsVO svo) {
 		
@@ -74,6 +103,34 @@ public class RegisterController {
 			return "-1"; // => result == "-1" 을 뜻함
 		}
 		
+	}
+	
+	// 회원가입 수행
+	@RequestMapping(value = "/signUp.do")
+	public String insertBoard(MemberVO mvo, Model model, HttpServletRequest request, HttpServletResponse response) {
+		
+		System.out.println("signUp.do 진입");
+		System.out.println("회원가입하는 회원 정보 ↓");
+		System.out.println(mvo);
+		
+		if (memberService.insert(mvo)) { // 회원가입 성공시
+			return "registerResultView.do";
+		} else { // 회원가입 실패시
+			response.setContentType("text/html; charset=utf-8");
+			PrintWriter out;
+			try {
+				out = response.getWriter();
+				out.println("<SCRIPT>alert('회원가입에 실패하였습니다... nyangsinsa@gmail.com로 문의해주세요.');history.go(-1);</SCRIPT>");
+				out.flush();
+				
+				model.addAttribute("lang", request.getParameter("lang"));
+				return "register.jsp";
+			} catch (IOException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
+
 	}
 	
 }
