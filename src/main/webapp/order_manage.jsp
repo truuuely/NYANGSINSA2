@@ -61,7 +61,11 @@
 
 			<aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
 				<div class="app-brand demo">
-					<a href="main.do" class="app-brand-link"><img src="img/logo.png" width="150px" alt="냥신사 홈으로 가기"> </a> <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none"> <i class="bx bx-chevron-left bx-sm align-middle"></i>
+					<a href="main.do" class="app-brand-link">
+						<img src="img/logo.png" width="150px" alt="냥신사 홈으로 가기">
+					</a>
+					<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+						<i class="bx bx-chevron-left bx-sm align-middle"></i>
 					</a>
 				</div>
 
@@ -69,36 +73,52 @@
 
 				<ul class="menu-inner py-1">
 					<!-- Dashboard -->
-					<li class="menu-item"><a href="main.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-home-circle"></i>
+					<li class="menu-item"><a href="main.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-home-circle"></i>
 							<div data-i18n="Analytics">냥신사홈</div>
-					</a></li>
-					<li class="menu-item"><a href="adminIndex.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-home-circle"></i>
+						</a></li>
+					<li class="menu-item"><a href="adminIndex.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-home-circle"></i>
 							<div data-i18n="Analytics">관리자홈</div>
-					</a></li>
+						</a></li>
 
 
 					<!-- Components -->
 					<li class="menu-header small text-uppercase"><span class="menu-header-text">관리자 메뉴</span></li>
 					<!-- Cards -->
-					<li class="menu-item"><a href="memberManagePage.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-user-check"></i>
+					<li class="menu-item"><a href="memberManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-user-check"></i>
 							<div data-i18n="Basic">회원관리</div>
-					</a></li>
+						</a></li>
 
 					<!-- 상품관리 -->
-					<li class="menu-item"><a href="productManagePage.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-store"></i>
+					<li class="menu-item"><a href="productManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-store"></i>
 
 							<div data-i18n="Basic">상품관리</div>
-					</a></li>
+						</a></li>
 
 					<!-- 주문관리 -->
-					<li class="menu-item"><a href="orderManagePage.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-receipt"></i>
+					<li class="menu-item"><a href="orderManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-receipt"></i>
 							<div data-i18n="Basic">주문관리</div>
-					</a></li>
+						</a></li>
 
 					<!-- 리뷰관리 -->
-					<li class="menu-item"><a href="reviewManagePage.do" class="menu-link"> <i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+					<li class="menu-item"><a href="reviewManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">리뷰관리</div>
-					</a></li>
+						</a></li>
+					<!-- 글 관리 -->
+					<li class="menu-item"><a href="reviewManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+							<div data-i18n="Basic">게시글 관리</div>
+						</a></li>
+					<!-- 신고 관리 -->
+					<li class="menu-item"><a href="reviewManagePage.do" class="menu-link">
+							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
+							<div data-i18n="Basic">신고 관리</div>
+						</a></li>
 				</ul>
 			</aside>
 			<!-- / Menu -->
@@ -109,7 +129,8 @@
 				<!-- Navbar -->
 				<nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
 					<div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-						<a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)"> <i class="bx bx-menu bx-sm"></i>
+						<a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+							<i class="bx bx-menu bx-sm"></i>
 						</a>
 					</div>
 
@@ -130,7 +151,7 @@
 									<div class="avatar avatar-online">
 										<img src="assets/img/avatars/admin.png" alt="관리자 프로필 사진" class="w-px-40 h-auto rounded-circle">
 									</div>
-							</a>
+								</a>
 								<ul class="dropdown-menu dropdown-menu-end">
 									<li><a class="dropdown-item">
 											<div class="d-flex">
@@ -143,15 +164,16 @@
 													<span class="fw-semibold d-block">${memberName}</span> <small class="text-muted">관리자</small>
 												</div>
 											</div>
-									</a></li>
+										</a></li>
 									<li>
 										<div class="dropdown-divider"></div>
 									</li>
 									<!--                            <li><a class="dropdown-item" href="#"> <i class="bx bx-user me-2"></i> <span class="align-middle">My Profile</span>
                            </a></li> -->
 
-									<li><a class="dropdown-item" href="logout.do"> <i class="bx bx-power-off me-2"></i> <span class="align-middle">로그아웃</span>
-									</a></li>
+									<li><a class="dropdown-item" href="logout.do">
+											<i class="bx bx-power-off me-2"></i> <span class="align-middle">로그아웃</span>
+										</a></li>
 								</ul></li>
 							<!--/ User -->
 						</ul>
@@ -207,10 +229,14 @@
 								<script>
 									document.write(new Date().getFullYear());
 								</script>
-								, made with ❤️ by <a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
+								, made with ❤️ by
+								<a href="https://themeselection.com" target="_blank" class="footer-link fw-bolder">ThemeSelection</a>
 							</div>
 							<div>
-								<a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a> <a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a> <a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a> <a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
+								<a href="https://themeselection.com/license/" class="footer-link me-4" target="_blank">License</a>
+								<a href="https://themeselection.com/" target="_blank" class="footer-link me-4">More Themes</a>
+								<a href="https://themeselection.com/demo/sneat-bootstrap-html-admin-template/documentation/" target="_blank" class="footer-link me-4">Documentation</a>
+								<a href="https://github.com/themeselection/sneat-html-admin-template-free/issues" target="_blank" class="footer-link me-4">Support</a>
 							</div>
 						</div>
 					</footer>

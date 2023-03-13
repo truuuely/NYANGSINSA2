@@ -59,19 +59,20 @@
 	margin-left: 20px;
 }
 
-
-/* 활성 메뉴 항목의 스타일 */ 
-.report-menubar a.active { color: black; font-weight: bold; }
-
-
-/* 비활성 메뉴 항목 스타일 */ 
-.report-menubar a:not(.active) { color: gray; }
-
-.report-menubar a:hover {
- 
-  cursor: pointer;
+/* 활성 메뉴 항목의 스타일 */
+.report-menubar a.active {
+	color: black;
+	font-weight: bold;
 }
 
+/* 비활성 메뉴 항목 스타일 */
+.report-menubar a:not(.active) {
+	color: gray;
+}
+
+.report-menubar a:hover {
+	cursor: pointer;
+}
 
 .modal-btn-box {
 	width: 100%;
@@ -271,71 +272,53 @@
 
 				<ul class="menu-inner py-1">
 					<!-- Dashboard -->
-					<li class="menu-item">
-						<a href="main.do" class="menu-link">
+					<li class="menu-item"><a href="main.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-home-circle"></i>
 							<div data-i18n="Analytics">냥신사홈</div>
-						</a>
-					</li>
-					<li class="menu-item">
-						<a href="adminIndex.do" class="menu-link">
+						</a></li>
+					<li class="menu-item"><a href="adminIndex.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-home-circle"></i>
 							<div data-i18n="Analytics">관리자홈</div>
-						</a>
-					</li>
+						</a></li>
 
 
 					<!-- Components -->
-					<li class="menu-header small text-uppercase">
-						<span class="menu-header-text">관리자 메뉴</span>
-					</li>
+					<li class="menu-header small text-uppercase"><span class="menu-header-text">관리자 메뉴</span></li>
 					<!-- Cards -->
-					<li class="menu-item">
-						<a href="memberManagePage.do" class="menu-link">
+					<li class="menu-item"><a href="memberManagePage.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-user-check"></i>
 							<div data-i18n="Basic">회원관리</div>
-						</a>
-					</li>
+						</a></li>
 
 					<!-- 상품관리 -->
-					<li class="menu-item">
-						<a href="productManagePage.do" class="menu-link">
+					<li class="menu-item"><a href="productManagePage.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-store"></i>
 
 							<div data-i18n="Basic">상품관리</div>
-						</a>
-					</li>
+						</a></li>
 
 					<!-- 주문관리 -->
-					<li class="menu-item">
-						<a href="orderManagePage.do" class="menu-link">
+					<li class="menu-item"><a href="orderManagePage.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-receipt"></i>
 							<div data-i18n="Basic">주문관리</div>
-						</a>
-					</li>
+						</a></li>
 
 					<!-- 리뷰관리 -->
-					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
+					<li class="menu-item"><a href="reviewManagePage.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">리뷰관리</div>
-						</a>
-					</li>
+						</a></li>
 
 					<!-- 글 관리 -->
-					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
+					<li class="menu-item"><a href="reviewManagePage.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">게시글 관리</div>
-						</a>
-					</li>
+						</a></li>
 					<!-- 신고 관리 -->
-					<li class="menu-item">
-						<a href="reviewManagePage.do" class="menu-link">
+					<li class="menu-item"><a href="reviewManagePage.do" class="menu-link">
 							<i class="menu-icon tf-icons bx bx-message-alt-dots"></i>
 							<div data-i18n="Basic">신고 관리</div>
-						</a>
-					</li>
+						</a></li>
 				</ul>
 			</aside>
 			<!-- / Menu -->
@@ -364,15 +347,13 @@
 
 
 							<!-- User -->
-							<li class="nav-item navbar-dropdown dropdown-user dropdown">
-								<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+							<li class="nav-item navbar-dropdown dropdown-user dropdown"><a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
 									<div class="avatar avatar-online">
 										<img src="assets/img/avatars/admin.png" alt="관리자 프로필 사진" class="w-px-40 h-auto rounded-circle">
 									</div>
 								</a>
 								<ul class="dropdown-menu dropdown-menu-end">
-									<li>
-										<a class="dropdown-item">
+									<li><a class="dropdown-item">
 											<div class="d-flex">
 												<div class="flex-shrink-0 me-3">
 													<div class="avatar avatar-online">
@@ -383,22 +364,17 @@
 													<span class="fw-semibold d-block">${member.userName}</span> <small class="text-muted">관리자</small>
 												</div>
 											</div>
-										</a>
-									</li>
+										</a></li>
 									<li>
 										<div class="dropdown-divider"></div>
 									</li>
 									<!--                            <li><a class="dropdown-item" href="#"> <i class="bx bx-user me-2"></i> <span class="align-middle">My Profile</span>
                            </a></li> -->
 
-									<li>
-										<a class="dropdown-item" href="logout.do">
-											<i class="bx bx-power-off me-2"></i>
-											<span class="align-middle">로그아웃</span>
-										</a>
-									</li>
-								</ul>
-							</li>
+									<li><a class="dropdown-item" href="logout.do">
+											<i class="bx bx-power-off me-2"></i> <span class="align-middle">로그아웃</span>
+										</a></li>
+								</ul></li>
 							<!--/ User -->
 						</ul>
 					</div>
@@ -417,17 +393,17 @@
 						<!-- Hoverable Table rows -->
 						<div class="card">
 							<h6 class="card-header">
-								<ul class="report-menubar"> 
-								<li> <a class="active" onclick="list(1,1);">게시글 </a> 	</li> 
-								
-								<li> <a onclick="list(1,2);">댓글</a> </li> 
+								<ul class="report-menubar">
+									<li><a class="active" onclick="list(1,1);">게시글 </a></li>
+
+									<li><a onclick="list(1,2);">댓글</a></li>
 								</ul>
 
 							</h6>
 							<div class="table-responsive text-nowrap">
 								<table class="table table-hover">
 									<thead id="dataTableList">
-										
+
 									</thead>
 									<!-- 목록 출력부분 -->
 									<tbody class="table-border-bottom-0" id="dataTableBody">
