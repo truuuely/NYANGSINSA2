@@ -23,6 +23,9 @@ public class MemberDAO {
 
 	// 회원 비밀번호 수정
 	private final String SQL_UPDATE_PW = "UPDATE MEMBER SET M_PW = ? WHERE M_ID = ?";
+	
+	// 신고 당한 회원 등급 변경 
+	private final String SQL_UPDATE_ROLE = "UPDATE MEMBER m SET m.WARN_CNT =(m.WARN_CNT+1), m.`ROLE` =CASE WHEN m.WARN_CNT=3 THEN 'BLOCKED' ELSE ROLE END WHERE M_ID = ?";
 
 	// 회원 삭제
 	private final String SQL_DELETE = "DELETE FROM MEMBER WHERE M_NO = ?";
@@ -56,6 +59,12 @@ public class MemberDAO {
 	public boolean update(MemberVO vo) {
 		if (vo.getUserPw() != null) { // 비밀번호 변경
 			int res = jdbcTemplate.update(SQL_UPDATE_PW, vo.getUserPw(), vo.getUserId());
+			if (res < 1) {
+				return false;
+			}
+			return true;
+		} else if (vo.getPostNum() == null) {// 신고 당한 회원 등급 변경
+			int res = jdbcTemplate.update(SQL_UPDATE_ROLE, vo.getUserId());
 			if (res < 1) {
 				return false;
 			}
@@ -105,7 +114,7 @@ public class MemberDAO {
 				}, vo.getPhoneNum());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("MemberDAO : selectOne 결과 없음");
 		}
 		return null;
 	}
