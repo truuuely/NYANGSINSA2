@@ -155,14 +155,12 @@
 						<li><img style="width: 20px;" src="img/eyes.png" alt="조회수 아이콘"> ${v.boardView }</li>
 						<c:choose>
 							<c:when test="${v.isChecked==true}">
-								<li id="${v.boardNum}"><a href="javascript:void(0);" onclick="javascript:updateLike(${v.boardNum}, 'down');">
-										<img class="heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png" alt="좋아요 아이콘">
-									</a> ${v.likeCnt}</li>
+								<li><img onclick="javascript:updateLike(${v.boardNum}, 'down');" id="${v.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png" alt="좋아요 아이콘">
+									<span id="${v.boardNum}">${v.likeCnt}</span></li>
 							</c:when>
 							<c:otherwise>
-								<li id="${v.boardNum}"><a href="javascript:void(0);" onclick="javascript:updateLike(${v.boardNum}, 'up');">
-										<img class="heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png" alt="좋아요 아이콘">
-									</a> ${v.likeCnt}</li>
+								<li><img onclick="javascript:updateLike(${v.boardNum}, 'up');" id="${v.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png" alt="좋아요 아이콘">
+									<span id="${v.boardNum}">${v.likeCnt}</span></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>

@@ -4,7 +4,16 @@ public class BlikeVO {
 	private int likeNum; // 좋아요 PK
 	private int boardNum; // 글 번호
 	private int userNum; // 좋아요 누른 회원의 회원 번호.
-	
+	private String upOrDown;
+
+	public String getUpOrDown() {
+		return upOrDown;
+	}
+
+	public void setUpOrDown(String upOrDown) {
+		this.upOrDown = upOrDown;
+	}
+
 	// vo에만 존재하는 멤버변수
 	private String userId; // 좋아요 누른 회원의 ID
 
@@ -42,7 +51,7 @@ public class BlikeVO {
 
 	@Override
 	public String toString() {
-		return "BlikeVO [likeNum=" + likeNum + ", boardNum=" + boardNum + ", userNum=" + userNum + ", userId=" + userId
+		return "BlikeVO [likeNum=" + likeNum + ", boardNum=" + boardNum + ", userNum=" + userNum + ", upOrDown=" + upOrDown + ", userId=" + userId
 				+ "]";
 	}
 
