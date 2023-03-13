@@ -61,7 +61,7 @@ public class ReviewController {
 	@RequestMapping(value="/insertReview.do")
 	public String insertReview(ReviewVO rvo, Model model,HttpServletResponse response) {
 		response.setContentType("text/html; charset=utf-8");
-
+		
 		try {
 			if(reviewService.insert(rvo)) { // 업데이트 성공  
 				response.getWriter().println("<SCRIPT>alert('리뷰가 등록되었습니다.'); window.close();</SCRIPT>");
