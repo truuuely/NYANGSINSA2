@@ -167,7 +167,7 @@
 					<h5>
 						<a href="boardPostView.do?boardNum=${v.boardNum}">${v.boardTitle}</a>
 					</h5>
-					<a href="boardPostView.do?boardNum=${v.boardNum}" class="blog__btn">
+					<a href="boardPostView.do?boardNum=${v.boardNum}&searchCondition=viewCnt" class="blog__btn">
 						글 보기<span class="arrow_right"></span>
 					</a>
 				</div>
