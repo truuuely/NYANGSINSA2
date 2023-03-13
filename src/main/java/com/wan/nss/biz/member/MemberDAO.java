@@ -34,7 +34,7 @@ public class MemberDAO {
 	private final String SQL_SELECTONE_ID = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? ";
 
 	// 핸드폰 번호 중복 검사
-	private final String SQL_SELECTONE_PHONE = "SELECT PHONE_NO FROM MEMBER WHERE PHONE_NO = ?";
+	private final String SQL_SELECTONE_PHONE = "SELECT PHONE_NO, M_NM, M_ID FROM MEMBER WHERE PHONE_NO = ?";
 
 	// 회원 전체 목록 보기
 	private final String SQL_SELECTALL = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER ORDER BY M_NO DESC";
@@ -98,6 +98,8 @@ public class MemberDAO {
 				// 휴대폰 번호 중복확인, 휴대폰 번호로 id 찾기
 				return jdbcTemplate.queryForObject(SQL_SELECTONE_PHONE, (rs, rowNum) -> {
 					MemberVO data = new MemberVO();
+					data.setUserName(rs.getString("M_NM"));
+					data.setUserId(rs.getString("M_ID"));
 					data.setPhoneNum(rs.getString("PHONE_NO"));
 					return data;
 				}, vo.getPhoneNum());
