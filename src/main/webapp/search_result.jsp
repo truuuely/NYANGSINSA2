@@ -261,25 +261,23 @@
 	<!-- 리스트세팅 -->
 	<script>
 		$(document).ready(function() {
-			list(${pSearchContent}, 1);
+			console.log("${pSearchContent}");
+			list("${pSearchContent}", 1);
 
-			$.when($.ajax("getList")).done(function() {
-
-				$.ajax({ // ajax로 데이터 가져오기
-					type : 'POST',
-					url : 'getCartCnt.do',
-					success : function(data) {
-						console.log("data: " + data);
-						let cartCnt = '';
-						cartCnt += data; // 장바구니 상품 개수
-						console.log("cartCnt 불러옴: " + cartCnt);
-						$('#cartCnt').text(cartCnt);
-						$('#cartCnt2').text(cartCnt);
-					},
-					error : function() {
-						alert('error');
-					}
-				})
+			$.ajax({ // ajax로 데이터 가져오기
+				type : 'POST',
+				url : 'getCartCnt.do',
+				success : function(data) {
+					console.log("data: " + data);
+					let cartCnt = '';
+					cartCnt += data; // 장바구니 상품 개수
+					console.log("cartCnt 불러옴: " + cartCnt);
+					$('#cartCnt').text(cartCnt);
+					$('#cartCnt2').text(cartCnt);
+				},
+				error : function() {
+					alert('error');
+				}
 			})
 		});
 
