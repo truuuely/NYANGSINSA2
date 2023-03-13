@@ -32,8 +32,7 @@ public class ReviewDAO {
 
 	public boolean insert(ReviewVO rvo) {
 		// 리뷰 작성
-		jdbcTemplate.update(SQL_INSERT, rvo.getpNum(), rvo.getrWriter(), rvo.getrContent(), rvo.getrDate(),
-				rvo.getrRate());
+		jdbcTemplate.update(SQL_INSERT, rvo.getpNum(), rvo.getUserId(), rvo.getrContent(), rvo.getrRate());
 		return true;
 	}
 
