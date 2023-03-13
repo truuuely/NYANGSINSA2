@@ -24,13 +24,14 @@ public class BoardDAO {
 	 * R
 	 */
 	// (사용자의 좋아요 여부 표시된) 삭제되지 않은 게시글 전체 가져오기
-//	SELECT * FROM BOARD ORDER BY B_NO DESC; 
-	private final String SELECT_ALL = "SELECT b.*, COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, COUNT(RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
-			+ " FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO WHERE STATUS != 3) b "
-			+ " LEFT JOIN (SELECT * FROM REPLY WHERE STATUS != 3) r ON b.B_NO = r.B_NO "
+	// ? : 로그인한 아이디
+	private final String SELECT_ALL = "SELECT IFNULL(i.I_NM, 'img/default.jpg') AS I_NM, "
+			+ "	EXISTS(SELECT LK_NO FROM BLIKE bl WHERE bl.B_NO = b.B_NO AND M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?)) AS ISCHECKED, "
+			+ "	COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, COUNT(DISTINCT r.RE_NO) AS REPLY_CNT, m.M_ID, b.* "
+			+ " FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO "
+			+ " LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO "
 			+ " LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO "
-			+ " LEFT JOIN (SELECT * FROM BLIKE WHERE M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?)) bl "
-			+ " ON b.B_NO = bl.B_NO GROUP BY b.B_NO, i.I_NM, bl.M_NO ORDER BY b.B_NO DESC";
+			+ " WHERE b.STATUS != 3 GROUP BY b.B_NO, i.I_NO ORDER BY B_NO DESC";
 
 	// 관리자 게시글 관리
 	private final String SELECT_ALL_ADMIN = "SELECT b.B_NO, b.M_NO, m.M_ID, b.B_TITLE, b.B_CONTENT, b.B_DATE, b.STATUS, b.B_VIEW FROM BOARD b "
@@ -186,8 +187,7 @@ public class BoardDAO {
 		if (vo.getSearchCondition() == null) { // 1. 글 전체 보기
 			// 로그인 안 한 경우 전체 좋아요가 false로 나옴
 			System.out.println("BoardDAO  전체 보기");
-			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId(),
-					vo.getUserId());
+			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL, new BoardRowMapper(), vo.getUserId());
 
 		}
 		if (vo.getSearchCondition().equals("admin")) { // 관리자 : 게시글 관리
