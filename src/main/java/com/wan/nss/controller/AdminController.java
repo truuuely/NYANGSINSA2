@@ -1,6 +1,5 @@
 package com.wan.nss.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -116,23 +115,24 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	}
 
 	// 관리자 홈 도넛차트 데이터 가져오기
-	@RequestMapping(value = "getDonutChart.do")
-	protected JsonObject sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
-		System.out.println("getDonutChart.do 진입");
+	@ResponseBody
+	@RequestMapping(value = "/getChart.do")
+	public JsonObject sendChart(OrderVO ovo, OrderDetailVO odvo) {
+		System.out.println("getChart.do 진입");
 		
-		// 카테고리별 도넛 차트
-		List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
-
 		String[] category = {"food", "treat", "sand"};
 		JsonObject data = new JsonObject();
 		
 		for (int i = 0; i < category.length; i++) {
 			
 			odvo.setCategory(category[i]);
+			System.out.println("odvo.category: " + odvo.getCategory());
 			odvo = orderDetailService.selectOne(odvo); // cnt, sum 받아옴
+			System.out.println("odvo");
+			System.out.println(odvo);
 			
-			data.addProperty("categoryCnt" + (i+0), odvo.getOdCnt()); // categoryCnt1~
-			data.addProperty("categorySum" + (i+0), odvo.getSum()); // categorySum1~
+			data.addProperty("categoryCnt" + (i+1), odvo.getOdCnt()); // categoryCnt1~
+			data.addProperty("categorySum" + (i+1), odvo.getSum()); // categorySum1~
 			
 		}
 
@@ -142,21 +142,24 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		// 작년 수익
 		ovo.setoSearchCondition("lastYear");
-		int lastYearSum = orderService.selectOne(ovo).getoPrice();
+		System.out.println(orderService.selectOne(ovo));
+//		int lastYearSum = orderService.selectOne(ovo).getoPrice();
+		int lastYearSum = 0;
 
 		// data 리스트에 넣기
 		System.out.println("lastYearSum: " + lastYearSum);
 		data.addProperty("lastYearSum", lastYearSum);
 
 		// 2023년 수익
-		ovo.setoSearchCondition("thisyear");
-		int thisyearSum = orderService.selectOne(ovo).getoPrice();
+		ovo.setoSearchCondition("thisYear");
+		int thisYearSum = orderService.selectOne(ovo).getoPrice();
 
 		// data 리스트에 넣기
-		System.out.println("thisyearSum: " + thisyearSum);
-		data.addProperty("thisyearSum", thisyearSum);
+		System.out.println("thisYearSum: " + thisYearSum);
+		data.addProperty("thisYearSum", thisYearSum);
 		// 연도별 수익 데이터 저장 부분 End
 
+		System.out.println("data: " + data);
 		return data;
 	}
 
@@ -184,7 +187,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 
 	// (관리자) 상품 관리 페이지 이동
-	@RequestMapping(value = "/adminProductDetail.do")
+	@RequestMapping(value = "/productManagePage.do")
 	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
@@ -207,17 +210,10 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// 상품 받아오는 이슈 해결하면 바로 할 듯
 	// (관리자) 상품 상세보기 페이지 이동: model에는 있으나 view에는 아직 없음
-	@RequestMapping(value = "/updateProductPage.do")
+	@RequestMapping(value = "/adminProductDetail.do")
 	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
-		productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
-
-		// 상세이미지 불러오기
-		ivo.setTargetNum(pvo.getpNum()); // 상품pk를 이미지pk에 세팅
-		ivo.setTypeNum(102);
-		ImageVO selectIvo = imageService.selectOne(ivo); // 세팅된 이미지pk를 가지고 selectOne하여 상세이미지 정보 불러오기
-		pvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 selectIvo의 imageName을 pvo의 ImageName2에 세팅
 		
-		model.addAttribute("pvo", pvo);
+		model.addAttribute("pvo", productService.selectOne(pvo)); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
 		
 		return "product_manage_detail.jsp";
 	}
