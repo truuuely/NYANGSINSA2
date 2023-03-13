@@ -174,7 +174,7 @@ public class OrderController {
 		for (int i = 0; i < oList.size(); i++) { // 주문 내역 한 개당 총 금액 넣기
 			oList.get(i).setoDate(oList.get(i).getoDate().substring(0, 19)); // 주문 날짜 뒤 ".000" 잘라서 저장
 			vo.setoNum(oList.get(i).getoNum());
-			vo.setoSearchCondition("totlaPrice");
+			vo.setoSearchCondition("totalPrice");
 			// totalPrice : 주문 당 총 금액
 			int totalPrice = orderService.selectOne(vo).getoPrice();
 			oList.get(i).setoPrice(totalPrice);
@@ -191,7 +191,8 @@ public class OrderController {
 	public String selectAllOrderDetailList(OrderVO ovo, OrderDetailVO odvo, Model model) {
 
 		System.out.println("orderDetailList.do 진입");
-
+		System.out.println("oNum: " + ovo.getoNum());
+		
 		odvo.setoNum(ovo.getoNum());
 		List<OrderDetailVO> odList = orderDetailService.selectAll(odvo); // 주문 번호가 oNum인 주문 상세 내역들
 
