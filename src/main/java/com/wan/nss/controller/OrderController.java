@@ -173,8 +173,8 @@ public class OrderController {
 
 		for (int i = 0; i < oList.size(); i++) { // 주문 내역 한 개당 총 금액 넣기
 			oList.get(i).setoDate(oList.get(i).getoDate().substring(0, 19)); // 주문 날짜 뒤 ".000" 잘라서 저장
-
 			vo.setoNum(oList.get(i).getoNum());
+			vo.setoSearchCondition("totlaPrice");
 			// totalPrice : 주문 당 총 금액
 			int totalPrice = orderService.selectOne(vo).getoPrice();
 			oList.get(i).setoPrice(totalPrice);
