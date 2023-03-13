@@ -187,7 +187,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 회원 관리 페이지 이동
 	@RequestMapping(value = "/memberManagePage.do")
-	public String selectAllMemberManage(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String selectAllMemberManage(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
