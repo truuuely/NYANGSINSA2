@@ -386,7 +386,7 @@
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
-			
+
 			console.log('들어옴');
 			$.ajax({
 				type : 'POST',
@@ -396,19 +396,23 @@
 					boardNum : bNum
 				},
 				success : function(data) {
-					var id = '#'+bNum+'heartImg';
+					var id = '#' + bNum + 'heartImg';
 					console.log("좋아유 수 " + data)
-					console.log("넘버 " +'#'+bNum)
-					console.log("업다운 " +upOrDown)
-					console.log("이미지 아이디 " +'#'+bNum+'heartImg')
+					console.log("넘버 " + '#' + bNum)
+					console.log("업다운 " + upOrDown)
+					console.log("이미지 아이디 " + '#' + bNum + 'heartImg')
 					console.log($(id).attr('src'));
-					$('#'+bNum+'').text(data);
-					
+					$('#' + bNum + '').text(data);
+
 					if (upOrDown == 'down') {
-						$(id).attr({src:'img/heart.png'});
+						$(id).attr({
+							src : 'img/heart.png'
+						});
 						/* $(this).children('img').attr("src", "img/heart.png"); */
 					} else {
-						$(id).attr({src:'img/fullheart.png'});
+						$(id).attr({
+							src : 'img/fullheart.png'
+						});
 					}
 				},
 				error : function() {
