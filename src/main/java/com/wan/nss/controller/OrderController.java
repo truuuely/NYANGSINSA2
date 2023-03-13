@@ -171,15 +171,6 @@ public class OrderController {
 		List<OrderVO> oList;
 		oList = orderService.selectAll(vo); // 현재 로그인한 회원의 주문 내역 리스트
 
-		for (int i = 0; i < oList.size(); i++) { // 주문 내역 한 개당 총 금액 넣기
-			oList.get(i).setoDate(oList.get(i).getoDate().substring(0, 19)); // 주문 날짜 뒤 ".000" 잘라서 저장
-			vo.setoNum(oList.get(i).getoNum());
-			vo.setoSearchCondition("totalPrice");
-			// totalPrice : 주문 당 총 금액
-			int totalPrice = orderService.selectOne(vo).getoPrice();
-			oList.get(i).setoPrice(totalPrice);
-		}
-
 		model.addAttribute("oList", oList);
 
 		return "order_list.jsp";
