@@ -54,9 +54,7 @@
 				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
-				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">
-					${board.boardContent}
-				</div>
+				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
 		</div>
 	</div>
@@ -105,14 +103,14 @@
 									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
 									<label for="r2">스팸광고/도배글 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
-									<label for="r2">부적절한 컨텐츠 입니다.</label>
+									<input type="radio" class="report-box2" name="radio" id="r3" value="0">
+									<label for="r3">부적절한 컨텐츠 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
-									<label for="r2">음란성 게시물 입니다.</label>
+									<input type="radio" class="report-box2" name="radio" id="r4" value="0">
+									<label for="r4">음란성 게시물 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r2" value="1">
-									<label for="r2">기타</label>
+									<input type="radio" class="report-box2" name="radio" id="r5" value="1">
+									<label for="r5">기타</label>
 									<br>
 									<input type="text" class="report-box2 report-text" name="text" disabled placeholder="사유를 작성해주세요.">
 							</div>
@@ -169,9 +167,9 @@
 			</button>
 		</a>
 	</div>
-	
-	
-	<c:if test = "${board.userNum==userNum}">
+
+
+	<c:if test="${board.userNum==userNum}">
 		<div id="fixdelete">
 			<a href="deleteBoard.do?boardNum=${board.boardNum}">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
@@ -270,7 +268,7 @@
 			});
 		});
 	</script> -->
-	
+
 	<script type="text/javascript">
 	
 		$("#showReReply").click(function() {
