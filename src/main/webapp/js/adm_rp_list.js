@@ -14,7 +14,7 @@ let encodedValues; // values를 json 타입으로 인코딩
 let url;
 
 
-function list(selectPage,step) {
+function list(selectPage,step) { // step : 글인지 댓글인지 대댓글인지 비교함
 	pageCount=5;
 	console.log(totalPage);
 	// 페이징 시작번호와 끝번호 세팅하기
@@ -75,7 +75,7 @@ function displayData(selectPage,step) {
 	console.log(dataList);
 	if(totalData!=0){
 		for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
-			if(step==1 && dataList[i].reportStat==1){
+			if(step==1 && dataList[i].reportStep==1 && dataList[i].reportStat==1){
 				// 신고된 글 
 				
 				values = { targetNum: dataList[i].targetNum ,
@@ -110,7 +110,7 @@ function displayData(selectPage,step) {
 				
 				listhtml="	<tr> 	<th>no.</th> 	<th>글 작성자</th> 	<th>게시글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
 			}
-			if(step==2 && dataList[i].reportStat==1){
+			if(step==2 && dataList[i].reportStep== 2 || 3 && dataList[i].reportStat==1){
 				// 신고된 댓글
 				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
 				+"<td>"+dataList[i].userId+"</td>"
@@ -147,7 +147,7 @@ function displayData(selectPage,step) {
 
 
 //페이지네이션 표시 함수
-function paging(currentPage,step) {
+function paging(currentPage,step) { 
 	console.log('페이징 함수 실행5');
 	if(totalData!=0){ // dataList에 데이터(상품||리뷰)가 있을 때 페이징 띄우기
 		console.log('paging 함수 '+part);

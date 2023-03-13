@@ -23,7 +23,7 @@ function list(selectPage) {
 		last+=pageCount;
 	}
 	console.log("dd");
-	part="product";
+	part="board";
 	
  	console.log("part: "+part);
  	console.log("selectPage: "+selectPage);
@@ -67,19 +67,18 @@ function displayData(selectPage) {
   console.log(dataList);
   	if(totalData!=0){
 		  	for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)); i++) {
-				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong onclick='openPop("+dataList[i].pNum+")'>"+dataList[i].pNum+"</strong></td>"
-                                 +"<td>"+dataList[i].category+"</td>"
-                                 +"<td>"+dataList[i].pName+"</td>"
-                                 +"<td>"+dataList[i].price+"</td>"
-                                 +"<td>"+dataList[i].pDcPercent+"</td>"
-                                 +"<td>"+dataList[i].pAmt+"</td>"
+				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong onclick='newOpen("+dataList[i].boardNum+")'>"+dataList[i].boardNum+"</strong></td>"
+                                 +"<td>"+dataList[i].userId+"</td>"
+                                 +"<td>"+(dataList[i].boardContent.length > 25 ? dataList[i].boardContent.substring(0, 25) + "..." : dataList[i].boardContent)+"</td>"
+                                 +"<td>"+dataList[i].boardView+"</td>"
+                                 +"<td>"+dataList[i].likeCnt+"</td>"
                                  +"<td>"
                                     +"<div class='dropdown'>"
                                        +"<button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
                                           +"<i class='bx bx-dots-vertical-rounded'></i>"
                                        +"</button>"
                                        +"<div class='dropdown-menu'>"
-                                          +"<a class='dropdown-item' href='adminProductDetail.do?pNum="+dataList[i].pNum+"'><i class='bx bx-edit-alt me-1'></i>게시글 관리</a> <a class='dropdown-item' href='javascript:void(0);'><i class='bx bx-trash me-1'></i> 삭제</a>"
+                                          +"<a class='dropdown-item' href='deleteBoardDetail.do?boardNum="+dataList[i].boardNum+"'><i class='bx bx-trash me-1'></i> 삭제</a>"
                                        +"</div>"
                                    +"</div>"
                                  +"</td>"
@@ -91,8 +90,8 @@ function displayData(selectPage) {
   }
 }
 // 글 상세보기 윈도우 오픈 함수 
-function openPop(data){
-	    var popup = window.open('shopDetails.do?pNum='+data+'', '네이버팝업', 'width=700px,height=800px,scrollbars=yes');
+function newOpen(boardNum){
+		window.open("boardDetialView.do?boardNum="+boardNum);
 	    }
 // 페이지네이션 표시 함수
 function paging(currentPage) {

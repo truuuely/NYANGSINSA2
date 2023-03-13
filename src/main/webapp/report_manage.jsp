@@ -519,73 +519,9 @@
 		 menuItems.forEach(item => { item.classList.remove('active'); }); // 클릭된 항목에 활성 클래스 추가 
 		 this.classList.add('active'); }); });
 	
-	//땐 글릭 시
-	/* $(".card-header").find("a").click(function(){
-	console.log('gd');
-	$(".card-header").find("li").not(this).removeClass("clickTr");
 	
-	$(this).parent().addClass("clickTr");
-	}); */
-		// 글자색변경
-		/*  $(function(){
-
-		     $(".report-menubar").click(function(){$(this).css("color","red")})
-
-		 }) */
-		/* var t = document.getElementsByClassName("report-menubar");
-		console.log(t);
-		// row 선택 시 event
-		for (var i = 0; i < t.length; i++) {
-			$(t).click(function(e) {
-				console.log('gg');
-				tableTrClick(e);
-			});
-		}
-
-		// row 선택 시 색깔 변경 나머지 원래대로
-		function tableTrClick(e) {
-			console.log('gd');
-			if ($(e.target.parentElement).hasClass("clickTr")) {
-				$(e.target.parentElement).removeClass('clickTr');
-			} else {
-				for (var i = 0; i < t.length; i++) {
-					t[i].classList.remove('clickTr');
-				}
-			}
-
-			$(e.target.parentElement).addClass('clickTr');
-		} */
 	</script>
-	<!--    클릭시 색상 변경 
-   <script>
-   var hhhh = document.getElementsByClassName("hhhh");
-
-   function handleClick(event) {
-     console.log(event.target);
-     // console.log(this);
-     // 콘솔창을 보면 둘다 동일한 값이 나온다
-
-     console.log(event.target.classList);
-
-     if (event.target.classList[1] === "clicked") {
-       event.target.classList.remove("clicked");
-     } else {
-       for (var i = 0; i < hhhh.length; i++) {
-    	   hhhh[i].classList.remove("clicked");
-       }
-
-       event.target.classList.add("clicked");
-     }
-   }
-
-   function init() {
-     for (var i = 0; i < hhhh.length; i++) {
-    	 hhhh[i].addEventListener("click", handleClick);
-     }
-   }
-   init();
-   </script> -->
-	<!-- 리스트세팅 -->
+	
 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script>
