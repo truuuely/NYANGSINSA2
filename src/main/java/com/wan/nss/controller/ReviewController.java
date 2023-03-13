@@ -40,9 +40,7 @@ public class ReviewController {
 		System.out.println("pNum: " + pvo.getpNum()); 	
 		pvo = productService.selectOne(pvo); // 리뷰 작성 창 세팅하기
 
-		model.addAttribute("pNum", pvo.getpNum());
-		//model.addAttribute("pImgUrl", pvo.getpImgUrl());
-		model.addAttribute("pName", pvo.getpName());
+		model.addAttribute("pvo", pvo);
 		try {
 			
 		for (ReviewVO v : rdatas) {
