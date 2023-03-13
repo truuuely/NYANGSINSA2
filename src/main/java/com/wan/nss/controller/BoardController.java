@@ -31,9 +31,10 @@ public class BoardController {
 
 	// 고양이 자랑 게시판 페이지 진입
 	@RequestMapping(value = "/boardView.do")
-	public String boardView(BoardVO bvo, Model model) {
+	public String boardView(BoardVO bvo, Model model, HttpSession session) {
 
 		System.out.println("boardView.do 진입");
+		bvo.setUserId((String) session.getAttribute("memberId"));
 
 		// 전체 자랑글 목록 : bList
 		model.addAttribute("bList", boardService.selectAll(bvo));
@@ -49,8 +50,9 @@ public class BoardController {
 
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
-	public String boardPostView(BoardVO bvo, Model model) {
+	public String boardPostView(BoardVO bvo, Model model, HttpSession session) {
 
+		bvo.setUserId((String) session.getAttribute("memberId"));
 		System.out.println("boardPostView.do 진입");
 
 		model.addAttribute("board", boardService.selectOne(bvo));
@@ -163,13 +165,12 @@ public class BoardController {
 	// 고양이 자랑 게시글 좋아요/취소 수행
 	@ResponseBody
 	@RequestMapping(value = "/updateBlike.do")
-	public String updateLike(BlikeVO blvo, BoardVO bvo, Model model, HttpServletRequest request) {
-		blvo.setUserId((String) request.getSession().getAttribute("memberId"));
-		bvo.setUserId((String) request.getSession().getAttribute("memberId"));
+	public String updateLike(BlikeVO blvo, BoardVO bvo, Model model, HttpSession session) {
+		blvo.setUserId((String) session.getAttribute("memberId"));
+		bvo.setUserId((String) session.getAttribute("memberId"));
 		System.out.println("updateBlike.do 진입");
 		System.out.println(blvo);
 
-		
 		if (blvo.getUpOrDown().equals("up")) {
 			System.out.println("좋아요 업");
 			blikeService.insert(blvo);
@@ -177,9 +178,7 @@ public class BoardController {
 			System.out.println("좋아요 다운");
 			blikeService.delete(blvo);
 		}
-		
 		bvo = boardService.selectOne(bvo);
-		
 
 //		// 좋아요 할 때
 //		BlikeService.insert(blvo);

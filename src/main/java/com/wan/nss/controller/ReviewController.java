@@ -61,7 +61,7 @@ public class ReviewController {
 	@RequestMapping(value="/insertReview.do")
 	public String insertReview(ReviewVO rvo, Model model,HttpServletResponse response) {
 		response.setContentType("text/html; charset=utf-8");
-
+		
 		try {
 			if(reviewService.insert(rvo)) { // 업데이트 성공  
 				response.getWriter().println("<SCRIPT>alert('리뷰가 등록되었습니다.'); window.close();</SCRIPT>");
@@ -80,7 +80,7 @@ public class ReviewController {
 	@RequestMapping(value = "/myReviewView.do") //View님들 myreview.do -> myReviewView.do로 수정 부탁드립니다
 	public String myReviewView(ReviewVO rvo,Model model) { 
 		model.addAttribute("rList", reviewService.selectAll(rvo));
-		return "myreview.jsp";
+		return "my_review.jsp";
 	}
 
 	// (관리자)리뷰 삭제
