@@ -29,6 +29,8 @@ import com.wan.nss.biz.orderdetail.OrderDetailService;
 import com.wan.nss.biz.orderdetail.OrderDetailVO;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
+import com.wan.nss.biz.report.ReportService;
+import com.wan.nss.biz.report.ReportVO;
 import com.wan.nss.biz.review.ReviewService;
 import com.wan.nss.biz.review.ReviewVO;
 
@@ -49,6 +51,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	private BoardService boardService;
 	@Autowired
 	private ImageService imageService;
+	@Autowired
+	private ReportService reportService;
 
 	// (관리자) 관리자 메인 페이지 이동
 	@RequestMapping(value = "/adminIndex.do")
@@ -291,7 +295,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		response.setCharacterEncoding("UTF-8"); // 인코딩
 
 		System.out.println("getAdminList.do 진입");
-
+		
 		// part = member, product, order, review 중 1
 		String part = request.getParameter("part");
 
@@ -301,13 +305,13 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		List list = null;
 
-		if (part.equals("member")) {
+		if (part.equals("member")) { //
 
 			MemberVO mvo = new MemberVO();
 
 			list = memberService.selectAll(mvo); // 결과 상품 목록
 
-		} else if (part.equals("product")) {
+		} else if (part.equals("product")) { //
 
 			ProductVO pvo = new ProductVO();
 			pvo.setCategory("all");
@@ -318,18 +322,30 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			// 뷰에서 넘어온 조건으로 상품리스트 가져오기
 			list = productService.selectAll(pvo); // 결과 상품 목록
 
-		} else if (part.equals("order")) {
+		} else if (part.equals("order")) { //
 
 			OrderDetailVO odvo = new OrderDetailVO();
 
 			list = orderDetailService.selectAll(odvo);
 
-		} else if (part.equals("review")) {
+		} else if (part.equals("review")) { //
 
 			ReviewVO rvo = new ReviewVO();
 
 			list = reviewService.selectAll(rvo);
 
+		} else if (part.equals("board")) { //
+		
+			BoardVO bvo = new BoardVO();
+			
+			list = boardService.selectAll(bvo);
+		
+		} else if (part.equals("report")) { //
+			
+			ReportVO rpVo = new ReportVO();
+			
+			list = reportService.selectAll(rpVo);
+			
 		}
 
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); // JsonArry로 변경하여 반환
