@@ -176,25 +176,28 @@ public class ProductDAO {
 	}
 
 	public ProductVO selectOne(ProductVO pvo) {
-
-		if (pvo.getpSearchCondition() == null) {
-			// 1. 상세보기 : pNum만 세팅
-			return jdbcTemplate.queryForObject(SQL_SELECTONE, new ProductRowMapper(), pvo.getpNum());
-
-		} else if (pvo.getpSearchCondition().equals("newest")) {
-			// 2. 가장 최근에 등록된 상품 번호 보기 (이미지 insert 할 때)
-			// pSearchCondition = "newest"
-			return jdbcTemplate.queryForObject(SELECT_ONE_NEWEST, (rs, rowNum) -> { 
-				ProductVO data = new ProductVO();
-				data.setpNum(rs.getInt("P_NO"));
-				return data;
-			});
-		} else if(pvo.getpSearchCondition().equals("max")) {
-			return jdbcTemplate.queryForObject(SELECT_ONE_MAX_PRICE, (rs, rowNum) -> {
-				ProductVO data = new ProductVO();
-				data.setPrice(rs.getInt("MAX_PRICE"));
-				return data;
-			});
+		try {
+			if (pvo.getpSearchCondition() == null) {
+				// 1. 상세보기 : pNum만 세팅
+				return jdbcTemplate.queryForObject(SQL_SELECTONE, new ProductRowMapper(), pvo.getpNum());
+			}
+			if (pvo.getpSearchCondition().equals("newest")) {
+				// 2. 가장 최근에 등록된 상품 번호 보기 (이미지 insert 할 때)
+				// pSearchCondition = "newest"
+				return jdbcTemplate.queryForObject(SELECT_ONE_NEWEST, (rs, rowNum) -> {
+					ProductVO data = new ProductVO();
+					data.setpNum(rs.getInt("P_NO"));
+					return data;
+				});
+			} else if (pvo.getpSearchCondition().equals("max")) {
+				return jdbcTemplate.queryForObject(SELECT_ONE_MAX_PRICE, (rs, rowNum) -> {
+					ProductVO data = new ProductVO();
+					data.setPrice(rs.getInt("MAX_PRICE"));
+					return data;
+				});
+			}
+		} catch (Exception e) {
+			System.out.println("ProductDAO selectOne 결과 없음");
 		}
 		return null;
 	}
@@ -214,12 +217,6 @@ public class ProductDAO {
 			pvo.setDc_price(rs.getInt("DC_PRICE")); // 할인된 가격
 			pvo.setImageName(rs.getString("I_NM")); // 상품 대표 이미지 파일 이름
 
-//         pvo.setSearchLowPrice(rs.getInt("LOWPRICE"));
-//         pvo.setSearchHighPrice(rs.getInt("HIGHPRICE"));
-//         pvo.setTotal(rs.getInt("TOTAL"));
-//         pvo.setpCnt(rs.getInt("PCNT"));
-//         pvo.setpSearchContent(rs.getString("CONTENT"));
-//         pvo.setSort(rs.getString("SORT"));
 			return pvo;
 		}
 	}
