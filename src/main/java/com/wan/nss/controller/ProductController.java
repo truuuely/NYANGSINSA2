@@ -1,5 +1,6 @@
 package com.wan.nss.controller;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.common.Crawling;
 import com.wan.nss.biz.image.ImageService;
 import com.wan.nss.biz.image.ImageVO;
@@ -74,7 +76,7 @@ public class ProductController {
 		pvo.setSort("sellDesc");
 		model.addAttribute("popPList", productService.selectAll(pvo)); //주문데이터가 있어야 가능 (지금 사료밖에 없음)
 		model.addAttribute("lang",request.getParameter("lang"));
-		
+
 		return "main.jsp";
 	}
 
@@ -110,20 +112,20 @@ public class ProductController {
 	@RequestMapping(value = "/shopDetails.do")
 	public String shopDetailView(ProductVO pvo, ProductVO pvo2, ImageVO ivo, ReviewVO rvo, Model model) {
 		System.out.println("pNum: " + pvo.getpNum());
-		
+
 		ProductVO resPvo = productService.selectOne(pvo); // 해당 상품 및 달려있는 리뷰 set,  상세페이지에서 보여줄 상품num을 selectAll에 돌린 결과를 resPvo에 저장
-			
+
 		// 상세이미지 불러오기
-	    ivo.setTargetNum(resPvo.getpNum()); // 상품pk를 이미지pk에 세팅
-	    ivo.setTypeNum(102);
-	    ImageVO selectIvo = imageService.selectOne(ivo); // 세팅된 이미지pk를 가지고 selectOne하여 상세이미지 정보 불러오기
-	    resPvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 ivo의 imageName을 pvo의 ImageName2에 세팅		
+		ivo.setTargetNum(resPvo.getpNum()); // 상품pk를 이미지pk에 세팅
+		ivo.setTypeNum(102);
+		ImageVO selectIvo = imageService.selectOne(ivo); // 세팅된 이미지pk를 가지고 selectOne하여 상세이미지 정보 불러오기
+		resPvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 ivo의 imageName을 pvo의 ImageName2에 세팅		
 		System.out.println("resPvo.getImageName2: "+resPvo.getImageName2()); // 확인
 
 		//해당 제품의 리뷰 보기
 		rvo.setrSearchCondition("pNum"); 
 		rvo.setpNum(resPvo.getpNum()); //리뷰 num을 해당 상품의 num으로 세팅
-		
+
 		// 관련상품 목록 가져오기 조건 : pName==null, 카테고리 nn, 정렬 nn
 		pvo.setCategory(resPvo.getCategory());
 		pvo.setSort("sellDesc"); // 관련상품(선택된 카테고리의 인기상품들) 가져오기 위해 정렬 set
@@ -137,7 +139,7 @@ public class ProductController {
 
 		System.out.println(rList);
 		System.out.println(pList);
-		
+
 		model.addAttribute("pvo", resPvo); // 해당 상품의 정보들을 보내줌
 		model.addAttribute("rList", rList); //해당 리뷰를 받고 있음??? 뷰에서 확인을 해봐야 할 거 같음.. 이 이상으로 뭘 해줄 수가 없음
 		model.addAttribute("pList", pList);
@@ -145,64 +147,92 @@ public class ProductController {
 		return "shop_details.jsp";
 	}
 
-	// (관리자)상품 추가 기능: 해당 상품 관리 페이지에서 
-	
+	// vo로 추가하고 데이터가 들어오는지 확인 > 안 되면 다시 고치기 / 되면 멤버변수로 받을 수 있는 방법 찾아보기
 	// (관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정
 	@RequestMapping(value = "/updateProduct.do", method = RequestMethod.POST)
-	public String updateProduct(ProductVO pvo, ImageVO ivo, Model model, HttpServletResponse response,
-			HttpServletRequest request) {
-		// @RequestParam(value="searchCondition",defaultValue="TITLE",required=false)String
-		// searchCondition
+	public String updateProduct(ProductVO pvo, ImageVO ivo, Model model, HttpServletResponse response, HttpServletRequest request
+			,@RequestParam("file")MultipartFile img, @RequestParam("file2")MultipartFile img2) {
 
-		// 관리자 모드 : 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정 (아직 안 함)
+		//@RequestParam("img")MultipartFile img,@RequestParam("img2")MultipartFile img2
+
+		// 관리자 모드 : 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정
 		System.out.println("updateProduct 입장");
-		
-		// 1. 파일 받아오기: downloadFile()의 역할: url을 인식하고, 해당 파일을 복사 및 저장시키는 것까지 진행함
-		//업로드한 파일을 본섭에 이동시키는 것 까지 진행시킴
-		
-		
-		// 2. 현재 이미지 파일이 비어있다면 디폴트파일로 세팅하고 업로드 진행, 
-		// 아니라면 바로 업로드를 실행
-		
-		// 이미지 파일이 비어있지 않은 경우,
-		// 업로드한 파일이름 추출, 추출한 파일이름을 파일이름 vo에 set하는 과정을 빼는 이유는, 
-		// 파일이름에 targetNum와 typeNum이라는 주요정보가 포함되어있음 
-		// >> 바꾸지 않고 사진만 바꿀 예정
-		
-		// 업로드 진행
-		boolean flag = productService.update(pvo);
-		
-		///////////////////////////////////////////////
-		// 파일을 받기 위해 다운로드 파일 메서드 불러오기
-		// crawling.downloadFile(new URL("원래 이미지 경로"), 실제로 저장할 이미지 경로); //input: Url
-		// url, String fileName
 
-		// 파일받기 (저장공간) : V에서 img, img2로 줌
+		// 파일 경로 설정
+		String projectPath = request.getSession().getServletContext().getRealPath("/"); // 파일 경로 ".../webapp/" 까지
+		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));		
 
-		
-		// 2. 세팅 (업로드 확인 > bvo.setFile(fileName) + 만약 파일의 크기가 기존 것과 동일하다면, 기존 것보다 크거나
-		// 작다면, 그렇게 조정하는 코드도 같이 넣기)
+		final String path1 = projectPath + "NYANGSINSA2/src/main/webapp/images/" + productService.selectOne(pvo).getImageName(); // 대표 이미지 경로 설정
 
+		// 상세이미지 불러오기
+		ProductVO resPvo = productService.selectOne(pvo);
+		ivo.setTargetNum(resPvo.getpNum()); // 상품pk를 이미지pk에 세팅
+		ivo.setTypeNum(102);
+		ImageVO selectIvo = imageService.selectOne(ivo); // 세팅된 이미지pk를 가지고 selectOne하여 상세이미지 정보 불러오기
+		resPvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 ivo의 imageName을 pvo의 ImageName2에 세팅		
+		System.out.println("resPvo.getImageName2: "+resPvo.getImageName2()); // 확인
 
+		final String path2 = projectPath + "NYANGSINSA2/src/main/webapp/images/" + productService.selectOne(pvo).getImageName2(); // 상세 이미지 경로 설정
 
-		
+		//단일 파일 업로드
+		//MultipartFile img = selectIvo.getImg2(); //모델에 img, img2 vo 추가 요망
+		//MultipartFile img2 = selectIvo.getImg2(); 
 
-		if (!flag) { // 실패 시 알림창
+		try {
+			if(!img.isEmpty()) { //img가 업로드 된 경우 본섭에 업로드	
+				img.transferTo(new File(path1));
+				System.out.println("업로드 성공");	
+			}
+			else { // 이미지 업로드 실패
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/html; charset=utf-8");
+				out.println("<SCRIPT>alert('ERROR : 이미지 UPDATE 실패');</SCRIPT>");
+				return "product_manage_datail.jsp";
+			}
+
+			if(!img.isEmpty()) { //img2가 업로드 된 경우 본섭에 업로드	
+				img.transferTo(new File(path1));
+				System.out.println("업로드 성공");	
+			}
+			else { // 이미지 업로드 실패
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/html; charset=utf-8");
+				out.println("<SCRIPT>alert('ERROR : 이미지 UPDATE 실패');</SCRIPT>");
+				return "product_manage_datail.jsp";
+			}
+
 			try {
+				productService.update(pvo);	// 전체 업데이트 진행
+			} catch (Exception e) { // 전체 업데이트 실패
+				e.printStackTrace();
 				PrintWriter out = response.getWriter();
 				response.setContentType("text/html; charset=utf-8");
 				out.println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
 				return "product_manage_datail.jsp";
-			} catch (Exception e) {
-				System.out.println("실패 알람칭 띄우기 중 오류 발생");
-				e.printStackTrace();
 			}
+
+		}catch(Exception e) {
+			System.out.println("수행 실패 알럿창 오류");
 		}
+
+		//		기존 업로드 실패 시 알림창
+		//		if (!flag) { // 실패 시 알림창
+		//			try {
+		//				PrintWriter out = response.getWriter();
+		//				response.setContentType("text/html; charset=utf-8");
+		//				out.println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
+		//				return "product_manage_datail.jsp";
+		//			} catch (Exception e) {
+		//				System.out.println("실패 알람칭 띄우기 중 오류 발생");
+		//				e.printStackTrace();
+		//			}
+		//		}
+
 		return "redirect:product_manage.jsp";
 	}
 
 	//일단 원인은 찾았고, 서치가 되는지 확인 필요
-	@RequestMapping(value = "/search.do", method = RequestMethod.POST)
+	@RequestMapping(value = "/search.do")
 	public String selectAllProductSearch(ProductVO pvo, Model model) {
 		System.out.println("pSearchCondition: " + pvo.getpSearchCondition());
 		System.out.println("pSearchContent: " + pvo.getpSearchContent());
@@ -241,19 +271,19 @@ public class ProductController {
 
 	//SearchListController 이게 작동을 안 한다는 이야기임
 	@ResponseBody
-	@RequestMapping(value="getSearchList.do", method = RequestMethod.POST)
+	@RequestMapping(value="getSearchList.do")
 	public JsonArray getSearchList(ProductVO pvo, ProductVO pvo2, JSONArray jsonArray, Model model) {
 		// ajax가 보낸 searchContent
 		System.out.println("pSearchContent: "+pvo.getpSearchContent());
-		
+
 		// ajax()로 넘어온 category, sort를 세팅한 pvo를 가지고 selectAll 
 		pvo.setSearchLowPrice(0);
 		pvo2.setpSearchCondition("max"); // selectOne에서 인자로 쓸 것
 		pvo.setSearchHighPrice(productService.selectOne(pvo2).getPrice());
 		ArrayList<ProductVO> list = productService.selectAll(pvo); // 상품 검색 결과
-		
+
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); 
-		
+
 		return datas;
 	}
 

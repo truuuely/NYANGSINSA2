@@ -154,7 +154,7 @@
 		<a href="#fixheart">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 				<img class="heartImg" style="width: 50px; height: auto; cursor: pointer;" src="img/heart.png">
-				<div style="margin-top: 15px;">20</div>
+				<div style="margin-top: 15px;">${board.likeCnt}</div>
 			</button>
 		</a>
 	</div>
@@ -251,6 +251,39 @@
 				} else {
 					console.log(i);
 					this.src = "img/fullheart.png";
+				}
+			})
+		}
+	</script>
+	
+	<script type="text/javascript">
+		function updateLike(bNum, upOrDown) {
+			
+			console.log('들어옴');
+			$.ajax({
+				type : 'POST',
+				url : 'updateBlike.do',
+				data : {
+					upOrDown : upOrDown,
+					boardNum : bNum
+				},
+				success : function(data) {
+					var id = '#'+bNum+'heartImg';
+					console.log("좋아유 수 " + data)
+					console.log("넘버 " +'#'+bNum)
+					console.log("업다운 " +upOrDown)
+					console.log("이미지 아이디 " +'#'+bNum+'heartImg')
+					console.log($(id).attr('src'));
+					$('#'+bNum+'').text(data);
+					if (upOrDown == 'down') {
+						$(id).attr({src:'img/heart.png'});
+						/* $(this).children('img').attr("src", "img/heart.png"); */
+					} else {
+						$(id).attr({src:'img/fullheart.png'});
+					}
+				},
+				error : function() {
+					alert('error');
 				}
 			})
 		}

@@ -191,7 +191,7 @@
 						<div class="hero__search__form">
 							<form action="search.do">
 								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-								<input type="text" name="pSearchContent" placeholder="필요한 거 있냥?"
+								<input type="text" name="searchContent" placeholder="필요한 거 있냥?"
 									required>
 								<button type="submit" class="site-btn">검색</button>
 							</form>
@@ -242,7 +242,7 @@
 							<ul>
 								<li><a href="mypage.do">내정보</a></li>
 								<li><a href="orderList.do">주문내역</a></li>
-								<li><a href="checkPassword.do">회원정보변경</a></li>
+								<li><a href="check_password.jsp">회원정보변경</a></li>
 								<li><a href="myreview.do">내 리뷰 모아보기</a></li>
 							</ul>
 						</div>
@@ -258,102 +258,24 @@
 					<table style="font-size: 18px; font-weight: bold;">
 						<thead>
 							<tr>
-								<th style="padding-right: 30px; padding-left: 10px; text-align: center;">리뷰번호</th>
-								<th style="padding-right: 250px; text-align: center;">상품번호</th>
-								<th style="padding-right: 225px; text-align: center;">리뷰내용</th>
-								<th style="text-align: center; font-size: 18px; font-weight: bold;">별점</th>
+								<th style="text-align: center; width: 15%">날짜</th>
+								<th style="text-align: center; width: 30%;">상품명</th>
+								<th style="text-align: center; width: 35%;">리뷰내용</th>
+								<th style="text-align: center; font-size: 18px; font-weight: bold; width: 20%">별점</th>
 							</tr>
 						</thead>
 						<c:forEach var="v" items="${rList}" begin="0" varStatus="status">
 							<tbody>
 								<tr>
-									<td style="padding-right: 30px; padding-left: 10px; text-align: center;"><h5><a href="review_detail.do?rNum=${v.rNum}">${v.rNum}</a></h5></td>
-									<td style="padding-right: 250px; text-align: center;">${v.pNum}</td>
-									<td style="padding-right: 225px; text-align: center;">${v.rContent}</td>
-									<%-- <td style="text-align : center;">${v.rRate}</td> --%>
-									<td class="product__details__rating">
-										<nss:reviewstar list="${v.rRate}"/>
-									</td>
-									<%-- <c:set var="sumRate" value="0" />
-									<c:forEach var="v" items="${rList}">
-										<c:set var="sumRate" value="${sumRate+v.rRate}" />
-										</c:forEach> <c:set var="rRate" value="${sumRate/fn:length(rList)}" /> <c:choose>
-											<c:when test="${rRate>=1.0 && rRate<1.5}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</c:when>
-											<c:when test="${rRate>=1.5 && rRate<2.0}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-half-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</c:when>
-											<c:when test="${rRate>=2.0 && rRate<2.5}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</c:when>
-											<c:when test="${rRate>=2.5 && rRate<3.0}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-half-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</c:when>
-											<c:when test="${rRate>=3.0 && rRate<3.5}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</c:when>
-											<c:when test="${rRate>=3.5 && rRate<4.0}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-half-o"></i>
-												<i class="fa fa-star-o"></i>
-											</c:when>
-											<c:when test="${rRate>=4.0 && rRate<4.5}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-											</c:when>
-											<c:when test="${rRate>=4.5 && rRate<5.0}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												</i>
-												<i class="fa fa-star-half-o"></i>
-											</c:when>
-											<c:when test="${rRate==5}">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												</i>
-											</c:when>
-											<c:otherwise>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</c:otherwise>
-										</c:choose>
+									<td
+										style=" text-align: center; padding-top: 10px; padding-right:10px;">${v.rDate}</td>
+									<td style=" text-align: center; font-size: 18px; font-weight: bold; padding-top: 10px; padding-right:10px;">${v.pName}</td>
+									<td style=" text-align: center; font-size: 18px; font-weight: bold; padding-top: 10px; padding-right:10px;">${v.rContent}</td>
+									<td class="product__details__rating" style = "text-align: center; padding-top: 10px; padding-right:10px;">
+										<nss:reviewstar list="${v.rRate}" />
 									</td>
 								</tr>
-							</tbody>--%>
+							</tbody>
 						</c:forEach>
 					</table>
 				</div>
