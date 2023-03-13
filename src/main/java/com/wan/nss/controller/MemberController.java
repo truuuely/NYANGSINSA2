@@ -33,20 +33,20 @@ public class MemberController {
 	}
 	
 	// 아이디 찾기 페이지로 이동
-	@RequestMapping(value = "/findId.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/findIdView.do")
 	public String findIdView() {
 		
-		System.out.println("findId.do 진입");
+		System.out.println("findIdView.do 진입");
 		
 		return "find_id.jsp";
 		
 	}
 	
 	// 비밀번호 찾기 페이지로 이동
-	@RequestMapping(value = "/findPw.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/findPwView.do")
 	public String findPwView() {
 		
-		System.out.println("findPw.do 진입");
+		System.out.println("findPwView.do 진입");
 		
 		return "find_pw.jsp";
 		

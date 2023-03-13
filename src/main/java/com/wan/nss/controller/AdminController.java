@@ -85,7 +85,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			System.out.println("관리자 식별 성공! 관리자홈 진입!");
 
 			List<OrderVO> oList;
-			ovo.setoSearchCondition("all");
+			ovo.setoSearchCondition("adminOrderChart");
 			oList = orderService.selectAll(ovo); // 전체 주문 상품 불러오기 (관리자용)
 
 			for (int i = 0; i < oList.size(); i++) {
@@ -116,6 +116,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "getDonutChart.do")
 	protected JsonArray sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
 		System.out.println("getDonutChart.do 진입");
+		
+		// 카테고리별 도넛 차트
 		List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
 
 		List<OrderVO> list2022; // 연도별 수익 넣을 list
@@ -141,6 +143,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			datas.add(data);
 		}
 
+		// 올해 작년 수익 비교 차트
 		// 연도별 수익 데이터 저장 부분 Begin
 		// 연도별 수익 저장할 변수
 		int sum2022 = 0;
@@ -148,7 +151,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		// 2022년 수익
 		ovo.setoDate("2022");
-		ovo.setoSearchCondition("date");
+		ovo.setoSearchCondition("year");
 		list2022 = orderService.selectAll(ovo);
 
 		System.out.println("list2022: " + list2022);
@@ -165,7 +168,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		// 2023년 수익
 		ovo.setoDate("2023");
-		ovo.setoSearchCondition("date");
+		ovo.setoSearchCondition("year");
 		list2023 = orderService.selectAll(ovo);
 
 		System.out.println("list2023: " + list2023);
@@ -348,11 +351,11 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		} else if (part.equals("order")) {
 
-			OrderDetailVO odvo = new OrderDetailVO();
+			OrderVO ovo = new OrderVO();
 
-			odvo.setoNum(0);
+			ovo.setoSearchCondition("all");
 
-			list = orderDetailService.selectAll(odvo);
+			list = orderService.selectAll(ovo);
 
 		} else if (part.equals("review")) {
 
