@@ -386,21 +386,29 @@
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
+			
 			console.log('들어옴');
 			$.ajax({
 				type : 'POST',
-				url : 'getHeartCnt.do',
+				url : 'updateBlike.do',
 				data : {
-					upOrDown : upOrDown
+					upOrDown : upOrDown,
+					boardNum : bNum
 				},
 				success : function(data) {
+					var id = '#'+bNum+'heartImg';
 					console.log("좋아유 수 " + data)
-					$('#bNum').text(data);
-					if (upOrDown == "down") {
-						$(this).attr("src", "img/heart.png");
+					console.log("넘버 " +'#'+bNum)
+					console.log("업다운 " +upOrDown)
+					console.log("이미지 아이디 " +'#'+bNum+'heartImg')
+					console.log($(id).attr('src'));
+					$('#'+bNum+'').text(data);
+					
+					if (upOrDown == 'down') {
+						$(id).attr({src:'img/heart.png'});
 						/* $(this).children('img').attr("src", "img/heart.png"); */
 					} else {
-						$(this).attr("src", "img/fullheart.png");
+						$(id).attr({src:'img/fullheart.png'});
 					}
 				},
 				error : function() {
