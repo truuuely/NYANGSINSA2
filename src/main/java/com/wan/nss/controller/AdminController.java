@@ -351,11 +351,9 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		} else if (part.equals("order")) {
 
-			OrderVO ovo = new OrderVO();
+			OrderDetailVO odvo = new OrderDetailVO();
 
-			ovo.setoSearchCondition("all");
-
-			list = orderService.selectAll(ovo);
+			list = orderDetailService.selectAll(odvo);
 
 		} else if (part.equals("review")) {
 
