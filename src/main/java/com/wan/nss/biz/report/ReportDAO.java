@@ -87,7 +87,7 @@ public class ReportDAO {
 				}, vo.getReportNum());
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("reportDAO selectOne 결과 없음");
 		}
 		return null;
 	}

@@ -78,7 +78,12 @@ public class ReplyDAO {
 	}
 
 	public ReplyVO selectOne(ReplyVO vo) {
-		return jdbcTemplate.queryForObject(SELECT_ONE, new ReplyRowMapper(), vo.getReplyNum());
+		try {
+			return jdbcTemplate.queryForObject(SELECT_ONE, new ReplyRowMapper(), vo.getReplyNum());
+		} catch(Exception e) {
+			System.out.println("replyDAO selectOne 결과 없음");
+			return null;
+		}
 	}
 
 	public boolean update(ReplyVO vo) {

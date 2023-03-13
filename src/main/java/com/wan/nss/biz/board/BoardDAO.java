@@ -129,11 +129,30 @@ public class BoardDAO {
 
 	public BoardVO selectOne(BoardVO vo) {
 		/* 주의 : 로그인 했을 경우 BoardVO의 userId에 '현재 로그인한 멤버의 아이디'를 세팅해주세요. */
+		try {
+			if ("newest".equals(vo.getSearchCondition())) {
+				// 2. 가장 최근에 등록된 게시글 번호 보기 (이미지 insert 할 때)
+				// pSearchCondition = "newest"
+				return jdbcTemplate.queryForObject(SELECT_ONE_NEWEST, (rs, rowNum) -> {
+					BoardVO data = new BoardVO();
+					data.setBoardNum(rs.getInt("B_NO"));
+					data.setUserNum(rs.getInt("M_NO"));
+					data.setBoardTitle(rs.getString("B_TITLE"));
+					data.setBoardContent(rs.getString("B_CONTENT"));
+					data.setBoardDate(rs.getString("B_DATE"));
+					data.setBoardStatus(rs.getInt("STATUS"));
+					data.setBoardView(rs.getInt("B_VIEW"));
 
-		if ("newest".equals(vo.getSearchCondition())) {
-			// 2. 가장 최근에 등록된 게시글 번호 보기 (이미지 insert 할 때)
-			// pSearchCondition = "newest"
-			return jdbcTemplate.queryForObject(SELECT_ONE_NEWEST, (rs, rowNum) -> {
+					// vo에만 존재하는 멤버변수. join 사용해 set
+					data.setUserId(rs.getString("M_ID")); // 별칭으로 가져온 작성자 아이디
+					data.setLikeCnt(rs.getInt("LIKE_CNT")); // 좋아요 수
+					data.setChecked(rs.getBoolean("ISCHECKED")); // 좋아요 여부
+					data.setReplyCnt(rs.getInt("REPLY_CNT")); // 댓글 수
+					return data;
+				}, vo.getBoardNum(), vo.getUserId());
+			}
+
+			return jdbcTemplate.queryForObject(SELECT_ONE, (rs, rowNum) -> {
 				BoardVO data = new BoardVO();
 				data.setBoardNum(rs.getInt("B_NO"));
 				data.setUserNum(rs.getInt("M_NO"));
@@ -149,27 +168,11 @@ public class BoardDAO {
 				data.setChecked(rs.getBoolean("ISCHECKED")); // 좋아요 여부
 				data.setReplyCnt(rs.getInt("REPLY_CNT")); // 댓글 수
 				return data;
-			}, vo.getBoardNum(), vo.getUserId());
+			}, vo.getBoardNum(), vo.getUserId(), vo.getBoardNum());
+		} catch (Exception e) {
+			System.out.println("BoardDAO selectOne 결과 없음");
+			return null;
 		}
-
-		return jdbcTemplate.queryForObject(SELECT_ONE, (rs, rowNum) -> {
-			BoardVO data = new BoardVO();
-			data.setBoardNum(rs.getInt("B_NO"));
-			data.setUserNum(rs.getInt("M_NO"));
-			data.setBoardTitle(rs.getString("B_TITLE"));
-			data.setBoardContent(rs.getString("B_CONTENT"));
-			data.setBoardDate(rs.getString("B_DATE"));
-			data.setBoardStatus(rs.getInt("STATUS"));
-			data.setBoardView(rs.getInt("B_VIEW"));
-
-			// vo에만 존재하는 멤버변수. join 사용해 set
-			data.setUserId(rs.getString("M_ID")); // 별칭으로 가져온 작성자 아이디
-			data.setLikeCnt(rs.getInt("LIKE_CNT")); // 좋아요 수
-			data.setChecked(rs.getBoolean("ISCHECKED")); // 좋아요 여부
-			data.setReplyCnt(rs.getInt("REPLY_CNT")); // 댓글 수
-			return data;
-		}, vo.getBoardNum(), vo.getUserId(), vo.getBoardNum());
-
 	}
 
 	public ArrayList<BoardVO> selectAll(BoardVO vo) {
