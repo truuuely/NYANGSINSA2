@@ -52,6 +52,7 @@ public class BoardController {
 	@RequestMapping(value = "/boardPostView.do")
 	public String boardPostView(BoardVO bvo, Model model, HttpSession session) {
 
+		boardService.update(bvo);
 		bvo.setUserId((String) session.getAttribute("memberId"));
 		System.out.println("boardPostView.do 진입");
 
