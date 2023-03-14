@@ -95,7 +95,7 @@ public class MemberDAO {
 
 	// 회원탈퇴, 회원 삭제
 	public boolean delete(MemberVO vo) {
-		int res = jdbcTemplate.update(SQL_DELETE, vo.getUserNum());
+		int res = jdbcTemplate.update(SQL_DELETE, vo.getUserId());
 		if (res < 1) {
 			return false;
 		}
