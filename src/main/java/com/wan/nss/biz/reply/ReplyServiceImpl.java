@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("replyService")
-public class ReplyServiceimpl implements ReplyService {
+public class ReplyServiceImpl implements ReplyService {
 	
 	@Autowired
 	private ReplyDAO replyDAO;

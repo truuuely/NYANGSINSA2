@@ -143,6 +143,13 @@ public class MemberController {
 		return "profileView.do";
 	}
 
+	// 회원 등급 수정 수행
+		@RequestMapping(value = "/updateMemberRole.do")
+		public void updateMemberRole(MemberVO mvo) {
+			// mvo : memberNum, role
+			memberService.update(mvo);
+		}
+	
 	// 회원정보 수정 수행
 	@RequestMapping(value = "/updateMember.do")
 	public String updateMemberProfile(MemberVO mvo, Model model, HttpSession session, HttpServletResponse response) {
@@ -251,7 +258,8 @@ public class MemberController {
 				return null;
 			}
 		} else { // 로그인 성공시
-			session.setAttribute("memberId", loginMvo.getUserId()); // 세션에 로그인한 회원의 아이디, 이름 저장
+			session.setAttribute("memberNum", loginMvo.getUserNum()); // 세션에 로그인한 회원의 번호, 아이디, 이름 저장
+			session.setAttribute("memberId", loginMvo.getUserId());
 			session.setAttribute("memberName", loginMvo.getUserName());
 			
 			System.out.println("메인으로 이동");
