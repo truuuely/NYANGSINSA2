@@ -386,40 +386,45 @@
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
-			var imgId = '#' + bNum + 'heartImg';
-			var cntId = '#' + bNum + '';
-			var infoId = '#' + bNum + 'info';
-			console.log('들어옴');
-			$.ajax({
-				type : 'POST',
-				url : 'updateBlike.do',
-				data : {
-					upOrDown : upOrDown,
-					boardNum : bNum
-				},
-				success : function(data) {
-					$(infoId).load(location.href + ' ' + infoId);
-					console.log("좋아유 수 " + data)
-					console.log("넘버 " + '#' + bNum)
-					console.log("업다운 " + upOrDown)
-					console.log("이미지 아이디 " + '#' + bNum + 'heartImg')
-					console.log($(imgId).attr('src'));
-					$(cntId).text(data);
-					if (upOrDown == 'down') {
-						$(imgId).attr({
-							src : 'img/heart.png'
-						});
-						/* $(this).children('img').attr("src", "img/heart.png"); */
-					} else {
-						$(imgId).attr({
-							src : 'img/fullheart.png'
-						});
+			console.log('${memberId}');
+			if ('${memberId}' == '') {
+				alert('로그인 후 이용해주세요');
+			} else {
+				var imgId = '#' + bNum + 'heartImg';
+				var cntId = '#' + bNum + '';
+				var infoId = '#' + bNum + 'info';
+				console.log('들어옴');
+				$.ajax({
+					type : 'POST',
+					url : 'updateBlike.do',
+					data : {
+						upOrDown : upOrDown,
+						boardNum : bNum
+					},
+					success : function(data) {
+						$(infoId).load(location.href + ' ' + infoId);
+						console.log("좋아유 수 " + data)
+						console.log("넘버 " + '#' + bNum)
+						console.log("업다운 " + upOrDown)
+						console.log("이미지 아이디 " + '#' + bNum + 'heartImg')
+						console.log($(imgId).attr('src'));
+						$(cntId).text(data);
+						if (upOrDown == 'down') {
+							$(imgId).attr({
+								src : 'img/heart.png'
+							});
+							/* $(this).children('img').attr("src", "img/heart.png"); */
+						} else {
+							$(imgId).attr({
+								src : 'img/fullheart.png'
+							});
+						}
+					},
+					error : function() {
+						alert('error');
 					}
-				},
-				error : function() {
-					alert('error');
-				}
-			})
+				})
+			}
 		}
 	</script>
 
