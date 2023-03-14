@@ -37,39 +37,45 @@
 
 	<nss:header />
 
-<div id="board">
+	<div id="board">
 		<div id="boardDetail">
 			<div id="title">
-				${board.boardTitle} <br>
-			<div id="writer">[작성자 : ${board.userId}]</div>
+				${board.boardTitle}
+				<br>
+				<div id="writer">[작성자 : ${board.userId}]</div>
 			</div>
 			<ul id="boardInfo">
 				<li><i class="fa fa-calendar-o"></i> ${board.boardDate}</li>
 				<li><i class="fa fa-comment-o"></i> ${board.replyCnt}</li>
-				<li><img style="width: 20px;" src="img/eyes.png">
-					${board.boardView}</li>
-				<li class="heartVal"><img class="heartImg"
-					style="width: 20px; cursor: pointer;" src="img/heart.png">
-					${board.likeCnt}</li>
-				<li><img class="reportBtn"
-					style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+				<li><img style="width: 20px;" src="img/eyes.png"> ${board.boardView}</li>
+				<li class="${board.boardNum}info1"><c:choose>
+						<c:when test="${board.isChecked==true}">
+							<img onclick="javascript:updateLike(${board.boardNum}, 'down');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png">
+							<span class="${board.boardNum}">${board.likeCnt}</span>
+						</c:when>
+						<c:otherwise>
+							<img onclick="javascript:updateLike(${board.boardNum}, 'up');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png">
+							<span class="${board.boardNum}">${board.likeCnt}</span>
+						</c:otherwise>
+					</c:choose></li>
+				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
 			<c:if test="${board.userId == member.userId}">
-			<div style = "float:right;">
-				<form action="updateBoardView.do?boardNum=${board.boardNum}">
+				<div style="float: right;">
+					<form action="updateBoardView.do?boardNum=${board.boardNum}">
 						<input type="submit" value="수정하기" style="border: 1px solid #6667ab42; color: white; padding: 10px; border-radius: 5px; background-color: #A0A0C8; font-size: 15px; float: right; margin-left: 950px; margin-bottom: -15px;">
 					</form>
-			</div>
+				</div>
 			</c:if>
 		</div>
 	</div>
 
 	<div id="showReply">
-		<img style="width: 20px;" src="img/replyicon.png"> 댓글
-		(${board.replyCnt}) ▼
+		<img style="width: 20px;" src="img/replyicon.png">
+		댓글 (${board.replyCnt}) ▼
 	</div>
 	<div id="reply">
 		<nss:list sort="reply" />
@@ -77,18 +83,13 @@
 
 	<div id="replywrite">
 		<form style="width: 100%;" action="insertReply.do" method="post">
-			<textarea
-				style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;"
-				name="reply" placeholder="댓글을 작성하세요" required></textarea>
-			<br> <input
-				style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;"
-				type="submit" value="댓글 작성">
+			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="reply" placeholder="댓글을 작성하세요" required></textarea>
+			<br>
+			<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;" type="submit" value="댓글 작성">
 		</form>
 	</div>
 
-
 	<nss:footer />
-
 
 	<!--  신고하기 모달창  -->
 
@@ -157,7 +158,7 @@
 		</a>
 	</div>
 
-	<div id="fixheart">
+	<div class="${board.boardNum}info2" id="fixheart">
 		<a href="#fixheart">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 				<c:choose>
@@ -267,6 +268,10 @@
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
+			var imgClass = '.'+bNum+'heartImg';
+			var cntClass = '.'+bNum+'';
+			var infoClass1 = '.'+bNum+'info1';
+			var infoClass2 = '.'+bNum+'info2';
 			console.log('들어옴');
 			$.ajax({
 				type : 'POST',
@@ -276,18 +281,19 @@
 					boardNum : bNum
 				},
 				success : function(data) {
-					var id = '.'+bNum+'heartImg';
+					$(infoClass1).load(location.href + ' ' + infoClass1);
+					$(infoClass2).load(location.href + ' ' + infoClass2);
 					console.log("좋아유 수 " + data)
 					console.log("넘버 " +'#'+bNum)
 					console.log("업다운 " +upOrDown)
 					console.log("이미지 아이디 " +'.'+bNum+'heartImg')
-					console.log($(id).attr('src'));
-					$('.'+bNum+'').text(data);
+					console.log($(imgClass).attr('src'));
+					$(cntClass).text(data);
 					if (upOrDown == 'down') {
-						$(id).attr({src:'img/heart.png'});
+						$(imgClass).attr({src:'img/heart.png'});
 						/* $(this).children('img').attr("src", "img/heart.png"); */
 					} else {
-						$(id).attr({src:'img/fullheart.png'});
+						$(imgClass).attr({src:'img/fullheart.png'});
 					}
 				},
 				error : function() {
@@ -368,11 +374,11 @@
 		}
 	</script>
 	<script type="text/javascript">
-	var result = confirm("정말로 삭제 하시겠습니까?");
 		function deletecheck(bNum) {
+			var result = confirm("정말로 삭제 하시겠습니까?");
 			if(result) {
 				alert("예");
-				location.href = "deleteReply.do?bNum="${bNum}"";
+				location.href = "deleteReply.do?bNum="+bNum+"";
 			}
 			else {
 				alert("아니오");

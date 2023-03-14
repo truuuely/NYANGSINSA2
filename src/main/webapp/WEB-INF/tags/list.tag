@@ -149,7 +149,7 @@
 					<img src="${v.imageName}" alt="고양이 사진">
 				</div>
 				<div class="blog__item__text">
-					<ul>
+					<ul id = "${v.boardNum}info">
 						<li><i class="fa fa-calendar-o"></i> ${v.boardDate}</li>
 						<li><i class="fa fa-comment-o"></i> ${v.replyCnt}</li>
 						<li><img style="width: 20px;" src="img/eyes.png" alt="조회수 아이콘"> ${v.boardView }</li>
