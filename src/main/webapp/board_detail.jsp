@@ -258,7 +258,7 @@
 	</div>
 
 	<div id="replywrite">
-		<form style="width: 100%;" action="insertReply.do" method="post">
+		<form style="width: 100%;" action="insertReply.do" onsubmit="return loginCheck()" method="post">
 			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="reply" placeholder="댓글을 작성하세요" required></textarea>
 			<br>
 			<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;" type="submit" value="댓글 작성">
@@ -415,7 +415,25 @@
 		});
 	</script>
 
-
+	<script type="text/javascript">
+		function loginCheck(){
+			if ('${memberId}' == '') {
+				swal({
+					text : "로그인 후 이용해주세요",
+					button : "확인"
+				});
+				return false;
+			}else if('${memberRole}' == 'BLOCKED'){
+				swal({
+					text : "댓글쓰기 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
+					button : "확인"
+				});
+				return false;
+			}else if('${memberRole}' == 'MEMBER'){
+				return true;
+			}
+		}
+</script>
 
 	<!-- Js Plugins -->
 	<script src="js/jquery-3.3.1.min.js"></script>
@@ -428,20 +446,6 @@
 	<script src="js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-	<!-- <script type="text/javascript">
-		var heart = document.getElementsByClassName("heartImg");
-		for (var i = 0; i < heart.length; i++) {
-			heart[i].addEventListener('click', function() {
-				if (this.getAttribute("src") == "img/fullheart.png") {
-					this.src = "img/heart.png";
-				} else {
-					console.log(i);
-					this.src = "img/fullheart.png";
-				}
-			})
-		}
-	</script>  -->
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
