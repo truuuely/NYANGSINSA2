@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -20,9 +19,7 @@
 <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
 <!-- google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
 <!-- Css Styles -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -40,12 +37,11 @@
 
 	<nss:header />
 
-
-	<div id="board">
+<div id="board">
 		<div id="boardDetail">
 			<div id="title">
 				${board.boardTitle} <br>
-				<div id="writer">[작성자 : ${board.userId}]</div>
+			<div id="writer">[작성자 : ${board.userId}]</div>
 			</div>
 			<ul id="boardInfo">
 				<li><i class="fa fa-calendar-o"></i> ${board.boardDate}</li>
@@ -109,18 +105,22 @@
 						<div class="body-contentbox">
 							<div style="width: 300px;">
 								<form action="" class="report-box">
-									<input type="radio" class="report-box2" name="radio" id="r1"
-										value="0"> <label for="r1">욕설/부적절한 언어 입니다.</label> <br>
-									<input type="radio" class="report-box2" name="radio" id="r2"
-										value="0"> <label for="r2">스팸광고/도배글 입니다.</label> <br>
-									<input type="radio" class="report-box2" name="radio" id="r3"
-										value="0"> <label for="r3">부적절한 컨텐츠 입니다.</label> <br>
-									<input type="radio" class="report-box2" name="radio" id="r4"
-										value="0"> <label for="r4">음란성 게시물 입니다.</label> <br>
-									<input type="radio" class="report-box2" name="radio" id="r5"
-										value="1"> <label for="r5">기타</label> <br> <input
-										type="text" class="report-box2 report-text" name="text"
-										disabled placeholder="사유를 작성해주세요.">
+									<input type="radio" class="report-box2" name="radio" id="r1" value="0">
+									<label for="r1">욕설/부적절한 언어 입니다.</label>
+									<br>
+									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
+									<label for="r2">스팸광고/도배글 입니다.</label>
+									<br>
+									<input type="radio" class="report-box2" name="radio" id="r3" value="0">
+									<label for="r3">부적절한 컨텐츠 입니다.</label>
+									<br>
+									<input type="radio" class="report-box2" name="radio" id="r4" value="0">
+									<label for="r4">음란성 게시물 입니다.</label>
+									<br>
+									<input type="radio" class="report-box2" name="radio" id="r5" value="1">
+									<label for="r5">기타</label>
+									<br>
+									<input type="text" class="report-box2 report-text" name="text" disabled placeholder="사유를 작성해주세요.">
 							</div>
 
 						</div>
@@ -140,9 +140,6 @@
 
 
 
-
-
-
 	<!-- TOP 버튼 -->
 	<div id="fixtop">
 		<a href="#">
@@ -152,56 +149,51 @@
 
 	<div id="fixshare">
 		<a href="#">
-			<button type="button" onclick="kakaoShare()"
-				style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
-				<img class="shareImg"
-					style="width: 50px; height: auto; cursor: pointer;"
-					src="img/share.png">
+			<button type="button" onclick="kakaoShare()" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+				<img class="shareImg" style="width: 50px; height: auto; cursor: pointer;" src="img/share.png">
 				<div style="margin-top: 15px;">공유</div>
 			</button>
 		</a>
 	</div>
+
 	<div id="fixheart">
 		<a href="#fixheart">
-			<button type="button"
-				style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
-				<img class="heartImg"
-					style="width: 50px; height: auto; cursor: pointer;"
-					src="img/heart.png">
-				<div style="margin-top: 15px;">20</div>
+			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+				<c:choose>
+					<c:when test="${board.isChecked==true}">
+						<img onclick="javascript:updateLike(${board.boardNum}, 'down');" class="${board.boardNum}heartImg" style="width: 50px; height: auto; cursor: pointer;" src="img/fullheart.png">
+					</c:when>
+					<c:otherwise>
+						<img onclick="javascript:updateLike(${board.boardNum}, 'up');" class="${board.boardNum}heartImg" style="width: 50px; height: auto; cursor: pointer;" src="img/heart.png">
+					</c:otherwise>
+				</c:choose>
+				<div class="${board.boardNum}" style="margin-top: 15px;">${board.likeCnt}</div>
 			</button>
 		</a>
 	</div>
 
 	<div id="fixcomment">
 		<a href="#replywrite">
-			<button type="button"
-				style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
-				<img style="width: 50px; height: auto; cursor: pointer;"
-					src="img/replyicon.png">
-				<div style="margin-top: 15px;">5</div>
+			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+				<img style="width: 50px; height: auto; cursor: pointer;" src="img/replyicon.png">
+				<div style="margin-top: 15px;">${board.replyCnt}</div>
 			</button>
 		</a>
 	</div>
 
-
-	<c:if test="${board.userNum==userNum}">
+	<c:if test="${board.userNum == memberNum}">
 		<div id="fixdelete">
 			<a href="deleteBoard.do?boardNum=${board.boardNum}">
-				<button type="button"
-					style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
-					<img style="width: 50px; height: auto; cursor: pointer;"
-						src="img/deleteBoard.png">
+				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+					<img style="width: 50px; height: auto; cursor: pointer;" src="img/deleteBoard.png">
 					<div style="margin-top: 15px;">삭제</div>
 				</button>
 			</a>
 		</div>
 		<div id="fixupdate">
 			<a href="updateBoard.do?boardNum=${board.boardNum}">
-				<button type="button"
-					style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
-					<img style="width: 50px; height: auto; cursor: pointer;"
-						src="img/updateBoard.png">
+				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+					<img style="width: 50px; height: auto; cursor: pointer;" src="img/updateBoard.png">
 					<div style="margin-top: 15px;">수정</div>
 				</button>
 			</a>
@@ -210,8 +202,7 @@
 
 
 	<!--  신고하기 모달창 Scripte  -->
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script>
 		$(function() {
 			$("#confirm").click(function() {
@@ -232,16 +223,12 @@
 				$("#popup").fadeOut();
 			}
 		});
-
 		$(document).ready(function() {
-
 			// 라디오버튼 클릭시 이벤트 발생
 			$("input:radio[name=radio]").click(function() {
-
 				if ($("input[name=radio]:checked").val() == "1") {
 					$("input:text[name=text]").attr("disabled", false);
 					// radio 버튼의 value 값이 1이라면 활성화
-
 				} else if ($("input[name=radio]:checked").val() == "0") {
 					$("input:text[name=text]").attr("disabled", true);
 					// radio 버튼의 value 값이 0이라면 비활성화
@@ -261,9 +248,7 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
-		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
-		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
 	<script type="text/javascript">
 		var heart = document.getElementsByClassName("heartImg");
@@ -274,6 +259,38 @@
 				} else {
 					console.log(i);
 					this.src = "img/fullheart.png";
+				}
+			})
+		}
+	</script>
+
+	<script type="text/javascript">
+		function updateLike(bNum, upOrDown) {
+			console.log('들어옴');
+			$.ajax({
+				type : 'POST',
+				url : 'updateBlike.do',
+				data : {
+					upOrDown : upOrDown,
+					boardNum : bNum
+				},
+				success : function(data) {
+					var id = '.'+bNum+'heartImg';
+					console.log("좋아유 수 " + data)
+					console.log("넘버 " +'#'+bNum)
+					console.log("업다운 " +upOrDown)
+					console.log("이미지 아이디 " +'.'+bNum+'heartImg')
+					console.log($(id).attr('src'));
+					$('.'+bNum+'').text(data);
+					if (upOrDown == 'down') {
+						$(id).attr({src:'img/heart.png'});
+						/* $(this).children('img').attr("src", "img/heart.png"); */
+					} else {
+						$(id).attr({src:'img/fullheart.png'});
+					}
+				},
+				error : function() {
+					alert('error');
 				}
 			})
 		}
@@ -316,10 +333,8 @@
 	<script type="text/javascript">
 		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('603243ecdb0757012b9f08d95c495f53');
-
 		// SDK 초기화 여부를 판단합니다.
 		console.log(Kakao.isInitialized());
-
 		function kakaoShare() {
 			Kakao.Link
 					.sendDefault({
@@ -338,7 +353,6 @@
 							commentCount : 45, //댓글 수
 							sharedCount : 845, //공유 수
 						},
-
 						buttons : [
 								{
 									title : '웹으로 보기',
