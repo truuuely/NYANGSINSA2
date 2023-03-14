@@ -22,18 +22,24 @@ public class ReportController {
 	@Autowired
 	private ReplyService replyService;
 	
-	// ()
-	@RequestMapping(value = "/insertReport")
-	public String insertReport() {
-		
-	}
+	//(관리자) 신고하기
+//	@RequestMapping(value = "/insertReport")
+//	public String insertReport() {
+//		//targetNum, reportStep, userID, reportContent
+//		
+//	}
 
 	// (관리자) 신고글 관리 페이지 이동
 	@RequestMapping(value = "/reportManageView.do")
 	public String reportManageView(ReportVO rpVo, Model model) {
-		model.addAttribute("userId", rvo.getUserId()); // 멤버 ID
-		model.addAttribute("reporterId",rvo.getReporterId()); // 신고자 ID
-		model.addAttribute("rpList", reportService.selectAll(rvo)); // 나머지 정보등 꺼내쓸 수 있는 곳: 여기서 맞게 꺼내쓰세요
+		//게시글, 댓글 구분
+		model.addAttribute("userId", rpVo.getUserId()); // 멤버 ID
+		model.addAttribute("reporterId",rpVo.getReporterId()); // 신고자 ID
+		model.addAttribute("rpList", reportService.selectAll(rpVo)); // 나머지 정보들을 꺼내쓸 수 있는 곳
+		
+		//누르면 해당 페이지로 이동하기
+		
+		
 		return "report_manage.jsp";
 	}
 
