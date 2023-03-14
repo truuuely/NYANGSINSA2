@@ -125,7 +125,7 @@ public class BoardController {
 		// 가장 최근 게시글 찾아내서 B_NO 가져오기
 		bvo.setSearchCondition("newest");
 		BoardVO preBvo = boardService.selectOne(bvo);
-		int bNum = 0;
+		int bNum = 100;
 		if(preBvo != null) {
 			bNum = preBvo.getBoardNum() + 1;
 		}
@@ -135,6 +135,7 @@ public class BoardController {
 
 		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
 		String tag = bvo.getBoardContent();
+		int typeNum = 201;
 		while (true) {
 			
 			System.out.println("tag: " + tag);
@@ -146,7 +147,7 @@ public class BoardController {
 				ivo.setTargetNum(bNum);
 				
 				// 이미지 구분 번호 세팅
-				ivo.setTypeNum(201);
+				ivo.setTypeNum(typeNum);
 				
 				// 이미지 이름 세팅
 				// 이미지 태그 값 잘라내기
@@ -160,6 +161,9 @@ public class BoardController {
 				
 				// 찾은 부분까지 잘라내고 다시 찾기위해 저장
 				tag = tag.substring(tag.indexOf("\" style=") + 9);
+				
+				// typeNum ++
+				typeNum ++;
 				
 			// "img/" 문자열이 없으면 종료
 			} else { // 
