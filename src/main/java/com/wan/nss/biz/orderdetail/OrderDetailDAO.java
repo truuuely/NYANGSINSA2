@@ -37,7 +37,12 @@ public class OrderDetailDAO {
 	public OrderDetailVO selectOne(OrderDetailVO odvo) {
 		try {
 			Object[] args = { odvo.getCategory()}; 
-			return jdbcTemplate.queryForObject(SQL_SELECTONE_CATEGORY_CNT_SUM, args, new OrderDetailRowMapper());
+			return (OrderDetailVO) jdbcTemplate.queryForObject(SQL_SELECTONE_CATEGORY_CNT_SUM, args, (rs, rowNum) -> {
+				OrderDetailVO data = new OrderDetailVO();
+				data.setOdCnt(rs.getInt("CNT"));
+				data.setSum(rs.getInt("SUM"));
+				return data;
+			});
 			
 		} catch (Exception e) {
 			System.out.println("OdrerDetailDAO selectOne 결과 없음");
