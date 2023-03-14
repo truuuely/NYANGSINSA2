@@ -387,6 +387,7 @@
 
 	<script type="text/javascript">
 		function boardInsert() {
+			console.log('등급 ${memberRole}');
 			if ('${memberId}' == '') {
 				swal({
 					text : "로그인 후 이용해주세요",
