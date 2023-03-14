@@ -2,18 +2,16 @@
  * Dashboard Analytics
  */
 
+var yearDataBegin = 3; // 카테고리별 주문건수 데이터가 끝나고 연도별 수익 데이터가 시작되는 인덱스번호를 상수화
+
 'use strict';
-console.log("진입"),
 $.ajax({ // ajax로 데이터 가져오기
 	type: 'POST',
-	url: 'getChart.do',
+	url: 'getDonutChart.do',
 	dataType: 'json',
 	traditional: 'true',
 	contentType: "application/x-www-form-urlencoded; charset=UTF-8",
 	success: function(data) {
-		console.log("data ↓");
-		console.log(data);
-		
 		var totalCnt = data.categoryCnt1 + data.categoryCnt2 + data.categoryCnt3;  // 총 주문수
 		var foodCnt = data.categoryCnt1 / totalCnt * 100;  // 사료 주문 %
 		var treatCnt = data.categoryCnt2 / totalCnt * 100; // 간식 주문 %
@@ -35,8 +33,10 @@ $.ajax({ // ajax로 데이터 가져오기
 		console.log('사료:' + foodSum);
 		console.log('간식:' + treatSum);
 		console.log('모래:' + sandSum);
+		console.log("data: " + data[yearDataBegin].year);
 		console.log("2023:"+data.thisYearSum);
 		console.log("2022:"+data.lastYearSum);
+		console.log((data.thisYearSum - data.lastYearSum) * 10);
 
 		(function() {
 			let cardColor, headingColor, axisColor, shadeColor, borderColor;
@@ -317,8 +317,9 @@ $.ajax({ // ajax로 데이터 가져오기
 			// --------------------------------------------------------------------
 			const growthChartEl = document.querySelector('#growthChart');
 			var revenueDatas = [];
-				revenueDatas.push(data.lastYearSum); // 상수의 값을 연도별 수익 데이터가 담긴 인덱스로 변경해줘야함!
-				revenueDatas.push(data.thisYearSum); // 상수의 값을 연도별 수익 데이터가 담긴 인덱스로 변경해줘야함!
+			for (var i = yearDataBegin; i < data.length; i++) {
+				revenueDatas.push(data[i].year); // 상수의 값을 연도별 수익 데이터가 담긴 인덱스로 변경해줘야함!
+			}
 
 			$('#revenueLastYear').text(data.lastYearSum.toLocaleString('ko-KR')+'원');
 			$('#revenueThisYear').text(data.thisYearSum.toLocaleString('ko-KR')+'원');

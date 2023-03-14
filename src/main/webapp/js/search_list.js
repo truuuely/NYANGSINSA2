@@ -25,12 +25,12 @@ function list(searchContentIn, selectPageIn) {
 		first += pageCount; // 페이징 번호를 뒤로
 		last += pageCount;
 	}
-	console.log("pSearchContent: " + searchContent);
+	console.log("searchContetn: ", searchContent);
 
 	$.ajax({ // ajax로 데이터 가져오기
 		type: 'POST',
 		url: 'getSearchList.do',
-		data: { pSearchContent: searchContent }, // pSearchContent 담아서 ListController Servlet에 걸리게!
+		data: { searchContent: searchContent }, // searchContent 담아서 ListController Servlet에 걸리게!
 		dataType: 'json',
 		traditional: 'true',
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
