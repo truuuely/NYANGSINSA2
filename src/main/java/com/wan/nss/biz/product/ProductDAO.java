@@ -19,7 +19,7 @@ public class ProductDAO {
 	private final String SQL_INSERT = "INSERT INTO PRODUCT (P_NM, P_CATEGORY, P_PRICE, P_AMT, P_DETAIL, DC_PERCENT) VALUES(?, ?, ?, ?, ?, ?)";
 	// 상품 업데이트
 	private final String SQL_UPDATE = "UPDATE PRODUCT SET P_NM=?, P_CATEGORY=?, P_PRICE=?, P_DETAIL=?, DC_PERCENT=? WHERE P_NO=?";
-	// 상품 재고 수량 업데이트
+	// 상품 구매시 재고에서 구매한 개수 빼기
 	private final String SQL_UPDATE_AMOUNT = "UPDATE PRODUCT SET P_AMT = P_AMT - ? WHERE P_NO = ?";
 	// 상품 삭제
 	private final String SQL_DELETE = "DELETE FROM PRODUCT WHERE P_NO=?";
@@ -76,7 +76,7 @@ public class ProductDAO {
 	// 상품 검색
 	private final String SELECT_ALL_SEARCH = "SELECT p.*, i.*, (p.P_PRICE * (100 - p.DC_PERCENT)/100) AS DC_PRICE, SUM(od.OD_CNT) "
 			+ " FROM PRODUCT p INNER JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 101) i "
-			+ " ON p.P_NO = i.TARGET_NO INNER JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO "
+			+ " ON p.P_NO = i.TARGET_NO LEFT JOIN ORDER_DETAIL od ON p.P_NO = od.P_NO "
 			+ " WHERE p.P_NM LIKE CONCAT('%', ?, '%') GROUP BY p.P_NO, i.I_NO ORDER BY SUM(od.OD_CNT) DESC";
 
 	// 상품 추가
@@ -88,15 +88,22 @@ public class ProductDAO {
 
 	// 상품 & 재고 업데이트
 	public boolean update(ProductVO pvo) {
-		if (pvo.getpAmt() >= 0) {
-			jdbcTemplate.update(SQL_UPDATE_AMOUNT, pvo.getpAmt(), pvo.getpNum());
-			return true;
-
-		} else {
-			jdbcTemplate.update(SQL_UPDATE, pvo.getpName(), pvo.getCategory(), pvo.getPrice(), pvo.getpAmt(),
+		if (pvo.getpSearchCondition() == null) { // 상품 정보 수정
+			int res = jdbcTemplate.update(SQL_UPDATE, pvo.getpName(), pvo.getCategory(), pvo.getPrice(), pvo.getpAmt(),
 					pvo.getpDetail(), pvo.getpDcPercent(), pvo.getpNum());
+			if (res < 1) {
+				return false;
+			}
 			return true;
 		}
+		if (pvo.getpSearchCondition().equals("buy")) { // 구매시 재고 빼기
+			int res = jdbcTemplate.update(SQL_UPDATE_AMOUNT, pvo.getpAmt(), pvo.getpNum());
+			if (res < 1) {
+				return false;
+			}
+			return true;
+		}
+		return false;
 	}
 
 	// 상품 삭제

@@ -52,7 +52,7 @@ public class Crawling {
 		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
 		System.out.println("projectPath: " + projectPath);
 		System.out.println();
-		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver.exe"; // 드라이버
+		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA/src/main/webapp/Source/chromedriver"; // 드라이버
 
 		List<ProductVO> datas = sampleStep01(request); // 반환받은 url 배열리스트
 
@@ -77,7 +77,7 @@ public class Crawling {
 		WebDriver driver = new ChromeDriver(options);
 
 		// 폴더가 있으면 삭제하고 생성하기
-		File dir = new File(projectPath + "NYANGSINSA2/src/main/webapp/img/101");
+		File dir = new File(projectPath + "NYANGSINSA/src/main/webapp/img/101");
 		if (dir.exists()) {
 			File[] files = dir.listFiles();
 
@@ -101,7 +101,7 @@ public class Crawling {
 		System.out.println("101 폴더 생성");
 		System.out.println();
 
-		File dir2 = new File(projectPath + "NYANGSINSA2/src/main/webapp/img/102");
+		File dir2 = new File(projectPath + "NYANGSINSA/src/main/webapp/img/102");
 		if (dir2.exists()) {
 			File[] files = dir2.listFiles();
 
@@ -200,7 +200,7 @@ public class Crawling {
 			// imgUrl이 null이 아닐 때
 			if (imgUrl != null) {
 				try {
-					downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
+					downloadFile(imgUrl, projectPath + "NYANGSINSA/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
 					ivo.setImageName("img/101/" + (i + 100) + ".jpg");
 					System.out.println("상품대표이미지주소: " + ivo.getImageName());
 				} catch (Exception e) {
@@ -228,7 +228,7 @@ public class Crawling {
 			// 이미지 파일 저장하기
 			// imgUrl이 null이 아닐 때
 			try {
-				downloadFile(imgUrl2, projectPath + "NYANGSINSA2/src/main/webapp/img/102/" + (i + 100) + ".jpg"); // 파일
+				downloadFile(imgUrl2, projectPath + "NYANGSINSA/src/main/webapp/img/102/" + (i + 100) + ".jpg"); // 파일
 				ivo.setImageName("img/102/" + (i + 100) + ".jpg");
 				System.out.println("상품설명이미지주소: " + ivo.getImageName());
 			} catch (Exception e) {
@@ -286,7 +286,7 @@ public class Crawling {
 		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
 		System.out.println("projectPath: " + projectPath);
 		System.out.println();
-		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver.exe"; // 드라이버
+		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA/src/main/webapp/Source/chromedriver"; // 드라이버
 
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
