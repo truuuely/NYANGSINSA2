@@ -116,9 +116,9 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	}
 
 	// 관리자 홈 도넛차트 데이터 가져오기
-	@RequestMapping(value = "getDonutChart.do")
-	protected JsonObject sendDonutChart(OrderVO ovo, OrderDetailVO odvo) {
-		System.out.println("getDonutChart.do 진입");
+	@RequestMapping(value = "getChart.do")
+	protected JsonObject sendChart(OrderVO ovo, OrderDetailVO odvo) {
+		System.out.println("getChart.do 진입");
 		
 		// 카테고리별 도넛 차트
 		List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
@@ -131,8 +131,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			odvo.setCategory(category[i]);
 			odvo = orderDetailService.selectOne(odvo); // cnt, sum 받아옴
 			
-			data.addProperty("categoryCnt" + (i+0), odvo.getOdCnt()); // categoryCnt1~
-			data.addProperty("categorySum" + (i+0), odvo.getSum()); // categorySum1~
+			data.addProperty("categoryCnt" + (i+1), odvo.getOdCnt()); // categoryCnt1~
+			data.addProperty("categorySum" + (i+1), odvo.getSum()); // categorySum1~
 			
 		}
 
@@ -184,7 +184,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 
 	// (관리자) 상품 관리 페이지 이동
-	@RequestMapping(value = "/adminProductDetail.do")
+	@RequestMapping(value = "/productManagePage.do")
 	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
