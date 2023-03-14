@@ -239,13 +239,13 @@
 			<div id="content">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
-			<c:if test="${board.userId == member.userId}">
+			<%-- <c:if test="${board.userId == member.userId}">
 				<div style="float: right;">
 					<form action="updateBoardView.do?boardNum=${board.boardNum}">
 						<input type="submit" value="수정하기" style="border: 1px solid #6667ab42; color: white; padding: 10px; border-radius: 5px; background-color: #A0A0C8; font-size: 15px; float: right; margin-left: 950px; margin-bottom: -15px;">
 					</form>
 				</div>
-			</c:if>
+			</c:if> --%>
 		</div>
 	</div>
 
@@ -254,12 +254,16 @@
 		댓글 (${board.replyCnt}) ▼
 	</div>
 	<div id="reply">
-		<nss:list sort="reply" />
+		<nss:list sort="reply"/>
 	</div>
 
 	<div id="replywrite">
+
 		<form style="width: 100%;" action="insertReply.do" onsubmit="return loginCheck()" method="post">
-			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="reply" placeholder="댓글을 작성하세요" required></textarea>
+			<input type="hidden" name="boardNum" value="${board.boardNum}">
+			<input type="hidden" name="userId" value="${member.userId}">
+			
+			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="replyContent" placeholder="댓글을 작성하세요" required></textarea>
 			<br>
 			<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;" type="submit" value="댓글 작성">
 		</form>
@@ -282,23 +286,25 @@
 						</div>
 						<div class="body-contentbox">
 							<div style="width: 300px;">
-								<form action="" class="report-box">
-									<input type="radio" class="report-box2" name="radio" id="r1" value="0">
+								<form action="insertReport.do" class="report-box">
+									<input type="hidden" name="targetNum" value="${board.boardNum}">
+									<input type="hidden" name="reportStep" value="1">
+									<input type="radio" class="report-box2" name="reportContent" id="r1" value="욕설/부적절한 언어 입니다.">
 									<label for="r1">욕설/부적절한 언어 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
+									<input type="radio" class="report-box2" name="reportContent" id="r2" value="스팸광고/도배글 입니다.">
 									<label for="r2">스팸광고/도배글 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r3" value="0">
+									<input type="radio" class="report-box2" name="reportContent" id="r3" value="부적절한 컨텐츠 입니다.">
 									<label for="r3">부적절한 컨텐츠 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r4" value="0">
+									<input type="radio" class="report-box2" name="reportContent" id="r4" value="음란성 게시물 입니다.">
 									<label for="r4">음란성 게시물 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r5" value="1">
+									<input type="radio" class="report-box2" name="reportContent" id="r5" value="기타">
 									<label for="r5">기타</label>
 									<br>
-									<input type="text" class="report-box2 report-text" name="text" disabled placeholder="사유를 작성해주세요.">
+									<input type="text" class="report-box2 report-text" name="reportContent2" disabled placeholder="사유를 작성해주세요.">
 							</div>
 
 						</div>
@@ -369,7 +375,7 @@
 			</a>
 		</div>
 		<div id="fixupdate">
-			<a href="updateBoard.do?boardNum=${board.boardNum}">
+			<a href="updateBoardView.do?boardNum=${board.boardNum}">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 					<img style="width: 50px; height: auto; cursor: pointer;" src="img/updateBoard.png">
 					<div style="margin-top: 15px;">수정</div>
@@ -403,12 +409,12 @@
 		});
 		$(document).ready(function() {
 			// 라디오버튼 클릭시 이벤트 발생
-			$("input:radio[name=radio]").click(function() {
-				if ($("input[name=radio]:checked").val() == "1") {
-					$("input:text[name=text]").attr("disabled", false);
+			$("input:radio[name=reportContent]").click(function() {
+				if ($("input[name=reportContent]:checked").val() == "기타") {
+					$("input:text[name=reportContent2]").attr("disabled", false);
 					// radio 버튼의 value 값이 1이라면 활성화
-				} else if ($("input[name=radio]:checked").val() == "0") {
-					$("input:text[name=text]").attr("disabled", true);
+				} else {
+					$("input:text[name=reportContent2]").attr("disabled", true);
 					// radio 버튼의 value 값이 0이라면 비활성화
 				}
 			});
@@ -515,6 +521,49 @@
 
 	<script type="text/javascript">
 		$("#showReply").click(function() {
+			$("#showReply").click(function() {
+				/* console.log('쇼리플라이');
+				$.ajax({ // ajax로 데이터 가져오기
+					type: 'POST',
+					url: 'selectAllReply.do',
+					data: {boardNum:100}, // category, sort 담아서 ListController Servlet에 걸리게!
+					dataType: 'json',
+					traditional: 'true',
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					success: function(data) {
+						console.log('selectAllReply 통신성공 !');
+						console.log(data);
+						console.log(data.replyContent);
+						var replyset=data;
+
+						var html="";
+
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
+					},
+					error : function() {
+						alert('selectAllReply error');
+					}
+				}); */
+				
+				$(this).next("#reply").stop().slideToggle(300);
+				$(this).toggleClass('on').siblings().removeClass('on');
+				$(this).next("#reply").siblings("#reply").slideUp(300);
+			});
+			
 			$(this).next("#reply").stop().slideToggle(300);
 			$(this).toggleClass('on').siblings().removeClass('on');
 			$(this).next("#reply").siblings("#reply").slideUp(300);
