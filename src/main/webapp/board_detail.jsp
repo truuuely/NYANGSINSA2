@@ -252,7 +252,7 @@
 	<script src="js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
-	<script type="text/javascript">
+	 <!-- <script type="text/javascript">
 		var heart = document.getElementsByClassName("heartImg");
 		for (var i = 0; i < heart.length; i++) {
 			heart[i].addEventListener('click', function() {
@@ -264,7 +264,7 @@
 				}
 			})
 		}
-	</script>
+	</script>  -->
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
@@ -291,7 +291,6 @@
 					$(cntClass).text(data);
 					if (upOrDown == 'down') {
 						$(imgClass).attr({src:'img/heart.png'});
-						/* $(this).children('img').attr("src", "img/heart.png"); */
 					} else {
 						$(imgClass).attr({src:'img/fullheart.png'});
 					}

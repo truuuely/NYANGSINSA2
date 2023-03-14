@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,7 +60,9 @@ public class BoardController {
 		System.out.println("boardPostView.do 진입");
 
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
+		boardService.update(bvo);
 		mvo.setUserId((String) session.getAttribute("memberId"));
+		bvo.setUserId((String) session.getAttribute("memberId"));
 		MemberVO loginMvo = memberService.selectOne(mvo);
 
 		// 게시글 상세 데이터
@@ -191,7 +194,7 @@ public class BoardController {
 
 	// 고양이 자랑 게시글 좋아요/취소 수행
 	@ResponseBody
-	@RequestMapping(value = "/updateBlike.do")
+	@RequestMapping(value = "/updateBlike.do", method=RequestMethod.POST)
 	public String updateLike(BlikeVO blvo, BoardVO bvo, Model model, HttpSession session) {
 		blvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setUserId((String) session.getAttribute("memberId"));
@@ -212,7 +215,7 @@ public class BoardController {
 
 //		// 좋아요 취소할 때
 //		BlikeService.delete(blvo);
-
+		
 		return Integer.toString(bvo.getLikeCnt());
 
 	}
