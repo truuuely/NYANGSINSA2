@@ -2,7 +2,6 @@ package com.wan.nss.controller;
 
 import java.io.PrintWriter;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -11,11 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.wan.nss.biz.blike.BlikeService;
 import com.wan.nss.biz.blike.BlikeVO;
 import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.board.BoardVO;
+import com.wan.nss.biz.image.ImageService;
+import com.wan.nss.biz.image.ImageVO;
 import com.wan.nss.biz.member.MemberService;
 import com.wan.nss.biz.member.MemberVO;
 
@@ -28,6 +30,8 @@ public class BoardController {
 	private BoardService boardService;
 	@Autowired
 	private BlikeService blikeService;
+	@Autowired
+	private ImageService imageService;
 
 	// 고양이 자랑 게시판 페이지 진입
 	@RequestMapping(value = "/boardView.do")
@@ -50,13 +54,17 @@ public class BoardController {
 
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
-	public String boardPostView(BoardVO bvo, Model model, HttpSession session) {
+	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
 
-		boardService.update(bvo);
-		bvo.setUserId((String) session.getAttribute("memberId"));
 		System.out.println("boardPostView.do 진입");
 
+		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
+		mvo.setUserId((String) session.getAttribute("memberId"));
+		MemberVO loginMvo = memberService.selectOne(mvo);
+
+		// 게시글 상세 데이터
 		model.addAttribute("board", boardService.selectOne(bvo));
+		model.addAttribute("member", loginMvo);
 
 		return "board_detail.jsp";
 
@@ -109,8 +117,26 @@ public class BoardController {
 	public String insertBoard(BoardVO bvo, Model model) {
 
 		System.out.println("insertBoard.do 진입");
-
+		// 이미지 객체 생성
+		ImageVO ivo = new ImageVO();
+		// 가장 최근 게시글 찾아내서 B_NO 가져오기
+		bvo.setSearchCondition("newest");
+		BoardVO bvo2 = boardService.selectOne(bvo);
+		// 게시글 추가
 		boardService.insert(bvo);
+
+		String image = bvo.getBoardContent();
+		// 이미지 태그 값 잘라내기
+		String imageUrl = (String) image.subSequence(bvo.getBoardContent().indexOf("boardimages/"), bvo.getBoardContent().indexOf("\" style="));
+		System.out.println(imageUrl);
+		// 이미지 이름 세팅
+		ivo.setImageName(imageUrl);
+		// 이미지 번호 세팅
+		ivo.setTargetNum(bvo2.getBoardNum() + 1);
+		// 이미지 구분 번호 세팅
+		ivo.setTypeNum(201);
+		// 이미지 추가
+		imageService.insert(ivo);
 
 		return "board_detail.jsp";
 

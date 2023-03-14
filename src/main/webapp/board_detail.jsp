@@ -37,40 +37,38 @@
 
 	<nss:header />
 
-
-	<div id="board">
+<div id="board">
 		<div id="boardDetail">
 			<div id="title">
-				${board.boardTitle}
-				<br>
-				<div id="writer">[작성자 : ${board.userId}]</div>
+				${board.boardTitle} <br>
+			<div id="writer">[작성자 : ${board.userId}]</div>
 			</div>
-			<hr>
 			<ul id="boardInfo">
 				<li><i class="fa fa-calendar-o"></i> ${board.boardDate}</li>
 				<li><i class="fa fa-comment-o"></i> ${board.replyCnt}</li>
-				<li><img style="width: 20px;" src="img/eyes.png"> ${board.boardView}</li>
-				<c:choose>
-					<c:when test="${board.isChecked==true}">
-						<li><img onclick="javascript:updateLike(${board.boardNum}, 'down');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png"> <span class="${board.boardNum}">${board.likeCnt}</span></li>
-					</c:when>
-					<c:otherwise>
-						<li><img onclick="javascript:updateLike(${board.boardNum}, 'up');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> <span class="${board.boardNum}">${board.likeCnt}</span></li>
-					</c:otherwise>
-				</c:choose>
-				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+				<li><img style="width: 20px;" src="img/eyes.png">
+					${board.boardView}</li>
+				<li class="heartVal"><img class="heartImg"
+					style="width: 20px; cursor: pointer;" src="img/heart.png">
+					${board.likeCnt}</li>
+				<li><img class="reportBtn"
+					style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
+			<c:if test="${board.userId == member.userId}">
+				<form action="updateBoardView.do?boardNum=${board.boardNum}">
+					<input type="submit" value="수정하기"
+						style="border: 1px solid #6667ab42; color: white; padding: 7px; border-radius: 5px; background-color: #A0A0C8; font-size: 14px; float: right; margin-left: 560px; margin-bottom: -20px;">
+				</form>
+			</c:if>
 		</div>
 	</div>
 
-
-
 	<div id="showReply">
-		<img style="width: 20px;" src="img/replyicon.png">
-		댓글 (${board.replyCnt}) ▼
+		<img style="width: 20px;" src="img/replyicon.png"> 댓글
+		(${board.replyCnt}) ▼
 	</div>
 	<div id="reply">
 		<nss:list sort="reply" />
@@ -78,9 +76,12 @@
 
 	<div id="replywrite">
 		<form style="width: 100%;" action="insertReply.do" method="post">
-			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="reply" placeholder="댓글을 작성하세요" required></textarea>
-			<br>
-			<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;" type="submit" value="댓글 작성">
+			<textarea
+				style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;"
+				name="reply" placeholder="댓글을 작성하세요" required></textarea>
+			<br> <input
+				style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;"
+				type="submit" value="댓글 작성">
 		</form>
 	</div>
 
@@ -222,16 +223,12 @@
 				$("#popup").fadeOut();
 			}
 		});
-
 		$(document).ready(function() {
-
 			// 라디오버튼 클릭시 이벤트 발생
 			$("input:radio[name=radio]").click(function() {
-
 				if ($("input[name=radio]:checked").val() == "1") {
 					$("input:text[name=text]").attr("disabled", false);
 					// radio 버튼의 value 값이 1이라면 활성화
-
 				} else if ($("input[name=radio]:checked").val() == "0") {
 					$("input:text[name=text]").attr("disabled", true);
 					// radio 버튼의 value 값이 0이라면 비활성화
@@ -336,10 +333,8 @@
 	<script type="text/javascript">
 		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('603243ecdb0757012b9f08d95c495f53');
-
 		// SDK 초기화 여부를 판단합니다.
 		console.log(Kakao.isInitialized());
-
 		function kakaoShare() {
 			Kakao.Link
 					.sendDefault({
@@ -358,7 +353,6 @@
 							commentCount : 45, //댓글 수
 							sharedCount : 845, //공유 수
 						},
-
 						buttons : [
 								{
 									title : '웹으로 보기',
