@@ -125,7 +125,7 @@ public class BoardController {
 		// 가장 최근 게시글 찾아내서 B_NO 가져오기
 		bvo.setSearchCondition("newest");
 		BoardVO preBvo = boardService.selectOne(bvo);
-		int bNum = 100;
+		int bNum = 0;
 		if(preBvo != null) {
 			bNum = preBvo.getBoardNum() + 1;
 		}
@@ -143,7 +143,7 @@ public class BoardController {
 			if (tag.indexOf("img/") >= 0) {
 				
 				// 이미지 번호 세팅
-				ivo.setTargetNum(bvo.getBoardNum() + 1);
+				ivo.setTargetNum(bNum);
 				
 				// 이미지 구분 번호 세팅
 				ivo.setTypeNum(201);
@@ -159,7 +159,7 @@ public class BoardController {
 				imageService.insert(ivo);
 				
 				// 찾은 부분까지 잘라내고 다시 찾기위해 저장
-				tag = tag.substring(tag.indexOf(" style="));
+				tag = tag.substring(tag.indexOf("\" style=") + 9);
 				
 			// "img/" 문자열이 없으면 종료
 			} else { // 
@@ -177,10 +177,10 @@ public class BoardController {
 	public String updateBoardView(BoardVO bvo, Model model) {
 
 		System.out.println("updateBoardView.do 진입");
-
-		boardService.update(bvo);
-
-		return "insert_board.jsp";
+		System.out.println("bvo: " + bvo);
+		
+		// 몇번 글 수정인지 설정하여 보내기
+		return "update_board.jsp?boardNum=" + bvo.getBoardNum();
 
 	}
 

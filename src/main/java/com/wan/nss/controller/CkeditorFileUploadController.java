@@ -42,7 +42,7 @@ public class CkeditorFileUploadController {
 
 		// 파일을 가져오기 위해 MultipartHttpServletRequest 의 getFileMap 메서드 사용
 		Map<String, MultipartFile> fileMap = request.getFileMap();
-
+		
 		MultipartFile file = fileMap.get("upload");
 		if (file != null) {
 			// 파일 사이즈가 0보다 크고, 파일이름이 공백이 아닐때
