@@ -31,6 +31,7 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/style_login.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -281,6 +282,7 @@
 	<%--ajax 쓰기 위해 JQ연결 --%>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
    </script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- 아이디 중복확인 -->
 	<script type="text/javascript">
@@ -691,13 +693,13 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
                 console.log("로그 result:["+result+"]")
                 console.log(typeof result);
                 if(result == "1"){
-                   alert("<spring:message code="message.register.matchauthentication"/>");
+                   swal("<spring:message code="message.register.matchauthentication"/>");
                    smsCheckTrue = true;
                    console.log(smsCheckTrue)
                    document.getElementById('phone').readOnly = true;
                 } 
                 else{
-                   alert("<spring:message code="message.register.nomatchauthentication"/>");  //인증번호 불일치
+                   swal("<spring:message code="message.register.nomatchauthentication"/>");  //인증번호 불일치
                    smsCheckTrue = false;
                 }
              }
@@ -716,13 +718,13 @@ fetch("tos3.jsp") /*해당 경로의 내용 가져옴 */
          return true;
       }else{
          if(!smsTrue){
-            alert("<spring:message code="message.register.confirmationphone"/>");  
+            swal("<spring:message code="message.register.confirmationphone"/>");  
          }else if(!smsCheckTrue){
-            alert("<spring:message code="message.register.checkauthentication"/>"); 
+        	 swal("<spring:message code="message.register.checkauthentication"/>"); 
          }else if(!registerTrue){
-            alert("<spring:message code="message.register.checkenter"/>"); 
+        	 swal("<spring:message code="message.register.checkenter"/>"); 
          }else if(!idTrue){
-            alert("<spring:message code="message.register.checkid"/>"); 
+        	 swal("<spring:message code="message.register.checkid"/>"); 
          }
          return false;
       }
