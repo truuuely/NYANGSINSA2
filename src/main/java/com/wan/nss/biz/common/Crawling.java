@@ -52,7 +52,7 @@ public class Crawling {
 		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
 		System.out.println("projectPath: " + projectPath);
 		System.out.println();
-		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver"; // 드라이버
+		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 
 		List<ProductVO> datas = sampleStep01(request); // 반환받은 url 배열리스트
 
@@ -198,7 +198,7 @@ public class Crawling {
 
 			// 이미지 파일 저장하기
 			// imgUrl이 null이 아닐 때
-			if (imgUrl != null) {
+//			if (imgUrl != null) {
 				try {
 					downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
 					ivo.setImageName("img/101/" + (i + 100) + ".jpg");
@@ -210,7 +210,14 @@ public class Crawling {
 					ivo.setImageName("img/default/101.jpg");
 
 				}
-			}
+//			}
+//			else {
+//				// 다운로드 에러 발생시 default이미지로 지정
+//				System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imgURL NULL!");
+//				System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imageName을 'img/default/101.jpg'로 설정!");
+//				ivo.setImageName("img/default/101.jpg");
+//
+//			}
 
 			// ivo insert into IMAGE
 			imageDAO.insert(ivo);
@@ -286,7 +293,7 @@ public class Crawling {
 		projectPath = projectPath.substring(0, projectPath.indexOf(".metadata"));
 		System.out.println("projectPath: " + projectPath);
 		System.out.println();
-		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver"; // 드라이버
+		final String WEB_DRIVER_PATH = projectPath + "NYANGSINSA2/src/main/webapp/Source/chromedriver.exe"; // 드라이버
 
 		try {
 			System.setProperty(WEB_DRIVER_ID, WEB_DRIVER_PATH);
@@ -330,7 +337,7 @@ public class Crawling {
 
 			// 카테고리별 MAX만큼 상품 대표이미지 크롤링
 			List<WebElement> el5 = driver
-					.findElements(By.cssSelector("div > a > div.jss" + imgNum + "> div > picture > img"));
+					.findElements(By.xpath("html/body/div/div/div/div/div/div/div/main/div/div/div/div/div/div/div/div/a/div/div/picture/img"));
 
 			// 카테고리별 MAX만큼 datas에 추가
 			for (int i = 0; i < MAX; i++) {
@@ -365,8 +372,7 @@ public class Crawling {
 				try {
 					data.setImageName(el5.get(i).getAttribute("src"));
 				} catch (Exception e) {
-					System.out
-							.println("※※※ sampleStep01 " + (MAX * a + i + 100) + "번 imageName(상품 대표 이미지 주소) 크롤링 실패!");
+					System.out.println("※※※ sampleStep01 " + (MAX * a + i + 100) + "번 imageName(상품 대표 이미지 주소) 크롤링 실패!");
 				}
 				// 할인율 랜덤 지정
 				data.setpDcPercent((new Random().nextInt(6)) * 5);
