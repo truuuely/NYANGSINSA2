@@ -37,7 +37,6 @@
 
 	<nss:header />
 
-
 	<div id="board">
 		<div id="boardDetail">
 			<div id="title">
@@ -45,28 +44,34 @@
 				<br>
 				<div id="writer">[작성자 : ${board.userId}]</div>
 			</div>
-			<hr>
 			<ul id="boardInfo">
 				<li><i class="fa fa-calendar-o"></i> ${board.boardDate}</li>
 				<li><i class="fa fa-comment-o"></i> ${board.replyCnt}</li>
 				<li><img style="width: 20px;" src="img/eyes.png"> ${board.boardView}</li>
-				<c:choose>
-					<c:when test="${board.isChecked==true}">
-						<li><img onclick="javascript:updateLike(${board.boardNum}, 'down');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png"> <span class="${board.boardNum}">${board.likeCnt}</span></li>
-					</c:when>
-					<c:otherwise>
-						<li><img onclick="javascript:updateLike(${board.boardNum}, 'up');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png"> <span class="${board.boardNum}">${board.likeCnt}</span></li>
-					</c:otherwise>
-				</c:choose>
+				<li class="${board.boardNum}info1"><c:choose>
+						<c:when test="${board.isChecked==true}">
+							<img onclick="javascript:updateLike(${board.boardNum}, 'down');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/fullheart.png">
+							<span class="${board.boardNum}">${board.likeCnt}</span>
+						</c:when>
+						<c:otherwise>
+							<img onclick="javascript:updateLike(${board.boardNum}, 'up');" class="${board.boardNum}heartImg" style="width: 20px; cursor: pointer;" src="img/heart.png">
+							<span class="${board.boardNum}">${board.likeCnt}</span>
+						</c:otherwise>
+					</c:choose></li>
 				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
+			<c:if test="${board.userId == member.userId}">
+				<div style="float: right;">
+					<form action="updateBoardView.do?boardNum=${board.boardNum}">
+						<input type="submit" value="수정하기" style="border: 1px solid #6667ab42; color: white; padding: 10px; border-radius: 5px; background-color: #A0A0C8; font-size: 15px; float: right; margin-left: 950px; margin-bottom: -15px;">
+					</form>
+				</div>
+			</c:if>
 		</div>
 	</div>
-
-
 
 	<div id="showReply">
 		<img style="width: 20px;" src="img/replyicon.png">
@@ -84,9 +89,7 @@
 		</form>
 	</div>
 
-
 	<nss:footer />
-
 
 	<!--  신고하기 모달창  -->
 
@@ -155,7 +158,7 @@
 		</a>
 	</div>
 
-	<div id="fixheart">
+	<div class="${board.boardNum}info2" id="fixheart">
 		<a href="#fixheart">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 				<c:choose>
@@ -222,16 +225,12 @@
 				$("#popup").fadeOut();
 			}
 		});
-
 		$(document).ready(function() {
-
 			// 라디오버튼 클릭시 이벤트 발생
 			$("input:radio[name=radio]").click(function() {
-
 				if ($("input[name=radio]:checked").val() == "1") {
 					$("input:text[name=text]").attr("disabled", false);
 					// radio 버튼의 value 값이 1이라면 활성화
-
 				} else if ($("input[name=radio]:checked").val() == "0") {
 					$("input:text[name=text]").attr("disabled", true);
 					// radio 버튼의 value 값이 0이라면 비활성화
@@ -269,6 +268,10 @@
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
+			var imgClass = '.'+bNum+'heartImg';
+			var cntClass = '.'+bNum+'';
+			var infoClass1 = '.'+bNum+'info1';
+			var infoClass2 = '.'+bNum+'info2';
 			console.log('들어옴');
 			$.ajax({
 				type : 'POST',
@@ -278,18 +281,19 @@
 					boardNum : bNum
 				},
 				success : function(data) {
-					var id = '.'+bNum+'heartImg';
+					$(infoClass1).load(location.href + ' ' + infoClass1);
+					$(infoClass2).load(location.href + ' ' + infoClass2);
 					console.log("좋아유 수 " + data)
 					console.log("넘버 " +'#'+bNum)
 					console.log("업다운 " +upOrDown)
 					console.log("이미지 아이디 " +'.'+bNum+'heartImg')
-					console.log($(id).attr('src'));
-					$('.'+bNum+'').text(data);
+					console.log($(imgClass).attr('src'));
+					$(cntClass).text(data);
 					if (upOrDown == 'down') {
-						$(id).attr({src:'img/heart.png'});
+						$(imgClass).attr({src:'img/heart.png'});
 						/* $(this).children('img').attr("src", "img/heart.png"); */
 					} else {
-						$(id).attr({src:'img/fullheart.png'});
+						$(imgClass).attr({src:'img/fullheart.png'});
 					}
 				},
 				error : function() {
@@ -336,10 +340,8 @@
 	<script type="text/javascript">
 		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
 		Kakao.init('603243ecdb0757012b9f08d95c495f53');
-
 		// SDK 초기화 여부를 판단합니다.
 		console.log(Kakao.isInitialized());
-
 		function kakaoShare() {
 			Kakao.Link
 					.sendDefault({
@@ -358,7 +360,6 @@
 							commentCount : 45, //댓글 수
 							sharedCount : 845, //공유 수
 						},
-
 						buttons : [
 								{
 									title : '웹으로 보기',
@@ -373,11 +374,11 @@
 		}
 	</script>
 	<script type="text/javascript">
-	var result = confirm("정말로 삭제 하시겠습니까?");
 		function deletecheck(bNum) {
+			var result = confirm("정말로 삭제 하시겠습니까?");
 			if(result) {
 				alert("예");
-				location.href = "deleteReply.do?bNum="${bNum}"";
+				location.href = "deleteReply.do?bNum="+bNum+"";
 			}
 			else {
 				alert("아니오");
