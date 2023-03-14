@@ -12,17 +12,17 @@ public class ReportServiceImpl implements ReportService {
 	private ReportDAO reportDAO;
 	
 	@Override
-	public ArrayList<ReportVO> selectAll(ReportVO rpVo){
-		return reportDAO.selectAll(rpVo);
+	public ArrayList<ReportVO> selectAll(ReportVO rpvo){
+		return reportDAO.selectAll(rpvo);
 	}
 
 	@Override
-	public ReportVO selectOne(ReportVO rpVo) {
-		return reportDAO.selectOne(rpVo);
+	public ReportVO selectOne(ReportVO rpvo) {
+		return reportDAO.selectOne(rpvo);
 	}
 
 	@Override
-	public boolean update(ReportVO rpVo) {
-		return reportDAO.update(rpVo);
+	public boolean update(ReportVO rpvo) {
+		return reportDAO.update(rpvo);
 	}
 }
