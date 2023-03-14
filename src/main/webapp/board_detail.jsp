@@ -58,10 +58,11 @@
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
 			<c:if test="${board.userId == member.userId}">
+			<div style = "float:right;">
 				<form action="updateBoardView.do?boardNum=${board.boardNum}">
-					<input type="submit" value="수정하기"
-						style="border: 1px solid #6667ab42; color: white; padding: 7px; border-radius: 5px; background-color: #A0A0C8; font-size: 14px; float: right; margin-left: 560px; margin-bottom: -20px;">
-				</form>
+						<input type="submit" value="수정하기" style="border: 1px solid #6667ab42; color: white; padding: 10px; border-radius: 5px; background-color: #A0A0C8; font-size: 15px; float: right; margin-left: 950px; margin-bottom: -15px;">
+					</form>
+			</div>
 			</c:if>
 		</div>
 	</div>
