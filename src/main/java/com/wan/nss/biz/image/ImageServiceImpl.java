@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service("imageService")
+@Service("ImageService")
 public class ImageServiceImpl implements ImageService {
 	
 	@Autowired
