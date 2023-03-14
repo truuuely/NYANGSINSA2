@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.wan.nss.biz.blike.BlikeService;
 import com.wan.nss.biz.blike.BlikeVO;
@@ -58,6 +57,7 @@ public class BoardController {
 	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
 
 		System.out.println("boardPostView.do 진입");
+		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
 
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
 		boardService.update(bvo);
@@ -124,24 +124,51 @@ public class BoardController {
 		ImageVO ivo = new ImageVO();
 		// 가장 최근 게시글 찾아내서 B_NO 가져오기
 		bvo.setSearchCondition("newest");
-		BoardVO bvo2 = boardService.selectOne(bvo);
+		BoardVO preBvo = boardService.selectOne(bvo);
+		int bNum = 100;
+		if(preBvo != null) {
+			bNum = preBvo.getBoardNum() + 1;
+		}
+		bvo.setBoardNum(bNum);
 		// 게시글 추가
 		boardService.insert(bvo);
 
-		String image = bvo.getBoardContent();
-		// 이미지 태그 값 잘라내기
-		String imageUrl = (String) image.subSequence(bvo.getBoardContent().indexOf("boardimages/"), bvo.getBoardContent().indexOf("\" style="));
-		System.out.println(imageUrl);
-		// 이미지 이름 세팅
-		ivo.setImageName(imageUrl);
-		// 이미지 번호 세팅
-		ivo.setTargetNum(bvo2.getBoardNum() + 1);
-		// 이미지 구분 번호 세팅
-		ivo.setTypeNum(201);
-		// 이미지 추가
-		imageService.insert(ivo);
+		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
+		String tag = bvo.getBoardContent();
+		while (true) {
+			
+			System.out.println("tag: " + tag);
+			
+			// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
+			if (tag.indexOf("img/") >= 0) {
+				
+				// 이미지 번호 세팅
+				ivo.setTargetNum(bvo.getBoardNum() + 1);
+				
+				// 이미지 구분 번호 세팅
+				ivo.setTypeNum(201);
+				
+				// 이미지 이름 세팅
+				// 이미지 태그 값 잘라내기
+				String imageUrl = (String) tag.subSequence(tag.indexOf("img/"), tag.indexOf("\" style="));
+				System.out.println(imageUrl);
+				
+				ivo.setImageName(imageUrl);
+				
+				// 이미지 추가
+				imageService.insert(ivo);
+				
+				// 찾은 부분까지 잘라내고 다시 찾기위해 저장
+				tag = tag.substring(tag.indexOf(" style="));
+				
+			// "img/" 문자열이 없으면 종료
+			} else { // 
+				break;
+			}
 
-		return "board_detail.jsp";
+		}
+		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
+		return "boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
 
 	}
 
