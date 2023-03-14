@@ -14,7 +14,6 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>냥신사 | 홈</title>
 
-
 <!-- favicon -->
 <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
@@ -31,6 +30,7 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/blog.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 </head>
 
 <body>
@@ -349,6 +349,7 @@
 	<script src="js/main.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script>
 		$(function() {
 			$(".show-board").slice(0, 3).show(); // 초기갯수
@@ -388,7 +389,10 @@
 		function updateLike(bNum, upOrDown) {
 			console.log('${memberId}');
 			if ('${memberId}' == '') {
-				alert('로그인 후 이용해주세요');
+				swal({
+					text : "로그인 후 이용해주세요",
+					button : "확인"
+				});
 			} else {
 				var imgId = '#' + bNum + 'heartImg';
 				var cntId = '#' + bNum + '';

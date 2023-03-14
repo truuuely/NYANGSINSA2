@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -17,9 +16,7 @@
 <title>냥신사 | 마이페이지</title>
 
 <!-- google Font -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
 <!-- Css Styles -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
@@ -66,12 +63,15 @@
 	<div class="humberger__menu__overlay"></div>
 	<div class="humberger__menu__wrapper">
 		<div class="humberger__menu__logo">
-			<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+			<a href="main.do">
+				<img src="img/logo.png" alt="홈으로 가기">
+			</a>
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp"><i
-						class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+				<li><a href="shoping_cart.jsp">
+						<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+					</a></li>
 			</ul>
 		</div>
 
@@ -89,11 +89,15 @@
 		</nav>
 		<div id="mobile-menu-wrap"></div>
 		<div class="header__top__right__social">
-			<a href="https://www.facebook.com/profile.php?id=100089405234926"><i
-				class="fa fa-facebook"></i></a> <a
-				href="https://www.instagram.com/nyangsinsa5/"><i
-				class="fa fa-instagram"></i></a> <a
-				href="https://twitter.com/nyangsinsa"><i class="fa fa-twitter"></i></a>
+			<a href="https://www.facebook.com/profile.php?id=100089405234926">
+				<i class="fa fa-facebook"></i>
+			</a>
+			<a href="https://www.instagram.com/nyangsinsa5/">
+				<i class="fa fa-instagram"></i>
+			</a>
+			<a href="https://twitter.com/nyangsinsa">
+				<i class="fa fa-twitter"></i>
+			</a>
 		</div>
 		<div class="humberger__menu__contact">
 			<ul>
@@ -120,13 +124,15 @@
 					<div class="col-lg-6 col-md-6">
 						<div class="header__top__right">
 							<div class="header__top__right__social">
-								<a
-									href="https://www.facebook.com/profile.php?id=100089405234926"><i
-									class="fa fa-facebook"></i></a> <a
-									href="https://www.instagram.com/nyangsinsa5/"><i
-									class="fa fa-instagram"></i></a> <a
-									href="https://twitter.com/nyangsinsa"><i
-									class="fa fa-twitter"></i></a>
+								<a href="https://www.facebook.com/profile.php?id=100089405234926">
+									<i class="fa fa-facebook"></i>
+								</a>
+								<a href="https://www.instagram.com/nyangsinsa5/">
+									<i class="fa fa-instagram"></i>
+								</a>
+								<a href="https://twitter.com/nyangsinsa">
+									<i class="fa fa-twitter"></i>
+								</a>
 							</div>
 
 							<!-- 로그인 -->
@@ -141,7 +147,9 @@
 			<div class="row">
 				<div class="col-lg-3">
 					<div class="header__logo">
-						<a href="main.do"><img src="img/logo.png" alt="홈으로 가기"></a>
+						<a href="main.do">
+							<img src="img/logo.png" alt="홈으로 가기">
+						</a>
 					</div>
 				</div>
 				<div class="col-lg-6">
@@ -149,15 +157,17 @@
 						<ul>
 							<li class="active"><a href="main.do">홈</a></li>
 							<li><a href="shop.do?category=all&sort=sellDesc">쇼핑</a></li>
-							<li><a href="contact.jsp">Contact</a></li>
+							<li><a href="contact.do">Contact</a></li>
+							<li><a href="boardView.do">자랑해냥</a></li>
 						</ul>
 					</nav>
 				</div>
 				<div class="col-lg-3">
 					<div class="header__cart">
 						<ul>
-							<li><a href="shoping_cart.jsp"><i
-									class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span></a></li>
+							<li><a href="shoping_cart.jsp">
+									<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
+								</a></li>
 						</ul>
 					</div>
 				</div>
@@ -191,8 +201,7 @@
 						<div class="hero__search__form">
 							<form action="search.do">
 								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-								<input type="text" name="searchContent" placeholder="필요한 거 있냥?"
-									required>
+								<input type="text" name="searchContent" placeholder="필요한 거 있냥?" required>
 								<button type="submit" class="site-btn">검색</button>
 							</form>
 						</div>
@@ -242,8 +251,8 @@
 							<ul>
 								<li><a href="mypage.do">내정보</a></li>
 								<li><a href="orderList.do">주문내역</a></li>
-								<li><a href="check_password.jsp">회원정보변경</a></li>
-								<li><a href="myreview.do">내 리뷰 모아보기</a></li>
+								<li><a href="checkPassword.do">회원정보변경</a></li>
+								<li><a href="myReviewView.do">내 리뷰 모아보기</a></li>
 							</ul>
 						</div>
 					</div>
@@ -267,13 +276,10 @@
 						<c:forEach var="v" items="${rList}" begin="0" varStatus="status">
 							<tbody>
 								<tr>
-									<td
-										style=" text-align: center; padding-top: 10px; padding-right:10px;">${v.rDate}</td>
-									<td style=" text-align: center; font-size: 18px; font-weight: bold; padding-top: 10px; padding-right:10px;">${v.pName}</td>
-									<td style=" text-align: center; font-size: 18px; font-weight: bold; padding-top: 10px; padding-right:10px;">${v.rContent}</td>
-									<td class="product__details__rating" style = "text-align: center; padding-top: 10px; padding-right:10px;">
-										<nss:reviewstar list="${v.rRate}" />
-									</td>
+									<td style="text-align: center; padding-top: 10px; padding-right: 10px;">${v.rDate}</td>
+									<td style="text-align: center; font-size: 18px; font-weight: bold; padding-top: 10px; padding-right: 10px;">${v.pName}</td>
+									<td style="text-align: center; font-size: 18px; font-weight: bold; padding-top: 10px; padding-right: 10px;">${v.rContent}</td>
+									<td class="product__details__rating" style="text-align: center; padding-top: 10px; padding-right: 10px;"><nss:reviewstar list="${v.rRate}" /></td>
 								</tr>
 							</tbody>
 						</c:forEach>
@@ -287,7 +293,9 @@
 				<div class="col-lg-3 col-md-6 col-sm-6">
 					<div class="footer__about">
 						<div class="footer__about__logo">
-							<a href="./index.html"><img src="img/logo.png" alt="로고"></a>
+							<a href="./index.html">
+								<img src="img/logo.png" alt="로고">
+							</a>
 						</div>
 						<ul>
 							<li>주소: 서울 강남구 역삼동 골목길</li>
@@ -316,9 +324,18 @@
 							<button type="submit" class="site-btn">구독</button>
 						</form>
 						<div class="footer__widget__social">
-							<a><i class="fa fa-facebook"></i></a> <a><i
-								class="fa fa-instagram"></i></a> <a><i class="fa fa-twitter"></i></a>
-							<a><i class="fa fa-pinterest"></i></a>
+							<a>
+								<i class="fa fa-facebook"></i>
+							</a>
+							<a>
+								<i class="fa fa-instagram"></i>
+							</a>
+							<a>
+								<i class="fa fa-twitter"></i>
+							</a>
+							<a>
+								<i class="fa fa-pinterest"></i>
+							</a>
 						</div>
 					</div>
 				</div>
@@ -333,9 +350,8 @@
 								<script>
 									document.write(new Date().getFullYear());
 								</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
+								All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by
+								<a href="https://colorlib.com" target="_blank">Colorlib</a>
 								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 							</p>
 						</div>
