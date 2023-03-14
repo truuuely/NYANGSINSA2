@@ -19,7 +19,7 @@ public class MemberDAO {
 	private final String SQL_INSERT = "INSERT INTO MEMBER (M_ID, M_PW, M_NM, CAT_NM, PHONE_NO, POST_NO, ADDRESS1, ADDRESS2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	// 회원정보 업데이트
-	private final String SQL_UPDATE = "UPDATE MEMBER SET M_NM = ?, CAT_NM = ?, POST_NO = ?, ADDRESS1 = ?, ADDRESS2 = ? WHERE M_ID = ?";
+	private final String SQL_UPDATE = "UPDATE MEMBER SET CAT_NM = ?, POST_NO = ?, ADDRESS1 = ?, ADDRESS2 = ? WHERE M_ID = ?";
 
 	// 회원 비밀번호 수정
 	private final String SQL_UPDATE_PW = "UPDATE MEMBER SET M_PW = ? WHERE M_ID = ?";
@@ -30,6 +30,9 @@ public class MemberDAO {
 	// 회원 삭제 처리
 	private final String SQL_DELETE = "UPDATE MEMBER SET ROLE = 'DELETED' WHERE M_NO = (SELECT M_NO FROM (SELECT M_NO FROM MEMBER WHERE M_ID = ?) m)";
 
+	// 회원 등급 변경
+	private final String SQL_UPDATE_CHANGE_ROLE = "UPDATE MEMBER m SET m.WARN_CNT = 0, m.ROLE = ? WHERE m.`ROLE` = 'MEMBER' AND M_NO= ?";
+	
 	// 로그인
 	private final String SQL_SELECTONE = "SELECT M_NO, M_NM, M_ID, M_NM, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_PW = ? AND ROLE != 'DELETED'";
 
@@ -57,20 +60,30 @@ public class MemberDAO {
 
 	// 회원 정보 변경
 	public boolean update(MemberVO vo) {
-		if (vo.getUserPw() != null) { // 비밀번호 변경
+		if (vo.getUserPw() != null) { 
+			// 비밀번호 변경
 			int res = jdbcTemplate.update(SQL_UPDATE_PW, vo.getUserPw(), vo.getUserId());
 			if (res < 1) {
 				return false;
 			}
 			return true;
-		} else if (vo.getPostNum() == null) {// 신고 당한 회원 등급 변경
+		} else if (vo.getPostNum() == null) {
+			// 신고 당한 회원 등급 변경
 			int res = jdbcTemplate.update(SQL_UPDATE_ROLE, vo.getUserId());
 			if (res < 1) {
 				return false;
 			}
 			return true;
-		} else { // 회원정보 변경
-			int res = jdbcTemplate.update(SQL_UPDATE, vo.getUserName(), vo.getCatName(), vo.getPostNum(),
+		} else if (vo.getRole() !=null) {
+			// 회원 등급 변경
+			int res = jdbcTemplate.update(SQL_UPDATE_CHANGE_ROLE, vo.getRole(), vo.getUserNum());
+			if (res < 1) {
+				return false;
+			}
+			return true;
+		} else { 
+			// 회원정보 변경
+			int res = jdbcTemplate.update(SQL_UPDATE, vo.getCatName(), vo.getPostNum(),
 					vo.getAddress1(), vo.getAddress2(), vo.getUserId());
 			if (res < 1) {
 				return false;
@@ -89,6 +102,7 @@ public class MemberDAO {
 		return true;
 	}
 
+	
 	public MemberVO selectOne(MemberVO vo) {
 		try {
 			if (vo.getUserId() != null && vo.getUserPw() != null && vo.getPhoneNum() != null) {
