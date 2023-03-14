@@ -20,6 +20,8 @@ import com.wan.nss.biz.image.ImageService;
 import com.wan.nss.biz.image.ImageVO;
 import com.wan.nss.biz.member.MemberService;
 import com.wan.nss.biz.member.MemberVO;
+import com.wan.nss.biz.reply.ReplyService;
+import com.wan.nss.biz.reply.ReplyVO;
 
 @Controller
 public class BoardController {
@@ -32,6 +34,8 @@ public class BoardController {
 	private BlikeService blikeService;
 	@Autowired
 	private ImageService imageService;
+	@Autowired
+	private ReplyService replyService;
 
 	// 고양이 자랑 게시판 페이지 진입
 	@RequestMapping(value = "/boardView.do")
@@ -55,17 +59,20 @@ public class BoardController {
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
 	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
-
+		
 		System.out.println("boardPostView.do 진입");
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-
+		ReplyVO rvo = new ReplyVO();
+		rvo.setBoardNum(bvo.getBoardNum());
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
 		boardService.update(bvo);
 		mvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setUserId((String) session.getAttribute("memberId"));
 		MemberVO loginMvo = memberService.selectOne(mvo);
-
+		     
+		System.out.println("replyset 길이 :"+replyService.selectAll(rvo).size());
 		// 게시글 상세 데이터
+		model.addAttribute("replyset",replyService.selectAll(rvo));
 		model.addAttribute("board", boardService.selectOne(bvo));
 		model.addAttribute("member", loginMvo);
 

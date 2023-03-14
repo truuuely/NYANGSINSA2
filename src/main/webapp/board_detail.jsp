@@ -239,13 +239,13 @@
 			<div id="content">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
-			<c:if test="${board.userId == member.userId}">
+			<%-- <c:if test="${board.userId == member.userId}">
 				<div style="float: right;">
 					<form action="updateBoardView.do?boardNum=${board.boardNum}">
 						<input type="submit" value="수정하기" style="border: 1px solid #6667ab42; color: white; padding: 10px; border-radius: 5px; background-color: #A0A0C8; font-size: 15px; float: right; margin-left: 950px; margin-bottom: -15px;">
 					</form>
 				</div>
-			</c:if>
+			</c:if> --%>
 		</div>
 	</div>
 
@@ -254,12 +254,16 @@
 		댓글 (${board.replyCnt}) ▼
 	</div>
 	<div id="reply">
-		<nss:list sort="reply" />
+		<nss:list sort="reply"/>
 	</div>
 
 	<div id="replywrite">
+
 		<form style="width: 100%;" action="insertReply.do" onsubmit="return loginCheck()" method="post">
-			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="reply" placeholder="댓글을 작성하세요" required></textarea>
+			<input type="hidden" name="boardNum" value="${board.boardNum}">
+			<input type="hidden" name="userId" value="${member.userId}">
+			
+			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="replyContent" placeholder="댓글을 작성하세요" required></textarea>
 			<br>
 			<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;" type="submit" value="댓글 작성">
 		</form>
@@ -369,7 +373,7 @@
 			</a>
 		</div>
 		<div id="fixupdate">
-			<a href="updateBoard.do?boardNum=${board.boardNum}">
+			<a href="updateBoardView.do?boardNum=${board.boardNum}">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 					<img style="width: 50px; height: auto; cursor: pointer;" src="img/updateBoard.png">
 					<div style="margin-top: 15px;">수정</div>
@@ -515,6 +519,49 @@
 
 	<script type="text/javascript">
 		$("#showReply").click(function() {
+			$("#showReply").click(function() {
+				/* console.log('쇼리플라이');
+				$.ajax({ // ajax로 데이터 가져오기
+					type: 'POST',
+					url: 'selectAllReply.do',
+					data: {boardNum:100}, // category, sort 담아서 ListController Servlet에 걸리게!
+					dataType: 'json',
+					traditional: 'true',
+					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					success: function(data) {
+						console.log('selectAllReply 통신성공 !');
+						console.log(data);
+						console.log(data.replyContent);
+						var replyset=data;
+
+						var html="";
+
+						
+
+
+
+
+
+
+
+
+
+
+
+
+
+						
+					},
+					error : function() {
+						alert('selectAllReply error');
+					}
+				}); */
+				
+				$(this).next("#reply").stop().slideToggle(300);
+				$(this).toggleClass('on').siblings().removeClass('on');
+				$(this).next("#reply").siblings("#reply").slideUp(300);
+			});
+			
 			$(this).next("#reply").stop().slideToggle(300);
 			$(this).toggleClass('on').siblings().removeClass('on');
 			$(this).next("#reply").siblings("#reply").slideUp(300);
