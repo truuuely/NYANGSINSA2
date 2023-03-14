@@ -87,7 +87,7 @@ public class OrderDAO {
 			return null;
 		} catch (Exception e) {
 			System.out.println("OrderDAO : selectOne 결과 없음");
-			return new OrderVO();
+			return null;
 		}
 	}
 

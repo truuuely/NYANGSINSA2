@@ -141,7 +141,6 @@ public class OrderController {
 			// DB 에 업데이트
 			pvo.setpNum(cList.get(i).getpNum());
 			pvo.setpCnt(cList.get(i).getpCnt());
-			pvo.setpSearchCondition("buy");
 			if (!productService.update(pvo)) {
 				try {
 					response.setContentType("text/html; charset=utf-8");

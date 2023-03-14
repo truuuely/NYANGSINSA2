@@ -25,13 +25,14 @@ public class ReportController {
 	// ()
 	@RequestMapping(value = "/insertReport")
 	public String insertReport() {
-		return null;
+		
 	}
 
 	// (관리자) 신고글 관리 페이지 이동
-	@RequestMapping(value = "/ReportManageView.do")
-	public String reportManageView(ReportVO rvo, Model model) {// rvo? vpVo? 일단 전자로 씁니다
+	@RequestMapping(value = "/reportManageView.do")
+	public String reportManageView(ReportVO rpVo, Model model) {
 		model.addAttribute("userId", rvo.getUserId()); // 멤버 ID
+		model.addAttribute("reporterId",rvo.getReporterId()); // 신고자 ID
 		model.addAttribute("rpList", reportService.selectAll(rvo)); // 나머지 정보등 꺼내쓸 수 있는 곳: 여기서 맞게 꺼내쓰세요
 		return "report_manage.jsp";
 	}
@@ -44,7 +45,7 @@ public class ReportController {
 //		return "report_manage_detail.jsp";
 //	}
 
-	// (관리자) Report 게시글 신고 취소
+	// (관리자) Report 게시글 신고 처리
 	@RequestMapping(value = "/updateReport.do")
 	public String updateReport(ReportVO rpVo) {
 

@@ -275,7 +275,7 @@
 								<h5 class="card-header">상품 이미지</h5>
 								<div class="card-body">
 									<div class="mb-3">
-										<label for="formFileMultiple" class="form-label">이미지 파일을 선택하세요</label> <input class="form-control" type="file" id="formFileMultiple" name="img1" accept="image/*"  />
+										<label for="formFileMultiple" class="form-label">이미지 파일을 선택하세요</label> <input class="form-control" type="file" id="formFileMultiple" name="img" accept="image/*"  />
 									</div>
 								</div>
 							</div>
