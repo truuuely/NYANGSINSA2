@@ -282,23 +282,25 @@
 						</div>
 						<div class="body-contentbox">
 							<div style="width: 300px;">
-								<form action="" class="report-box">
-									<input type="radio" class="report-box2" name="radio" id="r1" value="0">
+								<form action="insertReport.do" class="report-box">
+									<input type="hidden" name="targetNum" value="${board.boardNum}">
+									<input type="hidden" name="reportStep" value="1">
+									<input type="radio" class="report-box2" name="reportContent" id="r1" value="욕설/부적절한 언어 입니다.">
 									<label for="r1">욕설/부적절한 언어 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r2" value="0">
+									<input type="radio" class="report-box2" name="reportContent" id="r2" value="스팸광고/도배글 입니다.">
 									<label for="r2">스팸광고/도배글 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r3" value="0">
+									<input type="radio" class="report-box2" name="reportContent" id="r3" value="부적절한 컨텐츠 입니다.">
 									<label for="r3">부적절한 컨텐츠 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r4" value="0">
+									<input type="radio" class="report-box2" name="reportContent" id="r4" value="음란성 게시물 입니다.">
 									<label for="r4">음란성 게시물 입니다.</label>
 									<br>
-									<input type="radio" class="report-box2" name="radio" id="r5" value="1">
+									<input type="radio" class="report-box2" name="reportContent" id="r5" value="기타">
 									<label for="r5">기타</label>
 									<br>
-									<input type="text" class="report-box2 report-text" name="text" disabled placeholder="사유를 작성해주세요.">
+									<input type="text" class="report-box2 report-text" name="reportContent2" disabled placeholder="사유를 작성해주세요.">
 							</div>
 
 						</div>
@@ -403,12 +405,12 @@
 		});
 		$(document).ready(function() {
 			// 라디오버튼 클릭시 이벤트 발생
-			$("input:radio[name=radio]").click(function() {
-				if ($("input[name=radio]:checked").val() == "1") {
-					$("input:text[name=text]").attr("disabled", false);
+			$("input:radio[name=reportContent]").click(function() {
+				if ($("input[name=reportContent]:checked").val() == "기타") {
+					$("input:text[name=reportContent2]").attr("disabled", false);
 					// radio 버튼의 value 값이 1이라면 활성화
-				} else if ($("input[name=radio]:checked").val() == "0") {
-					$("input:text[name=text]").attr("disabled", true);
+				} else {
+					$("input:text[name=reportContent2]").attr("disabled", true);
 					// radio 버튼의 value 값이 0이라면 비활성화
 				}
 			});
