@@ -382,8 +382,26 @@
 
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
-		<a href="insertBoardView.do" class="write_board">글 쓰기</a>
+		<a href="javascript:boardInsert()" class="write_board">글 쓰기</a>
 	</div>
+
+	<script type="text/javascript">
+		function boardInsert() {
+			if ('${memberId}' == '') {
+				swal({
+					text : "로그인 후 이용해주세요",
+					button : "확인"
+				});
+			}else if('${memberRole}' == 'BLOCKED'){
+				swal({
+					text : "글쓰기 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
+					button : "확인"
+				});
+			}else if('${memberRole}' == 'MEMBER'){
+				location.href="insertBoardView.do";
+			}
+		}
+	</script>
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
