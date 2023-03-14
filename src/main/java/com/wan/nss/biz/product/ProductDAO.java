@@ -81,8 +81,11 @@ public class ProductDAO {
 
 	// 상품 추가
 	public boolean insert(ProductVO pvo) {
-		jdbcTemplate.update(SQL_INSERT, pvo.getpName(), pvo.getCategory(), pvo.getPrice(), pvo.getpAmt(),
+		int res = jdbcTemplate.update(SQL_INSERT, pvo.getpName(), pvo.getCategory(), pvo.getPrice(), pvo.getpAmt(),
 				pvo.getpDetail(), pvo.getpDcPercent());
+		if(res < 1) {
+			return false;
+		}
 		return true;
 	}
 
@@ -108,7 +111,9 @@ public class ProductDAO {
 
 	// 상품 삭제
 	public boolean delete(ProductVO pvo) {
-		jdbcTemplate.update(SQL_DELETE, pvo.getpNum());
+		if(jdbcTemplate.update(SQL_DELETE, pvo.getpNum()) < 1) {
+			return false;
+		}
 		return true;
 	}
 
