@@ -408,7 +408,7 @@ width: 100px;
                                  <th>&nbsp;&nbsp;&nbsp;&nbsp;아이디</th>
                                  <th>이름</th>
                                  <th>전화번호</th>
-                                 <th>반려묘 이름</th>
+                                 <th>회원 등급</th>
                                  <th>관리</th>
                               </tr>
                            </thead>
@@ -498,7 +498,7 @@ width: 100px;
    <script src="assets/js/main.js"></script>
 
    <!-- Page JS -->
-   <script src="js/tt.js"></script>
+   <script src="js/adm_m_list.js"></script>
 
    <!-- Place this tag in your head or just before your close body tag. -->
    <script async defer src="https://buttons.github.io/buttons.js"></script>

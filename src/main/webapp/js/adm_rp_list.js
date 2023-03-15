@@ -12,7 +12,7 @@ let part; // 목록 요청 매개변수(카테고리)
 let values; // 매개변수로 사용할 임시 객체 
 let encodedValues; // values를 json 타입으로 인코딩
 let url;
-
+let step;
 
 function list(selectPage,step) { // step : 글인지 댓글인지 대댓글인지 비교함
 	pageCount=5;
@@ -28,10 +28,8 @@ function list(selectPage,step) { // step : 글인지 댓글인지 대댓글인�
 		last+=pageCount;
 	}
 
-	part="report";
 
 	console.log("dmddmd")
-	console.log("part: "+part);
 	console.log("selectPage: "+selectPage);
 	console.log("step "+step)
 
@@ -39,7 +37,10 @@ function list(selectPage,step) { // step : 글인지 댓글인지 대댓글인�
 	$.ajax({ // ajax로 데이터 가져오기
 		type: 'POST',
 		url: 'getAdminList.do',
-		data: {part:part}, // category, sort 담아서 ListController Servlet에 걸리게!
+		data: {part:step
+			   
+		}, // category, sort 담아서 ListController Servlet에 걸리게!
+		
 		dataType: 'json',
 		traditional: 'true',
 		contentType: "application/x-www-form-urlencoded; charset=UTF-8",
@@ -54,7 +55,7 @@ function list(selectPage,step) { // step : 글인지 댓글인지 대댓글인�
 			// 글 목록 표시 호출 (테이블 생성)
 			console.log(dataList,step);
 			displayData(selectPage,step); // 현재페이지인데 바뀌어서 나옴
-
+			console.log('성공?');
 			// 페이징 표시 호출
 			paging(selectPage,step); // 그래서 저장해논 값을 넣어줌
 
@@ -65,6 +66,7 @@ function list(selectPage,step) { // step : 글인지 댓글인지 대댓글인�
 
 //데이터 출력 부분: 현재 페이지(currentPage)와 페이지당 글 개수(dataPerPage) 반영
 function displayData(selectPage,step) {
+	console.log('스텝   '+step);
 	let listhtml = "";
 	let chartHtml = "";
 
@@ -73,49 +75,29 @@ function displayData(selectPage,step) {
 //	dataPerPage = Number(dataPerPage);
 
 	console.log(dataList);
+	console.log('하이');
 	if(totalData!=0){
 		for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
-			if(step==1 && dataList[i].reportStep==1 && dataList[i].reportStat==1){
+			if(step==1 && dataList[i].reportStat==1){
+				//
 				// 신고된 글 
-				
+
 				values = { targetNum: dataList[i].targetNum ,
-						   reportNum: dataList[i].reportNum ,
-						   userNum : dataList[i].userNum ,
-						   reporterNum: dataList[i].reporterNum ,
-						   reportStep: dataList[i].reoprtStep };
+						reportNum: dataList[i].reportNum ,
+						userId : dataList[i].userId ,
+						reporterId: dataList[i].reporterId ,
+						reportStep: dataList[i].reportStep };
 				encodedValues = encodeURIComponent(JSON.stringify(values));
-				
+
 				url = `init(encodedValues);`;
 
-				
-				
+
+
 				console.log(dataList[i]);
 				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
 				+"<td>"+dataList[i].userId+"</td>"
-				+"<td><a href='#' onclick='newOpen("+encodedValues+");'> "+(dataList[i].content.length > 25 ? dataList[i].content.substring(0, 25) + "..." : dataList[i].content)+"</a></td>"
+				+"<td><a href='javascript:newOpen("+encodedValues+");'>글 상세보기</a></td>"
 				+"<td>"+dataList[i].reporterId+"</td>"
-				+"<td>"+dataList[i].reportContent+"</td>"
-					
-				+"<td>"
-				+"<div class='dropdown'>"
-				+"<button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
-				+"<i class='bx bx-dots-vertical-rounded'></i>"
-				+"</button>"
-				+"<div class='dropdown-menu'>"
-				+"<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>"
-				+"</div>"
-				+"</div>"
-				+"</td>"
-				+"</tr>";
-				
-				listhtml="	<tr> 	<th>no.</th> 	<th>글 작성자</th> 	<th>게시글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
-			}
-			if(step==2 && dataList[i].reportStep== 2 || 3 && dataList[i].reportStat==1){
-				// 신고된 댓글
-				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
-				+"<td>"+dataList[i].userId+"</td>"
-				+"<td><a href='#' onclick='newOpen("+encodedValues+");'> "+(dataList[i].content.length > 25 ? dataList[i].content.substring(0, 25) + "..." : dataList[i].content)+"</a></td>"
-				+"<td>"+dataList[i].reportId+"</td>"
 				+"<td>"+dataList[i].reportContent+"</td>"
 
 				+"<td>"
@@ -129,9 +111,41 @@ function displayData(selectPage,step) {
 				+"</div>"
 				+"</td>"
 				+"</tr>";
+
+				listhtml="	<tr> 	<th>no.</th> 	<th>글 작성자</th> 	<th>게시글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
+			}
+			if(step==2 && (dataList[i].reportStep== 2 || 3) && dataList[i].reportStat==1){
 				
-				
-				
+
+				values = { targetNum: dataList[i].targetNum ,
+						reportNum: dataList[i].reportNum ,
+						userId : dataList[i].userId ,
+						reporterId: dataList[i].reporterId ,
+						reportStep: dataList[i].reportStep };
+				encodedValues = encodeURIComponent(JSON.stringify(values));
+
+				url = `init(encodedValues);`;
+				// 신고된 댓글 
+				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
+				+"<td>"+dataList[i].userId+"</td>"
+				+"<td><a href='#' onclick='newOpen("+encodedValues+");'> "+dataList[i].content+"</a></td>"
+				+"<td>"+dataList[i].reporterId+"</td>"
+				+"<td>"+dataList[i].reportContent+"</td>"
+
+				+"<td>"
+				+"<div class='dropdown'>"
+				+"<button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
+				+"<i class='bx bx-dots-vertical-rounded'></i>"
+				+"</button>"
+				+"<div class='dropdown-menu'>"
+				+"<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>"
+				+"</div>"
+				+"</div>"
+				+"</td>"
+				+"</tr>";
+
+
+
 				listhtml="	<tr> 	<th>no.</th> 	<th>댓글 작성자</th> 	<th>댓글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
 
 			}
@@ -199,37 +213,45 @@ function paging(currentPage,step) {
 }
 
 function proc(data) {
-	  console.log(typeof data.targetNum);
-	  console.log(typeof data.reportInput);
-	  console.log(typeof data.userNumInput);
-	  console.log( data.reporterInput);
-	  console.log( parseInt(data.boardNum));
-	  console.log(data);
-	  
-	  
-	  var targetNumInput = document.getElementById("targetNum"); // id가 boardNum 인 태그 가져와서 매개변수로 받은 boardNum 대입
-	  targetNumInput.value =parseInt(data.targetNum);
-		
-		var reportInput = document.getElementById("reportNum");  // id가 reportNum 인 태그 가져와서 매개변수로 받은 reportNum 대입
-		reportInput.value =parseInt(data.reportInput);
-		
-		var userNumInput = document.getElementById("userNum");  // id가 userNum 인 태그 가져와서 매개변수로 받은 userNum 대입
-		userNumInput.value =parseInt(data.userNumInput);
-		
-	    var reporterInput = document.getElementById("reporterNum");  // id가 reporterNum 인 태그 가져와서 매개변수로 받은 reporterNum 대입
-		   reporterInput.value =parseInt(data.reporterInput);
-		
-		var reportStepInput=document.getElementById("reportStep");
-			reportStepInput.value=parseInt(data.reportStep);
-		   
-		var reportForm = document.getElementById("reportForm");
-		reportForm.action = "updateReport.do";
+	console.log(typeof data.reportNum);
+	console.log('target Num '+ data.targetNum);
+	console.log('userId '+ data.userId);
+	console.log( 'reportNum '+ data.reportNum);
+	console.log('reporterId '+ data.reporterId);
+	console.log('reportStep'+ data.reportStep);
+	console.log('dsdsds');
 
-			document.querySelector(".report-modal").classList.remove("report-modal-hidden");
-	  
-	};
+
+	var targetNumInput = document.getElementById("targetNum"); // id가 boardNum 인 태그 가져와서 매개변수로 받은 boardNum 대입
+	targetNumInput.value =parseInt(data.targetNum);
+
+	var reportInput = document.getElementById("reportNum");  // id가 reportNum 인 태그 가져와서 매개변수로 받은 reportNum 대입
+	reportInput.value =parseInt(data.reportNum);
+
+	var userIdInput = document.getElementById("userId");  // id가 userNum 인 태그 가져와서 매개변수로 받은 userNum 대입
+	userIdInput.value =data.userId;
+
+	var reporterInput = document.getElementById("reporterId");  // id가 reporterNum 인 태그 가져와서 매개변수로 받은 reporterNum 대입
+	reporterInput.value =data.reporterId;
+
+	var reportStepInput=document.getElementById("reportStep");
+	reportStepInput.value=parseInt(data.reportStep);
+
+
+	console.log('target Num '+ targetNumInput.value);
+	console.log('userId '+userIdInput.value);
+	console.log( 'reportNum '+ reportInput.value);
+	console.log('reporterId '+ reporterInput.value );
+	console.log('reportStep '+ reportStepInput.value);
+
+//	var reportForm = document.getElementById("reportForm");
+//	reportForm.action = "updateReport.do";
+
+	document.querySelector(".report-modal").classList.remove("report-modal-hidden");
+
+};
 function newOpen(data){
-		window.open("boardPostView.do?targetNum="+data.targetNum+"&reportStep="+data.reportStep);
-		
-	
+	window.open("boardPostView.do?boardNum="+data.targetNum+"&searchCondition=viewCnt");
+
+
 }

@@ -72,11 +72,11 @@ function displayData(selectPage) {
 			+ "<td>" + dataList[i].userName + "</td>"
 			+ "<td><ul class='list-unstyled users-list m-0 avatar-group d-flex align-items-center'>"
 			+ "<li>" + dataList[i].phoneNum + "</li></ul></td>"
-			+ "<td><span class='badge bg-label-primary me-1'>" + dataList[i].catName + "</span></td>"
+			+ "<td><span class='badge bg-label-primary me-1'>" + dataList[i].role + "</span></td>"
 			+ "<td><div class='dropdown'><button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
 			+ "<i class='bx bx-dots-vertical-rounded'></i></button>"
 			+ "<div class='dropdown-menu'><a class='dropdown-item' href='javascript:member("+dataList[i].userNum+");'>"
-			+ "<i class='bx bx-trash me-1'></i> 삭제</a></div></div></td></tr>";
+			+ "<i class='bx bx-trash me-1'></i> 등급 관리</a></div></div></td></tr>";
 		}
 		$("#dataTableBody").html(chartHtml);
 	}
@@ -143,9 +143,9 @@ function paging(currentPage) {
 
 function member(data) {
 	  var userNumInput = document.getElementById("userNum");
-	  userNumInput.value = parseInt(data);
-	  var updateMemberForm = document.getElementById("updateMemberForm");
-	  updateMemberForm.action = "updateMemberRole.do";
+	  userNumInput.value = data;
+	  console.log("userNum"+userNumInput.value);
+	  
 	  
 	  const modal = document.querySelector(".report-modal");
 	  const modalBox = modal.querySelector(".report-modalBox");

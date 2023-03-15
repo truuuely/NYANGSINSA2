@@ -145,9 +145,13 @@ public class MemberController {
 
 	// 회원 등급 수정 수행
 		@RequestMapping(value = "/updateMemberRole.do")
-		public void updateMemberRole(MemberVO mvo) {
+		public String updateMemberRole(MemberVO mvo) {
+			System.out.println("멤버 업데이트 입장");
+			System.out.println(mvo);
 			// mvo : memberNum, role
 			memberService.update(mvo);
+			
+			return "memberManagePage.do";
 		}
 	
 	// 회원정보 수정 수행
