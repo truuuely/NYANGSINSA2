@@ -1,5 +1,6 @@
 package com.wan.nss.controller;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,6 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
-import com.wan.nss.biz.review.ReviewDAO;
 import com.wan.nss.biz.review.ReviewService;
 import com.wan.nss.biz.review.ReviewVO;
 
@@ -29,73 +29,110 @@ public class ReviewController {
 	@Autowired
 	private ProductService productService;
 
-	//리뷰 페이지 이동 (이미 쓴 리뷰를 또 쓰려고 접근하면 돌려보냄)
+	//리뷰 페이지 이동 (완)
 	@RequestMapping(value="/reviewPage.do")
 	public String reviewView(ReviewVO rvo,ProductVO pvo,Model model,HttpSession session,
 			HttpServletResponse response) {
-		String userId = (String)session.getAttribute("userId");//로그인한 회원아이디
-	    
-		ArrayList<ReviewVO> rdatas = reviewService.selectAll(rvo); //리뷰 전체보기
 		
+		// 추후 userId로 수정 예정
+		
+		// 세션에서 로그인 한 회원아이디 받아 저장
+		String memberId = (String) session.getAttribute("memberId");
+	    
+		System.out.println("memberId="+memberId);
+		
+		// 해당 제품의 리뷰 전체보기
+		rvo.setrSearchCondition("pNum");
+		ArrayList<ReviewVO> rdatas = reviewService.selectAll(rvo); //pNum을 세팅하여 selectAll 
+		
+		System.out.println("rdatas= "+rdatas); // 어떤 건 rdatas가 뜨고 어떤 건 안 뜸.. 이거 뭐지..
+		
+		// View가 보내준 pNum 확인
 		System.out.println("pNum: " + pvo.getpNum()); 	
-		pvo = productService.selectOne(pvo); // 리뷰 작성 창 세팅하기
-
-		model.addAttribute("pvo", pvo);
+		System.out.println("pNum: " + rvo.getpNum()); 	
+		
+		// pNum으로 선택된 상품 정보를 pvo에 저장하여 View에서 사용하게 보냄
+		ProductVO resPvo = productService.selectOne(pvo); 
+		
+		System.out.println("pvo: "+resPvo); // pvo가 저장되지 않았음
+		
+		model.addAttribute("pvo", resPvo);
 		try {
 			
-		for (ReviewVO v : rdatas) {
-			if (v.getUserId().equals(userId)) { // 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우
-				response.getWriter().println("<SCRIPT>alert('이미 리뷰를 작성하셨습니다.'); window.close();</SCRIPT>"); // 리뷰 작성 창 닫기
-				return "order_detail.jsp";
+		// 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우, 리뷰 작성 창 닫기 처리
+		for (ReviewVO v : rdatas) { 
+			if (v.getUserId().equals(memberId)) { 
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/html; charset=utf-8");
+				out.println("<SCRIPT>alert('이미 리뷰를 작성하셨습니다.'); window.close();</SCRIPT>"); // 리뷰 작성 창 닫기
+				System.out.println("이미 리뷰 작성");
+				return "order_detail.jsp"; //알럿창이 안 뜨고 리턴하는 페이지로 가버리는.. (utf-8 설정도 안 되어 있음)				
 			}
+			//System.out.println("for문 1번 수행 완료");
 		}
 		}catch(Exception e) {
 			System.out.println("리뷰페이지 이동 오류");
-			e.printStackTrace();
 		}
-		
-		return "review.jsp";
+		return "review.jsp"; // View에서 리뷰창으로 갈 수 있도록 리뷰페이지 return
 	}
 
-	// 사용자 리뷰 추가
+	// 사용자 리뷰 추가 (알림창만 띄워줌) (완)
 	@RequestMapping(value="/insertReview.do")
-	public String insertReview(ReviewVO rvo, Model model,HttpServletResponse response) {
+	public void insertReview(ReviewVO rvo, Model model,HttpServletResponse response) {
 		response.setContentType("text/html; charset=utf-8");
 		
+		// insert input 잘 들어오는지 확인
+		System.out.println("pNum: "+rvo.getpNum());
+		System.out.println("memberId: "+rvo.getUserId());
+		System.out.println("rContent: "+rvo.getrContent());
+		System.out.println("rRate: "+rvo.getrRate());
+		
 		try {
-			if(reviewService.insert(rvo)) { // 업데이트 성공  
-				response.getWriter().println("<SCRIPT>alert('리뷰가 등록되었습니다.'); window.close();</SCRIPT>");
+			if(reviewService.insert(rvo)) {  
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/html; charset=utf-8");
+				out.println("<SCRIPT>alert('리뷰가 등록되었습니다.'); window.close();</SCRIPT>");
 			}
 			else { // 실패 시 
-				response.getWriter().println("<SCRIPT>alert('에러 발생. 잠시 후 다시 시도해주세요.'); window.close();</SCRIPT>");
+				PrintWriter out = response.getWriter();
+				response.setContentType("text/html; charset=utf-8");
+				out.println("<SCRIPT>alert('에러 발생. 잠시 후 다시 시도해주세요.'); window.close();</SCRIPT>");
 			}
+			System.out.println("리뷰 추가 완료");
+		
 		}catch(Exception e) { //실패 시
 			System.out.println("insertReview오류: 알림창 에러 발생");
 		}
-
-		return "order_detail.jsp";
+		
+		//창을 닫을 것이므로 리턴할 것이 없음
+		//return "order_detail.jsp"; 뷰가 닫아주자
 	}
 	
-	// 내 리뷰 모아보기 페이지 
-	@RequestMapping(value = "/myReviewView.do") //View님들 myreview.do -> myReviewView.do로 수정 부탁드립니다
-	public String myReviewView(ReviewVO rvo,Model model) { 
+	// 내 리뷰 모아보기 페이지 (완)
+	@RequestMapping(value = "/myReviewView.do") 
+	public String myReviewView(ReviewVO rvo,Model model,HttpSession session) { 
+		rvo.setrSearchCondition("myReviews");
+		rvo.setUserId((String)session.getAttribute("memberId"));
 		model.addAttribute("rList", reviewService.selectAll(rvo));
 		return "my_review.jsp";
 	}
 
 	// (관리자)리뷰 삭제
 	@RequestMapping(value="/deleteReview.do")
-	public String deleteReview(ReviewVO rvo, ReviewDAO rdao, HttpSession session,
+	public String deleteReview(ReviewVO rvo, HttpSession session,
 			HttpServletResponse response, HttpServletRequest request) {
 		System.out.println("deleteReview 입장");
 
-		String id = (String)session.getAttribute("userId");
+		//유저 아이디 세션에서 받아오기
+		String id = (String)session.getAttribute("memberId");
 
 		try {
+			//세션에 아이디가 없거나 관리자가 아닌 회원이 접근한 경우 경고와 함께 메인으로 돌려보냄
 			if (id == null || !(id.equals("admin"))) {
 				// 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+				PrintWriter out = response.getWriter();
 				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+				out.println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
 				return "main.do";
 			}
 		}catch(Exception e) {
@@ -105,8 +142,9 @@ public class ReviewController {
 
 		try {
 			if (!reviewService.delete(rvo)) { // 리뷰 삭제 실패 시
+				PrintWriter out = response.getWriter();
 				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('Delete 실패. 잠시 후 다시 시도하세요.');</SCRIPT>");
+				out.println("<SCRIPT>alert('Delete 실패. 잠시 후 다시 시도하세요.');</SCRIPT>");
 			}
 		}catch(Exception e) {
 			System.out.println("deleteReview 오류: delete 실패 알림창 오류");
@@ -116,7 +154,7 @@ public class ReviewController {
 		return "redirect:review_manage.jsp"; //null, forward 상황
 	}
 	
-	//ReviewListController
+	//ReviewListController (완)
 	@ResponseBody
 	@RequestMapping(value="getReviewList.do", method = RequestMethod.POST)
 	public JsonArray getReviewList(ReviewVO rvo) {
