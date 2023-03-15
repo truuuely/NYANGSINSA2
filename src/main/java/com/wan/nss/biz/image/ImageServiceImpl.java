@@ -23,10 +23,10 @@ public class ImageServiceImpl implements ImageService {
 	public boolean insert(ImageVO pvo) {
 		return imageDAO.insert(pvo);
 	}
-	@Override
-	public boolean update(ImageVO pvo) {
-		return imageDAO.update(pvo);
-	}
+//	@Override
+//	public boolean update(ImageVO pvo) {
+//		return imageDAO.update(pvo);
+//	}
 	@Override
 	public boolean delete(ImageVO pvo) {
 		return imageDAO.delete(pvo);
