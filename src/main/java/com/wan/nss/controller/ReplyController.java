@@ -22,7 +22,7 @@ public class ReplyController {
 	@ResponseBody
 	@RequestMapping(value="/insertReply.do")
 	public void insertReply(ReplyVO rvo, Model model) {
-		System.out.println("insertReply 로그 "+rvo);
+		System.out.println("insertReply 진입");
 		// 글번호, 글쓴이, 내용, 패런트넘
 		replyService.insert(rvo);
 	}
@@ -36,6 +36,7 @@ public class ReplyController {
 	@ResponseBody
 	@RequestMapping(value="/deleteReply.do")
 	public void deleteReply(ReplyVO rvo, Model model) {
+		System.out.println("deleteReply 진입");
 		replyService.delete(rvo);
 	}
 	
