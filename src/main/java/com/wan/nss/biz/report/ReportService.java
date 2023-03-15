@@ -3,7 +3,7 @@ package com.wan.nss.biz.report;
 import java.util.ArrayList;
 
 public interface ReportService {
-	public ArrayList<ReportVO> selectAll(ReportVO rvo);
-	public ReportVO selectOne(ReportVO rvo);
-	public boolean update(ReportVO rvo);
+	public boolean insert(ReportVO rpvo);
+	public ArrayList<ReportVO> selectAll(ReportVO rpvo);
+	public boolean update(ReportVO rpvo);
 }
