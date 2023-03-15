@@ -38,7 +38,7 @@
 }
 
 .ck-editor__editable {
-	min-height: 500px;
+	min-height: 1000px;
 }
 </style>
 
@@ -89,9 +89,11 @@
 							<input type="text" name="boardTitle" value="${board.boardTitle}" required>
 							<input type="hidden" name="writer" value="${memberId}">
 							<input type="hidden" name="userId" value="${memberId}">
+							<input type="hidden" name="boardNum" value="${board.boardNum}">
+							<input type="hidden" name="searchCondition" value="edit">
 						</div>
 						<div class="col-lg-12 text-center">
-							<textarea name="boardContent" id="editor" value="${board.boardContent}" >${board.boardContent}</textarea>
+							<textarea name="boardContent" id="editor">${board.boardContent}</textarea>
 							<button type="submit" class="site-btn" style="margin-top: 30px;">수정하기</button>
 						</div>
 					</div>

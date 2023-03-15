@@ -141,7 +141,7 @@
 	width: 120px;
 	position: fixed;
 	z-index: 1;
-	bottom: 480px;
+	bottom: 580px;
 	right: 75px;
 }
 
@@ -149,7 +149,15 @@
 	width: 120px;
 	position: fixed;
 	z-index: 1;
-	bottom: 580px;
+	bottom: 680px;
+	right: 75px;
+}
+
+#fixboardlist {
+	width: 120px;
+	position: fixed;
+	z-index: 1;
+	bottom: 480px;
 	right: 75px;
 }
 

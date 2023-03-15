@@ -239,13 +239,6 @@
 			<div id="content">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
-			<%-- <c:if test="${board.userId == member.userId}">
-				<div style="float: right;">
-					<form action="updateBoardView.do?boardNum=${board.boardNum}">
-						<input type="submit" value="수정하기" style="border: 1px solid #6667ab42; color: white; padding: 10px; border-radius: 5px; background-color: #A0A0C8; font-size: 15px; float: right; margin-left: 950px; margin-bottom: -15px;">
-					</form>
-				</div>
-			</c:if> --%>
 		</div>
 	</div>
 
@@ -331,6 +324,14 @@
 		</a>
 	</div>
 
+	<div id="fixboardlist">
+			<a href="boardView.do">
+				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+					<img style="width: 50px; height: auto; cursor: pointer;" src="img/boardlist.png">
+					<div style="margin-top: 15px;">목록</div>
+				</button>
+			</a>
+	</div>
 	<div id="fixshare">
 		<a href="#">
 			<button type="button" onclick="kakaoShare()" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
@@ -339,7 +340,6 @@
 			</button>
 		</a>
 	</div>
-
 	<div class="${board.boardNum}info2" id="fixheart">
 		<a href="#fixheart">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
@@ -365,7 +365,7 @@
 		</a>
 	</div>
 
-	<c:if test="${board.userNum == memberNum}">
+	<c:if test="${board.userId == member.userId}">
 		<div id="fixdelete">
 			<a href="deleteBoard.do?boardNum=${board.boardNum}">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
@@ -382,6 +382,7 @@
 				</button>
 			</a>
 		</div>
+		
 	</c:if>
 
 
