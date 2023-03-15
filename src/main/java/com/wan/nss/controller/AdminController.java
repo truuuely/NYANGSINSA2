@@ -116,7 +116,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	}
 
 	// 관리자 홈 도넛차트 데이터 가져오기
-	@RequestMapping(value = "getChart.do")
+	@ResponseBody
+	@RequestMapping(value = "/getChart.do")
 	protected JsonObject sendChart(OrderVO ovo, OrderDetailVO odvo) {
 		System.out.println("getChart.do 진입");
 		
@@ -135,7 +136,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			data.addProperty("categorySum" + (i+1), odvo.getSum()); // categorySum1~
 			
 		}
-
+		
 		// 올해 작년 수익 비교 차트
 		// 연도별 수익 데이터 저장 부분 Begin
 		// 연도별 수익 저장할 변수
@@ -149,14 +150,15 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		data.addProperty("lastYearSum", lastYearSum);
 
 		// 2023년 수익
-		ovo.setoSearchCondition("thisyear");
-		int thisyearSum = orderService.selectOne(ovo).getoPrice();
+		ovo.setoSearchCondition("thisYear");
+		int thisYearSum = orderService.selectOne(ovo).getoPrice();
 
 		// data 리스트에 넣기
-		System.out.println("thisyearSum: " + thisyearSum);
-		data.addProperty("thisyearSum", thisyearSum);
+		System.out.println("thisYearSum: " + thisYearSum);
+		data.addProperty("thisYearSum", thisYearSum);
 		// 연도별 수익 데이터 저장 부분 End
 
+		System.out.println("data: " + data);
 		return data;
 	}
 
