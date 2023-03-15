@@ -12,7 +12,7 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>냥신사 | 홈</title>
+<title>냥신사 | 게시글 상세페이지</title>
 
 
 <!-- favicon -->
@@ -236,7 +236,7 @@
 					</c:choose></li>
 				<li><img class="reportBtn" onclick="javascript:report(1,${board.boardNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
-			<div id="content">
+			<div id="content" style="width: 90%;">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
 		</div>
@@ -253,42 +253,12 @@
 	</div>
 	<div id="replywrite">
 		<div style="width: 100%;">
-			<textarea id="replyContent" style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="replyContent" placeholder="댓글을 작성하세요" required></textarea>
-			<br>
-			<div onclick="insertReply()" style="cursor: pointer; border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;">댓글 작성</div>
+			<input id="0replyContent" class="replyContent" type="text" name="replyContent" style="padding-left: 20px; width: 85%; height: 55px; border-radius: 5px; border: 1.7px solid #6667ab6b;" placeholder="댓글을 작성하세요" required />
+			<div onclick="insertReply(0)" style="cursor: pointer; text-align: center; width: 14%; height: 100%; padding-top: 13px; border: 1px solid #6667ab42; float: right; color: white; border-radius: 5px; background-color: #6667AB;">댓글 작성</div>
 		</div>
 	</div>
 
-	<script type="text/javascript">
-	function insertReply(){
-		var userId = '${member.userId}';
-		var boardNum = '${board.boardNum}';
-		var replyContent = $('#replyContent').val();
-		console.log(replyContent);
-		$.ajax({
-			type : 'POST',
-			url : 'insertReply.do',
-			data : {
-				boardNum: boardNum,
-				userId : userId,
-				replyContent : "우아아앙"
-			},
-			success : function() {
-				$('.showReply').load(location.href + ' .showReply');
-				setTimeout(function() {
-					$('#reply').css('display', 'block');
-				},100);
-				// 시연해보고, 발표할때 적당한 시간 찾아서 대입
-				// -> 각각을 함수로 빼서,(모듈화)
-				// if분기로 처리할수있음
-			},
-			error : function() {
-				alert('error');
-			}
-		})
-		
-	}
-	</script>
+
 
 	<nss:footer />
 
@@ -300,15 +270,16 @@
 				<div class="popup-head">
 					<span class="head-title"> 신고하기</span>
 				</div>
-				<div class="popup-body">
-					<div class="body-content">
-						<div class="body-titlebox">
-							<h2 style="font-size: 25px;">신고 사유를 선택해주세요.</h2>
-						</div>
-						<div class="body-contentbox">
-							<div style="width: 300px;">
-								<form action="insertReport.do" class="report-box">
-									<input type="hidden" id="targetNum"name="targetNum" value="">
+				<!-- 원래 있었음 class="report-box" -->
+				<form action="insertReport.do" method="post">
+					<div class="popup-body">
+						<div class="body-content">
+							<div class="body-titlebox">
+								<h2 style="font-size: 25px;">신고 사유를 선택해주세요.</h2>
+							</div>
+							<div class="body-contentbox">
+								<div style="width: 300px;">
+									<input type="hidden" id="targetNum" name="targetNum" value="">
 									<input type="hidden" id="rpStep" name="reportStep" value="">
 									<input type="hidden" name="userId" value="${board.userId}">
 									<input type="hidden" name="reporterId" value="${member.userId}">
@@ -328,15 +299,15 @@
 									<label for="r5">기타</label>
 									<br>
 									<input type="text" class="report-box2 report-text" name="reportContent" disabled placeholder="사유를 작성해주세요.">
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="popup-foot">
-					<input type="submit" class="pop-btn2" value="신고하기" id="close">
-					</form>
-					<span class="pop-btn modal-close" id="close2">창 닫기</span>
-				</div>
+					<div class="popup-foot">
+						<input type="submit" class="pop-btn2" value="신고하기" id="close">
+						<span class="pop-btn modal-close" id="close2">창 닫기</span>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -393,7 +364,7 @@
 		</a>
 	</div>
 
-	<c:if test="${board.userId == member.userId}">
+	<c:if test="${board.userId == memberId}">
 		<div id="fixdelete">
 			<a href="deleteBoard.do?boardNum=${board.boardNum}">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
@@ -413,6 +384,42 @@
 
 	</c:if>
 
+	<!-- 댓글 추가 -->
+	<script type="text/javascript">
+   
+   
+   
+   function insertReply(parentNum){
+      console.log('insert');
+      var userId = '${memberId}';
+      var boardNum = '${board.boardNum}';
+      var replyContent = $('input[id='+parentNum+'replyContent]').val();
+      console.log('내용'+replyContent);
+      $.ajax({
+         type : 'POST',
+         url : 'insertReply.do',
+         data : {
+            boardNum: boardNum,
+            userId : userId,
+            replyContent : replyContent,
+            parentNum : parentNum
+         },
+         success : function() {
+            $('.showReply').load(location.href + ' .showReply');
+            setTimeout(function() {
+               $('#reply').css('display', 'block');
+            },100);
+            // 시연해보고, 발표할때 적당한 시간 찾아서 대입
+            // -> 각각을 함수로 빼서,(모듈화)
+            // if분기로 처리할수있음
+         },
+         error : function() {
+            alert('error');
+         }
+      })
+   }
+   </script>
+	<!-- 댓글 추가 / -->
 
 	<!--  신고하기 모달창 Scripte  -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -478,24 +485,26 @@
 	</script>
 
 
+
+
 	<script type="text/javascript">
-		function loginCheck(){
-			if ('${memberId}' == '') {
-				swal({
-					text : "로그인 후 이용해주세요",
-					button : "확인"
-				});
-				return false;
-			}else if('${memberRole}' == 'BLOCKED'){
-				swal({
-					text : "댓글쓰기 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
-					button : "확인"
-				});
-				return false;
-			}else if('${memberRole}' == 'MEMBER'){
-				return true;
-			}
-		}
+      function loginCheck(){
+         if ('${memberId}' == '') {
+            swal({
+               text : "로그인 후 이용해주세요",
+               button : "확인"
+            });
+            return false;
+         }else if('${memberRole}' == 'BLOCKED'){
+            swal({
+               text : "댓글쓰기 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
+               button : "확인"
+            });
+            return false;
+         }else if('${memberRole}' == 'MEMBER'){
+            return true;
+         }
+      }
 </script>
 
 	<!-- Js Plugins -->
@@ -511,129 +520,143 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<script type="text/javascript">
-		function updateLike(bNum, upOrDown) {
-			if ('${memberId}' == '') {
-				swal({
-					text : "로그인 후 이용해주세요",
-					button : "확인"
-				});
-			} else {
-			var imgClass = '.'+bNum+'heartImg';
-			var cntClass = '.'+bNum+'';
-			var infoClass1 = '.'+bNum+'info1';
-			var infoClass2 = '.'+bNum+'info2';
-			console.log('들어옴');
-			$.ajax({
-				type : 'POST',
-				url : 'updateBlike.do',
-				data : {
-					upOrDown : upOrDown,
-					boardNum : bNum
-				},
-				success : function(data) {
-					$(infoClass1).load(location.href + ' ' + infoClass1);
-					$(infoClass2).load(location.href + ' ' + infoClass2);
-					console.log("좋아유 수 " + data)
-					console.log("넘버 " +'#'+bNum)
-					console.log("업다운 " +upOrDown)
-					console.log("이미지 아이디 " +'.'+bNum+'heartImg')
-					console.log($(imgClass).attr('src'));
-					$(cntClass).text(data);
-					if (upOrDown == 'down') {
-						$(imgClass).attr({src:'img/heart.png'});
-					} else {
-						$(imgClass).attr({src:'img/fullheart.png'});
-					}
-				},
-				error : function() {
-					alert('error');
-				}
-			})
-		}
-		}
-	</script>
+      function updateLike(bNum, upOrDown) {
+         if ('${memberId}' == '') {
+            swal({
+               text : "로그인 후 이용해주세요",
+               button : "확인"
+            });
+         } else {
+         var imgClass = '.'+bNum+'heartImg';
+         var cntClass = '.'+bNum+'';
+         var infoClass1 = '.'+bNum+'info1';
+         var infoClass2 = '.'+bNum+'info2';
+         console.log('들어옴');
+         $.ajax({
+            type : 'POST',
+            url : 'updateBlike.do',
+            data : {
+               upOrDown : upOrDown,
+               boardNum : bNum
+            },
+            success : function(data) {
+               $(infoClass1).load(location.href + ' ' + infoClass1);
+               $(infoClass2).load(location.href + ' ' + infoClass2);
+               console.log("좋아유 수 " + data)
+               console.log("넘버 " +'#'+bNum)
+               console.log("업다운 " +upOrDown)
+               console.log("이미지 아이디 " +'.'+bNum+'heartImg')
+               console.log($(imgClass).attr('src'));
+               $(cntClass).text(data);
+               if (upOrDown == 'down') {
+                  $(imgClass).attr({src:'img/heart.png'});
+               } else {
+                  $(imgClass).attr({src:'img/fullheart.png'});
+               }
+            },
+            error : function() {
+               alert('error');
+            }
+         })
+      }
+      }
+   </script>
 
 	<!-- <script>
-		$(function() {
-			/* $(".reply").slice(0, 6).show(); // 초기갯수 */
-			$("#showReply").click(function(e) { // 클릭시 more
-				e.preventDefault();
-				$(".reply:hidden").slice(0, 1).show(); // 클릭시 more 갯수 지정
-				/* if ($(".dd:hidden").length < 0) { // 컨텐츠 남아있는지 확인
-				   alert("게시물의 끝입니다."); // 컨텐츠 없을시 alert 창 띄우기 
-				} */
-			});
-		});
-	</script> -->
+      $(function() {
+         /* $(".reply").slice(0, 6).show(); // 초기갯수 */
+         $("#showReply").click(function(e) { // 클릭시 more
+            e.preventDefault();
+            $(".reply:hidden").slice(0, 1).show(); // 클릭시 more 갯수 지정
+            /* if ($(".dd:hidden").length < 0) { // 컨텐츠 남아있는지 확인
+               alert("게시물의 끝입니다."); // 컨텐츠 없을시 alert 창 띄우기 
+            } */
+         });
+      });
+   </script> -->
 
 	<script type="text/javascript">
-	function showReReply(rNum){
-		$('#'+rNum+'rereplywrite').stop().slideToggle(300);
-	    $('#'+rNum+'rereplywrite').css('display','flex'); 
-		$('#'+rNum+'rereplywrite').toggleClass('on').siblings().removeClass('on');
-		$('#'+rNum+'rereplywrite').siblings('#'+rNum+'rereplywrite').slideUp(300); 
-	}
-	</script>
+   function showReReply(rNum){
+      $('#'+rNum+'rereplywrite').stop().slideToggle(300);
+       $('#'+rNum+'rereplywrite').css('display','flex'); 
+      $('#'+rNum+'rereplywrite').toggleClass('on').siblings().removeClass('on');
+      $('#'+rNum+'rereplywrite').siblings('#'+rNum+'rereplywrite').slideUp(300); 
+   }
+   </script>
 
 	<script type="text/javascript">
-	function showReply(){
-			$("#showReply").next("#reply").stop().slideToggle(300);
-			$("#showReply").toggleClass('on').siblings().removeClass('on');
-			$("#showReply").next("#reply").siblings("#reply").slideUp(300);
-	}
-	</script>
+   function showReply(){
+         $("#showReply").next("#reply").stop().slideToggle(300);
+         $("#showReply").toggleClass('on').siblings().removeClass('on');
+         $("#showReply").next("#reply").siblings("#reply").slideUp(300);
+   }
+   </script>
 
 	<!-- kakao sdk 호출 -->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
 	<script type="text/javascript">
-		// SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-		Kakao.init('603243ecdb0757012b9f08d95c495f53');
-		// SDK 초기화 여부를 판단합니다.
-		console.log(Kakao.isInitialized());
-		function kakaoShare() {
-			Kakao.Link
-					.sendDefault({
-						objectType : 'feed',
-						content : {
-							title : '안녕안녕 헬로월드 마이크테스트',// 글제목 
-							description : '강문영 바보바보', // 글내용
-							imageUrl : 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
-							link : {
-								mobileWebUrl : 'https://www.naver.com/',
-								webUrl : 'https://www.youtube.com/watch?v=72fDsC2kX7g',
-							},
-						},
-						social : {
-							likeCount : 286, //좋아요 수
-							commentCount : 45, //댓글 수
-							sharedCount : 845, //공유 수
-						},
-						buttons : [
-								{
-									title : '웹으로 보기',
-									link : {
-										mobileWebUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
-										webUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
-									},
-								}, ],
-						// 카카오톡 미설치 시 카카오톡 설치 경로이동
-						installTalk : true,
-					})
-		}
-	</script>
+      // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
+      Kakao.init('603243ecdb0757012b9f08d95c495f53');
+      // SDK 초기화 여부를 판단합니다.
+      console.log(Kakao.isInitialized());
+      function kakaoShare() {
+         Kakao.Link
+               .sendDefault({
+                  objectType : 'feed',
+                  content : {
+                     title : '안녕안녕 헬로월드 마이크테스트',// 글제목 
+                     description : '강문영 바보바보', // 글내용
+                     imageUrl : 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
+                     link : {
+                        mobileWebUrl : 'https://www.naver.com/',
+                        webUrl : 'https://www.youtube.com/watch?v=72fDsC2kX7g',
+                     },
+                  },
+                  social : {
+                     likeCount : 286, //좋아요 수
+                     commentCount : 45, //댓글 수
+                     sharedCount : 845, //공유 수
+                  },
+                  buttons : [
+                        {
+                           title : '웹으로 보기',
+                           link : {
+                              mobileWebUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
+                              webUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
+                           },
+                        }, ],
+                  // 카카오톡 미설치 시 카카오톡 설치 경로이동
+                  installTalk : true,
+               })
+      }
+   </script>
 	<script type="text/javascript">
-		function deletecheck(bNum) {
-			var result = confirm("정말로 삭제 하시겠습니까?");
-			if(result) {
-				alert("예");
-				location.href = "deleteReply.do?bNum="+bNum+"";
-			}
-			else {
-				alert("아니오");
-			}
-		}
-	</script>
+      function deletecheck(replyNum) {
+         var result = confirm("정말로 삭제 하시겠습니까?");
+         if(result) {
+            $.ajax({
+               type : 'POST',
+               url : 'deleteReply.do',
+               data : {
+                  replyNum: replyNum,
+               },
+               success : function() {
+                  $('.showReply').load(location.href + ' .showReply');
+                  setTimeout(function() {
+                     $('#reply').css('display', 'block');
+                  },100);
+               },
+               error : function() {
+                  alert('error');
+               }
+            })
+         }
+         else {
+            alert("삭제가 취소되었습니다.");
+         }
+      }
+   </script>
 </body>
 
 </html>
