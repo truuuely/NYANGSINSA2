@@ -234,7 +234,7 @@
 							<span class="${board.boardNum}">${board.likeCnt}</span>
 						</c:otherwise>
 					</c:choose></li>
-				<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+				<li><img class="reportBtn" onclick="javascript:report(1,${board.boardNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
@@ -292,7 +292,7 @@
 
 	<nss:footer />
 
-	<!--  신고하기 모달창  -->
+	<!--  글 신고하기 모달창  -->
 
 	<div class="container">
 		<div class="popup-wrap" id="popup">
@@ -308,8 +308,10 @@
 						<div class="body-contentbox">
 							<div style="width: 300px;">
 								<form action="insertReport.do" class="report-box">
-									<input type="hidden" name="targetNum" value="${board.boardNum}">
-									<input type="hidden" name="reportStep" value="1">
+									<input type="hidden" id="targetNum"name="targetNum" value="">
+									<input type="hidden" id="rpStep" name="reportStep" value="">
+									<input type="hidden" name="userId" value="${board.userId}">
+									<input type="hidden" name="reporterId" value="${member.userId}">
 									<input type="radio" class="report-box2" name="reportContent" id="r1" value="욕설/부적절한 언어 입니다.">
 									<label for="r1">욕설/부적절한 언어 입니다.</label>
 									<br>
@@ -415,12 +417,38 @@
 	<!--  신고하기 모달창 Scripte  -->
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script>
+
+		function report(step,targetNum){
+			if ('${memberId}' == '') {
+				swal({
+					text : "로그인 후 이용해주세요",
+					button : "확인"
+				});
+				console.log('리포트함수');
+			  var rpStep = document.getElementById("rpStep"); 
+			  rpStep.value =parseInt(step);
+			  
+			  var targetNumInput = document.getElementById("targetNum"); 
+			  targetNumInput.value =parseInt(targetNum);
+
+			} 
+		}
+	
 		$(function() {
 			$("#confirm").click(function() {
 				modalClose();
 				//컨펌 이벤트 처리
 			});
 			$(".reportBtn").click(function() {
+				if ('${memberId}' == '') {
+					swal({
+						text : "로그인 후 이용해주세요",
+						button : "확인"
+					});
+					return;
+				}
+
+				
 				console.log('dd');
 				$("#popup").css('display', 'flex').hide().fadeIn();
 			});
