@@ -18,7 +18,8 @@ public class ReportDAO {
 	 * C : 게시글, 댓글/대댓글 신고. TARGET_NO 에는 게시글 PK 혹은 댓글 PK가 들어가야 함. RP_STEP = 1(글),
 	 * 2(댓글), 3(대댓글)
 	 */
-	private final String INSERT = "INSERT INTO REPORT (TARGET_NO, RP_STEP, M_NO, RP_CONTENT) VALUES (?, ?, (SELECT M_NO FROM MEMBER WHERE M_ID = ?), ?)";
+	private final String INSERT = "INSERT INTO REPORT (TARGET_NO, RP_STEP, M_NO, RP_M_NO, RP_CONTENT) "
+			+ " VALUES (?, ?, (SELECT M_NO FROM MEMBER WHERE M_ID = ?), (SELECT M_NO FROM MEMBER WHERE M_ID = ?), ?)";
 
 	// R : Report 전체 보기
 	private final String SELECT_ALL = "SELECT r.*, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID FROM REPORT r INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO  = m2.M_NO ORDER BY RP_NO DESC";
@@ -26,7 +27,7 @@ public class ReportDAO {
 	// R : 게시글 신고 상세보기
 	// ? : rpNum
 	private final String SELECT_ONE_BRPT = "SELECT r.*, b.B_CONTENT, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID FROM REPORT r "
-			+ " INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO  = m2.M_NO "
+			+ " INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO = m2.M_NO "
 			+ " INNER JOIN BOARD b ON b.B_NO = r.TARGET_NO WHERE RP_NO = ?";
 
 	// 댓글 신고 상세보기
@@ -38,8 +39,9 @@ public class ReportDAO {
 	private final String UPDATE = "UPDATE REPORT SET STATUS = ? WHERE RP_NO = ?";
 
 	public boolean insert(ReportVO vo) {
-		if (jdbcTemplate.update(INSERT, vo.getTargetNum(), vo.getReportStep(), vo.getUserId(),
-				vo.getReportContent()) < 1) {
+		int res = jdbcTemplate.update(INSERT, vo.getTargetNum(), vo.getReportStep(), vo.getUserId(), vo.getReporterId(),
+				vo.getReportContent());
+		if (res < 1) {
 			return false;
 		}
 		return true;
