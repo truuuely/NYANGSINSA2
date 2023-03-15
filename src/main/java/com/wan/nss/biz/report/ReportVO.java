@@ -8,7 +8,7 @@ public class ReportVO {
 	private int reporterNum; // 신고한 사람의 회원 번호
 	private String reportDate; // 신고 일자
 	private String reportContent; // 신고 내용
-	private int reportStat; // 신고 상태 (1: 정상, 2: 신고, 3: 삭제)
+	private int reportStat; // 신고 상태 (1: 처리 전, 2: 처리 완)
 
 //	vo에만 존재하는 멤버 변수
 	private String userId; // 신고 당한 회원의 ID

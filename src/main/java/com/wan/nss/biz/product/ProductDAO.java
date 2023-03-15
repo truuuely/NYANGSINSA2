@@ -18,7 +18,7 @@ public class ProductDAO {
 	// 상품 추가
 	private final String SQL_INSERT = "INSERT INTO PRODUCT (P_NM, P_CATEGORY, P_PRICE, P_AMT, P_DETAIL, DC_PERCENT) VALUES(?, ?, ?, ?, ?, ?)";
 	// 상품 업데이트
-	private final String SQL_UPDATE = "UPDATE PRODUCT SET P_NM=?, P_CATEGORY=?, P_PRICE=?, P_DETAIL=?, DC_PERCENT=? WHERE P_NO=?";
+	private final String SQL_UPDATE = "UPDATE PRODUCT SET P_NM = ?, P_CATEGORY = ?, P_PRICE = ?, P_AMT = ?, P_DETAIL = ?, DC_PERCENT = ? WHERE P_NO = ?";
 	// 상품 구매시 재고에서 구매한 개수 빼기
 	private final String SQL_UPDATE_AMOUNT = "UPDATE PRODUCT SET P_AMT = P_AMT - ? WHERE P_NO = ?";
 	// 상품 삭제

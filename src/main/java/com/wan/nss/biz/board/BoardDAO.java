@@ -41,8 +41,13 @@ public class BoardDAO {
 	private final String SELECT_ALL_TOP3 = "SELECT m.CAT_NM, b.B_NO, b.B_VIEW, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM "
 			+ " FROM BOARD b LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO "
 			+ " LEFT JOIN MEMBER m ON b.M_NO = m.M_NO "
-			+ " LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO "
+			+ " LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO WHERE b.STATUS != 3 "
 			+ " GROUP BY B_NO, i.I_NM ORDER BY LIKE_CNT DESC, b.B_VIEW DESC, REPLY_CNT DESC LIMIT 3";
+
+	// 내가 좋아요 누른 글 목록
+	private final String SELECT_ALL_MYLIKE = "SELECT b.B_NO, b.B_TITLE, b.B_CONTENT, m.M_ID "
+			+ " FROM BOARD b INNER JOIN `MEMBER` m ON b.M_NO = m.M_NO INNER JOIN BLIKE bl ON b.B_NO = bl.B_NO AND bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?) "
+			+ " GROUP BY b.B_NO ORDER BY B_NO DESC";
 
 	// 게시글 제목 검색
 	// ? : 로그인한 사용자 아이디, 검색어, 로그인한 사용자 아이디 (id가 null일 경우 ISCHECKED 는 모두 false
@@ -216,6 +221,15 @@ public class BoardDAO {
 				return data;
 			});
 
+		} else if (vo.getSearchCondition().equals("myLike")) {
+			return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_MYLIKE, (rs, rowNum) -> {
+				BoardVO data = new BoardVO();
+				data.setBoardNum(rs.getInt("B_NO"));
+				data.setBoardTitle(rs.getString("B_TITLE"));
+				data.setBoardContent(rs.getString("B_CONTENT"));
+				data.setUserId(rs.getString("M_ID"));
+				return data;
+			}, vo.getUserId());
 		} else if (vo.getSearchContent() != null) { // 3. 글 검색
 			if (vo.getSearchCondition().equals("title")) { // 제목 검색
 				return (ArrayList<BoardVO>) jdbcTemplate.query(SELECT_ALL_SEARCH_TITLE, new BoardRowMapper(),
