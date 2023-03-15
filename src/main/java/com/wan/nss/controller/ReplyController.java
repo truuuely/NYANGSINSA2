@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
 import com.wan.nss.biz.reply.ReplyService;
 import com.wan.nss.biz.reply.ReplySet;
 import com.wan.nss.biz.reply.ReplyVO;
@@ -20,11 +19,11 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 	
+	@ResponseBody
 	@RequestMapping(value="/insertReply.do")
-	public String insertReply(ReplyVO rvo, Model model) {
+	public void insertReply(ReplyVO rvo, Model model) {
 		System.out.println("insertReply 로그 "+rvo);
 		replyService.insert(rvo);
-		return "";
 	}
 	
 	@RequestMapping(value="/updateReply.do")
@@ -33,10 +32,10 @@ public class ReplyController {
 		return "";
 	}
 	
+	@ResponseBody
 	@RequestMapping(value="/deleteReply.do")
-	public String deleteReply(ReplyVO rvo, Model model) {
+	public void deleteReply(ReplyVO rvo, Model model) {
 		replyService.delete(rvo);
-		return "";
 	}
 	
 	@RequestMapping(value="/selectAllReply.do")
