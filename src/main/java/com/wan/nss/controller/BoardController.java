@@ -335,4 +335,27 @@ public class BoardController {
 		return Integer.toString(bvo.getLikeCnt());
 
 	}
+
+	// 내가 좋아요 한 글 모아보기
+	@RequestMapping(value = "/selectAllMyLike.do")
+	public String selectAllMyLike(BoardVO bvo, Model model) {
+		System.out.println("selectAllMyLike.do 진입");
+		System.out.println("bvo: " + bvo);
+
+		bvo.setSearchCondition("myLike");
+		model.addAttribute("board", boardService.selectAll(bvo));
+		return "myfavboard.jsp";
+	}
+	
+	// 내가 먹은 글 모아보기
+	@RequestMapping(value = "/selectAllMyBoard.do")
+	public String selectAllMyBoardLike(BoardVO bvo, Model model) {
+		System.out.println("selectAllMyBoardLike 진입");
+		System.out.println("bvo: " + bvo);
+
+		bvo.setSearchCondition("myLike");
+		model.addAttribute("board", boardService.selectAll(bvo));
+		return "myfavboard.jsp";
+	}
+
 }
