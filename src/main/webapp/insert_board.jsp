@@ -38,7 +38,7 @@
 }
 
 .ck-editor__editable {
-	min-height: 500px;
+	min-height: 1000px;
 }
 </style>
 
@@ -87,7 +87,6 @@
 					<div class="row2" style="width: 90%; margin-left: -15px">
 						<div class="col-lg-12 col-md-12">
 							<input type="text" name="boardTitle" required>
-							<input type="hidden" name="writer" value="${memberId}">
 							<input type="hidden" name="userId" value="${memberId}">
 						</div>
 						<div class="col-lg-12 text-center">
