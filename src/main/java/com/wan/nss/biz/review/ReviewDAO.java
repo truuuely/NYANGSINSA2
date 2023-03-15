@@ -53,7 +53,7 @@ public class ReviewDAO {
 
 		} else if (rvo.getrSearchCondition().equals("myReviews")) {
 			// 내가 작성한 리뷰 보기
-			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL_USER, new ReviewRowMapper(), rvo.getrWriter());
+			return (ArrayList<ReviewVO>) jdbcTemplate.query(SQL_SELECTALL_USER, new ReviewRowMapper(), rvo.getUserId());
 		}
 		return null;
 	}
