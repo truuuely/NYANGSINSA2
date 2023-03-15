@@ -242,25 +242,53 @@
 		</div>
 	</div>
 
-	<div id="showReply">
-		<img style="width: 20px;" src="img/replyicon.png">
-		댓글 (${board.replyCnt}) ▼
+	<div class="showReply">
+		<div id="showReply" onclick="showReply()">
+			<img style="width: 20px;" src="img/replyicon.png">
+			댓글 (${board.replyCnt}) ▼
+		</div>
+		<div id="reply">
+			<nss:list sort="reply" />
+		</div>
 	</div>
-	<div id="reply">
-		<nss:list sort="reply"/>
-	</div>
-
 	<div id="replywrite">
-
-		<form style="width: 100%;" action="insertReply.do" onsubmit="return loginCheck()" method="post">
-			<input type="hidden" name="boardNum" value="${board.boardNum}">
-			<input type="hidden" name="userId" value="${member.userId}">
-			
-			<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="replyContent" placeholder="댓글을 작성하세요" required></textarea>
+		<div style="width: 100%;">
+			<textarea id="replyContent" style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 100%;" name="replyContent" placeholder="댓글을 작성하세요" required></textarea>
 			<br>
-			<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;" type="submit" value="댓글 작성">
-		</form>
+			<div onclick="insertReply()" style="cursor: pointer; border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB;">댓글 작성</div>
+		</div>
 	</div>
+
+	<script type="text/javascript">
+	function insertReply(){
+		var userId = '${member.userId}';
+		var boardNum = '${board.boardNum}';
+		var replyContent = $('#replyContent').val();
+		console.log(replyContent);
+		$.ajax({
+			type : 'POST',
+			url : 'insertReply.do',
+			data : {
+				boardNum: boardNum,
+				userId : userId,
+				replyContent : "우아아앙"
+			},
+			success : function() {
+				$('.showReply').load(location.href + ' .showReply');
+				setTimeout(function() {
+					$('#reply').css('display', 'block');
+				},100);
+				// 시연해보고, 발표할때 적당한 시간 찾아서 대입
+				// -> 각각을 함수로 빼서,(모듈화)
+				// if분기로 처리할수있음
+			},
+			error : function() {
+				alert('error');
+			}
+		})
+		
+	}
+	</script>
 
 	<nss:footer />
 
@@ -297,12 +325,9 @@
 									<input type="radio" class="report-box2" name="reportContent" id="r5" value="기타">
 									<label for="r5">기타</label>
 									<br>
-									<input type="text" class="report-box2 report-text" name="reportContent2" disabled placeholder="사유를 작성해주세요.">
+									<input type="text" class="report-box2 report-text" name="reportContent" disabled placeholder="사유를 작성해주세요.">
 							</div>
-
 						</div>
-
-
 					</div>
 				</div>
 				<div class="popup-foot">
@@ -317,6 +342,7 @@
 
 
 
+
 	<!-- TOP 버튼 -->
 	<div id="fixtop">
 		<a href="#">
@@ -325,12 +351,12 @@
 	</div>
 
 	<div id="fixboardlist">
-			<a href="boardView.do">
-				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
-					<img style="width: 50px; height: auto; cursor: pointer;" src="img/boardlist.png">
-					<div style="margin-top: 15px;">목록</div>
-				</button>
-			</a>
+		<a href="boardView.do">
+			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
+				<img style="width: 50px; height: auto; cursor: pointer;" src="img/boardlist.png">
+				<div style="margin-top: 15px;">목록</div>
+			</button>
+		</a>
 	</div>
 	<div id="fixshare">
 		<a href="#">
@@ -382,7 +408,7 @@
 				</button>
 			</a>
 		</div>
-		
+
 	</c:if>
 
 
@@ -408,19 +434,21 @@
 				$("#popup").fadeOut();
 			}
 		});
-		$(document).ready(function() {
+		
 			// 라디오버튼 클릭시 이벤트 발생
-			$("input:radio[name=reportContent]").click(function() {
-				if ($("input[name=reportContent]:checked").val() == "기타") {
-					$("input:text[name=reportContent2]").attr("disabled", false);
+			$(".report-box2").click(function() {
+				if ($(".report-box2:checked").val() == "기타") {
+					console.log('입입입2');
+					$(".report-text").attr("disabled", false);
 					// radio 버튼의 value 값이 1이라면 활성화
 				} else {
-					$("input:text[name=reportContent2]").attr("disabled", true);
+					$(".report-text").attr("disabled", true);
 					// radio 버튼의 value 값이 0이라면 비활성화
 				}
 			});
-		});
+	
 	</script>
+
 
 	<script type="text/javascript">
 		function loginCheck(){
@@ -511,64 +539,20 @@
 	</script> -->
 
 	<script type="text/javascript">
-	
-		$("#showReReply").click(function() {
-			$("#rereplywrite").stop().slideToggle(300);
-		    $('#rereplywrite').css('display','flex'); 
-			$("#rereplywrite").toggleClass('on').siblings().removeClass('on');
-			$("#rereplywrite").siblings("#rereplywrite").slideUp(300); 
-		});
+	function showReReply(rNum){
+		$('#'+rNum+'rereplywrite').stop().slideToggle(300);
+	    $('#'+rNum+'rereplywrite').css('display','flex'); 
+		$('#'+rNum+'rereplywrite').toggleClass('on').siblings().removeClass('on');
+		$('#'+rNum+'rereplywrite').siblings('#'+rNum+'rereplywrite').slideUp(300); 
+	}
 	</script>
 
 	<script type="text/javascript">
-		$("#showReply").click(function() {
-			$("#showReply").click(function() {
-				/* console.log('쇼리플라이');
-				$.ajax({ // ajax로 데이터 가져오기
-					type: 'POST',
-					url: 'selectAllReply.do',
-					data: {boardNum:100}, // category, sort 담아서 ListController Servlet에 걸리게!
-					dataType: 'json',
-					traditional: 'true',
-					contentType: "application/x-www-form-urlencoded; charset=UTF-8",
-					success: function(data) {
-						console.log('selectAllReply 통신성공 !');
-						console.log(data);
-						console.log(data.replyContent);
-						var replyset=data;
-
-						var html="";
-
-						
-
-
-
-
-
-
-
-
-
-
-
-
-
-						
-					},
-					error : function() {
-						alert('selectAllReply error');
-					}
-				}); */
-				
-				$(this).next("#reply").stop().slideToggle(300);
-				$(this).toggleClass('on').siblings().removeClass('on');
-				$(this).next("#reply").siblings("#reply").slideUp(300);
-			});
-			
-			$(this).next("#reply").stop().slideToggle(300);
-			$(this).toggleClass('on').siblings().removeClass('on');
-			$(this).next("#reply").siblings("#reply").slideUp(300);
-		});
+	function showReply(){
+			$("#showReply").next("#reply").stop().slideToggle(300);
+			$("#showReply").toggleClass('on').siblings().removeClass('on');
+			$("#showReply").next("#reply").siblings("#reply").slideUp(300);
+	}
 	</script>
 
 	<!-- kakao sdk 호출 -->
