@@ -86,7 +86,7 @@ function displayData(selectPage) {
 						+"<th>내용</th><th></th></tr></thead>";
 	for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
 		    chartHtml+="<tbody><tr><td class='shoping__cart__price'>"+dataList[i].rDate.substr(0, 10)+"</td>"
-						+"<td class='shoping__cart__price'>"+dataList[i].rWriter+"</td>"
+						+"<td class='shoping__cart__price'>"+dataList[i].userId+"</td>"
 						+"<td class='shoping__cart__price' style='color:#FFC90E;'>";
 						
 			if(dataList[i].rRate<0.5){
