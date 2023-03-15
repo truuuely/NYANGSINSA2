@@ -67,15 +67,16 @@ function displayData(selectPage) {
 	console.log(dataList);
 	if (totalData != 0) {
 		for (var i = (selectPage - 1) * dataPerPage; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)); i++) {
+
 			chartHtml += "<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>" + dataList[i].userId + "</strong></td>"
-				+ "<td>" + dataList[i].userName + "</td>"
-				+ "<td><ul class='list-unstyled users-list m-0 avatar-group d-flex align-items-center'>"
-				+ "<li>" + dataList[i].phoneNum + "</li></ul></td>"
-				+ "<td><span class='badge bg-label-primary me-1'>" + dataList[i].catName + "</span></td>"
-				+ "<td><div class='dropdown'><button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
-				+ "<i class='bx bx-dots-vertical-rounded'></i></button>"
-				+ "<div class='dropdown-menu'><a class='dropdown-item' href='deleteMem.do?userId=" + dataList[i].userId + "'>"
-				+ "<i class='bx bx-trash me-1'></i> 삭제</a></div></div></td></tr>";
+			+ "<td>" + dataList[i].userName + "</td>"
+			+ "<td><ul class='list-unstyled users-list m-0 avatar-group d-flex align-items-center'>"
+			+ "<li>" + dataList[i].phoneNum + "</li></ul></td>"
+			+ "<td><span class='badge bg-label-primary me-1'>" + dataList[i].catName + "</span></td>"
+			+ "<td><div class='dropdown'><button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
+			+ "<i class='bx bx-dots-vertical-rounded'></i></button>"
+			+ "<div class='dropdown-menu'><a class='dropdown-item' href='javascript:member("+dataList[i].userNum+");'>"
+			+ "<i class='bx bx-trash me-1'></i> 삭제</a></div></div></td></tr>";
 		}
 		$("#dataTableBody").html(chartHtml);
 	}
@@ -138,3 +139,26 @@ function paging(currentPage) {
 		$("#pagingul").html(pageHtml);
 	}
 }
+
+
+function member(data) {
+	  var userNumInput = document.getElementById("userNum");
+	  userNumInput.value = parseInt(data);
+	  var updateMemberForm = document.getElementById("updateMemberForm");
+	  updateMemberForm.action = "updateMemberRole.do";
+	  
+	  const modal = document.querySelector(".report-modal");
+	  const modalBox = modal.querySelector(".report-modalBox");
+	  modalBox.classList.add("fadeIn"); // 모달창 열릴 때 애니메이션 추가
+	  modal.classList.remove("report-modal-hidden");
+	  
+	  const closeBtn = modal.querySelector(".report-closeBtn");
+	  closeBtn.addEventListener("click", function() {
+	    modalBox.classList.remove("fadeIn"); // 열리는 애니메이션 클래스 제거
+	    modalBox.classList.add("fadeOut"); // 닫히는 애니메이션 클래스 추가
+	    setTimeout(function() {
+	      modal.classList.add("report-modal-hidden");
+	      modalBox.classList.remove("fadeOut"); // 닫히는 애니메이션 클래스 제거
+	    }, 300); // 애니메이션 지속 시간과 같은 시간(0.3초) 이후에 클래스 제거
+	  });
+	};
