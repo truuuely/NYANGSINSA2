@@ -197,7 +197,7 @@
 							<li>
 								<button onclick = "showReReply(${reply.replyNum})"class="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
 							<li>
-							<li style="margin-left: 8px;"><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+							<li style="margin-left: 8px;"><img class="reportBtn" onclick="javascript:report(2,${reply.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 							<c:if test="${reply.userId==memberId}">
 								<li style="margin-left: 8px; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deletecheck(${reply.replyNum})">삭제</a></li>
 							</c:if>
@@ -234,7 +234,7 @@
 								<div style="font-size: 15px;" id="replyContent">${r.replyContent}</div>
 								<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
 									<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${r.replyDate}</li>
-									<li><img class="reportBtn" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+									<li><img class="reportBtn" onclick="javascript:report(3,${r.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 									<c:if test="${r.userId==memberId}">
 										<li style="margin-left: auto;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" href="deleteReply.do">삭제</a></li>
 									</c:if>
