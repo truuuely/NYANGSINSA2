@@ -21,22 +21,22 @@ public class ImageDAO {
 	// 이미지 전체 보기
 	private final String SQL_SELECTALL = "SELECT * FROM IMAGE ORDER BY I_NO ASC";
 	// 이미지 수정
-	private final String SQL_UPDATE = "UPDATE IMAGE SET I_NM = ?, TYPE_NO = ? WHERE I_NO=?";
-	// 이미지 삭제
-	private final String SQL_DELETE = "DELETE FROM IMAGE WHERE I_NO=?";
+//	private final String SQL_UPDATE = "UPDATE IMAGE SET I_NM = ?, TYPE_NO = ? WHERE I_NO=?";
+	// 이미지 삭제 targetNum, TypeNum 받아와서 이미지 삭제 
+	private final String SQL_DELETE_ALL = "DELETE FROM IMAGE WHERE TARGET_NO = ? AND TYPE_NO < ?+100 AND TYPE_NO > ?";
 
 	public boolean insert(ImageVO ivo) {
 		jdbcTemplate.update(SQL_INSERT, ivo.getTargetNum(), ivo.getTypeNum(), ivo.getImageName());
 		return true;
 	}
 
-	public boolean update(ImageVO ivo) {
-		jdbcTemplate.update(SQL_UPDATE, ivo.getImageName(), ivo.getTypeNum(), ivo.getImageNum());
-		return true;
-	}
+//	public boolean update(ImageVO ivo) {
+//		jdbcTemplate.update(SQL_UPDATE, ivo.getImageName(), ivo.getTypeNum(), ivo.getImageNum());
+//		return true;
+//	}
 
 	public boolean delete(ImageVO ivo) {
-		jdbcTemplate.update(SQL_DELETE, ivo.getImageNum());
+		jdbcTemplate.update(SQL_DELETE_ALL, ivo.getTargetNum(), ivo.getTypeNum(), ivo.getTypeNum());
 		return true;
 	}
 
