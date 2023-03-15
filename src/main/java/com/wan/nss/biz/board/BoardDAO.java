@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
-@Repository("boardDAO")
+//@Repository("boardDAO")
 public class BoardDAO {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
