@@ -166,6 +166,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/memberManagePage.do")
 	public String selectAllMemberManage(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) {
 
+		System.out.println("memberManagePage.do 진입");
+		
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
@@ -189,6 +191,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/productManagePage.do")
 	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
+		System.out.println("productManagePage.do 진입");
+		
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
@@ -209,9 +213,12 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// 상품 받아오는 이슈 해결하면 바로 할 듯
 	// (관리자) 상품 상세보기 페이지 이동: model에는 있으나 view에는 아직 없음
-	@RequestMapping(value = "/updateProductPage.do")
+	@RequestMapping(value = "/adminProductDetail.do")
 	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
-		productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
+		
+		System.out.println("adminProductDetail.do 진입");
+		
+		pvo = productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
 
 		// 상세이미지 불러오기
 		ivo.setTargetNum(pvo.getpNum()); // 상품pk를 이미지pk에 세팅
@@ -220,6 +227,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		pvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 selectIvo의 imageName을 pvo의 ImageName2에 세팅
 		
 		model.addAttribute("pvo", pvo);
+		System.out.println("pvo: " + pvo);
 		
 		return "product_manage_detail.jsp";
 	}
@@ -227,6 +235,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 주문 관리 페이지 열기
 	public String selectAllorderDetailManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
+		System.out.println("orderManagePage.do 진입");
+		
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
@@ -249,6 +259,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/reviewManagePage.do")
 	public String selectAllReviewManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 
+		System.out.println("reviewManagePage.do 진입");
+		
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
@@ -270,6 +282,9 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	// (관리자) 게시글 관리 페이지 이동
 	@RequestMapping(value = "/boardManageView.do")
 	public String boardManageView(BoardVO bvo, BlikeVO lvo, Model model) {
+		
+		System.out.println("boardManageView.do 진입");
+		
 		model.addAttribute("userId", bvo.getUserId()); // 멤버 ID, 멤버 ID로 정보를 주면 model에서 알아서 글을 찾아줌!
 		model.addAttribute("bList", boardService.selectAll(bvo)); // 좋아요 정보도 있음
 		return "board_manage.jsp";
@@ -278,6 +293,9 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	// (관리자) 게시글 상세보기 페이지 이동
 	@RequestMapping(value = "/boardDetialView.do")
 	public String boardDetailView(BoardVO bvo, BlikeVO lvo, Model model) {
+		
+		System.out.println("boardDetialView.do 진입");
+		
 		model.addAttribute("userId", bvo.getUserId());
 		model.addAttribute("bList", boardService.selectOne(bvo)); // 좋아요 정보도 있음
 		return "board_manage.jsp"; // 새창은 주소를 어떻게 리턴해야돼요??
@@ -286,6 +304,9 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	// (관리자) Board 게시글 삭제 처리
 	@RequestMapping(value = "/deleteBoardDetail.do")
 	public String deleteBoardDetail(BoardVO bvo) {
+		
+		System.out.println("deleteBoardDetail.do 진입");
+		
 		boardService.delete(bvo);
 		return "board_manage.jsp";
 	}
