@@ -23,6 +23,7 @@ public class ReplyController {
 	@RequestMapping(value="/insertReply.do")
 	public void insertReply(ReplyVO rvo, Model model) {
 		System.out.println("insertReply 로그 "+rvo);
+		// 글번호, 글쓴이, 내용, 패런트넘
 		replyService.insert(rvo);
 	}
 	
