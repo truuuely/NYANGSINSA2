@@ -209,6 +209,7 @@ public class BoardController {
 		}
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
 		return "redirect:/boardPostViewFirst.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
+		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 
 	}
 
@@ -282,7 +283,8 @@ public class BoardController {
 		}
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
 		return "redirect:/boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
-
+		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
+		
 	}
 
 	// 고양이 자랑 게시판 게시글 삭제 수행 및 전체 목록으로 이동
