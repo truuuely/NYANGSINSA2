@@ -21,8 +21,17 @@ public class ReportDAO {
 	private final String INSERT = "INSERT INTO REPORT (TARGET_NO, RP_STEP, M_NO, RP_M_NO, RP_CONTENT) "
 			+ " VALUES (?, ?, (SELECT M_NO FROM MEMBER WHERE M_ID = ?), (SELECT M_NO FROM MEMBER WHERE M_ID = ?), ?)";
 
-	// R : Report 전체 보기
-	private final String SELECT_ALL = "SELECT r.*, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID FROM REPORT r INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO INNER JOIN `MEMBER` m2 ON r.RP_M_NO  = m2.M_NO ORDER BY RP_NO DESC";
+	// R : Report 게시글 신고 전체 조회
+	private final String SELECT_ALL_BOARD = "SELECT r.*, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID, b.B_CONTENT "
+			+ " FROM REPORT r INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO "
+			+ " INNER JOIN `MEMBER` m2 ON r.RP_M_NO = m2.M_NO "
+			+ " INNER JOIN BOARD b ON r.TARGET_NO = b.B_NO AND r.RP_STEP = ? ORDER BY RP_NO DESC";
+
+	// R : Report 댓글 및 대댓글 신고 전체 조회
+	private final String SELECT_ALL_REPLY = "SELECT r.*, m1.M_ID AS M_ID, m2.M_ID AS REPORTER_ID, r2.RE_CONTENT "
+			+ " FROM REPORT r INNER JOIN `MEMBER` m1 ON r.M_NO = m1.M_NO "
+			+ " INNER JOIN `MEMBER` m2 ON r.RP_M_NO = m2.M_NO "
+			+ " INNER JOIN REPLY r2 ON r.TARGET_NO = r2.RE_NO AND r.RP_STEP >= ? ORDER BY RP_NO DESC";
 
 	// R : 게시글 신고 상세보기
 	// ? : rpNum
@@ -48,45 +57,24 @@ public class ReportDAO {
 	}
 
 	public ArrayList<ReportVO> selectAll(ReportVO vo) {
-		return (ArrayList<ReportVO>) jdbcTemplate.query(SELECT_ALL, new ReportRowMapper());
+		if (vo.getReportStep() == 1) {
+			// 게시글 신고 내역 조회
+			return (ArrayList<ReportVO>) jdbcTemplate.query(SELECT_ALL_BOARD, new ReportBoardRowMapper(),
+					vo.getReportStep());
+		} else if (vo.getReportStep() > 1) {
+			// 댓글 신고 내역 조회
+			return (ArrayList<ReportVO>) jdbcTemplate.query(SELECT_ALL_REPLY, new ReportReplyRowMapper(),
+					vo.getReportStep());
+		}
+		return null;
 	}
 
 	public ReportVO selectOne(ReportVO vo) {
 		try {
 			if (vo.getReportStep() == 1) { // 게시글 신고 내용 조회
-				return jdbcTemplate.queryForObject(SELECT_ONE_BRPT, (rs, rowNum) -> {
-					ReportVO data = new ReportVO();
-					data.setReportNum(rs.getInt("RP_NO"));
-					data.setTargetNum(rs.getInt("TARGET_NO"));
-					data.setReportStep(rs.getInt("RP_STEP"));
-					data.setUserNum(rs.getInt("M_NO"));
-					data.setReporterNum(rs.getInt("RP_M_NO"));
-					data.setReportDate(rs.getString("RP_DATE"));
-					data.setReportContent(rs.getString("RP_CONTENT"));
-					data.setReportStat(rs.getInt("STATUS"));
-
-					data.setUserId(rs.getString("M_ID"));
-					data.setReporterId(rs.getString("REPORTER_ID"));
-					data.setContent(rs.getString("B_CONTENT"));
-					return data;
-				}, vo.getReportNum());
+				return jdbcTemplate.queryForObject(SELECT_ONE_BRPT, new ReportBoardRowMapper(), vo.getReportNum());
 			} else if (vo.getReportStep() <= 3) { // 댓글 및 대댓글 신고 내용 조회
-				return jdbcTemplate.queryForObject(SELECT_ONE_RRPT, (rs, rowNum) -> {
-					ReportVO data = new ReportVO();
-					data.setReportNum(rs.getInt("RP_NO"));
-					data.setTargetNum(rs.getInt("TARGET_NO"));
-					data.setReportStep(rs.getInt("RP_STEP"));
-					data.setUserNum(rs.getInt("M_NO"));
-					data.setReporterNum(rs.getInt("RP_M_NO"));
-					data.setReportDate(rs.getString("RP_DATE"));
-					data.setReportContent(rs.getString("RP_CONTENT"));
-					data.setReportStat(rs.getInt("STATUS"));
-
-					data.setUserId(rs.getString("M_ID"));
-					data.setReporterId(rs.getString("REPORTER_ID"));
-					data.setContent(rs.getString("RE_CONTENT"));
-					return data;
-				}, vo.getReportNum());
+				return jdbcTemplate.queryForObject(SELECT_ONE_RRPT, new ReportReplyRowMapper(), vo.getReportNum());
 			}
 		} catch (Exception e) {
 			System.out.println("reportDAO selectOne 결과 없음");
@@ -104,7 +92,7 @@ public class ReportDAO {
 
 }
 
-class ReportRowMapper implements RowMapper<ReportVO> {
+class ReportBoardRowMapper implements RowMapper<ReportVO> {
 	@Override
 	public ReportVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 		ReportVO data = new ReportVO();
@@ -119,7 +107,27 @@ class ReportRowMapper implements RowMapper<ReportVO> {
 
 		data.setUserId(rs.getString("M_ID"));
 		data.setReporterId(rs.getString("REPORTER_ID"));
+		data.setContent(rs.getString("B_CONTENT"));
 		return data;
 	}
+}
 
+class ReportReplyRowMapper implements RowMapper<ReportVO> {
+	@Override
+	public ReportVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		ReportVO data = new ReportVO();
+		data.setReportNum(rs.getInt("RP_NO"));
+		data.setTargetNum(rs.getInt("TARGET_NO"));
+		data.setReportStep(rs.getInt("RP_STEP"));
+		data.setUserNum(rs.getInt("M_NO"));
+		data.setReporterNum(rs.getInt("RP_M_NO"));
+		data.setReportDate(rs.getString("RP_DATE"));
+		data.setReportContent(rs.getString("RP_CONTENT"));
+		data.setReportStat(rs.getInt("STATUS"));
+
+		data.setUserId(rs.getString("M_ID"));
+		data.setReporterId(rs.getString("REPORTER_ID"));
+		data.setContent(rs.getString("RE_CONTENT"));
+		return data;
+	}
 }
