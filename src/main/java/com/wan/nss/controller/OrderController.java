@@ -185,7 +185,7 @@ public class OrderController {
 		System.out.println("orderDetailList.do 진입");
 		System.out.println("oNum: " + ovo.getoNum());
 		
-		odvo.setoNum(ovo.getoNum());
+		odvo.setOdNum(ovo.getoNum());
 		List<OrderDetailVO> odList = orderDetailService.selectAll(odvo); // 주문 번호가 oNum인 주문 상세 내역들
 
 		model.addAttribute("odList", odList); // 주문 상세 보내주기
