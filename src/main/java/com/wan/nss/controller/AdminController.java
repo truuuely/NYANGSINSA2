@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.wan.nss.biz.blike.BlikeVO;
 import com.wan.nss.biz.board.BoardService;
 import com.wan.nss.biz.board.BoardVO;
 import com.wan.nss.biz.image.ImageService;
@@ -56,8 +55,8 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 관리자 메인 페이지 이동
 	@RequestMapping(value = "/adminIndex.do")
-	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) {
 
 		String id = (String) session.getAttribute("memberId");
 
@@ -120,23 +119,23 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/getChart.do")
 	protected JsonObject sendChart(OrderVO ovo, OrderDetailVO odvo) {
 		System.out.println("getChart.do 진입");
-		
+
 		// 카테고리별 도넛 차트
 		List<OrderDetailVO> list = new ArrayList<>(); // 카테고리별 cnt / sum 넣을 list
 
-		String[] category = {"food", "treat", "sand"};
+		String[] category = { "food", "treat", "sand" };
 		JsonObject data = new JsonObject();
-		
+
 		for (int i = 0; i < category.length; i++) {
-			
+
 			odvo.setCategory(category[i]);
 			odvo = orderDetailService.selectOne(odvo); // cnt, sum 받아옴
-			
-			data.addProperty("categoryCnt" + (i+1), odvo.getOdCnt()); // categoryCnt1~
-			data.addProperty("categorySum" + (i+1), odvo.getSum()); // categorySum1~
-			
+
+			data.addProperty("categoryCnt" + (i + 1), odvo.getOdCnt()); // categoryCnt1~
+			data.addProperty("categorySum" + (i + 1), odvo.getSum()); // categorySum1~
+
 		}
-		
+
 		// 올해 작년 수익 비교 차트
 		// 연도별 수익 데이터 저장 부분 Begin
 		// 연도별 수익 저장할 변수
@@ -164,16 +163,17 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 회원 관리 페이지 이동
 	@RequestMapping(value = "/memberManagePage.do")
-	public String selectAllMemberManage(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) {
+	public String selectAllMemberManage(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 
 		System.out.println("memberManagePage.do 진입");
-		
+
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-				
+
 				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
@@ -186,19 +186,19 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	}
 
-
 	// (관리자) 상품 관리 페이지 이동
 	@RequestMapping(value = "/productManagePage.do")
-	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		System.out.println("productManagePage.do 진입");
-		
+
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-				
+
 				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
@@ -215,9 +215,9 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	// (관리자) 상품 상세보기 페이지 이동: model에는 있으나 view에는 아직 없음
 	@RequestMapping(value = "/adminProductDetail.do")
 	public String updateProuctView(ProductVO pvo, ImageVO ivo, Model model) {
-		
+
 		System.out.println("adminProductDetail.do 진입");
-		
+
 		pvo = productService.selectOne(pvo); // pNum을 받아 해당 번호를 갖고 있는 상품 가져오기
 
 		// 상세이미지 불러오기
@@ -225,24 +225,25 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		ivo.setTypeNum(102);
 		ImageVO selectIvo = imageService.selectOne(ivo); // 세팅된 이미지pk를 가지고 selectOne하여 상세이미지 정보 불러오기
 		pvo.setImageName2(selectIvo.getImageName()); // 상세이미지가 selectOne된 selectIvo의 imageName을 pvo의 ImageName2에 세팅
-		
+
 		model.addAttribute("pvo", pvo);
 		System.out.println("pvo: " + pvo);
-		
+
 		return "product_manage_detail.jsp";
 	}
 
 	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 주문 관리 페이지 열기
-	public String selectAllorderDetailManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String selectAllorderDetailManage(Model model, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		System.out.println("orderManagePage.do 진입");
-		
+
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-				
+
 				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
@@ -257,16 +258,17 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 리뷰 관리 페이지 이동
 	@RequestMapping(value = "/reviewManagePage.do")
-	public String selectAllReviewManage(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String selectAllReviewManage(Model model, HttpSession session, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		System.out.println("reviewManagePage.do 진입");
-		
+
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			try {
 				response.setContentType("text/html; charset=utf-8");
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-				
+
 				model.addAttribute("lang", request.getParameter("lang"));
 				return "main.do";
 			} catch (Exception e) {
@@ -281,32 +283,64 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 게시글 관리 페이지 이동
 	@RequestMapping(value = "/boardManageView.do")
-	public String boardManageView(BoardVO bvo, BlikeVO lvo, Model model) {
-		
+	public String boardManageView(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
 		System.out.println("boardManageView.do 진입");
-		
-		model.addAttribute("userId", bvo.getUserId()); // 멤버 ID, 멤버 ID로 정보를 주면 model에서 알아서 글을 찾아줌!
-		model.addAttribute("bList", boardService.selectAll(bvo)); // 좋아요 정보도 있음
-		return "board_manage.jsp";
+
+		String id = (String) session.getAttribute("memberId");
+		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+			try {
+				response.setContentType("text/html; charset=utf-8");
+				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+
+				model.addAttribute("lang", request.getParameter("lang"));
+				return "main.do";
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+			return "board_manage.jsp";
+		}
+	}
+
+	// (관리자) 신고글 관리 페이지 이동 (댓글, 대댓글 세팅은 알아서 하고 있음.. 이동만 시켜주긴)
+	@RequestMapping(value = "/reportManageView.do")
+	public String reportManageView(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+		String id = (String) session.getAttribute("memberId");
+		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+			try {
+				response.setContentType("text/html; charset=utf-8");
+				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
+
+				return "main.do";
+			} catch (Exception e) {
+				e.printStackTrace();
+				return null;
+			}
+		} else {
+			return "report_manage.jsp";
+		}
 	}
 
 	// (관리자) 게시글 상세보기 페이지 이동
 	@RequestMapping(value = "/boardDetialView.do")
-	public String boardDetailView(BoardVO bvo, BlikeVO lvo, Model model) {
-		
+	public String boardDetailView(BoardVO bvo, Model model) {
+
 		System.out.println("boardDetialView.do 진입");
-		
-		model.addAttribute("userId", bvo.getUserId());
-		model.addAttribute("bList", boardService.selectOne(bvo)); // 좋아요 정보도 있음
-		return "board_manage.jsp"; // 새창은 주소를 어떻게 리턴해야돼요??
+
+		model.addAttribute("board", boardService.selectOne(bvo)); // 좋아요 정보도 있음
+		return "board_manage_detail.jsp"; // 
 	}
 
 	// (관리자) Board 게시글 삭제 처리
 	@RequestMapping(value = "/deleteBoardDetail.do")
 	public String deleteBoardDetail(BoardVO bvo) {
-		
+
 		System.out.println("deleteBoardDetail.do 진입");
-		
+
 		boardService.delete(bvo);
 		return "board_manage.jsp";
 	}
@@ -318,7 +352,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		response.setCharacterEncoding("UTF-8"); // 인코딩
 
 		System.out.println("getAdminList.do 진입");
-		
+
 		// part = member, product, order, review 중 1
 		String part = request.getParameter("part");
 
@@ -328,13 +362,13 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		List list = null;
 
-		if (part.equals("member")) { //
+		if (part.equals("member")) { // 회원 관리
 
 			MemberVO mvo = new MemberVO();
 
-			list = memberService.selectAll(mvo); // 결과 상품 목록
+			list = memberService.selectAll(mvo); // 회원 목록
 
-		} else if (part.equals("product")) { //
+		} else if (part.equals("product")) { // 상품 관리
 
 			ProductVO pvo = new ProductVO();
 			pvo.setCategory("all");
@@ -343,33 +377,44 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			pvo.setSearchHighPrice(10000000);
 
 			// 뷰에서 넘어온 조건으로 상품리스트 가져오기
-			list = productService.selectAll(pvo); // 결과 상품 목록
+			list = productService.selectAll(pvo); // 상품 목록
 
-		} else if (part.equals("order")) { //
+		} else if (part.equals("order")) { // 주문 관리
 
 			OrderDetailVO odvo = new OrderDetailVO();
 
 			list = orderDetailService.selectAll(odvo);
 
-		} else if (part.equals("review")) { //
+		} else if (part.equals("review")) { // 리뷰 관리
 
 			ReviewVO rvo = new ReviewVO();
 
 			list = reviewService.selectAll(rvo);
 
-		} else if (part.equals("board")) { //
-		
+		} else if (part.equals("board")) { // 게시글 관리
+
 			BoardVO bvo = new BoardVO();
-			
+			bvo.setSearchCondition("admin");
+
 			list = boardService.selectAll(bvo);
-		
-		} else if (part.equals("report")) { //
-			
+
+		} else if (part.equals("1")) { // 신고 관리 - 게시글
+
 			ReportVO rpVo = new ReportVO();
-			
+			rpVo.setReportStep(1);
+
 			list = reportService.selectAll(rpVo);
-			
+
+		} else if (part.equals("2")) { // 신고 관리 - 댓글, 대댓글
+
+			ReportVO rpVo = new ReportVO();
+			rpVo.setReportStep(2);
+
+			list = reportService.selectAll(rpVo);
+
 		}
+		System.out.println("list: ");
+		System.out.println(list);
 
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); // JsonArry로 변경하여 반환
 
