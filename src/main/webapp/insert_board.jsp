@@ -104,7 +104,6 @@
 	<nss:footer />
 	<!-- Footer Section End -->
 
-
 	<!-- Js Plugins -->
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -115,14 +114,20 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/email.js"></script>
-	<script type="text/javascript"
-		src="${pageContext.request.contextPath}/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="https://ckeditor.com/docs/vendors/4.20.2/ckeditor/plugins/autogrow/plugin.js?t=N227"></script>
 	<script>
 		$(function() {
 			CKEDITOR
 					.replace(
 							'editor',
 							{
+								extraPlugins : 'autogrow',
+								autoGrow_minHeight : 250,
+								autoGrow_maxHeight : 1000,
+								autoGrow_bottomSpace : 50,
+								removePlugins : 'resize',
+								removeButtons : 'PasteFromWord',
 								filebrowserUploadUrl : '${pageContext.request.contextPath}/fileupload.do'
 							});
 		});
