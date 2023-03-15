@@ -208,7 +208,7 @@ public class BoardController {
 
 		}
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		return "boardPostViewFirst.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
+		return "redirect:/boardPostViewFirst.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
 
 	}
 
@@ -235,7 +235,7 @@ public class BoardController {
 		
 		// 게시글 수정
 		boardService.update(bvo);
-
+		
 		// IMAGE 테이블에서 기존 이미지 행 삭제
 		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
 		ivo.setTypeNum(200); // 200: 게시글
@@ -281,7 +281,7 @@ public class BoardController {
 
 		}
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		return "boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
+		return "redirect:/boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
 
 	}
 
@@ -335,4 +335,27 @@ public class BoardController {
 		return Integer.toString(bvo.getLikeCnt());
 
 	}
+
+	// 내가 좋아요 한 글 모아보기
+	@RequestMapping(value = "/selectAllMyLike.do")
+	public String selectAllMyLike(BoardVO bvo, Model model) {
+		System.out.println("selectAllMyLike.do 진입");
+		System.out.println("bvo: " + bvo);
+
+		bvo.setSearchCondition("myLike");
+		model.addAttribute("board", boardService.selectAll(bvo));
+		return "myfavboard.jsp";
+	}
+	
+	// 내가 먹은 글 모아보기
+	@RequestMapping(value = "/selectAllMyBoard.do")
+	public String selectAllMyBoardLike(BoardVO bvo, Model model) {
+		System.out.println("selectAllMyBoardLike 진입");
+		System.out.println("bvo: " + bvo);
+
+		bvo.setSearchCondition("myLike");
+		model.addAttribute("board", boardService.selectAll(bvo));
+		return "myfavboard.jsp";
+	}
+
 }
