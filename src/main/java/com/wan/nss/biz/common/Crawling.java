@@ -176,6 +176,7 @@ public class Crawling {
 				datas.get(i).setpDetail(info);
 			} catch (Exception e) {
 				System.out.println("※※※ sampleStep02 " + (i + 100) + "번 상세정보 크롤링 실패!");
+				datas.get(i).setpDetail("얼마나 같은 이상의 인생의 가치를 있는 무한한 아니다. 이상 꽃이 낙원을 날카로우나 그러므로 것은 황금시대다. 없으면, 앞이 착목한는 힘있다. 무한한 들어 구하지 이것이다. 꽃이 이상 구하지 보라. 일월과 현저하게 피고, 피에 피다. 그들은 있으며, 장식하는 그림자는 두기 아니다. 끝까지 인생에 능히 하여도 힘차게 품고 착목한는 아니다. 기쁘며, 방황하였으며, 타오르고 예수는 구할 용감하고 능히 청춘의 속잎나고, 보라. 풀밭에 간에 피부가 속잎나고, 반짝이는 이것이다.");
 			}
 
 			// 크롤링 데이터 확인 부분
@@ -197,27 +198,18 @@ public class Crawling {
 			ivo.setTypeNum(101);
 
 			// 이미지 파일 저장하기
-			// imgUrl이 null이 아닐 때
-//			if (imgUrl != null) {
-				try {
-					downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
-					ivo.setImageName("img/101/" + (i + 100) + ".jpg");
-					System.out.println("상품대표이미지주소: " + ivo.getImageName());
-				} catch (Exception e) {
-					// 다운로드 에러 발생시 default이미지로 지정
-					System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imgURL 다운로드 실패!");
-					System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imageName을 'img/default/101.jpg'로 설정!");
-					ivo.setImageName("img/default/101.jpg");
+			try {
+				downloadFile(imgUrl, projectPath + "NYANGSINSA2/src/main/webapp/img/101/" + (i + 100) + ".jpg"); // 파일
+				ivo.setImageName("img/101/" + (i + 100) + ".jpg");
+				System.out.println("상품대표이미지주소: " + ivo.getImageName());
+			} catch (Exception e) {
+				// 다운로드 에러 발생시 default이미지로 지정
+				System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imgURL 다운로드 실패!");
+				System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imageName을 'img/default/101.jpg'로 설정!");
+				ivo.setImageName("img/default/101.jpg");
 
-				}
-//			}
-//			else {
-//				// 다운로드 에러 발생시 default이미지로 지정
-//				System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imgURL NULL!");
-//				System.out.println("※※※ sampleStep02 " + (i + 100) + "번 imageName을 'img/default/101.jpg'로 설정!");
-//				ivo.setImageName("img/default/101.jpg");
-//
-//			}
+			}
+
 
 			// ivo insert into IMAGE
 			imageDAO.insert(ivo);
