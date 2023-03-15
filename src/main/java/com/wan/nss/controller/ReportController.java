@@ -54,7 +54,7 @@ public class ReportController {
    // (관리자) Report 게시글 신고 처리
    @RequestMapping(value = "/updateReport.do")
    public String updateReport(ReportVO rpvo, MemberVO mvo) {
-
+	   System.out.println("업데이트 리포트 입장");
       //넘겨받는 것
       //: targetNum, reportNum, userId(vo), reporterId(vo), reportStep, proStatus
       //warnCnt+1
@@ -67,22 +67,23 @@ public class ReportController {
     	  mvo.setUserId(rpvo.getUserId());
     	  memberService.update(mvo);
     	  
-    	  if(rpvo.getReportStat()==1) { // 글일 경우
+    	  if(rpvo.getReportStep()==1) { // 글일 경우
             BoardVO bvo = new BoardVO();
             bvo.setBoardNum(rpvo.getTargetNum());
             bvo.setBoardStatus(3);
+            bvo.setSearchCondition("changeStatus");
             boardService.update(bvo);
          } 
-         else if(rpvo.getReportStat()==2 || rpvo.getReportStat()==3) { // 댓글일 경우
+         else if(rpvo.getReportStep()==2 || rpvo.getReportStep()==3) { // 댓글일 경우
             ReplyVO rvo = new ReplyVO();
             rvo.setReplyStatus(3);
             rvo.setReplyNum(rpvo.getTargetNum());
             replyService.update(rvo);
          } 
          //신고 완료
-         rpvo.setReportStat(2);
-         reportService.update(rpvo);
       } 
+      rpvo.setReportStat(2);
+      reportService.update(rpvo);
       return "report_manage.jsp";
    }
    
