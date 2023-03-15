@@ -179,7 +179,7 @@
 <c:if test="${sort=='reply'}">
 	<c:forEach var="v" items="${replyset}" begin="0" varStatus="status">
 		<c:set var="reply" value="${v.reply}" />
-		<div class = "replyDetail"id="replyDetail">
+		<div class="replyDetail" id="replyDetail">
 			<div class="replywriter">[작성자 : ${reply.userId}]</div>
 			<div id="replyContent">
 				<c:choose>
@@ -195,11 +195,11 @@
 						<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
 							<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${reply.replyDate}</li>
 							<li>
-								<button onclick = "showReReply(${reply.replyNum})"class="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
+								<button onclick="showReReply(${reply.replyNum})" class="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
 							<li>
 							<li style="margin-left: 8px;"><img class="reportBtn" onclick="javascript:report(2,${reply.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 							<c:if test="${reply.userId==memberId}">
-								<li style="margin-left: 8px; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deletecheck(${reply.replyNum})">삭제</a></li>
+								<li style="cursor: pointer; margin-left: 8px; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deletecheck(${reply.replyNum})">삭제</a></li>
 							</c:if>
 						</ul>
 					</c:otherwise>
@@ -207,27 +207,26 @@
 
 			</div>
 		</div>
-		<div id="${reply.replyNum}rereplywrite" style = "display:none;">
-			<form action="#" method="post" style="width: 90%; display: flex;">
+		<div id="${reply.replyNum}rereplywrite" style="display: none;">
+			<div style="width: 90%; display: flex;">
 				<div style="float: left; width: 80%; margin: 10px; margin-left: 66px;">
-					<textarea style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 83%; height: 47px;" name="reply" placeholder="댓글을 작성하세요" required></textarea>
+					<input id = "${reply.replyNum}replyContent"class = "replyContent" type="text" name="replyContent" style="border-radius: 5px; border: 1.7px solid #6667ab6b; width: 83%; height: 47px;" placeholder="댓글을 작성하세요" required />
 					<div style="float: right;">
-						<input style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB; width: 100%;" type="submit" value="댓글 작성">
+						<div style="border: 1px solid #6667ab42; float: right; color: white; padding: 10px; border-radius: 5px; background-color: #6667AB; width: 100%; cursor: pointer;" onclick="insertReply(${reply.replyNum})">댓글 작성</div>
 					</div>
 				</div>
-
 				<br>
-			</form>
+			</div>
 		</div>
 
 		<c:forEach var="r" items="${v.replyList}" begin="0" varStatus="status">
 			<div id="rereplyDetail">
 				<img style="width: 20px;" src="img/rereply.png">
 				<div style="width: 100%;">
-					<div class="replywriter">[작성자 : r.userId]</div>
+					<div class="replywriter">[작성자 : ${r.userId}]</div>
 					<div id="replyContent">
 						<c:choose>
-							<c:when test="${r.status==3}">
+							<c:when test="${r.replyStatus==3}">
 								<div style="font-size: 15px; color: #6f6f6fc4; margin-bottom: 10px;" id="replyContent">삭제된 댓글입니다.</div>
 							</c:when>
 							<c:otherwise>
@@ -236,7 +235,7 @@
 									<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${r.replyDate}</li>
 									<li><img class="reportBtn" onclick="javascript:report(3,${r.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 									<c:if test="${r.userId==memberId}">
-										<li style="margin-left: auto;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" href="deleteReply.do">삭제</a></li>
+										<li style="margin-left: 8px; cursor: pointer;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" onclick="deletecheck(${r.replyNum})">삭제</a></li>
 									</c:if>
 								</ul>
 							</c:otherwise>
