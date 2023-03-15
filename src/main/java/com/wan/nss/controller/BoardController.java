@@ -190,8 +190,9 @@ public class BoardController {
 		System.out.println("updateBoardView.do 진입");
 		System.out.println("bvo: " + bvo);
 		
+		model.addAttribute("board", boardService.selectOne(bvo));
 		// 몇번 글 수정인지 설정하여 보내기
-		return "update_board.jsp?boardNum=" + bvo.getBoardNum();
+		return "update_board.jsp";
 
 	}
 
@@ -201,10 +202,55 @@ public class BoardController {
 	public String updateBoard(BoardVO bvo, Model model) {
 
 		System.out.println("updateBoard.do 진입");
-
+		ImageVO ivo = new ImageVO();
+		
+		// 게시글 수정
 		boardService.update(bvo);
 
-		return "board_detail.jsp";
+		// IMAGE 테이블에서 기존 이미지 행 삭제
+		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
+		ivo.setTypeNum(200); // 200: 게시글
+		
+		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
+		String tag = bvo.getBoardContent();
+		int typeNum = 201;
+		while (true) {
+			
+			System.out.println("tag: " + tag);
+			
+			// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
+			if (tag.indexOf("img/") >= 0) {
+				
+//				// 이미지 번호 세팅
+//				ivo.setTargetNum(bvo.getBoardNum());
+				
+				// 이미지 구분 번호 세팅
+				ivo.setTypeNum(typeNum);
+				
+				// 이미지 이름 세팅
+				// 이미지 태그 값 잘라내기
+				String imageUrl = (String) tag.subSequence(tag.indexOf("img/"), tag.indexOf("\" style="));
+				System.out.println(imageUrl);
+				
+				ivo.setImageName(imageUrl);
+				
+				// 이미지 추가
+				imageService.insert(ivo);
+				
+				// 찾은 부분까지 잘라내고 다시 찾기위해 저장
+				tag = tag.substring(tag.indexOf("\" style=") + 9);
+				
+				// typeNum ++
+				typeNum ++;
+				
+			// "img/" 문자열이 없으면 종료
+			} else { // 
+				break;
+			}
+
+		}
+		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
+		return "boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
 
 	}
 
@@ -213,10 +259,15 @@ public class BoardController {
 	public String deleteBoard(BoardVO bvo, Model model) {
 
 		System.out.println("deleteBoard.do 진입");
-
+		ImageVO ivo = new ImageVO();
+		
 		boardService.delete(bvo);
-
-		return "board.jsp";
+		
+		// IMAGE 테이블에서 게시글 이미지 행 삭제
+		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
+		ivo.setTypeNum(200); // 200: 게시글
+		
+		return "boardView.do";
 
 	}
 
@@ -247,12 +298,6 @@ public class BoardController {
 			blikeService.delete(blvo);
 		}
 		bvo = boardService.selectOne(bvo);
-
-//		// 좋아요 할 때
-//		BlikeService.insert(blvo);
-
-//		// 좋아요 취소할 때
-//		BlikeService.delete(blvo);
 		
 		return Integer.toString(bvo.getLikeCnt());
 
