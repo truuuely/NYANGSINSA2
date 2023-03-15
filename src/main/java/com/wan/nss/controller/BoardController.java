@@ -208,7 +208,7 @@ public class BoardController {
 
 		}
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		return "boardPostViewFirst.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
+		return "redirect:/boardPostViewFirst.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
 
 	}
 
@@ -235,7 +235,7 @@ public class BoardController {
 		
 		// 게시글 수정
 		boardService.update(bvo);
-
+		
 		// IMAGE 테이블에서 기존 이미지 행 삭제
 		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
 		ivo.setTypeNum(200); // 200: 게시글
@@ -281,7 +281,7 @@ public class BoardController {
 
 		}
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		return "boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
+		return "redirect:/boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
 
 	}
 
