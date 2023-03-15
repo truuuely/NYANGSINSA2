@@ -228,7 +228,16 @@
 								outputPw.style.color = 'red';
 								pwValid = false;
 
-							} else {
+							}
+							
+							else if(inputUsePw.value == inputPw.value) {
+								outputPw.textContent = `현재 비밀번호와 일치합니다. 다른 비밀번호를 입력 해주세요.`;
+								outputPw.style.color = 'red';
+								pwValid = false;
+								
+							}
+							
+							else {
 								outputPw.textContent = `사용 가능합니다.`;
 								outputPw.style.color = '#6667AB';
 								pwValid = true;
@@ -236,7 +245,7 @@
 						})
 
 		inputPw2.addEventListener('input', function() {
-			if (inputPw.value == inputPw2.value) {
+			if (inputPw.value == inputPw2.value && inputPw.value != inputUsePw.value) {
 				outputPw2.textContent = `일치합니다.`
 				outputPw2.style.color = '#6667AB'
 				inputPw.addEventListener('input', function() {
@@ -244,7 +253,7 @@
 						outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
 						outputPw2.style.color = 'red'
 						pwSame = false;
-					} else if (inputPw.value == inputPw2.value) {
+					} else if (inputPw.value == inputPw2.value && inputPw.value != inputUsePw.value) {
 						outputPw2.textContent = `일치합니다.`
 						outputPw2.style.color = '#6667AB'
 						pwSame = true;
@@ -255,6 +264,19 @@
 					}
 				})
 				pwSame = true;
+			} else if(inputUsePw.value == inputPw2.value) {
+				outputPw2.textContent = `현재 비밀번호와 일치합니다. 다른 비밀번호를 입력 해주세요.`;
+				outputPw2.style.color = 'red';
+				pwValid = false;
+				if (inputPw.value == "") {
+					outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+					outputPw2.style.color = 'red'
+					pwSame = false;
+				} else {
+					outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
+					outputPw2.style.color = 'red'
+					pwSame = false;
+				}
 			} else {
 				outputPw2.textContent = `비밀번호를 다시 입력해주세요.`
 				outputPw2.style.color = 'red'
