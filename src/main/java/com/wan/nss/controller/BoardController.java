@@ -56,7 +56,7 @@ public class BoardController {
 		return "board.jsp";
 	}
 
-	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입(글작성 직후)
+	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입(글작성 직후) : 조회수 증가 xxx
 	@RequestMapping(value = "/boardPostViewFirst.do")
 	public String boardPostViewFirst(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
 		
@@ -73,7 +73,9 @@ public class BoardController {
 		System.out.println("replyset 길이 :"+replyService.selectAll(rvo).size());
 		// 게시글 상세 데이터
 		model.addAttribute("replyset",replyService.selectAll(rvo));
-		model.addAttribute("board", boardService.selectOne(bvo));
+		BoardVO preBvo = boardService.selectOne(bvo);
+		System.out.println("preBvo: " + preBvo);
+		model.addAttribute("board", preBvo);
 		model.addAttribute("member", loginMvo);
 
 		return "board_detail.jsp";
