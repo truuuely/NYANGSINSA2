@@ -96,7 +96,7 @@ public class BoardController {
 		mvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setUserId((String) session.getAttribute("memberId"));
 		MemberVO loginMvo = memberService.selectOne(mvo);
-		     
+
 		System.out.println("replyset 길이 :"+replyService.selectAll(rvo).size());
 		// 게시글 상세 데이터
 		model.addAttribute("replyset",replyService.selectAll(rvo));
@@ -238,6 +238,8 @@ public class BoardController {
 		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
 		ivo.setTypeNum(200); // 200: 게시글
 		
+		imageService.delete(ivo);
+		
 		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
 		String tag = bvo.getBoardContent();
 		int typeNum = 201;
@@ -293,6 +295,8 @@ public class BoardController {
 		// IMAGE 테이블에서 게시글 이미지 행 삭제
 		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
 		ivo.setTypeNum(200); // 200: 게시글
+		
+		imageService.delete(ivo);
 		
 		return "boardView.do";
 
