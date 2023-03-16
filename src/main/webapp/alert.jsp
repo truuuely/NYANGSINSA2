@@ -15,8 +15,8 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 	
-	 alert(${msg});
-	 location.href = ${location};
+	 alert('${msg}');
+	 location.href = '${location}';
 
 });
 
