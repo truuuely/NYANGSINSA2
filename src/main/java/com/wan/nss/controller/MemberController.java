@@ -227,11 +227,13 @@ public class MemberController {
 		MemberVO loginMvo = memberService.selectOne(vo);
 
 		if (loginMvo == null) { // 로그인 실패시
+			System.out.println("로그: 로그인 실패!");
 			model.addAttribute("msg", "아이디/비밀번호를 확인해주세요.");
 			model.addAttribute("location", request.getParameter("urlBack"));
 			
 			return "alert.jsp";
 		} else { // 로그인 성공시
+			System.out.println("로그: 로그인 성공!");
 			session.setAttribute("memberNum", loginMvo.getUserNum()); // 세션에 로그인한 회원의 번호, 아이디, 이름, 등급 저장
 			session.setAttribute("memberId", loginMvo.getUserId());
 			session.setAttribute("memberName", loginMvo.getUserName());
