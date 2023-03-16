@@ -1,6 +1,5 @@
 package com.wan.nss.controller;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -111,7 +110,7 @@ public class ReviewController {
 	// (관리자)리뷰 삭제
 	@RequestMapping(value="/deleteReview.do")
 	public String deleteReview(ReviewVO rvo, HttpSession session,
-			HttpServletResponse response, HttpServletRequest request, Model model) {
+			HttpServletResponse response, Model model) {
 		System.out.println("deleteReviewController 입장");
 
 		//유저 아이디 세션에서 받아오기
@@ -124,7 +123,7 @@ public class ReviewController {
 			model.addAttribute("location", "main.do"); //main에서 lang을 전달해줌
 			return "alert.jsp";
 		}
-
+		
 		if (!reviewService.delete(rvo)) { // 리뷰 삭제 실패 시
 			model.addAttribute("msg", "Delete 실패. 잠시 후 다시 시도하세요.");
 			model.addAttribute("location", "review_manage.jsp");
