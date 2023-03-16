@@ -32,7 +32,7 @@ public class ReviewController {
 	//리뷰 페이지 이동 (완)
 	@RequestMapping(value="/reviewPage.do")
 	public String reviewView(ReviewVO rvo,ProductVO pvo,Model model,HttpSession session,
-			HttpServletResponse response) {
+			HttpServletResponse response, HttpServletRequest request) {
 		System.out.println("reviewViewController 진입");
 
 		// 세션에서 로그인 한 회원아이디 받아 저장
@@ -61,9 +61,10 @@ public class ReviewController {
 		// 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우, 리뷰 작성 창 닫기 처리
 		for (ReviewVO v : rdatas) { 
 			if (v.getUserId().equals(memberId)) { 
-				model.addAttribute("alert", "이미 리뷰를 작성하셨습니다.");
+				model.addAttribute("lang",request.getParameter("lang")); //header 태그로 갈 때 문제가 생김.. 어떻게??
+				model.addAttribute("msg", "이미 리뷰를 작성하셨습니다.");
 				model.addAttribute("location", "order_detail.jsp");
-				return "alert.jsp"; //알럿창이 안 뜨고 리턴하는 페이지로 가버리는.. (utf-8 설정도 안 되어 있음)				
+				return "alert.jsp";			
 			}
 			//System.out.println("for문 1번 수행 완료");
 		}
@@ -72,7 +73,7 @@ public class ReviewController {
 
 	// 사용자 리뷰 추가 (알림창만 띄워줌) (완)
 	@RequestMapping(value="/insertReview.do")
-	public String insertReview(ReviewVO rvo, Model model,HttpServletResponse response) {
+	public String insertReview(ReviewVO rvo, Model model,HttpServletResponse response, HttpServletRequest request) {
 		System.out.println("insertReviewController 진입");
 
 		// insert input 잘 들어오는지 확인
@@ -83,12 +84,14 @@ public class ReviewController {
 		System.out.println("리뷰 추가 완료");
 
 		if(reviewService.insert(rvo)) {  
-			model.addAttribute("alert", "리뷰가 등록되었습니다.");
+			model.addAttribute("lang",request.getParameter("lang"));
+			model.addAttribute("msg", "리뷰가 등록되었습니다.");
 			model.addAttribute("location", "order_detail.jsp");
 			return "alert.jsp";	
 		}
 		else { // 실패 시 
-			model.addAttribute("alert", "에러 발생. 잠시 후 다시 시도해주세요.");
+			model.addAttribute("lang",request.getParameter("lang"));
+			model.addAttribute("msg", "에러 발생. 잠시 후 다시 시도해주세요.");
 			model.addAttribute("location", "order_detail.jsp");
 			return "alert.jsp";	
 		}
@@ -117,13 +120,13 @@ public class ReviewController {
 		//세션에 아이디가 없거나 관리자가 아닌 회원이 접근한 경우 경고와 함께 메인으로 돌려보냄
 		if (id == null || !(id.equals("admin"))) {
 			// 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			model.addAttribute("alert", "접근 권한이 없습니다.");
-			model.addAttribute("location", "main.do");
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("location", "main.do"); //main에서 lang을 전달해줌
 			return "alert.jsp";
 		}
 
 		if (!reviewService.delete(rvo)) { // 리뷰 삭제 실패 시
-			model.addAttribute("alert", "Delete 실패. 잠시 후 다시 시도하세요.");
+			model.addAttribute("msg", "Delete 실패. 잠시 후 다시 시도하세요.");
 			model.addAttribute("location", "review_manage.jsp");
 			return "alert.jsp";
 		}
