@@ -347,7 +347,7 @@ public class MemberController {
 				return null;
 			}
 		} else {
-			model.addAttribute("memberId", loginMvo.getUserId());
+			model.addAttribute("changeId", loginMvo.getUserId());
 			return "change_pw.jsp";
 		}
 
