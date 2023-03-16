@@ -53,6 +53,16 @@
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
 <script src="assets/js/config.js"></script>
 <style type="text/css">
+#replycontent {
+	font-size: 14px;
+	color: #ffffff;
+	text-transform: uppercase;
+	padding: 10px 25px 10px;
+	background: #6667ab;
+	border: none;
+	border-radius: 10px;
+}
+
 .report-menubar li {
 	list-style-type: none;
 	float: left;

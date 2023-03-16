@@ -136,7 +136,7 @@ function displayData(selectPage,step) {
 				// 신고된 댓글 
 				chartHtml+=
 				 "<td>"+dataList[i].userId+"</td>"
-				+"<td><a href='#' onclick='newOpen("+encodedValues+");'> "+dataList[i].content+"</a></td>"
+				+"<td><a href='javascript:replycontent("+targetNum+");'>내용 보기 </a></td>"
 				+"<td>"+dataList[i].reporterId+"</td>"
 				+"<td>"+dataList[i].reportContent+"</td>"
 
@@ -263,4 +263,8 @@ function newOpen(data){
 	window.open("boardPostView.do?boardNum="+data.targetNum);
 
 
+}
+
+function replycontent(targetNum) {
+	window.open("selectOneReply.do?replyNum="+targetNum, "replycontent", "width=500,height=800, left=400, top = 200");
 }
