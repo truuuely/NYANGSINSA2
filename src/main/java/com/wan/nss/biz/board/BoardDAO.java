@@ -44,7 +44,7 @@ public class BoardDAO {
 			+ " GROUP BY B_NO, i.I_NM ORDER BY LIKE_CNT DESC, b.B_VIEW DESC, REPLY_CNT DESC LIMIT 3";
 
 	// 내가 좋아요 누른 글 목록
-	private final String SELECT_ALL_MYLIKE = "SELECT b.B_NO, b.B_TITLE, b.B_CONTENT, m.M_ID "
+	private final String SELECT_ALL_MYLIKE = "SELECT b.B_NO, b.B_TITLE, b.B_DATE, m.M_ID "
 			+ " FROM BOARD b INNER JOIN `MEMBER` m ON b.M_NO = m.M_NO INNER JOIN BLIKE bl ON b.B_NO = bl.B_NO AND bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?) "
 			+ " GROUP BY b.B_NO ORDER BY B_NO DESC";
 
@@ -80,11 +80,7 @@ public class BoardDAO {
 
 	// 가장 최근에 추가한 board
 	// ? :
-	private final String SELECT_ONE_NEWEST = "SELECT b.*, m.M_ID, COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, COUNT(DISTINCT r.RE_NO) AS REPLY_CNT, "
-			+ "    EXISTS(SELECT LK_NO FROM BLIKE WHERE B_NO = (SELECT MAX(B_NO) FROM BOARD) AND M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?)) AS ISCHECKED "
-			+ " FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO "
-			+ " LEFT JOIN REPLY r ON b.B_NO = r.B_NO "
-			+ " WHERE b.B_NO = (SELECT MAX(B_NO) FROM BOARD) AND b.STATUS != 3 GROUP BY b.B_NO";
+	private final String SELECT_ONE_NEWEST = "SELECT MAX(B_NO) AS B_NO FROM BOARD";
 
 	/*
 	 * U
