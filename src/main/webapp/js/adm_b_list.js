@@ -79,7 +79,7 @@ function displayData(selectPage) {
                                           +"<i class='bx bx-dots-vertical-rounded'></i>"
                                        +"</button>"
                                        +"<div class='dropdown-menu'>"
-                                          +"<a class='dropdown-item' href='deleteBoardDetail.do?boardNum="+dataList[i].boardNum+"'><i class='bx bx-trash me-1'></i> 삭제</a>"
+                                          +"<a class='dropdown-item' href='updateBoardStat.do?boardNum="+dataList[i].boardNum+"&boardStatus="+3+"'><i class='bx bx-trash me-1'></i> 삭제</a>"
                                        +"</div>"
                                    +"</div>"
                                  +"</td>"
