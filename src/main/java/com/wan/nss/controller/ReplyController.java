@@ -56,7 +56,7 @@ public class ReplyController {
 	public String selectOne(ReplyVO rvo, Model model) {
 		System.out.println("selectOneReply.do 진입, rvo: "+rvo);
 		replyService.selectOne(rvo);
-		return "";
+		return "report_reply.jsp";
 	}
 	
 }
