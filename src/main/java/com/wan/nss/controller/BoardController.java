@@ -2,6 +2,7 @@ package com.wan.nss.controller;
 
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -84,10 +85,19 @@ public class BoardController {
 	
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
-	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
+	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpServletRequest request, HttpSession session) {
 		
 		System.out.println("boardPostView.do 진입");
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
+		System.out.println("status: " + boardService.selectOne(bvo).getBoardStatus());
+		if(boardService.selectOne(bvo).getBoardStatus()==3) {
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "삭제된 게시글입니다.");
+			model.addAttribute("location", "report_manage.jsp");
+			
+			return "alert.jsp";
+		}
+		
 		ReplyVO rvo = new ReplyVO();
 		rvo.setBoardNum(bvo.getBoardNum());
 		
@@ -158,16 +168,14 @@ public class BoardController {
 		System.out.println("insertBoard.do 진입");
 		// 이미지 객체 생성
 		ImageVO ivo = new ImageVO();
-		// 가장 최근 게시글 찾아내서 B_NO 가져오기
-		bvo.setSearchCondition("newest");
-		BoardVO preBvo = boardService.selectOne(bvo);
-		int bNum = 100;
-		if(preBvo != null) {
-			bNum = preBvo.getBoardNum() + 1;
-		}
-		bvo.setBoardNum(bNum);
+		
 		// 게시글 추가
 		boardService.insert(bvo);
+
+		// 가장 최근 게시글 찾아내서 B_NO 가져오기 -> targetNum으로 저장
+		bvo.setSearchCondition("newest");
+		BoardVO preBvo = boardService.selectOne(bvo);
+		int targetNum = preBvo.getBoardNum();
 
 		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
 		String tag = bvo.getBoardContent();
@@ -180,7 +188,7 @@ public class BoardController {
 			if (tag.indexOf("img/") >= 0) {
 				
 				// 이미지 번호 세팅
-				ivo.setTargetNum(bNum);
+				ivo.setTargetNum(targetNum);
 				
 				// 이미지 구분 번호 세팅
 				ivo.setTypeNum(typeNum);
@@ -207,8 +215,8 @@ public class BoardController {
 			}
 
 		}
-		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		return "redirect:/boardPostViewFirst.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
+		System.out.println("targetNum: " + targetNum);
+		return "redirect:/boardPostViewFirst.do?boardNum=" + targetNum + "&searchCondition=viewCnt";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 
 	}
@@ -234,11 +242,14 @@ public class BoardController {
 		System.out.println("updateBoard.do 진입");
 		ImageVO ivo = new ImageVO();
 		
+		// 게시글 번호 설정
+		int targetNum = bvo.getBoardNum();
+		
 		// 게시글 수정
 		boardService.update(bvo);
 		
 		// IMAGE 테이블에서 기존 이미지 행 삭제
-		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
+		ivo.setTargetNum(targetNum); // 게시글 번호
 		ivo.setTypeNum(200); // 200: 게시글
 		
 		imageService.delete(ivo);
@@ -281,8 +292,8 @@ public class BoardController {
 			}
 
 		}
-		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		return "redirect:/boardPostView.do?boardNum=" + bvo.getBoardNum() + "&searchCondition=viewCnt";
+		System.out.println("targetNum: " + targetNum);
+		return "redirect:/boardPostView.do?boardNum=" + targetNum + "&searchCondition=viewCnt";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 		
 	}

@@ -180,7 +180,7 @@
 						<div class="hero__search__form">
 							<form action="search.do">
 								<!-- <input type="hidden" name="searchCondition" value="pName">  -->
-								<input type="text" name="pSearchContent" placeholder="필요한 거 있냥?" required>
+								<input type="text" name="pSearchContent" value="${pSearchContent }" placeholder="필요한 거 있냥?" required>
 								<button type="submit" class="site-btn">검색</button>
 							</form>
 						</div>
@@ -209,7 +209,8 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="breadcrumb__text">
-						<h2>검색 결과</h2>
+						<span style="font-size: 25px; color: white; font-weight: 700;">"${pSearchContent }"</span>
+						<span style="font-size: 25px; color: white; font-weight: 200;">에 대한 검색 결과</span>
 						<!-- <div class="breadcrumb__option">
                      <a href="./index.html">홈</a>
                   </div> -->

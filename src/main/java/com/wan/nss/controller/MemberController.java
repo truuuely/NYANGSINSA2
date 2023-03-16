@@ -1,7 +1,6 @@
 package com.wan.nss.controller;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,7 +84,7 @@ public class MemberController {
 
 	// 비밀번호 찾기 결과에서 비밀번호 변경하기 수행
 	@RequestMapping(value = "/changePw.do")
-	public String updateMemberChangePw(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String updateMemberChangePw(MemberVO vo, Model model, HttpServletRequest request) {
 		
 		System.out.println("changePw.do 진입");
 
@@ -105,7 +104,7 @@ public class MemberController {
 
 	// 회원정보변경에서 비밀번호 변경하기 수행
 	@RequestMapping(value = "/updatePw.do")
-	public String updateMemberPw(MemberVO mvo, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
+	public String updateMemberPw(MemberVO mvo, HttpServletRequest request, HttpSession session, Model model) {
 		
 		System.out.println("updatePw.do 진입");
 		mvo.setUserId((String)session.getAttribute("memberId"));
@@ -142,7 +141,7 @@ public class MemberController {
 	
 	// 회원정보 수정 수행
 	@RequestMapping(value = "/updateMember.do")
-	public String updateMemberProfile(MemberVO mvo, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String updateMemberProfile(MemberVO mvo, Model model, HttpSession session, HttpServletRequest request) {
 		
 		System.out.println("updateMember.do 진입");
 		
@@ -189,7 +188,7 @@ public class MemberController {
 	
 	// 관리자 페이지 - 회원 삭제(강퇴)
 	@RequestMapping(value = "/deleteMem.do")
-	public String deleteMember(MemberVO vo, HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model) {
+	public String deleteMember(MemberVO vo, HttpSession session, HttpServletRequest request, Model model) {
 		
 		System.out.println("deleteMem.do 진입");
 
@@ -218,7 +217,7 @@ public class MemberController {
 
 	// 로그인 수행
 	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
-	public String selectOneMemberLogin(MemberVO vo, Model model, HttpServletRequest request, HttpSession session, HttpServletResponse response) {
+	public String selectOneMemberLogin(MemberVO vo, Model model, HttpServletRequest request, HttpSession session) {
 		
 		System.out.println("login.do 진입");
 		
@@ -230,7 +229,7 @@ public class MemberController {
 		if (loginMvo == null) { // 로그인 실패시
 			model.addAttribute("lang", request.getParameter("lang"));
 			model.addAttribute("msg", "아이디/비밀번호를 확인해주세요.");
-			model.addAttribute("location", "login.jsp");
+			model.addAttribute("location", "login_bridge.jsp");
 			
 			return "alert.jsp";
 		} else { // 로그인 성공시
@@ -239,10 +238,9 @@ public class MemberController {
 			session.setAttribute("memberName", loginMvo.getUserName());
 			session.setAttribute("memberRole", loginMvo.getRole());
 			
-			System.out.println("메인으로 이동");
+			System.out.println("login_bridge.jsp로 이동");
 			
-			model.addAttribute("lang", request.getParameter("lang"));
-			return "main.do"; // 메인으로 이동
+			return "login_bridge.jsp"; // 로그인 브릿지로 이동
 		}
 
 	}
@@ -270,7 +268,7 @@ public class MemberController {
 
 	// 아이디 찾기 수행
 	@RequestMapping(value = "/findId.do")
-	public String selectOneMemberId(MemberVO mvo, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String selectOneMemberId(MemberVO mvo, Model model, HttpServletRequest request) {
 		
 		System.out.println("findId.do 진입");
 
@@ -293,7 +291,7 @@ public class MemberController {
 
 	// 비밀번호 찾기 수행
 	@RequestMapping(value = "/findPw.do")
-	public String selectOneMemberPw(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String selectOneMemberPw(MemberVO vo, Model model, HttpServletRequest request) {
 		
 		System.out.println("findPw.do 진입");
 
@@ -317,7 +315,7 @@ public class MemberController {
 
 	// 회원정보변경 클릭시 비밀번호 확인 페이지에서 비밀번호 확인 수행
 	@RequestMapping(value = "/checkPw.do") // 
-	public String selectOneMemberCheckPw(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String selectOneMemberCheckPw(MemberVO vo, Model model, HttpServletRequest request) {
 
 		System.out.println("checkPw.do 진입");
 
@@ -328,7 +326,7 @@ public class MemberController {
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
 			model.addAttribute("location", "find_pw.jsp");
 			
-			return "check_password.jsp";
+			return "alert.jsp";
 		} else {
 			
 			System.out.println("loginMvo: " + loginMvo);
@@ -340,7 +338,7 @@ public class MemberController {
 
 	// 마이페이지로 이동
 	@RequestMapping(value = "/mypage.do")
-	public String selectOneMemberMyPage(MemberVO vo, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String selectOneMemberMyPage(MemberVO vo, Model model, HttpSession session, HttpServletRequest request) {
 		
 		System.out.println("mypage.do 진입");
 
@@ -350,7 +348,7 @@ public class MemberController {
 			model.addAttribute("msg", "로그인을 해주세요.");
 			model.addAttribute("location", "find_pw.jsp");
 			
-			return "login.jsp";
+			return "alert.jsp";
 		} else {
 			vo.setUserId(id);
 			
