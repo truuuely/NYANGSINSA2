@@ -102,8 +102,11 @@ public class BoardController {
 		rvo.setBoardNum(bvo.getBoardNum());
 		
 		// 조회수 증가 로직
-		bvo.setSearchCondition("viewCnt");
-		boardService.update(bvo);
+		System.out.println("updateViewCnt: " + request.getParameter("updateViewCnt"));
+		if (request.getParameter("updateViewCnt") == null) { // 진입할때 조회수 증가할지 안할지 결정하는 파라미터
+			bvo.setSearchCondition("viewCnt");
+			boardService.update(bvo);
+		}
 		
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
 		mvo.setUserId((String) session.getAttribute("memberId"));
@@ -219,7 +222,7 @@ public class BoardController {
 
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "redirect:/boardPostViewFirst.do?boardNum=" + targetNum + "&searchCondition=viewCnt";
+		return "redirect:/boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 
 	}
@@ -296,7 +299,7 @@ public class BoardController {
 
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "redirect:/boardPostView.do?boardNum=" + targetNum + "&searchCondition=viewCnt";
+		return "redirect:/boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 		
 	}
