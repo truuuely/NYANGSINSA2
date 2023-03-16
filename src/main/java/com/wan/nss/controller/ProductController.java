@@ -24,6 +24,7 @@ import com.google.gson.JsonArray;
 import com.wan.nss.biz.common.Crawling;
 import com.wan.nss.biz.image.ImageService;
 import com.wan.nss.biz.image.ImageVO;
+import com.wan.nss.biz.product.ConvertEntoKo;
 import com.wan.nss.biz.product.ProductService;
 import com.wan.nss.biz.product.ProductVO;
 import com.wan.nss.biz.review.ReviewService;
@@ -257,6 +258,12 @@ public class ProductController {
 		
 		// ajax()로 넘어온 pSearchContent를 세팅한 pvo를 가지고 selectAll 
 		ArrayList<ProductVO> list = productService.selectAll(pvo); // 상품 검색 결과
+		
+		if(list.isEmpty()) {
+			String engToKor = new ConvertEntoKo().engToKor(pvo.getpSearchContent());
+			pvo.setpSearchContent(engToKor);
+			list = productService.selectAll(pvo);
+		}
 		
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); 
 		

@@ -37,7 +37,7 @@ public class BoardDAO {
 			+ " INNER JOIN `MEMBER` m ON b.M_NO = m.M_NO ORDER BY B_NO DESC";
 
 	// TOP3 : 좋아요 많이 받은 글의 작성자의 고양이, 글의 대표 사진 가져오기
-	private final String SELECT_ALL_TOP3 = "SELECT m.CAT_NM, b.B_NO, b.B_VIEW, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM "
+	private final String SELECT_ALL_TOP3 = "SELECT m.CAT_NM, b.B_NO, b.B_VIEW, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'img/default.jpg') AS I_NM "
 			+ " FROM BOARD b LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO "
 			+ " LEFT JOIN MEMBER m ON b.M_NO = m.M_NO "
 			+ " LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO WHERE b.STATUS != 3 "
@@ -50,7 +50,7 @@ public class BoardDAO {
 
 	// 게시글 제목 검색
 	// ? : 로그인한 사용자 아이디, 검색어, 로그인한 사용자 아이디 (id가 null일 경우 ISCHECKED 는 모두 false
-	private final String SELECT_ALL_SEARCH_TITLE = "SELECT b.*, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
+	private final String SELECT_ALL_SEARCH_TITLE = "SELECT b.*, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'img/default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
 			+ " FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO WHERE STATUS != 3 AND b.B_TITLE LIKE CONCAT('%', ? ,'%')) b "
 			+ " LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO "
 			+ " LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO "
@@ -58,7 +58,7 @@ public class BoardDAO {
 
 	// 게시글 내용 검색
 	// ? : 로그인한 사용자 아이디, 검색어, 로그인한 사용자 아이디 (id가 null일 경우 ISCHECKED 는 모두 false
-	private final String SELECT_ALL_SEARCH_CONTENT = "SELECT b.*, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
+	private final String SELECT_ALL_SEARCH_CONTENT = "SELECT b.*, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'img/default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
 			+ "FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO WHERE STATUS != 3 AND b.B_CONTENT LIKE CONCAT('%', ? ,'%')) b "
 			+ "LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO "
 			+ "LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO "
@@ -66,7 +66,7 @@ public class BoardDAO {
 
 	// 게시글 작성자 검색
 	// ? : 로그인한 사용자 아이디, 검색어, 로그인한 사용자 아이디 (id가 null일 경우 ISCHECKED 는 모두 false
-	private final String SELECT_ALL_SEARCH_WRITER = "SELECT b.*, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
+	private final String SELECT_ALL_SEARCH_WRITER = "SELECT b.*, COUNT(DISTINCT LK_NO) AS LIKE_CNT, COUNT(DISTINCT RE_NO) AS REPLY_CNT, IFNULL(i.I_NM, 'img/default.jpg') AS I_NM, IF(bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?), TRUE, FALSE) AS ISCHECKED "
 			+ "FROM (SELECT b.*, m.M_ID FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO WHERE STATUS != 3 AND m.M_ID LIKE CONCAT('%', ? ,'%')) b "
 			+ "LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO LEFT JOIN REPLY r ON b.B_NO = r.B_NO "
 			+ "LEFT JOIN (SELECT * FROM IMAGE WHERE TYPE_NO = 201) i ON b.B_NO = i.TARGET_NO "
