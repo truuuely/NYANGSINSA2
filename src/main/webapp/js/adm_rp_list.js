@@ -260,7 +260,7 @@ function proc(data) {
 };
 function newOpen(data){
 	console.log(data.targetNum);
-	window.open("boardPostView.do?boardNum="+data.targetNum+"&searchCondition=viewCnt");
+	window.open("boardPostView.do?boardNum="+data.targetNum);
 
 
 }
