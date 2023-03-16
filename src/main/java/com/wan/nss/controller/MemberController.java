@@ -78,7 +78,7 @@ public class MemberController {
 		session.removeAttribute("memberId");
 		session.removeAttribute("memberName");
 		model.addAttribute("lang", request.getParameter("lang"));
-		return "main.do";
+		return "index.jsp";
 		
 	}
 
