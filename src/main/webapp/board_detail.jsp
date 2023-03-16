@@ -187,9 +187,9 @@
 						<div class="hero__search__form">
 							<form action="selectAllSearchBoard.do">
 								<select name="searchCondition">
-									<option value="TITLE">제목</option>
-									<option value="WRITER">작성자</option>
-									<option value="CONTENT">내용</option>
+									<option value="title">제목</option>
+									<option value="writer">작성자</option>
+									<option value="content">내용</option>
 								</select>
 								<!-- 글 검색 부분 -->
 								<input type="text" name="searchContent" placeholder="궁금한 글 있냥?" required>
