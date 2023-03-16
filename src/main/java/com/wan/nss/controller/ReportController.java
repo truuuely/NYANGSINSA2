@@ -36,11 +36,11 @@ public class ReportController {
 		System.out.println("targetNum: " + rpvo.getTargetNum());
 		System.out.println("reportStep: " + rpvo.getReportStep());
 		System.out.println("userId: " + rpvo.getUserId());
+		System.out.println("reporterId: " + rpvo.getReporterId());
 		System.out.println("reportContent: " + rpvo.getReportContent());
-
 		reportService.insert(rpvo);
 
-		return "board_detail.jsp";
+		return "redirect:/boardPostView.do?boardNum=" + rpvo.getTargetNum() + "&searchCondition=viewCnt";
 	}
 
 	// (관리자) Report 게시글 신고 처리
