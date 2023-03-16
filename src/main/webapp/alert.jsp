@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", function(){
 		if(${lang != null}){
 		       location.href = '${location}?lang=${lang}';
 		    }
+		else if(${vo != null}){
+			location.href = '${location}?'+vo+'=${'+vo+'}';
+		}
 		    else{
 		       location.href = '${location}';
 		    }
