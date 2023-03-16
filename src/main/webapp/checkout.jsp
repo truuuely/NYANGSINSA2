@@ -65,7 +65,7 @@ button img {
 		</div>
 		<div class="humberger__menu__cart">
 			<ul>
-				<li><a href="shoping_cart.jsp">
+				<li><a href="shopingCart.do">
 						<i class="fa fa-shopping-bag"></i> <span>${fn:length(cList)}</span>
 					</a></li>
 			</ul>
