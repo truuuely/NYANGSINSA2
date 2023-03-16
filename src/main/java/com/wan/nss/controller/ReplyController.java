@@ -55,7 +55,7 @@ public class ReplyController {
 	@RequestMapping(value="/selectOneReply.do")
 	public String selectOne(ReplyVO rvo, Model model) {
 		System.out.println("selectOneReply.do 진입, rvo: "+rvo);
-		replyService.selectOne(rvo);
+		model.addAttribute("rvo", replyService.selectOne(rvo));
 		return "report_reply.jsp";
 	}
 	
