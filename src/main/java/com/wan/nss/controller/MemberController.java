@@ -1,7 +1,5 @@
 package com.wan.nss.controller;
 
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -92,16 +90,11 @@ public class MemberController {
 		System.out.println("changePw.do 진입");
 
 		if (!memberService.update(vo)) { // 업데이트 실패 시 알림창
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('회원 정보 수정 실패. 잠시 후 다시 시도하세요');</script>"); // 이전 화면으로 이동
-				out.flush();
-				return "change_pw.jsp";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "회원 정보 수정 실패. 잠시 후 다시 시도하세요.");
+			model.addAttribute("location", "change_pw.jsp");
+			
+			return "alert.jsp";
 		}
 		else {
 			model.addAttribute("lang", request.getParameter("lang"));
@@ -112,33 +105,26 @@ public class MemberController {
 
 	// 회원정보변경에서 비밀번호 변경하기 수행
 	@RequestMapping(value = "/updatePw.do")
-	public String updateMemberPw(MemberVO mvo, HttpServletRequest request, HttpServletResponse response, HttpSession session) {
+	public String updateMemberPw(MemberVO mvo, HttpServletRequest request, HttpServletResponse response, HttpSession session, Model model) {
 		
 		System.out.println("updatePw.do 진입");
 		mvo.setUserId((String)session.getAttribute("memberId"));
 		
 		if (memberService.selectOne(mvo) == null) { // 현재 비밀번호가 일치하지 않으면
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('현재 비밀번호를 확인하세요.');</script>"); // 이전 화면으로 이동
-				out.flush();
-				return "profileView.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "현재 비밀번호를 확인하세요.");
+			model.addAttribute("location", "profileView.do");
+			
+			return "alert.jsp";
 		}
 		String memberPwNew = (String) request.getParameter("memberPwNew"); // 새 비밀번호
 		mvo.setUserPw(memberPwNew);
 		if (!memberService.update(mvo)) { // 업데이트에 실패하면 알림창
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<script>alert('업데이트 실패. 잠시 후 다시 시도해주세요.');</script>"); // 이전 화면으로 이동
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "업데이트 실패. 잠시 후 다시 시도해주세요.");
+			model.addAttribute("location", "profileView.do");
+			
+			return "alert.jsp";
 		}
 		return "profileView.do";
 	}
@@ -156,21 +142,18 @@ public class MemberController {
 	
 	// 회원정보 수정 수행
 	@RequestMapping(value = "/updateMember.do")
-	public String updateMemberProfile(MemberVO mvo, Model model, HttpSession session, HttpServletResponse response) {
+	public String updateMemberProfile(MemberVO mvo, Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("updateMember.do 진입");
 		
 		mvo.setUserId((String)session.getAttribute("memberId"));
 		
 		if (!memberService.update(mvo)) {
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<script>alert('회원 정보 수정 실패. 잠시 후 다시 시도하세요');</script>"); // 이전 화면으로 이동
-				return "profile.jsp";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "회원 정보 수정 실패. 잠시 후 다시 시도하세요.");
+			model.addAttribute("location", "profile.jsp");
+			
+			return "alert.jsp";
 		} else {
 			
 			return "profileView.do";
@@ -206,32 +189,26 @@ public class MemberController {
 	
 	// 관리자 페이지 - 회원 삭제(강퇴)
 	@RequestMapping(value = "/deleteMem.do")
-	public String deleteMember(MemberVO vo, HttpSession session, HttpServletResponse response) {
+	public String deleteMember(MemberVO vo, HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model) {
 		
 		System.out.println("deleteMem.do 진입");
 
 		String id = (String)session.getAttribute("memberId"); // 세션의 멤버 Id 를 가져오기
 		
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-				return "memberManagePage.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("location", "memberManagePage.do");
+			
+			return "alert.jsp";
 		}
 		
 		if (!memberService.delete(vo)) {
-			try {
-			response.setContentType("text/html; charset=utf-8");
-			response.getWriter().println("<SCRIPT>alert('Delete 실패. 잠시 후 다시 시도하세요.');</SCRIPT>");
-			return "memberManagePage.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "Delete 실패. 잠시 후 다시 시도하세요.");
+			model.addAttribute("location", "memberManagePage.do");
+			
+			return "alert.jsp";
 		}
 		else {
 			return "memberManagePage.do";
@@ -251,16 +228,11 @@ public class MemberController {
 		MemberVO loginMvo = memberService.selectOne(vo);
 
 		if (loginMvo == null) { // 로그인 실패시
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<SCRIPT>alert('아이디/비밀번호를 확인해주세요');</SCRIPT>");
-				out.flush();
-				return "login.jsp"; // 현재 페이지에 머무름
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "아이디/비밀번호를 확인해주세요.");
+			model.addAttribute("location", "login.jsp");
+			
+			return "alert.jsp";
 		} else { // 로그인 성공시
 			session.setAttribute("memberNum", loginMvo.getUserNum()); // 세션에 로그인한 회원의 번호, 아이디, 이름, 등급 저장
 			session.setAttribute("memberId", loginMvo.getUserId());
@@ -298,7 +270,7 @@ public class MemberController {
 
 	// 아이디 찾기 수행
 	@RequestMapping(value = "/findId.do")
-	public String selectOneMemberId(MemberVO mvo, Model model, HttpServletResponse response) {
+	public String selectOneMemberId(MemberVO mvo, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("findId.do 진입");
 
@@ -306,16 +278,11 @@ public class MemberController {
 		System.out.println("loginMvo: " + loginMvo);
 		
 		if (loginMvo == null) { // 가입정보가 없는 경우
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('회원정보가 존재하지 않습니다. Please check your information.');</script>");
-				out.flush();
-				return "find_id.jsp";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "회원정보가 존재하지 않습니다. Please check your information.");
+			model.addAttribute("location", "find_id.jsp");
+			
+			return "alert.jsp";
 		} else { // 가입정보가 있는 경우
 			model.addAttribute("memberId", loginMvo.getUserId());
 			model.addAttribute("memberName", loginMvo.getUserName());
@@ -326,7 +293,7 @@ public class MemberController {
 
 	// 비밀번호 찾기 수행
 	@RequestMapping(value = "/findPw.do")
-	public String selectOneMemberPw(MemberVO vo, Model model, HttpServletResponse response) {
+	public String selectOneMemberPw(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
 		
 		System.out.println("findPw.do 진입");
 
@@ -336,16 +303,11 @@ public class MemberController {
 		// mdao에서 해당하는 멤버 가져오고, 아이디만 전달
 		MemberVO loginMvo = memberService.selectOne(vo);
 		if (loginMvo == null) { // 없는 회원인 경우\
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('존재하지 않는 회원입니다. Please check your information.');</script>");
-				out.flush();
-				return "find_pw.jsp";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "존재하지 않는 회원입니다. Please check your information.");
+			model.addAttribute("location", "find_pw.jsp");
+			
+			return "alert.jsp";
 		} else {
 			model.addAttribute("changeId", loginMvo.getUserId());
 			return "change_pw.jsp";
@@ -355,23 +317,18 @@ public class MemberController {
 
 	// 회원정보변경 클릭시 비밀번호 확인 페이지에서 비밀번호 확인 수행
 	@RequestMapping(value = "/checkPw.do") // 
-	public String selectOneMemberCheckPw(MemberVO vo, Model model, HttpServletResponse response) {
+	public String selectOneMemberCheckPw(MemberVO vo, Model model, HttpServletRequest request, HttpServletResponse response) {
 
 		System.out.println("checkPw.do 진입");
 
 		MemberVO loginMvo = memberService.selectOne(vo); // id, pw가 일치하는 회원이 있는경우만 not null
 
 		if (loginMvo == null) { // 비밀번호가 일치하지 않으면, 알림창 뜨고 뒤로 돌아가야 함
-			try {
-				response.setContentType("text/html; charset=utf-8"); // 알림창 인코딩
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('비밀번호가 일치하지 않습니다.');</script>");
-				out.flush();
-				return "check_password.jsp"; // 비밀번호 확인 페이지에 머물기
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
+			model.addAttribute("location", "find_pw.jsp");
+			
+			return "check_password.jsp";
 		} else {
 			
 			System.out.println("loginMvo: " + loginMvo);
@@ -389,16 +346,11 @@ public class MemberController {
 
 		String id = (String) session.getAttribute("memberId"); // 세션에 저장된 '로그인한 회원의 아이디'
 		if (id == null) { // 로그인한 회원이 없다면 로그인 페이지로 이동
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<script>alert('로그인을 해주세요.');</script>"); // 로그인 화면으로 이동
-				
-				model.addAttribute("lang", request.getParameter("lang"));
-				return "login.jsp";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "로그인을 해주세요.");
+			model.addAttribute("location", "find_pw.jsp");
+			
+			return "login.jsp";
 		} else {
 			vo.setUserId(id);
 			
