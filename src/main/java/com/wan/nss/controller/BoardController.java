@@ -102,6 +102,7 @@ public class BoardController {
 		rvo.setBoardNum(bvo.getBoardNum());
 		
 		// 조회수 증가 로직
+		bvo.setSearchCondition("viewCnt");
 		boardService.update(bvo);
 		
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
@@ -169,12 +170,14 @@ public class BoardController {
 		// 이미지 객체 생성
 		ImageVO ivo = new ImageVO();
 		
+		System.out.println("bvo: " + bvo);
 		// 게시글 추가
 		boardService.insert(bvo);
 
 		// 가장 최근 게시글 찾아내서 B_NO 가져오기 -> targetNum으로 저장
 		bvo.setSearchCondition("newest");
 		BoardVO preBvo = boardService.selectOne(bvo);
+		System.out.println("preBvo: " + preBvo);
 		int targetNum = preBvo.getBoardNum();
 
 		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
@@ -352,10 +355,11 @@ public class BoardController {
 
 	// 내가 좋아요 한 글 모아보기
 	@RequestMapping(value = "/selectAllMyLike.do")
-	public String selectAllMyLike(BoardVO bvo, Model model) {
+	public String selectAllMyLike(BoardVO bvo, Model model, HttpSession session) {
 		System.out.println("selectAllMyLike.do 진입");
 		System.out.println("bvo: " + bvo);
 
+		bvo.setUserId((String)session.getAttribute("memberId"));
 		bvo.setSearchCondition("myLike");
 		model.addAttribute("board", boardService.selectAll(bvo));
 		return "myfavboard.jsp";
