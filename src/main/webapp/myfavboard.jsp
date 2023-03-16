@@ -57,7 +57,7 @@
 	width: 180px;
 }
 
-#order_detail {
+#board-view {
 	font-size: 14px;
 	color: #ffffff;
 	text-transform: uppercase;
@@ -103,7 +103,7 @@
 								<li><a href="orderList.do">주문내역</a></li>
 								<li><a href="checkPassword.do">회원정보변경</a></li>
 								<li><a href="myReviewView.do">내 리뷰 모아보기</a></li>
-								<li><a href="myReviewView.do">내가 좋아요 한 글 </a></li>
+								<li><a href="selectAllMyLike.do">내가 좋아요 한 글 </a></li>
 							</ul>
 						</div>
 					</div>
@@ -112,28 +112,28 @@
 					<div class="col-lg-12">
 						<div class="shoping__cart__table">
 							<script>
-                        console.log(${oList});
+                        console.log(${board});
                      </script>
 							<table>
 								<thead>
 									<tr>
 										<th class="shoping__product">글 제목</th>
-										<th>글 내용</th>
+										<th>글 작성일</th>
 										<th>작성자</th>
 										<th>바로가기</th>
 										<th></th>
 									</tr>
 								</thead>
-								<c:forEach var="v" items="${oList}" begin="0" varStatus="status">
+								<c:forEach var="v" items="${board}" begin="0" varStatus="status">
 									<tbody>
 										<tr>
 											<td class="shoping__cart__item" style="text-align: center;">
 												<h5>${v.boardTitle}</h5>
 											</td>
-											<td class="shoping__cart__price">${v.boardContent}</td>
-											<td class="shoping__cart__total">${v.oPrice}원</td>
-											<td><a href="orderDetailList.do?oNum=${v.oNum}">
-													<input id="order_detail" type="button" value="상세보기">
+											<td class="shoping__cart__price">${v.boardDate}</td>
+											<td class="shoping__cart__total">${v.userId}</td>
+											<td><a href="boardPostView.do?boardNum=${v.boardNum}">
+													<input id="board-view" type="button" value="상세보기">
 												</a></td>
 										</tr>
 									</tbody>

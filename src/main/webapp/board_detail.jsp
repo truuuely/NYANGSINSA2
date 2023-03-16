@@ -615,8 +615,8 @@
                         {
                            title : '웹으로 보기',
                            link : {
-                              mobileWebUrl : 'http://localhost:8080/NYANGSINSA2/boardPostView.do?boardNum=${board.boardNum}&searchCondition=viewCnt', // 이동할 경로
-                              webUrl : 'http://localhost:8080/NYANGSINSA2/boardPostView.do?boardNum=${board.boardNum}&searchCondition=viewCnt', // 이동할 경로
+                              mobileWebUrl : 'http://localhost:8088/NYANGSINSA2/boardPostView.do?boardNum=${board.boardNum}&searchCondition=viewCnt', // 이동할 경로
+                              webUrl : 'http://localhost:8088/NYANGSINSA2/boardPostView.do?boardNum=${board.boardNum}&searchCondition=viewCnt', // 이동할 경로
                            },
                         }, ],
                   // 카카오톡 미설치 시 카카오톡 설치 경로이동
