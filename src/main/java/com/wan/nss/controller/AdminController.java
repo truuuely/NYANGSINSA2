@@ -72,7 +72,10 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
 
 				model.addAttribute("lang", request.getParameter("lang"));
-				return "main.do";
+				model.addAttribute("msg", "접근 권한이 없습니다.");
+				model.addAttribute("location", "main.do");
+				
+				return "alert.jsp";
 
 			} catch (Exception e) {
 
