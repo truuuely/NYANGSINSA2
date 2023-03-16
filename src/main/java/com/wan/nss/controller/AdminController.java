@@ -67,10 +67,6 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			try {
 
 				System.out.println("관리자 식별 불가! 관리자홈 접근 권한 없음!");
-
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-
 				model.addAttribute("lang", request.getParameter("lang"));
 				model.addAttribute("msg", "접근 권한이 없습니다.");
 				model.addAttribute("location", "main.do");
@@ -173,16 +169,11 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-
-				model.addAttribute("lang", request.getParameter("lang"));
-				return "main.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("location", "main.do");
+			
+			return "alert.jsp";
 		} else {
 			return "member_manage.jsp";
 		}
@@ -198,16 +189,11 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-
-				model.addAttribute("lang", request.getParameter("lang"));
-				return "main.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("location", "main.do");
+			
+			return "alert.jsp";
 		} else {
 			return "product_manage.jsp";
 		}
@@ -268,16 +254,11 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-
-				model.addAttribute("lang", request.getParameter("lang"));
-				return "main.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("location", "main.do");
+			
+			return "alert.jsp";
 		} else {
 			return "review_manage.jsp";
 		}
@@ -293,16 +274,11 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-
-				model.addAttribute("lang", request.getParameter("lang"));
-				return "main.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("location", "main.do");
+			
+			return "alert.jsp";
 		} else {
 			return "board_manage.jsp";
 		}
@@ -314,15 +290,11 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 			Model model) {
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-
-				return "main.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+			model.addAttribute("lang", request.getParameter("lang"));
+			model.addAttribute("msg", "접근 권한이 없습니다.");
+			model.addAttribute("location", "main.do");
+			
+			return "alert.jsp";
 		} else {
 			return "report_manage.jsp";
 		}

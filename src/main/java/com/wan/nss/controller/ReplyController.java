@@ -36,9 +36,10 @@ public class ReplyController {
 	
 	@ResponseBody
 	@RequestMapping(value="/deleteReply.do")
-	public void deleteReply(ReplyVO rvo, Model model) {
+	public String deleteReply(ReplyVO rvo, Model model) {
 		System.out.println("deleteReply.do 진입");
 		replyService.delete(rvo);
+		return "reply";
 	}
 	
 	@RequestMapping(value="/selectAllReply.do")
