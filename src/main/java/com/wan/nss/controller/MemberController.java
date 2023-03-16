@@ -229,7 +229,7 @@ public class MemberController {
 		if (loginMvo == null) { // 로그인 실패시
 			model.addAttribute("lang", request.getParameter("lang"));
 			model.addAttribute("msg", "아이디/비밀번호를 확인해주세요.");
-			model.addAttribute("location", "login.jsp");
+			model.addAttribute("location", "login_bridge.jsp");
 			
 			return "alert.jsp";
 		} else { // 로그인 성공시
@@ -240,7 +240,6 @@ public class MemberController {
 			
 			System.out.println("login_bridge.jsp로 이동");
 			
-			model.addAttribute("lang", request.getParameter("lang"));
 			return "login_bridge.jsp"; // 로그인 브릿지로 이동
 		}
 
