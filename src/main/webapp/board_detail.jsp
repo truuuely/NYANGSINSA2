@@ -585,16 +585,21 @@
 
 	<script type="text/javascript">
       // SDK를 초기화 합니다. 사용할 앱의 JavaScript 키를 설정해 주세요.
-      Kakao.init('603243ecdb0757012b9f08d95c495f53');
+      Kakao.init('8c3000037d16f0a25f2fe24fba99fdb6');
       // SDK 초기화 여부를 판단합니다.
       console.log(Kakao.isInitialized());
+
+		var boardLikecnt = ${board.likeCnt};
+		var boardReplyCnt = ${board.replyCnt};
+		console.log(boardTitle); 
+      
       function kakaoShare() {
          Kakao.Link
                .sendDefault({
                   objectType : 'feed',
                   content : {
-                     title : '안녕안녕 헬로월드 마이크테스트',// 글제목 
-                     description : '강문영 바보바보', // 글내용
+                     title : '냥신사 커뮤니티',// 글제목 
+                     description : '${board.boardTitle}', // 글내용
                      imageUrl : 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
                      link : {
                         mobileWebUrl : 'https://www.naver.com/',
@@ -602,16 +607,16 @@
                      },
                   },
                   social : {
-                     likeCount : 286, //좋아요 수
-                     commentCount : 45, //댓글 수
-                     sharedCount : 845, //공유 수
+                     likeCount : boardLikecnt, //좋아요 수
+                     commentCount : boardReplyCnt, //댓글 수
+                    
                   },
                   buttons : [
                         {
                            title : '웹으로 보기',
                            link : {
-                              mobileWebUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
-                              webUrl : 'http://localhost:8088/nyangsinsa7/blog_detail.jsp', // 이동할 경로
+                              mobileWebUrl : 'http://localhost:8080/NYANGSINSA2/boardPostView.do?boardNum=${board.boardNum}&searchCondition=viewCnt', // 이동할 경로
+                              webUrl : 'http://localhost:8080/NYANGSINSA2/boardPostView.do?boardNum=${board.boardNum}&searchCondition=viewCnt', // 이동할 경로
                            },
                         }, ],
                   // 카카오톡 미설치 시 카카오톡 설치 경로이동

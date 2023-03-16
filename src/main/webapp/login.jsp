@@ -57,6 +57,7 @@
 					<div class="login_form_inner">
 						<h3><spring:message code="message.login.login" /></h3>
 						<form class="row login_form" action="login.do" id="contactForm" method="POST">
+						<input type="hidden" id="urlBack" name="urlBack" value=""/>
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="id" name="userId" placeholder="<spring:message code="message.login.id" />" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
 							</div>
@@ -103,12 +104,17 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
-
+	
 	<!-- 카카오 스크립트 -->
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<!-- 카카오 스크립트 end -->
 
 	<script>
+		$(document).ready(function getURL() {
+			var urlBack = document.referrer;
+			$('#urlBack').attr('value', urlBack);
+		});
+		
 		Kakao.init('a4736b83f633d7309942ec1e31da7d0f'); // SDK를 초기화함 / 발급 받은 키 중 javascript키를 사용해준다.
 		console.log(Kakao.isInitialized()); // sdk초기화여부판단
 

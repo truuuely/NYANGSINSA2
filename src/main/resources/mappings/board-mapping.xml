@@ -117,7 +117,7 @@
 	<select id="selectOneBoard" resultMap="boardResultSet">
 		<choose>
 			<when test="searchCondition == 'newest'">
-			SELECT MAX(B_NO) FROM BOARD
+			SELECT MAX(B_NO) AS B_NO FROM BOARD
 			</when>
 			<otherwise>
 			SELECT b.*, m.M_ID, COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, 
