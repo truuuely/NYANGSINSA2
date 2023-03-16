@@ -1,5 +1,6 @@
 package com.wan.nss.controller;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,8 +33,7 @@ public class ReviewController {
 	@RequestMapping(value="/reviewPage.do")
 	public String reviewView(ReviewVO rvo,ProductVO pvo,Model model,HttpSession session,
 			HttpServletResponse response) {
-
-		// 추후 userId로 수정 예정
+		System.out.println("reviewViewController 진입");
 
 		// 세션에서 로그인 한 회원아이디 받아 저장
 		String memberId = (String) session.getAttribute("memberId");
@@ -61,46 +61,44 @@ public class ReviewController {
 		// 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우, 리뷰 작성 창 닫기 처리
 		for (ReviewVO v : rdatas) { 
 			if (v.getUserId().equals(memberId)) { 
-				model.addAttribute("msg", "이미 리뷰를 작성하셨습니다.");
-				model.addAttribute("location","order_detail.jsp");
-				System.out.println("이미 리뷰 작성");
+				model.addAttribute("alert", "이미 리뷰를 작성하셨습니다.");
+				model.addAttribute("location", "order_detail.jsp");
 				return "alert.jsp"; //알럿창이 안 뜨고 리턴하는 페이지로 가버리는.. (utf-8 설정도 안 되어 있음)				
 			}
 			//System.out.println("for문 1번 수행 완료");
 		}
-
 		return "review.jsp"; // View에서 리뷰창으로 갈 수 있도록 리뷰페이지 return
 	}
 
 	// 사용자 리뷰 추가 (알림창만 띄워줌) (완)
 	@RequestMapping(value="/insertReview.do")
 	public String insertReview(ReviewVO rvo, Model model,HttpServletResponse response) {
-		response.setContentType("text/html; charset=utf-8");
+		System.out.println("insertReviewController 진입");
 
 		// insert input 잘 들어오는지 확인
 		System.out.println("pNum: "+rvo.getpNum());
 		System.out.println("memberId: "+rvo.getUserId());
 		System.out.println("rContent: "+rvo.getrContent());
 		System.out.println("rRate: "+rvo.getrRate());
-
+		System.out.println("리뷰 추가 완료");
 
 		if(reviewService.insert(rvo)) {  
-			model.addAttribute("msg", "리뷰가 등록되었습니다.");
-			model.addAttribute("location","order_detail.jsp");
-			System.out.println("리뷰 추가 완료");
-			return "alert.jsp";
+			model.addAttribute("alert", "리뷰가 등록되었습니다.");
+			model.addAttribute("location", "order_detail.jsp");
+			return "alert.jsp";	
 		}
 		else { // 실패 시 
-			model.addAttribute("msg", "에러 발생. 잠시 후 다시 시도해주세요.");
-			model.addAttribute("location","order_detail.jsp");
-			return "alert.jsp";
+			model.addAttribute("alert", "에러 발생. 잠시 후 다시 시도해주세요.");
+			model.addAttribute("location", "order_detail.jsp");
+			return "alert.jsp";	
 		}
-
 	}
 
 	// 내 리뷰 모아보기 페이지 (완)
 	@RequestMapping(value = "/myReviewView.do") 
 	public String myReviewView(ReviewVO rvo,Model model,HttpSession session) { 
+		System.out.println("myReviewViewController 진입");
+
 		rvo.setrSearchCondition("myReviews");
 		rvo.setUserId((String)session.getAttribute("memberId"));
 		model.addAttribute("rList", reviewService.selectAll(rvo));
@@ -111,35 +109,33 @@ public class ReviewController {
 	@RequestMapping(value="/deleteReview.do")
 	public String deleteReview(ReviewVO rvo, HttpSession session,
 			HttpServletResponse response, HttpServletRequest request, Model model) {
-		System.out.println("deleteReview 입장");
+		System.out.println("deleteReviewController 입장");
 
 		//유저 아이디 세션에서 받아오기
 		String id = (String)session.getAttribute("memberId");
 
-
 		//세션에 아이디가 없거나 관리자가 아닌 회원이 접근한 경우 경고와 함께 메인으로 돌려보냄
 		if (id == null || !(id.equals("admin"))) {
 			// 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			model.addAttribute("msg", "접근 권한이 없습니다.");
-			model.addAttribute("location","main.do");
+			model.addAttribute("alert", "접근 권한이 없습니다.");
+			model.addAttribute("location", "main.do");
 			return "alert.jsp";
 		}
 
 		if (!reviewService.delete(rvo)) { // 리뷰 삭제 실패 시
-			model.addAttribute("msg", "Delete 실패. 잠시 후 다시 시도하세요.");
-			model.addAttribute("location","review_manage.jsp");
+			model.addAttribute("alert", "Delete 실패. 잠시 후 다시 시도하세요.");
+			model.addAttribute("location", "review_manage.jsp");
 			return "alert.jsp";
 		}
-
-		model.addAttribute("msg", "리뷰 삭제 성공!");
-		model.addAttribute("location","redirect:review_manage.jsp");
-		return "alert.jsp";		
+		return "redirect:review_manage.jsp"; //null, forward 상황
 	}
 
 	//ReviewListController (완)
 	@ResponseBody
 	@RequestMapping(value="getReviewList.do", method = RequestMethod.POST)
 	public JsonArray getReviewList(ReviewVO rvo) {
+		System.out.println("getReviewListServletController 진입");
+
 		rvo.setrSearchCondition("pNum"); // "해당 상품의 리뷰 보기"에 걸리도록 설정
 		ArrayList<ReviewVO> list = reviewService.selectAll(rvo); // ajax로 받은 pNum을 selectAll (리뷰리스트 결과)
 		JsonArray datas = new Gson().toJsonTree(list).getAsJsonArray(); // JsonArry로 변경하여 반환
