@@ -115,21 +115,17 @@
 	
 	<!-- 셀렉트원 -->
 	<select id="selectOneBoard" resultMap="boardResultSet">
-		SELECT b.*, m.M_ID, COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, 
-			COUNT(DISTINCT r.RE_NO) AS REPLY_CNT, 
 		<choose>
 			<when test="searchCondition == 'newest'">
-				EXISTS(SELECT LK_NO FROM BLIKE WHERE B_NO = (SELECT MAX(B_NO) FROM BOARD) 
-					AND M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = #{userId})) AS ISCHECKED
-			FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO LEFT JOIN BLIKE bl ON b.B_NO = bl.B_NO 
-				LEFT JOIN REPLY r ON b.B_NO = r.B_NO 
-			WHERE b.B_NO = (SELECT MAX(B_NO) FROM BOARD) AND b.STATUS != 3 GROUP BY b.B_NO
+			SELECT MAX(B_NO) FROM BOARD
 			</when>
 			<otherwise>
+			SELECT b.*, m.M_ID, COUNT(DISTINCT bl.LK_NO) AS LIKE_CNT, 
+				COUNT(DISTINCT r.RE_NO) AS REPLY_CNT, 
 				EXISTS(SELECT LK_NO FROM BLIKE WHERE B_NO = #{boardNum} AND M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = #{userId})) AS ISCHECKED 
 			FROM BOARD b INNER JOIN MEMBER m ON b.M_NO = m.M_NO LEFT JOIN BLIKE
 			bl ON b.B_NO = bl.B_NO 
-			LEFT JOIN REPLY r ON b.B_NO = r.B_NO WHERE b.B_NO = #{boardNum} AND b.STATUS != 3 GROUP BY b.B_NO
+			LEFT JOIN REPLY r ON b.B_NO = r.B_NO WHERE b.B_NO = #{boardNum} GROUP BY b.B_NO
 			</otherwise>
 		</choose>
 	</select>
