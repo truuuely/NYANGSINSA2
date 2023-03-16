@@ -386,14 +386,17 @@
 
 	<!-- 댓글 추가 -->
 	<script type="text/javascript">
-   
-   
-   
    function insertReply(parentNum){
-      console.log('insert');
-      var userId = '${memberId}';
-      var boardNum = '${board.boardNum}';
-      var replyContent = $('input[id='+parentNum+'replyContent]').val();
+	   var userId = '${memberId}';
+	   var boardNum = '${board.boardNum}';
+	   var replyContent = $('input[id='+parentNum+'replyContent]').val();
+	   if(loginCheck()){
+		   if(replyContent==''){
+			   swal({
+					text : "내용을 입력하세요.",
+					button : "확인"
+				});
+		   }else{
       console.log('내용'+replyContent);
       $.ajax({
          type : 'POST',
@@ -413,10 +416,12 @@
             // -> 각각을 함수로 빼서,(모듈화)
             // if분기로 처리할수있음
          },
-         error : function() {
-            alert('error');
-         }
-      })
+        		error : function() {
+         	   alert('error');
+       		  }
+    	  })
+   		}
+   	}
    }
    </script>
 	<!-- 댓글 추가 / -->
@@ -562,18 +567,6 @@
       }
    </script>
 
-	<!-- <script>
-      $(function() {
-         /* $(".reply").slice(0, 6).show(); // 초기갯수 */
-         $("#showReply").click(function(e) { // 클릭시 more
-            e.preventDefault();
-            $(".reply:hidden").slice(0, 1).show(); // 클릭시 more 갯수 지정
-            /* if ($(".dd:hidden").length < 0) { // 컨텐츠 남아있는지 확인
-               alert("게시물의 끝입니다."); // 컨텐츠 없을시 alert 창 띄우기 
-            } */
-         });
-      });
-   </script> -->
 
 	<script type="text/javascript">
    function showReReply(rNum){
@@ -631,6 +624,7 @@
                })
       }
    </script>
+   
 	<script type="text/javascript">
       function deletecheck(replyNum) {
          var result = confirm("정말로 삭제 하시겠습니까?");
@@ -656,6 +650,7 @@
             alert("삭제가 취소되었습니다.");
          }
       }
+
    </script>
 </body>
 

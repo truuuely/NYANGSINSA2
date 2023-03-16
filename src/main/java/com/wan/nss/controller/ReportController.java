@@ -1,12 +1,7 @@
 package com.wan.nss.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.wan.nss.biz.board.BoardService;
@@ -47,24 +42,6 @@ public class ReportController {
 	  return "board_detail.jsp";
    }
 
-   // (관리자) 신고글 관리 페이지 이동 (댓글, 대댓글 세팅은 알아서 하고 있음.. 이동만 시켜주긴)
-   @RequestMapping(value = "/reportManageView.do")
-   public String reportManageView(HttpSession session, HttpServletRequest request, HttpServletResponse response, Model model) {
-	   String id = (String) session.getAttribute("memberId");
-		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-				
-				return "main.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
-		} else {
-			return "report_manage.jsp";
-		}
-   }
 
 //   // (관리자) 신고 게시글 상세보기 페이지 이동 (보드디테일과 동일해서 뻄)
 //   @RequestMapping(value = "/reportDetailView.do")
@@ -77,12 +54,12 @@ public class ReportController {
    // (관리자) Report 게시글 신고 처리
    @RequestMapping(value = "/updateReport.do")
    public String updateReport(ReportVO rpvo, MemberVO mvo) {
-
+	   System.out.println("업데이트 리포트 입장");
       //넘겨받는 것
       //: targetNum, reportNum, userId(vo), reporterId(vo), reportStep, proStatus
       //warnCnt+1
 
-      if(rpvo.getProcStatus().equals("cancle")) { //신고 취소, 신고한 사람에게 경고 +1
+      if(rpvo.getProcStatus().equals("cancel")) { //신고 취소, 신고한 사람에게 경고 +1
     	  mvo.setUserId(rpvo.getReporterId());
     	  memberService.update(mvo);
       } 
@@ -90,22 +67,23 @@ public class ReportController {
     	  mvo.setUserId(rpvo.getUserId());
     	  memberService.update(mvo);
     	  
-    	  if(rpvo.getReportStat()==1) { // 글일 경우
+    	  if(rpvo.getReportStep()==1) { // 글일 경우
             BoardVO bvo = new BoardVO();
             bvo.setBoardNum(rpvo.getTargetNum());
             bvo.setBoardStatus(3);
+            bvo.setSearchCondition("changeStatus");
             boardService.update(bvo);
          } 
-         else if(rpvo.getReportStat()==2 || rpvo.getReportStat()==3) { // 댓글일 경우
+         else if(rpvo.getReportStep()==2 || rpvo.getReportStep()==3) { // 댓글일 경우
             ReplyVO rvo = new ReplyVO();
             rvo.setReplyStatus(3);
             rvo.setReplyNum(rpvo.getTargetNum());
             replyService.update(rvo);
          } 
          //신고 완료
-         rpvo.setReportStat(2);
-         reportService.update(rpvo);
       } 
+      rpvo.setReportStat(2);
+      reportService.update(rpvo);
       return "report_manage.jsp";
    }
    
