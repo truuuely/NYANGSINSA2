@@ -146,7 +146,7 @@ function paging(currentPage) {
 }
 
 function newOpen(data){
-	window.open("boardPostView.do?boardNum="+data+"&searchCondition=viewCnt");
+	window.open("boardPostView.do?boardNum="+data);
 
 
 }
