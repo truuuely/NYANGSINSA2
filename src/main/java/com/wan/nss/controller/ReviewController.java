@@ -44,7 +44,7 @@ public class ReviewController {
 		rvo.setrSearchCondition("pNum");
 		ArrayList<ReviewVO> rdatas = reviewService.selectAll(rvo); //pNum을 세팅하여 selectAll 
 
-		System.out.println("rdatas= "+rdatas); // 어떤 건 rdatas가 뜨고 어떤 건 안 뜸.. 이거 뭐지..
+		System.out.println("rdatas= "+rdatas); 
 
 		// View가 보내준 pNum 확인
 		System.out.println("pNum: " + pvo.getpNum()); 	
