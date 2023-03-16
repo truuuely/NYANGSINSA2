@@ -36,11 +36,8 @@ public class ReplyDAO {
 			+ "	, STATUS, RE_STEP " + " FROM REPLY r " + " INNER JOIN `MEMBER` m " + " ON r.M_NO = m.M_NO "
 			+ " WHERE B_NO = ? AND RE_STEP = 3 ORDER BY PARENT_NO,RE_NO ASC";
 
-	private final String SELECT_ONE = "SELECT RE_NO, B_NO, m.M_ID, r.M_NO, PARENT_NO, RE_DATE, " + "	CASE "
-			+ "		WHEN STATUS = 2 " + "		THEN '*** 관리자가 검토중인 댓글입니다. ***' " + "		WHEN STATUS = 3 "
-			+ "		THEN '*** 해당 댓글은 삭제된 댓글입니다. ***' " + "		ELSE RE_CONTENT " + "	END AS RE_CONTENT "
-			+ "	, STATUS, RE_STEP " + " FROM REPLY r " + " INNER JOIN `MEMBER` m " + " ON r.M_NO = m.M_NO "
-			+ " WHERE RE_NO = ?";
+	private final String SELECT_ONE = "SELECT RE_NO, B_NO, m.M_ID, r.M_NO, PARENT_NO, RE_DATE, "
+			+ "	RE_CONTENT, STATUS, RE_STEP FROM REPLY r INNER JOIN `MEMBER` m ON r.M_NO = m.M_NO WHERE RE_NO = ?";
 
 	// 관리자 : 댓글 상태 수정 (1: 정상, 2: 신고, 3:삭제)
 	private final String UPDATE = "UPDATE REPLY SET STATUS = ? WHERE RE_NO = ?";
@@ -73,7 +70,7 @@ public class ReplyDAO {
 		// 해당 글의 대댓글들
 		ArrayList<ReplyVO> rrDatas = (ArrayList<ReplyVO>) jdbcTemplate.query(SELECT_ALL_REREPLY, new ReplyRowMapper(),
 				vo.getBoardNum());
-		
+
 		for (int i = 0; i < rDatas.size(); i++) { // 댓글 하나하나를
 			ReplyVO reply = rDatas.get(i);
 
@@ -81,7 +78,7 @@ public class ReplyDAO {
 			rs.setReply(reply);
 
 			ArrayList<ReplyVO> rrList = new ArrayList<>(); // ReplySet에 넣을 대댓글 AL
-			
+
 			for (int j = 0; j < rrDatas.size(); j++) {
 				// 만약 대댓글이 존재한다면 (댓글의 RE_NO == 대댓글의 PARENT_NO 이면 )
 				if (reply.getReplyNum() == rrDatas.get(j).getParentNum()) {
