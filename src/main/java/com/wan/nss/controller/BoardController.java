@@ -222,7 +222,7 @@ public class BoardController {
 
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "redirect:/boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
+		return "boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 
 	}
@@ -299,7 +299,7 @@ public class BoardController {
 
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "redirect:/boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
+		return "boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 		
 	}
