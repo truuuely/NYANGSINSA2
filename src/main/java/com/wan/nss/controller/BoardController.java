@@ -288,6 +288,7 @@ public class BoardController {
 	}
 
 	// 고양이 자랑 게시판 게시글 삭제 수행 및 전체 목록으로 이동
+	@ResponseBody
 	@RequestMapping(value = "/deleteBoard.do")
 	public String deleteBoard(BoardVO bvo, Model model) {
 
@@ -302,7 +303,7 @@ public class BoardController {
 		
 		imageService.delete(ivo);
 		
-		return "boardView.do";
+		return "board";
 
 	}
 
