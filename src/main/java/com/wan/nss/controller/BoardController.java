@@ -56,32 +56,6 @@ public class BoardController {
 
 		return "board.jsp";
 	}
-
-	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입(글작성 직후) : 조회수 증가 xxx
-	@RequestMapping(value = "/boardPostViewFirst.do")
-	public String boardPostViewFirst(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
-		
-		System.out.println("boardPostViewFirst.do 진입");
-		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		ReplyVO rvo = new ReplyVO();
-		rvo.setBoardNum(bvo.getBoardNum());
-		
-		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
-		mvo.setUserId((String) session.getAttribute("memberId"));
-		bvo.setUserId((String) session.getAttribute("memberId"));
-		MemberVO loginMvo = memberService.selectOne(mvo);
-		     
-		System.out.println("replyset 길이 :"+replyService.selectAll(rvo).size());
-		// 게시글 상세 데이터
-		model.addAttribute("replyset",replyService.selectAll(rvo));
-		BoardVO preBvo = boardService.selectOne(bvo);
-		System.out.println("preBvo: " + preBvo);
-		model.addAttribute("board", preBvo);
-		model.addAttribute("member", loginMvo);
-
-		return "board_detail.jsp";
-
-	}
 	
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
@@ -102,7 +76,10 @@ public class BoardController {
 		rvo.setBoardNum(bvo.getBoardNum());
 		
 		// 조회수 증가 로직
-		boardService.update(bvo);
+		if(request.getParameter("veiwCnt").equals("true")) {
+			bvo.setSearchCondition("viewCnt");
+			boardService.update(bvo);
+		}
 		
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
 		mvo.setUserId((String) session.getAttribute("memberId"));
@@ -216,7 +193,7 @@ public class BoardController {
 
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "redirect:/boardPostViewFirst.do?boardNum=" + targetNum + "&searchCondition=viewCnt";
+		return "boardPostView.do?" + targetNum + "&veiwCnt=false";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 
 	}
@@ -293,7 +270,7 @@ public class BoardController {
 
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "redirect:/boardPostView.do?boardNum=" + targetNum + "&searchCondition=viewCnt";
+		return "redirect:/boardPostView.do?" + targetNum + "&veiwCnt=true";
 		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
 		
 	}
