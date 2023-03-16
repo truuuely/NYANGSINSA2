@@ -318,6 +318,8 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 
+
+	<!-- 요청이 2번되는건 ㄱㅊ, 숫자가 뷰에출력안되는건 안됨. 냅두고 향후 이프문 이나 온클릭이벤트등록으로 변경해도 됨  -->
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$.ajax({ // ajax로 데이터 가져오기
@@ -335,6 +337,8 @@
 			})
 		})
 
+		
+		
 		function insertCart(pNum) {
 			console.log(pNum);
 			window.location.href = "insertCart.do?pNum=" + pNum;
