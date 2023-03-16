@@ -53,9 +53,9 @@ applicationContext.xml
 .springBeans
 
 # img Files
-img/101/
-img/102/
-img/200/
+101/
+102/
+200/
 
 # Crawling
 Crawling.java
