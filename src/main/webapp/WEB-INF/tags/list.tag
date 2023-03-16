@@ -199,7 +199,7 @@
 							<li>
 							<li style="margin-left: 8px;"><img class="reportBtn" onclick="javascript:report(2,${reply.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 							<c:if test="${reply.userId==memberId}">
-								<li style="cursor: pointer; margin-left: 8px; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deletecheck(${reply.replyNum})">삭제</a></li>
+								<li style="cursor: pointer; margin-left: 8px; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deleteCheck(${reply.replyNum}, 'deleteReply')">삭제</a></li>
 							</c:if>
 						</ul>
 					</c:otherwise>
@@ -235,7 +235,7 @@
 									<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${r.replyDate}</li>
 									<li><img class="reportBtn" onclick="javascript:report(3,${r.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 									<c:if test="${r.userId==memberId}">
-										<li style="margin-left: 8px; cursor: pointer;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" onclick="deletecheck(${r.replyNum})">삭제</a></li>
+										<li style="margin-left: 8px; cursor: pointer;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" onclick="deleteCheck(${r.replyNum}, 'deleteReply')">삭제</a></li>
 									</c:if>
 								</ul>
 							</c:otherwise>

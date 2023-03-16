@@ -362,23 +362,7 @@
 			});
 		});
 	</script>
-	<!-- <script type="text/javascript">
-		function updateLike(bNum) {
-			console.log(bNum);
-			var heart = document.getElementsByClassName("heartImg");
-			for (var i = 0; i < heart.length; i++) {
-				heart[i].addEventListener('click', function() {
-					if (this.getAttribute("src") == "img/fullheart.png") {
-						this.src = "img/heart.png";
-						location.herf = "updateLike.do?boardNum=" + bNum;
-					} else {
-						console.log(i);
-						this.src = "img/fullheart.png";
-					}
-				})
-			}
-		}
-	</script> -->
+
 
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">
@@ -386,33 +370,39 @@
 	</div>
 
 	<script type="text/javascript">
-		function boardInsert() {
-			console.log('등급 ${memberRole}');
+		function loginCheck() {
 			if ('${memberId}' == '') {
 				swal({
 					text : "로그인 후 이용해주세요",
 					button : "확인"
 				});
-			}else if('${memberRole}' == 'BLOCKED'){
+				return false;
+			} else if ('${memberRole}' == 'BLOCKED') {
 				swal({
-					text : "글쓰기 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
+					text : "커뮤니티 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
 					button : "확인"
 				});
-			}else if('${memberRole}' == 'MEMBER'){
-				location.href="insertBoardView.do";
+				return false;
+			} else if ('${memberRole}' == 'MEMBER') {
+				return true;
 			}
+		}
+	</script>
+
+	<script type="text/javascript">
+		function boardInsert() {
+			console.log('등급 ${memberRole}');
+			if (!loginCheck()) {
+				return;
+			}
+			location.href = "insertBoardView.do";
 		}
 	</script>
 
 	<script type="text/javascript">
 		function updateLike(bNum, upOrDown) {
 			console.log('${memberId}');
-			if ('${memberId}' == '') {
-				swal({
-					text : "로그인 후 이용해주세요",
-					button : "확인"
-				});
-			} else {
+			if (loginCheck()) {
 				var imgId = '#' + bNum + 'heartImg';
 				var cntId = '#' + bNum + '';
 				var infoId = '#' + bNum + 'info';

@@ -14,7 +14,6 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>냥신사 | 게시글 상세페이지</title>
 
-
 <!-- favicon -->
 <link rel="shortcut icon" type="image/x-icon" href="img/favicon.ico" />
 
@@ -366,7 +365,7 @@
 
 	<c:if test="${board.userId == memberId}">
 		<div id="fixdelete">
-			<a href="deleteBoard.do?boardNum=${board.boardNum}">
+			<a href="javascript:deleteCheck(${board.boardNum}, 'deleteBoard')">
 				<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 					<img style="width: 50px; height: auto; cursor: pointer;" src="img/deleteBoard.png">
 					<div style="margin-top: 15px;">삭제</div>
@@ -503,7 +502,7 @@
             return false;
          }else if('${memberRole}' == 'BLOCKED'){
             swal({
-               text : "댓글쓰기 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
+               text : "커뮤니티 기능이 차단된 회원입니다. \n관리자에게 문의하세요.",
                button : "확인"
             });
             return false;
@@ -527,12 +526,7 @@
 
 	<script type="text/javascript">
       function updateLike(bNum, upOrDown) {
-         if ('${memberId}' == '') {
-            swal({
-               text : "로그인 후 이용해주세요",
-               button : "확인"
-            });
-         } else {
+         if (loginCheck()) {
          var imgClass = '.'+bNum+'heartImg';
          var cntClass = '.'+bNum+'';
          var infoClass1 = '.'+bNum+'info1';
@@ -625,33 +619,51 @@
                })
       }
    </script>
-   
-	<script type="text/javascript">
-      function deletecheck(replyNum) {
-         var result = confirm("정말로 삭제 하시겠습니까?");
-         if(result) {
-            $.ajax({
-               type : 'POST',
-               url : 'deleteReply.do',
-               data : {
-                  replyNum: replyNum,
-               },
-               success : function() {
-                  $('.showReply').load(location.href + ' .showReply');
-                  setTimeout(function() {
-                     $('#reply').css('display', 'block');
-                  },100);
-               },
-               error : function() {
-                  alert('error');
-               }
-            })
-         }
-         else {
-            alert("삭제가 취소되었습니다.");
-         }
-      }
 
+
+
+	<script type="text/javascript">
+      function deleteCheck(num, url) {
+      swal({
+    	  title: "정말로 삭제 하시겠습니까?",
+    	  text: "작성된 내용이 삭제되며 복구되지 않습니다.",
+    	  icon: "warning",
+    	  buttons: true,
+    	  dangerMode: true,
+    	})
+    	.then((willDelete) => {
+    	  if (willDelete) {
+    		   $.ajax({
+                   type : 'POST',
+                   url : url+'.do',
+                   data : {
+                      replyNum : num,
+                      boardNum : num
+                   },
+                   success : function(data) {
+                	   if(data=='reply'){
+                		   $('.showReply').load(location.href + ' .showReply');
+                           setTimeout(function() {
+                              $('#reply').css('display', 'block');
+                           },100);
+                	   }else{
+                		   location.href = "boardView.do";
+                	   }
+                   },
+                   error : function() {
+                      alert('error');
+                   }
+                })
+                if(url == 'deleteReply'){
+    	    		swal("삭제가 완료되었습니다.", {
+    	     			 icon: "success",
+    	   			 });
+                } 
+    	  } else {
+    	    swal("삭제가 취소되었습니다.");
+    	  }
+    	});
+      }
    </script>
 </body>
 
