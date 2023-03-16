@@ -59,7 +59,7 @@ public class ReportController {
       //: targetNum, reportNum, userId(vo), reporterId(vo), reportStep, proStatus
       //warnCnt+1
 
-      if(rpvo.getProcStatus().equals("cancle")) { //신고 취소, 신고한 사람에게 경고 +1
+      if(rpvo.getProcStatus().equals("cancel")) { //신고 취소, 신고한 사람에게 경고 +1
     	  mvo.setUserId(rpvo.getReporterId());
     	  memberService.update(mvo);
       } 
