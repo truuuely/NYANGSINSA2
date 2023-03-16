@@ -16,7 +16,7 @@
 document.addEventListener("DOMContentLoaded", function(){
 	
 	 alert('${msg}');
-	 location.href = '${location}';
+	 location.href = '${location}?lang='+${lang}+'';
 
 });
 

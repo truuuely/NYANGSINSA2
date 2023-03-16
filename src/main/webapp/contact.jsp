@@ -28,12 +28,13 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 </head>
 
 
 
 <body>
-		<nss:header />
+	<nss:header />
 
 	<!-- 메인 화면에는 제외 -->
 	<!-- Breadcrumb Section Begin -->
@@ -151,7 +152,7 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 	<script src="js/email.js"></script>
-
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- 이메일 스크립트 -->
 	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@2.4.1/dist/email.min.js"></script>
@@ -169,11 +170,17 @@
 						this.contact_number.value = Math.random() * 100000 | 0;
 						emailjs.sendForm('service_g4rgr9x', 'template_ckvoqfx',
 								this).then(function() {
-							alert("냥신사로 메일을 보냈어요!");
+							swal({
+								text : "냥신사로 메일을 보냈어요!",
+								button : "확인"
+							});
 							location.replace("contact.jsp");
 							console.log('SUCCESS!');
 						}, function(error) {
-							alert("냥신사로 메일을 보내기를 실패했어요... 다시 시도해주세요!");
+							swal({
+								text : "냥신사로 메일을 보내기를 실패했어요... 다시 시도해주세요!",
+								button : "확인"
+							});
 							console.log('FAILED...', error);
 						});
 					});

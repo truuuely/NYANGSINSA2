@@ -30,6 +30,7 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/style_login.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -116,7 +117,7 @@
    }
 </script>
 
-		<nss:header />
+	<nss:header />
 
 	<!-- ★★★★★여기에 페이지의 메인 코드를 넣어주세요★★★★★ -->
 
@@ -127,7 +128,7 @@
 			<div class="col-lg-6">
 				<div class="login_form_inner">
 
-					<form class="row login_form" action="changePw.do?userId=${memberId}" method="post" onsubmit="return register()" id="contactForm">
+					<form class="row login_form" action="changePw.do?userId=${changeId}" method="post" onsubmit="return register()" id="contactForm">
 						<div class="col-md-12 form-group">
 							<p>새로운 비밀번호를 입력해 주세요.</p>
 
@@ -179,6 +180,7 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- 개인정보 처리방침 동의 모달 시작 -->
 	<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -327,7 +329,10 @@ fetch("tos2.html") /*해당 경로의 내용 가져옴 */
    
     function register() {
         if (!(pwValid && pwSame)) {
-          alert('다시확인해주세요');
+        	swal({
+				text : "다시 확인해주세요.",
+				button : "확인"
+			});
           return false;
         }else{
            return true;

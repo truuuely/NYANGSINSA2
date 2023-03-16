@@ -30,6 +30,7 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/style_login.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 </head>
 
 <body>
@@ -90,6 +91,7 @@
 	<script src="js/main.js"></script>
 	<%--ajax 쓰기 위해 JQ연결 --%>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
 		var number = 0; //랜덤문자인증번호 저장할 변수	
 		//  var phoneCheck=0;  //인증번호 일치, 불일치 변수
@@ -105,7 +107,25 @@
 			console.log('로그1 : userId ' + userId);
 			console.log('로그2 : userName ' + userName);
 			console.log('로그3 : userPhoneNum ' + userPhoneNum);
-
+			if(userId == ''){
+				swal({
+					text : "아이디를 입력해주세요.",
+					button : "확인"
+				});
+				return;
+			}else if(userName == ''){
+				swal({
+					text : "이름을 입력해주세요.",
+					button : "확인"
+				});
+				return;
+			}else if(userPhoneNum==''){
+				swal({
+					text : "번호를 입력해주세요.",
+					button : "확인"
+				});
+				return;
+			}
 			//Sms서블릿클래스로 이동함.
 			$.ajax({
 				type : 'POST',
@@ -116,10 +136,16 @@
 				success : function(randNum) {
 					console.log("로그:인증번호[" + randNum + "]")
 					if (randNum != null) {
-						alert("인증번호 전송이 완료되었습니다!");
+						swal({
+							text : "인증번호 전송이 완료되었습니다!",
+							button : "확인"
+						});
 						number = randNum; //랜덤문자인증번호
 					} else {
-						alert("인증번호 전송이 불가합니다..");
+						swal({
+							text : "인증번호 전송이 불가합니다.",
+							button : "확인"
+						});
 					}
 
 				}
@@ -145,7 +171,10 @@
 					console.log("로그 result:[" + result + "]")
 					console.log(typeof result);
 					if (result == "1") {
-						alert("인증번호가 일치합니다!");
+						swal({
+							text : "인증번호가 일치합니다!",
+							button : "확인"
+						});
 						console.log('폰번호 :' + userPhoneNum);
 						console.log(userName);
 						var link = 'findPw.do?phoneNum=' + userPhoneNum
@@ -154,7 +183,10 @@
 						location.href = link;
 					} else {
 						console.log('후후  : userPhoneNum ' + userPhoneNum);
-						alert("인증번호가 일치하지 않습니다.다시 입력하세요!"); //인증번호 불일치
+						swal({
+							text : "인증번호가 일치하지 않습니다. 다시 입력하세요!",
+							button : "확인"
+						});
 					}
 				}
 			})

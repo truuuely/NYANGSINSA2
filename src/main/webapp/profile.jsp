@@ -43,6 +43,7 @@
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 </head>
 <style type="text/css">
 .shoping__cart__table table tbody tr td.shoping__cart__item {
@@ -201,6 +202,7 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- 비밀번호 변경 정규식 -->
 	<script type="text/javascript">
@@ -295,12 +297,14 @@
 		}
 
 		function registerCheck() {
-
 			if (registerTrue) {
 				return true;
 			} else {
 				if (!registerTrue) {
-					alert("입력한 내용을 확인해주세요");
+					swal({
+						text : "입력한 내용을 확인해주세요.",
+						button : "확인"
+					});
 				}
 				return false;
 			}
