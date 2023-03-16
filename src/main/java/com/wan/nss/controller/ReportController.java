@@ -38,9 +38,23 @@ public class ReportController {
 		System.out.println("userId: " + rpvo.getUserId());
 		System.out.println("reporterId: " + rpvo.getReporterId());
 		System.out.println("reportContent: " + rpvo.getReportContent());
+		
+		if(rpvo.getReportStep() == 1) { // 신고 : 게시글일 경우
+			BoardVO bvo = new BoardVO();
+			bvo.setBoardNum(rpvo.getTargetNum()); // 게시글 번호
+			bvo.setSearchCondition("changeStatus"); // update 종류 : 상태변경
+			bvo.setBoardStatus(2); // 2: 신고
+			boardService.update(bvo); // 게시글 상태 변경
+		}
+		else if(rpvo.getReportStep() == 2 || rpvo.getReportStep() == 3) { // 신고 : 댓글, 대댓글일 경우
+			ReplyVO rvo = new ReplyVO();
+			rvo.setReplyNum(rpvo.getTargetNum()); // 댓글, 대댓글 번호
+			rvo.setReplyStatus(2); // 2: 신고
+			replyService.update(rvo); // 댓글 상태 변경
+		}
 		reportService.insert(rpvo);
 
-		return "redirect:/boardPostView.do?boardNum=" + rpvo.getTargetNum() + "&searchCondition=viewCnt";
+		return "redirect:/boardPostView.do?boardNum=" + rpvo.getTargetNum() + "&updateViewCnt=false";
 	}
 
 	// (관리자) Report 게시글 신고 처리
