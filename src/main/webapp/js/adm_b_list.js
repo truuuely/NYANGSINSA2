@@ -26,11 +26,12 @@ function list(selectPage) {
 	part="board";
 	
  	console.log("part: "+part);
+ 	console.log("part: "+part);
  	console.log("selectPage: "+selectPage);
  	
 	$.ajax({ // ajax로 데이터 가져오기
 		type: 'POST',
-		url: 'getAdminList',
+		url: 'getAdminList.do',
 		data: {part:part}, // category, sort 담아서 ListController Servlet에 걸리게!
 		dataType: 'json',
 		traditional: 'true',
@@ -69,9 +70,9 @@ function displayData(selectPage) {
 		  	for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)); i++) {
 				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong onclick='newOpen("+dataList[i].boardNum+")'>"+dataList[i].boardNum+"</strong></td>"
                                  +"<td>"+dataList[i].userId+"</td>"
-                                 +"<td>"+(dataList[i].boardContent.length > 25 ? dataList[i].boardContent.substring(0, 25) + "..." : dataList[i].boardContent)+"</td>"
-                                 +"<td>"+dataList[i].boardView+"</td>"
-                                 +"<td>"+dataList[i].likeCnt+"</td>"
+                                 +"<td><a href='javascript:newOpen("+dataList[i].boardNum+");'>글 상세보기</a></td>"
+                                 +"<td>"+dataList[i].boardDate+"</td>"
+                                 +"<td>"+dataList[i].boardStatus+"</td>"
                                  +"<td>"
                                     +"<div class='dropdown'>"
                                        +"<button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
@@ -142,4 +143,10 @@ function paging(currentPage) {
 		let pageHtml = "<br><br>데이터가 없습니다.<br><br><br>";
 		$("#pagingul").html(pageHtml);
 	}
+}
+
+function newOpen(data){
+	window.open("boardPostView.do?boardNum="+data+"&searchCondition=viewCnt");
+
+
 }

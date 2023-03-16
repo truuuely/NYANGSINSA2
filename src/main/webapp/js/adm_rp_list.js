@@ -69,7 +69,7 @@ function displayData(selectPage,step) {
 	console.log('스텝   '+step);
 	let listhtml = "";
 	let chartHtml = "";
-
+	let proc = "";
 //	Number로 변환하지 않으면 아래에서 +를 할 경우 스트링 결합이 되어버림.. 
 //	currentPage = Number(currentPage);
 //	dataPerPage = Number(dataPerPage);
@@ -78,24 +78,40 @@ function displayData(selectPage,step) {
 	console.log('하이');
 	if(totalData!=0){
 		for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
-			if(step==1 && dataList[i].reportStat==1){
+			
+			
+			values = { targetNum: dataList[i].targetNum ,
+					reportNum: dataList[i].reportNum ,
+					userId : dataList[i].userId ,
+					reporterId: dataList[i].reporterId ,
+					reportStep: dataList[i].reportStep };
+			encodedValues = encodeURIComponent(JSON.stringify(values));
+
+			url = `init(encodedValues);`;
+
+
+
+			console.log(dataList[i]);
+			
+			if(dataList[i].reportStat==1){
+				chartHtml+=
+					"<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>처리 전</strong></td>";
+				proc = "<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>";
+			}else if(dataList[i].reportStat==2){
+				chartHtml+=
+					"<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>처리 완료</strong></td>";
+				proc = "<a class='dropdown-item '  >완료된 처리입니다.</a>";
+			}
+			
+			if(step==1){
 				//
 				// 신고된 글 
 
-				values = { targetNum: dataList[i].targetNum ,
-						reportNum: dataList[i].reportNum ,
-						userId : dataList[i].userId ,
-						reporterId: dataList[i].reporterId ,
-						reportStep: dataList[i].reportStep };
-				encodedValues = encodeURIComponent(JSON.stringify(values));
-
-				url = `init(encodedValues);`;
-
-
-
-				console.log(dataList[i]);
-				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
-				+"<td>"+dataList[i].userId+"</td>"
+				
+				
+				chartHtml+=
+				
+				"<td>"+dataList[i].userId+"</td>"
 				+"<td><a href='javascript:newOpen("+encodedValues+");'>글 상세보기</a></td>"
 				+"<td>"+dataList[i].reporterId+"</td>"
 				+"<td>"+dataList[i].reportContent+"</td>"
@@ -106,28 +122,20 @@ function displayData(selectPage,step) {
 				+"<i class='bx bx-dots-vertical-rounded'></i>"
 				+"</button>"
 				+"<div class='dropdown-menu'>"
-				+"<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>"
+				+proc
 				+"</div>"
 				+"</div>"
 				+"</td>"
 				+"</tr>";
 
-				listhtml="	<tr> 	<th>no.</th> 	<th>글 작성자</th> 	<th>게시글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
+				listhtml="	<tr> 	<th>처리 상태</th> 	<th>글 작성자</th> 	<th>게시글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
 			}
-			if(step==2 && (dataList[i].reportStep== 2 || 3) && dataList[i].reportStat==1){
+			if(step==2 && (dataList[i].reportStep== 2 || 3) ){
 				
 
-				values = { targetNum: dataList[i].targetNum ,
-						reportNum: dataList[i].reportNum ,
-						userId : dataList[i].userId ,
-						reporterId: dataList[i].reporterId ,
-						reportStep: dataList[i].reportStep };
-				encodedValues = encodeURIComponent(JSON.stringify(values));
-
-				url = `init(encodedValues);`;
 				// 신고된 댓글 
-				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].reportNum+"</strong></td>"
-				+"<td>"+dataList[i].userId+"</td>"
+				chartHtml+=
+				 "<td>"+dataList[i].userId+"</td>"
 				+"<td><a href='#' onclick='newOpen("+encodedValues+");'> "+dataList[i].content+"</a></td>"
 				+"<td>"+dataList[i].reporterId+"</td>"
 				+"<td>"+dataList[i].reportContent+"</td>"
@@ -138,7 +146,7 @@ function displayData(selectPage,step) {
 				+"<i class='bx bx-dots-vertical-rounded'></i>"
 				+"</button>"
 				+"<div class='dropdown-menu'>"
-				+"<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>"
+				+proc
 				+"</div>"
 				+"</div>"
 				+"</td>"
@@ -146,7 +154,7 @@ function displayData(selectPage,step) {
 
 
 
-				listhtml="	<tr> 	<th>no.</th> 	<th>댓글 작성자</th> 	<th>댓글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
+				listhtml="	<tr> 	<th>처리 상태</th> 	<th>댓글 작성자</th> 	<th>댓글 내용</th> 	<th>신고자</th> 	<th>신고 내용</th> </tr>";
 
 			}
 
@@ -251,6 +259,7 @@ function proc(data) {
 
 };
 function newOpen(data){
+	console.log(data.targetNum);
 	window.open("boardPostView.do?boardNum="+data.targetNum+"&searchCondition=viewCnt");
 
 
