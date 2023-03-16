@@ -148,11 +148,10 @@ public class ProductController {
 		return "shop_details.jsp";
 	}
 
-	// (관리자)상품 추가 기능: 해당 상품 관리 페이지에서 
 	
 	// (관리자)상품 수정 기능: 해당 상품 관리 페이지에서 "수정" 버튼 클릭 시 실제 수정
 	@RequestMapping(value = "/updateProduct.do", method = RequestMethod.POST)
-	public String updateProduct(ProductVO pvo, ImageVO ivo, HttpSession session, MultipartHttpServletRequest request, HttpServletResponse response) {
+	public String updateProduct(ProductVO pvo, ImageVO ivo, HttpSession session, MultipartHttpServletRequest request, Model model) {
 		
 		// 각자 이미지 저장할 위치
 		String projectPath = session.getServletContext().getRealPath("/"); // 파일 경로 ".../webapp/" 까지
@@ -190,31 +189,40 @@ public class ProductController {
         }
 	        
 		// update ProductVO
-		if (!productService.update(pvo)) { // 실패 시 알림창
-			try {
-				PrintWriter out = response.getWriter();
-				response.setContentType("text/html; charset=utf-8");
-				out.println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			return "adminProductDetail.do?pNum=" + pvo.getpNum();
-		}
-		else {
-			return "productManagePage.do";                          
-		}
+        try {
+        	productService.update(pvo);
+        }catch(Exception e) {
+        	model.addAttribute("msg", "ERROR : UPDATE 실패");
+			model.addAttribute("location", "main.do");
+			return "alert.jsp";
+        }
+        return "productManagePage.do";
+        	
+//		if (!productService.update(pvo)) { // 실패 시 알림창
+//			try {
+//				PrintWriter out = response.getWriter();
+//				response.setContentType("text/html; charset=utf-8");
+//				out.println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
+//			} catch (Exception e) {
+//				// TODO: handle exception
+//			}
+//			return "adminProductDetail.do?pNum=" + pvo.getpNum();	
+//		}
+//		else {
+//			return "productManagePage.do";                          
+//		}
 
 	}
 
 	// 상품 검색
 	@RequestMapping(value = "/search.do")
-	public String selectAllProductSearch(ProductVO pvo, HttpSession session) {
+	public String selectAllProductSearch(ProductVO pvo, Model model) {
 		
 		System.out.println("search.do 진입");
 		
 		System.out.println("pSearchContent: " + pvo.getpSearchContent());
 
-		session.setAttribute("pSearchContent", pvo.getpSearchContent());
+		model.addAttribute("pSearchContent", pvo.getpSearchContent());
 
 		return "search_result.jsp";
 	}
