@@ -471,7 +471,7 @@
 				<input type="hidden" id="reportStep" name="reportStep" value="">
 				<p style="font-size: 15px; margin-left: 15px; justify-content: space-around; display: flex;">
 					<select name="procStatus" style="width: 70px; height: 30px; border: 1px solid #6667ab52; margin-right: 13px; text-align: center;">
-						<option value="cancle">철회</option>
+						<option value="cancel">철회</option>
 						<option value="ok">삭제</option>
 					</select>
 				</p>

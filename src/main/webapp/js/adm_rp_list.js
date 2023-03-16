@@ -152,9 +152,9 @@ function displayData(selectPage,step) {
 
 
 		}
-		$("#dataTableBody").html(chartHtml);
-		$("#dataTableList").html(listhtml);
 	}
+	$("#dataTableBody").html(chartHtml);
+	$("#dataTableList").html(listhtml);
 }
 
 

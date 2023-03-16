@@ -29,6 +29,7 @@ public class ReplyController {
 	
 	@RequestMapping(value="/updateReply.do")
 	public String updateReply(ReplyVO rvo, Model model) {
+		System.out.println("updateteReply.do 진입");
 		replyService.update(rvo);
 		return "";
 	}
@@ -36,13 +37,13 @@ public class ReplyController {
 	@ResponseBody
 	@RequestMapping(value="/deleteReply.do")
 	public void deleteReply(ReplyVO rvo, Model model) {
-		System.out.println("deleteReply 진입");
+		System.out.println("deleteReply.do 진입");
 		replyService.delete(rvo);
 	}
 	
 	@RequestMapping(value="/selectAllReply.do")
 	public ArrayList<ReplySet>  selectAll(ReplyVO rvo, Model model) {
-		System.out.println("selectAllReply 로그 "+rvo);
+		System.out.println("selectAllReply.do 진입, rvo: "+rvo);
 		
 		 
 	        return replyService.selectAll(rvo);
@@ -52,6 +53,7 @@ public class ReplyController {
 	
 	@RequestMapping(value="/selectOneReply.do")
 	public String selectOne(ReplyVO rvo, Model model) {
+		System.out.println("selectOneReply.do 진입, rvo: "+rvo);
 		replyService.selectOne(rvo);
 		return "";
 	}
