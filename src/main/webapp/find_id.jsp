@@ -30,10 +30,11 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/style_login.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 </head>
 
 <body>
-		<nss:header />
+	<nss:header />
 
 	<!-- ★★★★★여기에 페이지의 메인 코드를 넣어주세요★★★★★ -->
 
@@ -96,12 +97,21 @@
 	<script src="js/main.js"></script>
 	<%--ajax 쓰기 위해 JQ연결 --%>
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
 		var number = 0; //랜덤문자인증번호 저장할 변수	
 		//  var phoneCheck=0;  //인증번호 일치, 불일치 변수
 		var userPhoneNum = 0; // 유저 폰번호 스코프때문에 위로 뺐음 
 		//인증번호 전송하기: sms()
 		function sms() {
+			var phoneNum = $('#userPhoneNum').val();
+			if (phoneNum == '') {
+				swal({
+					text : "휴대폰 번호를 입력해주세요.",
+					button : "확인"
+				});
+				return;
+			}
 			console.log('로그 1 : sms()라는 JS 함수가 연결되었음');
 			userPhoneNum = $("#userPhoneNum").val();
 			console.log('로그2 : userPhoneNum ' + userPhoneNum);
@@ -116,10 +126,16 @@
 				success : function(randNum) {
 					console.log("로그:인증번호[" + randNum + "]")
 					if (randNum != null) {
-						alert("인증번호 전송이 완료되었습니다!");
+						swal({
+							text : "인증번호 전송이 완료되었습니다!",
+							button : "확인"
+						});
 						number = randNum; //랜덤문자인증번호
 					} else {
-						alert("인증번호 전송이 불가합니다..");
+						swal({
+							text : "인증번호 전송이 불가합니다.",
+							button : "확인"
+						});
 					}
 
 				}
@@ -145,13 +161,19 @@
 					console.log("로그 result:[" + result + "]")
 					console.log(typeof result);
 					if (result == "1") {
-						alert("인증번호가 일치합니다!");
+						swal({
+							text : "인증번호가 일치합니다!",
+							button : "확인"
+						});
 						console.log('폰번호 :' + userPhoneNum);
 						var link = 'findId.do?phoneNum=' + userPhoneNum;
 						location.href = link;
 					} else {
 						console.log('후후  : userPhoneNum ' + userPhoneNum);
-						alert("인증번호가 일치하지 않습니다.다시 입력하세요!"); //인증번호 불일치
+						swal({
+							text : "인증번호가 일치하지 않습니다. 다시 입력하세요!",
+							button : "확인"
+						});
 					}
 				}
 			})
