@@ -33,28 +33,35 @@ public class ReportController {
 		// 폼 안에서 체크된(활성화 된) 값만 오므로 처리하면 됨
 
 		// setting된 input 확인
-		System.out.println("targetNum: " + rpvo.getTargetNum());
+		System.out.println("targetNum: " + rpvo.getTargetNum()); // 신고하는 글번호 또는 댓글번호
 		System.out.println("reportStep: " + rpvo.getReportStep());
 		System.out.println("userId: " + rpvo.getUserId());
 		System.out.println("reporterId: " + rpvo.getReporterId());
 		System.out.println("reportContent: " + rpvo.getReportContent());
 		
+		int boardNum = 0;
 		if(rpvo.getReportStep() == 1) { // 신고 : 게시글일 경우
+			// 게시글 상태 변경
 			BoardVO bvo = new BoardVO();
 			bvo.setBoardNum(rpvo.getTargetNum()); // 게시글 번호
 			bvo.setSearchCondition("changeStatus"); // update 종류 : 상태변경
 			bvo.setBoardStatus(2); // 2: 신고
 			boardService.update(bvo); // 게시글 상태 변경
+			boardNum = bvo.getBoardNum(); // 이동할 글 번호
 		}
 		else if(rpvo.getReportStep() == 2 || rpvo.getReportStep() == 3) { // 신고 : 댓글, 대댓글일 경우
+			// 댓글 상태 변경
 			ReplyVO rvo = new ReplyVO();
 			rvo.setReplyNum(rpvo.getTargetNum()); // 댓글, 대댓글 번호
 			rvo.setReplyStatus(2); // 2: 신고
 			replyService.update(rvo); // 댓글 상태 변경
+			
+			// 댓글이 달린 게시글 번호 가져오기
+			boardNum = replyService.selectOne(rvo).getBoardNum(); // 이동할 글 번호
 		}
 		reportService.insert(rpvo);
 
-		return "boardPostView.do?boardNum=" + rpvo.getTargetNum() + "&updateViewCnt=false";
+		return "boardPostView.do?boardNum=" + boardNum + "&updateViewCnt=false";
 	}
 
 	// (관리자) Report 게시글 신고 처리
