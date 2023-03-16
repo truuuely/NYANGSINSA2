@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	// (관리자) 관리자 메인 페이지 이동
 	@RequestMapping(value = "/adminIndex.do")
 	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session,
-			HttpServletRequest request, HttpServletResponse response) {
+			HttpServletRequest request) {
 
 		String id = (String) session.getAttribute("memberId");
 
@@ -162,7 +161,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 회원 관리 페이지 이동
 	@RequestMapping(value = "/memberManagePage.do")
-	public String selectAllMemberManage(HttpSession session, HttpServletRequest request, HttpServletResponse response,
+	public String selectAllMemberManage(HttpSession session, HttpServletRequest request,
 			Model model) {
 
 		System.out.println("memberManagePage.do 진입");
@@ -182,8 +181,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 상품 관리 페이지 이동
 	@RequestMapping(value = "/productManagePage.do")
-	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String adminProductDetailView(Model model, HttpSession session, HttpServletRequest request) {
 
 		System.out.println("productManagePage.do 진입");
 
@@ -222,23 +220,17 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	}
 
 	@RequestMapping(value = "/orderManagePage.do") // 관리자 페이지 주문 관리 페이지 열기
-	public String selectAllorderDetailManage(Model model, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String selectAllorderDetailManage(Model model, HttpSession session, HttpServletRequest request) {
 
 		System.out.println("orderManagePage.do 진입");
 
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
-			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<SCRIPT>alert('접근 권한이 없습니다.');</SCRIPT>");
-
 				model.addAttribute("lang", request.getParameter("lang"));
-				return "main.do";
-			} catch (Exception e) {
-				e.printStackTrace();
-				return null;
-			}
+				model.addAttribute("msg", "접근 권한이 없습니다.");
+				model.addAttribute("location", "main.do");
+				
+				return "alert.jsp";
 		} else {
 			return "order_manage.jsp";
 		}
@@ -247,8 +239,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 리뷰 관리 페이지 이동
 	@RequestMapping(value = "/reviewManagePage.do")
-	public String selectAllReviewManage(Model model, HttpSession session, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String selectAllReviewManage(Model model, HttpSession session, HttpServletRequest request) {
 
 		System.out.println("reviewManagePage.do 진입");
 
@@ -267,8 +258,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 게시글 관리 페이지 이동
 	@RequestMapping(value = "/boardManageView.do")
-	public String boardManageView(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			Model model) {
+	public String boardManageView(HttpSession session, HttpServletRequest request, Model model) {
 
 		System.out.println("boardManageView.do 진입");
 
@@ -286,8 +276,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 
 	// (관리자) 신고글 관리 페이지 이동 (댓글, 대댓글 세팅은 알아서 하고 있음.. 이동만 시켜주긴)
 	@RequestMapping(value = "/reportManageView.do")
-	public String reportManageView(HttpSession session, HttpServletRequest request, HttpServletResponse response,
-			Model model) {
+	public String reportManageView(HttpSession session, HttpServletRequest request, Model model) {
 		String id = (String) session.getAttribute("memberId");
 		if (id == null || !(id.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			model.addAttribute("lang", request.getParameter("lang"));
@@ -323,8 +312,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	// 관리자 파트별 관리페이지
 	@ResponseBody
 	@RequestMapping(value = "/getAdminList.do")
-	public JsonArray sendAdminList(HttpServletRequest request, HttpServletResponse response) {
-		response.setCharacterEncoding("UTF-8"); // 인코딩
+	public JsonArray sendAdminList(HttpServletRequest request) {
 
 		System.out.println("getAdminList.do 진입");
 
