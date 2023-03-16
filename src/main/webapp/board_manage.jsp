@@ -19,7 +19,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-<title>냥신사 | 상품관리</title>
+<title>냥신사 | 게시글관리</title>
 
 <meta name="description" content="" />
 
