@@ -74,7 +74,9 @@ public class ProductController {
 		// 전체 인기순(판매량순): category == all, sort == sellDesc
 		pvo.setSort("sellDesc");
 		model.addAttribute("popPList", productService.selectAll(pvo)); //주문데이터가 있어야 가능 (지금 사료밖에 없음)
-		session.setAttribute("lang",request.getParameter("lang"));
+		if(request.getParameter("lang") != null) {
+			session.setAttribute("lang",request.getParameter("lang"));
+		}
 		
 		return "main.jsp";
 	}
