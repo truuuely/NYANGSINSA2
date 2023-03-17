@@ -599,14 +599,13 @@
 
 		var boardLikecnt = ${board.likeCnt};
 		var boardReplyCnt = ${board.replyCnt};
-		console.log(boardTitle); 
       
       function kakaoShare() {
          Kakao.Link
                .sendDefault({
                   objectType : 'feed',
                   content : {
-                     title : '${board.boardTitle}',// 글제목 
+                     title : '대한민국 최고의 반려묘 용품 쇼핑몰',// 글제목 
                      description : '${board.boardTitle}', // 글내용
                      imageUrl : 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
                      link : {
@@ -617,7 +616,6 @@
                   social : {
                      likeCount : boardLikecnt, //좋아요 수
                      commentCount : boardReplyCnt, //댓글 수
-                    
                   },
                   buttons : [
                         {
@@ -678,6 +676,7 @@
     	});
       }
    </script>
+<jsp:include page="channel.jsp" />
 </body>
 
 </html>

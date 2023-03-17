@@ -372,7 +372,7 @@
 			})
 		}
 	</script>
-
+<jsp:include page="channel.jsp" />
 
 </body>
 
