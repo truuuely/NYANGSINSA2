@@ -233,7 +233,7 @@
 							<span class="${board.boardNum}">${board.likeCnt}</span>
 						</c:otherwise>
 					</c:choose></li>
-				<li><img class="reportBtn" onclick="javascript:report(1,${board.boardNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+				<li><img class="reportBtn" onclick="javascript:report(1,${board.boardNum},`${board.userId}`);" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
 			<div id="content" style="width: 90%;">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
@@ -280,7 +280,7 @@
 								<div style="width: 300px;">
 									<input type="hidden" id="targetNum" name="targetNum" value="">
 									<input type="hidden" id="rpStep" name="reportStep" value="">
-									<input type="hidden" name="userId" value="${board.userId}">
+									<input type="hidden" id="userId" name="userId" value="">
 									<input type="hidden" name="reporterId" value="${memberId}">
 									<input type="radio" class="report-box2" name="reportContent" id="r1" value="욕설/부적절한 언어 입니다.">
 									<label for="r1">욕설/부적절한 언어 입니다.</label>
@@ -431,7 +431,7 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script>
 
-		function report(step,targetNum){
+		function report(step,targetNum,userId){
 			if ('${memberId}' == '') {
 				swal({
 					text : "로그인 후 이용해주세요",
@@ -440,11 +440,15 @@
 
 			} else{
 				console.log('리포트함수');
+				console.log(typeof(userId));
 			  var rpStep = document.getElementById("rpStep"); 
 			  rpStep.value =step;
 			  
 			  var targetNumInput = document.getElementById("targetNum"); 
 			  targetNumInput.value =targetNum;
+			  
+			  var userIdInput = document.getElementById("userId"); 
+			  userIdInput.value =userId;
 			}
 		}
 	

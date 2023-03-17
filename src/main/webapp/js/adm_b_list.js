@@ -70,7 +70,7 @@ function displayData(selectPage) {
 		  	for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)); i++) {
 				chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong onclick='newOpen("+dataList[i].boardNum+")'>"+dataList[i].boardNum+"</strong></td>"
                                  +"<td>"+dataList[i].userId+"</td>"
-                                 +"<td><a href='javascript:newOpen("+dataList[i].boardNum+");'>글 상세보기</a></td>"
+                                 +"<td><a class='detail-view' href='javascript:newOpen("+dataList[i].boardNum+");'>글 상세보기</a></td>"
                                  +"<td>"+dataList[i].boardDate+"</td>"
                                  +"<td>"+dataList[i].boardStatus+"</td>"
                                  +"<td>"
@@ -79,7 +79,7 @@ function displayData(selectPage) {
                                           +"<i class='bx bx-dots-vertical-rounded'></i>"
                                        +"</button>"
                                        +"<div class='dropdown-menu'>"
-                                          +"<a class='dropdown-item' href='updateBoardStat.do?boardNum="+dataList[i].boardNum+"&boardStatus="+3+"'><i class='bx bx-trash me-1'></i> 삭제</a>"
+                                          +"<a class='dropdown-item' href='deleteBoard.do?boardNum="+dataList[i].boardNum+"&boardStatus="+3+"&searchCondition=admin'><i class='bx bx-trash me-1'></i> 삭제</a>"
                                        +"</div>"
                                    +"</div>"
                                  +"</td>"
