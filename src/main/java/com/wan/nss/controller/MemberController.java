@@ -283,7 +283,7 @@ public class MemberController {
 
 		if (loginMvo == null) { // 비밀번호가 일치하지 않으면, 알림창 뜨고 뒤로 돌아가야 함
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
-			model.addAttribute("location", "findPwView.do");
+			model.addAttribute("location", "checkPassword.do");
 			
 			return "alert.jsp";
 		} else {
