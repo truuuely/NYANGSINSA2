@@ -55,10 +55,10 @@
 						<form class="row login_form" action="selectOneMemberLogin.do" id="contactForm" method="POST">
 							<input type="hidden" id="urlBack" name="urlBack" value=""/>
 							<div class="col-md-12 form-group">
-								<input type="text" class="form-control" id="id" name="id" placeholder="아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
+								<input type="text" class="form-control" id="id" name="userId" placeholder="아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
 							</div>
 							<div class="col-md-12 form-group">
-								<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 입력'" required>
+								<input type="password" class="form-control" id="password" name="userPw" placeholder="비밀번호 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '비밀번호 입력'" required>
 							</div>
 							<div class="col-md-12 form-group">
 								<button type="submit" value="submit" class="button button-login w-100">로그인</button>
