@@ -52,7 +52,7 @@
 				<div class="col-lg-6">
 					<div class="login_form_inner">
 						<h3>로그인하기</h3>
-						<form class="row login_form" action="login.do" id="contactForm" method="POST">
+						<form class="row login_form" action="selectOneMemberLogin.do" id="contactForm" method="POST">
 							<input type="hidden" id="urlBack" name="urlBack" value=""/>
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="id" name="id" placeholder="아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>

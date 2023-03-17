@@ -45,18 +45,19 @@
 			<div class="col-lg-6">
 				<div class="login_form_inner">
 					<h3>아이디 찾기</h3>
-					<br><br>
+					<br>
 					<form class="row login_form" id="contactForm">
+						<input type="hidden" id="urlBack" name="urlBack" value=""/>
 						<div class="col-md-12 form-group">
 							<input type="tel" style="width: 100%;" id="userPhoneNum" name="tel" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						</div>
 						<br><br>
 						<div class="col-md-12 form-group">
-							<button class="button button-login w-100" onclick="sms()">핸드폰 번호로 아이디 찾기</button>
+							<button type="submit" value="submit" class="button button-login w-100" onclick="sms()">핸드폰 번호로 아이디 찾기</button>
 							<br><br>
 							<input type="text" style="width: 100%;" placeholder="인증번호를 입력하세요" id="userCheck">
 							<br><br>
-							<button class="button button-login w-100" onclick="smsCheck()">인증번호 확인</button>
+							<button type="submit" value="submit" class="button button-login w-100" onclick="smsCheck()">인증번호 확인</button>
 						</div>
 						<br>
 						<br>
@@ -86,6 +87,12 @@
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
+	
+		$(document).ready(function getURL() {
+			var urlBack = document.referrer;
+			$('#urlBack').attr('value', urlBack);
+		});
+	
 		var number = 0; //랜덤문자인증번호 저장할 변수	
 		//  var phoneCheck=0;  //인증번호 일치, 불일치 변수
 		var userPhoneNum = 0; // 유저 폰번호 스코프때문에 위로 뺐음 
@@ -100,7 +107,7 @@
 				return;
 			}
 			console.log('로그 1 : sms()라는 JS 함수가 연결되었음');
-			userPhoneNum = $("#userPhoneNum").val();
+			userPhoneNum = $('#userPhoneNum').val();
 			console.log('로그2 : userPhoneNum ' + userPhoneNum);
 
 			//Sms서블릿클래스로 이동함.

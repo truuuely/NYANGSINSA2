@@ -39,8 +39,7 @@ public class RegisterController {
 	@RequestMapping(value = "/registerResultView.do")
 	public String registerResultView(HttpServletRequest request, HttpSession session) {
 		System.out.println("registerResultView.do 진입");
-		session.setAttribute("urlBack", "main.do"); // 세션의 urlBack 갱신
-		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
+		
 		return "result_register.jsp";
 	}
 	
@@ -72,7 +71,7 @@ public class RegisterController {
 		System.out.println(randNum);
 
 		//받아온 randNum값을 다시 ajax으로 보낸다 ->  success: function(randNum)  
-		return randNum+"";
+		return Integer.toString(randNum);
 	}
 	
 	// 회원가입시 문자 인증 번호 확인
@@ -98,6 +97,15 @@ public class RegisterController {
 		System.out.println("signUp.do 진입");
 		System.out.println("회원가입하는 회원 정보 ↓");
 		System.out.println(mvo);
+		String urlBack = request.getParameter("urlBack"); // 페이지 진입 전전 주소
+		System.out.println("request.urlBack: " + urlBack);
+
+		if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
+				&& !urlBack.contains("register")
+				&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
+			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+		}
+		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
 		
 		if (memberService.insert(mvo)) { // 회원가입 성공시
 			return "registerResultView.do";
