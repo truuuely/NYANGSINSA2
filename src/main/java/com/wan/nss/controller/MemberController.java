@@ -19,26 +19,43 @@ public class MemberController {
 	private MemberService memberService;
 
 	// 로그인 페이지로 이동
-	@RequestMapping(value = "/login.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/login.do")
 	public String loginView(Model model, HttpSession session, HttpServletRequest request) {
 		System.out.println("login.do 진입");
-		model.addAttribute("lang", session.getAttribute("lang"));
 		
 		return "login.jsp";
 	}
 	
 	// 아이디 찾기 페이지로 이동
 	@RequestMapping(value = "/findIdView.do")
-	public String findIdView() {
+	public String findIdView(HttpServletRequest request, HttpSession session) {
 		System.out.println("findIdView.do 진입");
+		String urlBack = request.getParameter("urlBack"); // 페이지 진입 전전 주소
+		System.out.println("request.urlBack: " + urlBack);
+
+		if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
+				&& !urlBack.contains("register")
+				&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
+			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+		}
+		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
 		
 		return "find_id.jsp";
 	}
 	
 	// 비밀번호 찾기 페이지로 이동
 	@RequestMapping(value = "/findPwView.do")
-	public String findPwView() {
+	public String findPwView(HttpServletRequest request, HttpSession session) {
 		System.out.println("findPwView.do 진입");
+		String urlBack = request.getParameter("urlBack"); // 페이지 진입 전전 주소
+		System.out.println("request.urlBack: " + urlBack);
+
+		if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
+				&& !urlBack.contains("register")
+				&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
+			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+		}
+		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
 		
 		return "find_pw.jsp";
 	}
@@ -179,17 +196,19 @@ public class MemberController {
 	}
 
 	// 로그인 수행
-	@RequestMapping(value = "/login.do", method=RequestMethod.POST)
+	@RequestMapping(value = "/selectOneMemberLogin.do")
 	public String selectOneMemberLogin(MemberVO vo, Model model, HttpServletRequest request, HttpSession session) {
-		System.out.println("login.do 진입");
+		System.out.println("selectOneMemberLogin.do 진입");
 		System.out.println("로그인하려는 회원 정보 ↓");
 		System.out.println(vo);
 		System.out.println();
 		MemberVO loginMvo = memberService.selectOne(vo);
-		String urlBack = request.getParameter("urlBack"); // 로그인 수행 진입 전전 주소(로그인 페이지 진입 전 주소)
+		String urlBack = request.getParameter("urlBack"); // 페이지 진입 전전 주소
 		System.out.println("request.urlBack: " + urlBack);
 
-		if(!urlBack.contains("login.do") || !urlBack.contains("findIdView.do") || !urlBack.contains("findPwView.do")) { // urlBack에 login.do이 포함되지 않았을 때만
+		if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
+				&& !urlBack.contains("register")
+				&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
 			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
 		}
 		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
@@ -234,7 +253,7 @@ public class MemberController {
 
 	// 아이디 찾기 수행
 	@RequestMapping(value = "/findId.do")
-	public String selectOneMemberId(MemberVO mvo, Model model, HttpServletRequest request) {
+	public String selectOneMemberId(MemberVO mvo, Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("findId.do 진입");
 		MemberVO loginMvo = memberService.selectOne(mvo); // id, 이름이 담긴 멤버
 		System.out.println("loginMvo: " + loginMvo);
@@ -254,7 +273,7 @@ public class MemberController {
 
 	// 비밀번호 찾기 수행
 	@RequestMapping(value = "/findPw.do")
-	public String selectOneMemberPw(MemberVO vo, Model model, HttpServletRequest request) {
+	public String selectOneMemberPw(MemberVO vo, Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("findPw.do 진입");
 		// 인증번호로 폰 본인 건지 확인 후,
 		// 폰 번호로 비밀번호 찾기 버튼 누르면 :
