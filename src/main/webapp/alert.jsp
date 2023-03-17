@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", function(){
 			console.log('2');
 			location.href = '${location}?lang=${lang}';
 		}
+		else if('${location}' == '') {
+	         window.close();
+	    }
 	    else{
 	    	console.log('3');
 	        location.href = '${location}';

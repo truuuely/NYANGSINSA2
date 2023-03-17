@@ -46,7 +46,7 @@ public class BoardDAO {
 	// 내가 좋아요 누른 글 목록
 	private final String SELECT_ALL_MYLIKE = "SELECT b.B_NO, b.B_TITLE, b.B_DATE, m.M_ID "
 			+ " FROM BOARD b INNER JOIN `MEMBER` m ON b.M_NO = m.M_NO INNER JOIN BLIKE bl ON b.B_NO = bl.B_NO AND bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = ?) "
-			+ " GROUP BY b.B_NO ORDER BY B_NO DESC";
+			+ " WHERE b.STATUS != 3 GROUP BY b.B_NO ORDER BY B_NO DESC";
 
 	// 게시글 제목 검색
 	// ? : 로그인한 사용자 아이디, 검색어, 로그인한 사용자 아이디 (id가 null일 경우 ISCHECKED 는 모두 false

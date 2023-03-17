@@ -45,20 +45,18 @@
 			<div class="col-lg-6">
 				<div class="login_form_inner">
 					<h3>아이디 찾기</h3>
+					<br><br>
 					<form class="row login_form" id="contactForm">
 						<div class="col-md-12 form-group">
-							<input type="tel" style="width: 65%;" id="userPhoneNum" name="tel" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+							<input type="tel" style="width: 100%;" id="userPhoneNum" name="tel" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						</div>
-						<br>
-						<br>
-						<br>
-						<br>
+						<br><br>
 						<div class="col-md-12 form-group">
-							<!-- <button onclick="sms();" class="button button-login w-100"> 핸드폰 번호로 아이디 찾기</button> -->
-							<!-- <input type="submit" value=" 핸드폰 번호로 아이디 찾기"  class="button button-login w-100" >  -->
-							<input type="button" class="button button-login w-100" value="핸드폰 번호로 아이디 찾기" onclick="sms()">
-							<input type="text" placeholder="인증번호를 입력하세요" id="userCheck">
-							<input type="button" value="인증번호 확인" onclick="smsCheck()">
+							<button class="button button-login w-100" onclick="sms()">핸드폰 번호로 아이디 찾기</button>
+							<br><br>
+							<input type="text" style="width: 100%;" placeholder="인증번호를 입력하세요" id="userCheck">
+							<br><br>
+							<button class="button button-login w-100" onclick="smsCheck()">인증번호 확인</button>
 						</div>
 						<br>
 						<br>
@@ -69,17 +67,6 @@
 			</div>
 		</div>
 	</section>
-	<!-- 인증번호 -->
-	<!-- <p class="checkre" id="outputName">전화번호를 입력해주세요</p>
-							<div>
-								<input type="tel" placeholder="전화번호 입력" id="userPhoneNum"
-									onkeyup="validationCertiNum()"
-								> <input type="button" value="인증번호 받기" onclick="sms()">
-							</div>
-							<div id="phoneNumCheckMent"></div>
-							<input type="text" placeholder="인증번호를 입력하세요" id="userCheck">
-							<input type="button" value="인증번호 확인" onclick="smsCheck()"> -->
-	<!--                   -->
 	<!--================End Login Box Area =================-->
 
 	<!-- Footer Section Begin -->

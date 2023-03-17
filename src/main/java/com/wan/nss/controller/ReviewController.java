@@ -60,9 +60,8 @@ public class ReviewController {
 		// 해당 상품의 리뷰목록의 작성자 중에 현재 로그인한 회원이 있을 경우, 리뷰 작성 창 닫기 처리
 		for (ReviewVO v : rdatas) { 
 			if (v.getUserId().equals(memberId)) { 
-				model.addAttribute("lang",request.getParameter("lang")); //header 태그로 갈 때 문제가 생김.. 어떻게??
 				model.addAttribute("msg", "이미 리뷰를 작성하셨습니다.");
-				model.addAttribute("location", "order_detail.jsp");
+				model.addAttribute("location", "");
 				return "alert.jsp";			
 			}
 			//System.out.println("for문 1번 수행 완료");
@@ -83,15 +82,13 @@ public class ReviewController {
 		System.out.println("리뷰 추가 완료");
 
 		if(reviewService.insert(rvo)) {  
-			model.addAttribute("lang",request.getParameter("lang"));
 			model.addAttribute("msg", "리뷰가 등록되었습니다.");
-			model.addAttribute("location", "order_detail.jsp");
+			model.addAttribute("location", "");
 			return "alert.jsp";	
 		}
 		else { // 실패 시 
-			model.addAttribute("lang",request.getParameter("lang"));
 			model.addAttribute("msg", "에러 발생. 잠시 후 다시 시도해주세요.");
-			model.addAttribute("location", "order_detail.jsp");
+			model.addAttribute("location", "");
 			return "alert.jsp";	
 		}
 	}

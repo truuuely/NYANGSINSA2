@@ -173,9 +173,10 @@
 							swal({
 								text : "냥신사로 메일을 보냈어요!",
 								button : "확인"
-							});
-							location.replace("contact.jsp");
+							}).then(function(){
+							location.replace("contact.do");
 							console.log('SUCCESS!');
+							});
 						}, function(error) {
 							swal({
 								text : "냥신사로 메일을 보내기를 실패했어요... 다시 시도해주세요!",
