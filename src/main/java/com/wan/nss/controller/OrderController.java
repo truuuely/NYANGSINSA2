@@ -35,17 +35,14 @@ public class OrderController {
 
 	// 주문하기 페이지로 이동
 	@RequestMapping(value = "/buyProducts.do")
-	public String checkoutView(Model model, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String checkoutView(Model model, HttpSession session, HttpServletRequest request) {
 
 		System.out.println("buyProducts.do");
 
 		String userId = (String) session.getAttribute("memberId");
 
-		response.setContentType("text/html; charset=utf-8");
-
 		if (userId == null) { // 로그인 안 돼 있으면 로그인 창으로 이동
 			try {
-				model.addAttribute("lang", session.getAttribute("lang"));
 				model.addAttribute("msg", "로그인이 필요합니다.");
 				model.addAttribute("location", "login.do");
 				
@@ -71,9 +68,8 @@ public class OrderController {
 			
 			if (cList.isEmpty()) { // 장바구니가 비었을 때
 				try {
-					model.addAttribute("lang", session.getAttribute("lang"));
-					model.addAttribute("msg", "로그인이 필요합니다.");
-					model.addAttribute("location", "login.do");
+					model.addAttribute("msg", "장바구니가 비었습니다.");
+					model.addAttribute("location", "main.do");
 					
 					return "alert.jsp";
 				} catch (Exception e) {
