@@ -77,12 +77,14 @@
 						<div class="section-title product__discount__title">
 							<h2>비밀번호 확인</h2>
 						</div>
-						<div class="footer__widget">
+						<div class="footer__widget" style="text-align:center; ">
 							<form action="checkPw.do" method="post">
 								<input type="password" name="userPw" placeholder="비밀번호를 입력하세요" required>
 								<input type="hidden" name="userId" value="${memberId}">
 								<button type="submit" value="submit" class="site-btn">입력</button>
 							</form>
+							
+							<a href="findPwView.do" style="color:#615C61;">비밀번호를 있으셨나요? 비밀번호 찾기</a>
 						</div>
 					</div>
 				</div>

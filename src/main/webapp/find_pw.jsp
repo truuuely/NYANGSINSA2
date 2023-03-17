@@ -45,29 +45,21 @@
 			<div class="col-lg-6">
 				<div class="login_form_inner">
 					<h3>비밀번호 찾기</h3>
-					<form class="row login_form" action="?" id="contactForm">
+					<form class="row login_form" action="findPw.do" id="contactForm" method="post">
 						<div class="col-md-12 form-group">
-							<input type="text" class="form-control" id="userId" name="password" placeholder="아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
+							<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
 						</div>
 						<br>
 						<div class="col-md-12 form-group">
-							<input type="text" class="form-control" id="userName" name="name" placeholder="이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'" required>
+							<input type="text" class="form-control" id="userName" name="userName" placeholder="이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'" required>
 						</div>
 						<div class="col-md-12 form-group">
-							<input type="tel" style="width: 100%;" id="userPhoneNum" name="tel" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+							<input type="tel" style="width: 100%;" id="userPhoneNum" name="userPhoneNum" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						</div>
-						<br>
-						<br>
-						<br>
-						<br>
+						<br><br><br>
 						<div class="col-md-12 form-group">
-							<input type="button" class="button button-login w-100" value="핸드폰 번호로 아이디 찾기" onclick="sms()">
-							<br>
-							<br>
-							<br>
-							<br>
-							<input type="text" placeholder="인증번호를 입력하세요" id="userCheck">
-							<input type="button" value="인증번호 확인" onclick="smsCheck()">
+							<button type="submit" value="submit" class="button button-login w-100">비밀번호 찾기</button>
+							<br><br>
 						</div>
 					</form>
 				</div>
