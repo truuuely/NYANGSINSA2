@@ -4,7 +4,7 @@
 
 	document.addEventListener("DOMContentLoaded", function(){
 		
-		location.href = '${location}';
+		location.href = 'insertBoardResult.do?boardNum=${boardNum}';
 
 	});
 

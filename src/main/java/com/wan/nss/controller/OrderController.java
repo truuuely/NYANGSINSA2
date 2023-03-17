@@ -1,6 +1,5 @@
 package com.wan.nss.controller;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,11 +45,11 @@ public class OrderController {
 
 		if (userId == null) { // 로그인 안 돼 있으면 로그인 창으로 이동
 			try {
-				PrintWriter out = response.getWriter();
-				out.println("<script>alert('로그인이 필요합니다.');location.href='login.do';</script>");
-				out.flush();
-				model.addAttribute("lang", request.getParameter("lang"));
-				return "login.jsp";
+				model.addAttribute("lang", session.getAttribute("lang"));
+				model.addAttribute("msg", "로그인이 필요합니다.");
+				model.addAttribute("location", "login.do");
+				
+				return "alert.jsp";
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
@@ -72,10 +71,11 @@ public class OrderController {
 			
 			if (cList.isEmpty()) { // 장바구니가 비었을 때
 				try {
-					PrintWriter out = response.getWriter();
-					out.println("<script>alert('장바구니에 담긴 상품이 없습니다.');history.go(-1);</script>");
-					out.flush();
-					return "checkout.jsp";
+					model.addAttribute("lang", session.getAttribute("lang"));
+					model.addAttribute("msg", "로그인이 필요합니다.");
+					model.addAttribute("location", "login.do");
+					
+					return "alert.jsp";
 				} catch (Exception e) {
 					e.printStackTrace();
 					return null;
@@ -84,59 +84,48 @@ public class OrderController {
 				return "checkout.jsp";
 			}
 		}
-
 	}
 
 	// 주문하기 페이지에서 결제 및 최종 주문 수행
 	@RequestMapping(value = "/insertOrder.do")
 	public String insertOrder(OrderVO ovo, OrderDetailVO odvo, ProductVO pvo, Model model, HttpSession session,	HttpServletResponse response) {
-
 		System.out.println("insertOrder.do 진입");
-
 		String userId = (String) session.getAttribute("memberId"); // 로그인 무조건 돼 있음
-		
 		ovo.setUserId(userId);
-		
 		System.out.println("insert OrderVO: " + ovo);
 		
 		// Order insert
-
 		if (!orderService.insert(ovo)) { // insert 에서 실패했다면
 			try {
-				response.setContentType("text/html; charset=utf-8");
-				response.getWriter().println("<script>alert('주문내역 생성 실패...관리자에게 문의하세요.');history.go(-1);</script>");
-				return "checkout.jsp";
+				model.addAttribute("msg", "주문내역 생성 실패...관리자에게 문의하세요.");
+				model.addAttribute("location", "checkout.jsp");
+				
+				return "alert.jsp";
 			} catch (Exception e) {
 				return null;
 			}
 		}
 		System.out.println("오더 인서트 성공");
-
 		// ovo insert 성공
 		// → odvo insert!
-
 		ovo.setoSearchCondition("lastOrder");
 		System.out.println("ovo.userId: " + ovo.getUserId());
-		
 		OrderVO thisOvo = orderService.selectOne(ovo); // 방금 추가한 ovo
 		// SELECT O_NO FROM ORDER_INFO WHERE USER_ID = ? ORDER BY O_NO DESC;
 		System.out.println("thisOvo: " + thisOvo);
-		
 		ArrayList<ProductVO> cList = (ArrayList) session.getAttribute("cList"); // 장바구니에 담긴 상품들
+		
 		if (cList == null) {
 			cList = new ArrayList<ProductVO>();
 		}
+		
 		for (int i = 0; i < cList.size(); i++) {
-			
 			odvo.setoNum(thisOvo.getoNum()); // oNum 세팅
 			odvo.setpNum(cList.get(i).getpNum()); // pNum 세팅
 			odvo.setOdCnt(cList.get(i).getpCnt()); // pCnt 세팅
 			odvo.setOdPrice(cList.get(i).getDc_price() * cList.get(i).getpCnt()); // 실제 결제 금액으로 odPrice 세팅
-			
 			System.out.println("insert OrderDetailVO: " + odvo);
-			
 			orderDetailService.insert(odvo); // 주문 상세 내역 DB에 저장
-
 			// 장바구니에 있는 상품들의 pNum과 pCnt(개수)를 받아서
 			// DB 에 업데이트
 			pvo.setpNum(cList.get(i).getpNum());
@@ -144,9 +133,10 @@ public class OrderController {
 			pvo.setpSearchCondition("buy");
 			if (!productService.update(pvo)) {
 				try {
-					response.setContentType("text/html; charset=utf-8");
-					response.getWriter().println("<SCRIPT>alert('ERROR : UPDATE 실패');</SCRIPT>");
-					return null;
+					model.addAttribute("msg", "ERROR : UPDATE 실패");
+					model.addAttribute("location", "checkout.jsp");
+					
+					return "alert.jsp";
 				} catch (Exception e) {
 					return null;
 				}
@@ -161,36 +151,27 @@ public class OrderController {
 	// 주문 내역 페이지로 이동
 	@RequestMapping(value = "/orderList.do")
 	public String selectAllOrderList(OrderVO vo, Model model, HttpSession session) {
-
 		System.out.println("orderList.do 진입");
-
 		// 현재 로그인한 회원의 주문내역을 가져와야 함
 		String userId = (String) session.getAttribute("memberId");
-
 		vo.setUserId(userId);
-
 		List<OrderVO> oList;
 		oList = orderService.selectAll(vo); // 현재 로그인한 회원의 주문 내역 리스트
-
 		model.addAttribute("oList", oList);
 
 		return "order_list.jsp";
-
 	}
 
 	// 주문 상세 내역 페이지로 이동
 	@RequestMapping(value = "/orderDetailList.do")
 	public String selectAllOrderDetailList(OrderVO ovo, OrderDetailVO odvo, Model model) {
-
 		System.out.println("orderDetailList.do 진입");
 		System.out.println("oNum: " + ovo.getoNum());
-		
 		odvo.setOdNum(ovo.getoNum());
 		List<OrderDetailVO> odList = orderDetailService.selectAll(odvo); // 주문 번호가 oNum인 주문 상세 내역들
-
 		model.addAttribute("odList", odList); // 주문 상세 보내주기
+		
 		return "order_detail.jsp";
-
 	}
-
+	
 }
