@@ -197,7 +197,7 @@
 							<li>
 								<button onclick="showReReply(${reply.replyNum})" class="showReReply" style="border-radius: 10px; border: 1px solid #b2b2b2; margin-left: 10px; font-size: 12px;">답글 달기</button>
 							<li>
-							<li style="margin-left: 8px;"><img class="reportBtn" onclick="javascript:report(2,${reply.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+							<li style="margin-left: 8px;"><img class="reportBtn" onclick="javascript:report(2,${reply.replyNum},`${reply.userId}`);" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 							<c:if test="${reply.userId==memberId}">
 								<li style="cursor: pointer; margin-left: 8px; color: #49505787; border-bottom: 1px solid #49505787;"><a onclick="deleteCheck(${reply.replyNum}, 'deleteReply')">삭제</a></li>
 							</c:if>

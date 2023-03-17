@@ -99,7 +99,7 @@ function displayData(selectPage,step) {
 				proc = "<a class='dropdown-item ' href='javascript:proc("+encodedValues+");'  ><i class='bx bx-edit-alt me-1'></i>신고 처리</a>";
 			}else if(dataList[i].reportStat==2){
 				chartHtml+=
-					"<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>처리 완료</strong></td>";
+					"<tr ><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong style='color: #F82C2C;'>처리 완료</strong></td>";
 				proc = "<a class='dropdown-item '  >완료된 처리입니다.</a>";
 			}
 			
@@ -112,7 +112,7 @@ function displayData(selectPage,step) {
 				chartHtml+=
 				
 				"<td>"+dataList[i].userId+"</td>"
-				+"<td><a href='javascript:newOpen("+encodedValues+");'>글 상세보기</a></td>"
+				+"<td><a class='detail-view' href='javascript:newOpen("+encodedValues+");'>글 상세보기</a></td>"
 				+"<td>"+dataList[i].reporterId+"</td>"
 				+"<td>"+dataList[i].reportContent+"</td>"
 
@@ -136,7 +136,7 @@ function displayData(selectPage,step) {
 				// 신고된 댓글 
 				chartHtml+=
 				 "<td>"+dataList[i].userId+"</td>"
-				+"<td><a href='javascript:replycontent("+encodedValues+");'>내용 보기 </a></td>"
+				+"<td><a class='detail-view' href='javascript:replycontent("+encodedValues+");'>내용 보기 </a></td>"
 				+"<td>"+dataList[i].reporterId+"</td>"
 				+"<td>"+dataList[i].reportContent+"</td>"
 
@@ -267,5 +267,5 @@ function newOpen(data){
 
 function replycontent(data) {
 	console.log(data.targetNum);
-	window.open("selectOneReply.do?replyNum="+data.targetNum , "replycontent", "width=500,height=800, left=400, top = 200");
+	window.open("selectOneReply.do?replyNum="+data.targetNum , "replycontent", "width=500,height=500, left=400, top = 200");
 }

@@ -259,6 +259,13 @@
 .report-modal-hidden {
 	display: none;
 }
+.detail-view{
+ color:black;
+}
+.detail-view:hover{
+ font-weight: bold;
+ color:black;
+}
 </style>
 </head>
 

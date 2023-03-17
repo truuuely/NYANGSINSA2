@@ -60,6 +60,14 @@
 	color: black;
 	font-weight: bold;
 }
+
+.detail-view{
+ color:black;
+}
+.detail-view:hover{
+ font-weight: bold;
+ color:black;
+}
 </style>
 </head>
 

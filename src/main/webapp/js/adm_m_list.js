@@ -73,6 +73,7 @@ function displayData(selectPage) {
 			+ "<td><ul class='list-unstyled users-list m-0 avatar-group d-flex align-items-center'>"
 			+ "<li>" + dataList[i].phoneNum + "</li></ul></td>"
 			+ "<td><span class='badge bg-label-primary me-1'>" + dataList[i].role + "</span></td>"
+			+ "<td><p>" + dataList[i].warnCnt+ "</p></td>"
 			+ "<td><div class='dropdown'><button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
 			+ "<i class='bx bx-dots-vertical-rounded'></i></button>"
 			+ "<div class='dropdown-menu'><a class='dropdown-item' href='javascript:member("+dataList[i].userNum+");'>"

@@ -67,9 +67,9 @@ function displayData(selectPage) {
   console.log(dataList);
      if(totalData!=0){
            for (var i = (selectPage - 1) * dataPerPage ; i < (totalData < (selectPage * dataPerPage) ? totalData : (selectPage * dataPerPage)) ; i++) {
-            chartHtml+="<tr><td><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].pNum+"</strong></td>"
-                           +"<td>"+dataList[i].rContent+"</td>"
-                           +"<td><ul>"+dataList[i].rWriter+"</li></ul></td>"
+            chartHtml+="<tr><td style='width:30%; text-align:center;'><i class='fab fa-angular fa-lg text-danger me-3'></i> <strong>"+dataList[i].pName+"</strong></td>"
+                           +"<td style='width:45%; text-align:center;'>"+dataList[i].rContent+"</td>"
+                           +"<td style='width:5%; text-align:center;'><ul>"+dataList[i].userId+"</li></ul></td>"
                            +"<td><span class='badge bg-label-warning me-1'>"+dataList[i].rRate+"</span></td>"
                            +"<td><div class='dropdown'><button type='button' class='btn p-0 dropdown-toggle hide-arrow' data-bs-toggle='dropdown'>"
                            +"<i class='bx bx-dots-vertical-rounded'></i></button>"
