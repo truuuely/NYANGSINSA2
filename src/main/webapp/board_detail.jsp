@@ -500,6 +500,8 @@
             swal({
                text : "로그인 후 이용해주세요",
                button : "확인"
+            }).then(function(){
+            	location.href = "login.do";
             });
             return false;
          }else if('${memberRole}' == 'BLOCKED'){
@@ -600,12 +602,12 @@
                .sendDefault({
                   objectType : 'feed',
                   content : {
-                     title : '냥신사 커뮤니티',// 글제목 
+                     title : '${board.boardTitle}',// 글제목 
                      description : '${board.boardTitle}', // 글내용
                      imageUrl : 'https://ifh.cc/g/HkTbZk.png', // 이미지 url
                      link : {
-                        mobileWebUrl : 'https://www.naver.com/',
-                        webUrl : 'https://www.youtube.com/watch?v=72fDsC2kX7g',
+                        mobileWebUrl : 'http://localhost:8088/nss/boardPostView.do?boardNum=${board.boardNum}',
+                        webUrl : 'http://localhost:8088/nss/boardPostView.do?boardNum=${board.boardNum}',
                      },
                   },
                   social : {

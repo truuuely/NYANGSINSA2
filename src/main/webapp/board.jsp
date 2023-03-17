@@ -375,7 +375,9 @@
 				swal({
 					text : "로그인 후 이용해주세요",
 					button : "확인"
-				});
+				}).then(function(){
+	            	location.href = "login.do";
+	            });
 				return false;
 			} else if ('${memberRole}' == 'BLOCKED') {
 				swal({
