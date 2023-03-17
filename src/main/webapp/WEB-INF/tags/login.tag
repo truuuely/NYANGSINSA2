@@ -3,7 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 <c:if test="${not empty memberId}">
-	<c:if test="${memberId!='admin'}">
+	<c:if test="${memberRole!='ADMIN'}">
 			<div class="header__top__right__auth">
 				<a href="mypage.do"><i class="fa fa-user"></i> <spring:message code="message.logintag.mypage"/> </a>
 			</div>
@@ -12,7 +12,7 @@
 			</div>
 	</c:if>
 	
-	<c:if test="${memberId=='admin'}">
+	<c:if test="${memberRole=='ADMIN'}">
 			<div class="header__top__right__auth">
 				<a href="adminIndex.do"><i class="fa fa-user"></i><spring:message code="message.logintag.adminHome"/></a>
 			</div>

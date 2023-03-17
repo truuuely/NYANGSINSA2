@@ -87,7 +87,6 @@ function displayData(selectPage,step) {
 					reportStep: dataList[i].reportStep };
 			encodedValues = encodeURIComponent(JSON.stringify(values));
 
-			url = `init(encodedValues);`;
 
 
 
