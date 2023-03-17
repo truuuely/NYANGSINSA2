@@ -246,7 +246,7 @@
 			<img style="width: 20px;" src="img/replyicon.png">
 			댓글 (${board.replyCnt}) ▼
 		</div>
-		<div id="reply">
+		<div id="reply" style="display: block;">
 			<nss:list sort="reply" />
 		</div>
 	</div>
@@ -358,7 +358,7 @@
 		<a href="#replywrite">
 			<button type="button" style="border: 1px solid; border-radius: 50%; height: 65px; width: 65px; padding: 14px; background: none; background-color: white;">
 				<img style="width: 50px; height: auto; cursor: pointer;" src="img/replyicon.png">
-				<div style="margin-top: 15px;">${board.replyCnt}</div>
+				<div class="fixcomment" style="margin-top: 15px;">${board.replyCnt}</div>
 			</button>
 		</a>
 	</div>
@@ -408,6 +408,8 @@
          },
          success : function() {
             $('.showReply').load(location.href + ' .showReply');
+            $('.fixcomment').load(location.href + ' .fixcomment');
+            $('#0replyContent').val('');
             setTimeout(function() {
                $('#reply').css('display', 'block');
             },100);
