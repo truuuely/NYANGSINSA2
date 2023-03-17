@@ -40,6 +40,7 @@ button img {
 <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/alert.css" type="text/css">
 
 <style type="text/css">
 #iamportPayment2 {
@@ -309,15 +310,15 @@ button img {
 									</span>
 								</div>
 
-								<button id="iamportPayment" type="button">
+								<button id="iamportPayment" class="payment" type="button">
 									<img src="img/card.png" alt="카드결제버튼" style="heigth: 30px; width: 30px;">
 									카드결제
 								</button>
-								<button id="iamportPayment2" type="button" style="border-radius: 20px; border: solid 1px; border-color: gray;">
+								<button id="iamportPayment2"  class="payment" type="button" style="border-radius: 20px; border: solid 1px; border-color: gray;">
 									<img src="img/kakaoPay.png" alt="카카오페이버튼" style="heigth: 50px; width: 50px;">
 									카카오페이
 								</button>
-								<button id="iamportPayment3" type="button">
+								<button id="iamportPayment3"  class="payment" type="button">
 									<img src="img/phone_pay.png" alt="휴대폰결제버튼" style="heigth: 30px; width: 30px;">
 									휴대폰결제
 								</button>
@@ -406,6 +407,7 @@ button img {
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 	<!-- jQuery -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
@@ -416,25 +418,67 @@ button img {
 	<script type="text/javascript">
       //문서가 준비되면 제일 먼저 실행
          
+      function inputCheck(){
+    	  var userName=$("#name").val();
+    	  var userPhoneNum=$("#phone").val();
+    	  var post=$("#post").val();
+    	  var address=$("#address").val();
+    	  var addressDetail=$("#address_detail").val();
+    	  
+    	  console.log(userName);
+    	  console.log(userPhoneNum);
+    	  console.log(post);
+    	  console.log(address);
+    	  console.log(addressDetail);
+    	  
+    	  if(userName == '') {
+    		  swal({
+					text : "이름을 입력해주세요",
+					button : "확인"
+				});
+				return false;
+    	  } else if (userPhoneNum == '') {
+    		  swal({
+					text : "핸드폰 번호를 입력해주세요",
+					button : "확인"
+				});
+				return false;
+    	  } else if (post == '' || address == '' || addressDetail == '') {
+    		  swal({
+					text : "주소를 확인해주세요",
+					button : "확인"
+				});
+    		  return false;
+    	  }else{
+    		  return true;
+    	  }
+      }
+      	
             
          $(document).ready(function() {
             
          var data;
          $("#iamportPayment").click(function() {
+        	 if(inputCheck()){
             data = '카드결제';
             payment(data); //버튼 클릭하면 호출 
+        	 }
          });
          $("#iamportPayment2").click(function() {
+        	 if(inputCheck()){
             data = '카카오페이';
             payment(data); //버튼 클릭하면 호출 
+        	 }
          });
          $("#iamportPayment3").click(function() {
+        	 if(inputCheck()){
             data = '휴대폰결제';
-            payment(data); //버튼 클릭하면 호출 
+            payment(data); //버튼 클릭하면 호출
+        	 }
          });
            
          });
-          
+
           
           //버튼 클릭하면 실행
           function payment(data) {
