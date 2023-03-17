@@ -84,7 +84,7 @@
 								<button type="submit" value="submit" class="site-btn">입력</button>
 							</form>
 							
-							<a href="findPwView.do" style="color:#615C61;">비밀번호를 있으셨나요? 비밀번호 찾기</a>
+							<a href="findPwView.do" style="text-align:left;color:#615C61;"><u>비밀번호 찾기</u></a>
 						</div>
 					</div>
 				</div>

@@ -37,9 +37,10 @@ public class RegisterController {
 	
 	// 회원가입 성공시 결과 페이지로 이동
 	@RequestMapping(value = "/registerResultView.do")
-	public String registerResultView() {
+	public String registerResultView(HttpServletRequest request, HttpSession session) {
 		System.out.println("registerResultView.do 진입");
-		
+		session.setAttribute("urlBack", "main.do"); // 세션의 urlBack 갱신
+		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
 		return "result_register.jsp";
 	}
 	

@@ -63,10 +63,8 @@ public class MemberController {
 	@RequestMapping(value = "/logout.do")
 	public String logoutView(Model model, HttpServletRequest request, HttpSession session) {
 		System.out.println("logout.do 진입");
-		session.removeAttribute("memberId");
-		session.removeAttribute("memberName");
-		session.removeAttribute("lang");
-		model.addAttribute("lang", request.getParameter("lang"));
+		model.addAttribute("lang", session.getAttribute("ko"));
+		session.invalidate(); // 세션정보비우기
 		
 		return "index.jsp";
 	}
@@ -191,7 +189,7 @@ public class MemberController {
 		String urlBack = request.getParameter("urlBack"); // 로그인 수행 진입 전전 주소(로그인 페이지 진입 전 주소)
 		System.out.println("request.urlBack: " + urlBack);
 
-		if(!urlBack.contains("login.do")) { // urlBack에 login.do이 포함되지 않았을 때만
+		if(!urlBack.contains("login.do") || !urlBack.contains("findIdView.do") || !urlBack.contains("findPwView.do")) { // urlBack에 login.do이 포함되지 않았을 때만
 			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
 		}
 		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
