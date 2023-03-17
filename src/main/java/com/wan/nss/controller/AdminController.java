@@ -57,7 +57,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	public String adminIndexView(MemberVO mvo, OrderVO ovo, Model model, HttpSession session) {
 		String role = (String) session.getAttribute("memberRole");
 		System.out.println("role: " + role);
-		if (role == null || !(role.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+		if (role == null || !(role.equals("ADMIN"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 
 			try {
 				System.out.println("관리자 식별 불가! 관리자홈 접근 권한 없음!");
@@ -139,7 +139,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	public String selectAllMemberManage(HttpSession session, Model model) {
 		System.out.println("memberManagePage.do 진입");
 		String role = (String) session.getAttribute("memberRole");
-		if (role == null || !(role.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+		if (role == null || !(role.equals("ADMIN"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			model.addAttribute("location", "main.do");
 			
@@ -155,7 +155,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 		System.out.println("productManagePage.do 진입");
 		String role = (String) session.getAttribute("memberRole");
 		
-		if (role == null || !(role.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+		if (role == null || !(role.equals("ADMIN"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			model.addAttribute("location", "main.do");
 			
@@ -185,7 +185,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	public String selectAllorderDetailManage(Model model, HttpSession session) {
 		System.out.println("orderManagePage.do 진입");
 		String role = (String) session.getAttribute("memberRole");
-		if (role == null || !(role.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+		if (role == null || !(role.equals("ADMIN"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 				model.addAttribute("msg", "접근 권한이 없습니다.");
 				model.addAttribute("location", "main.do");
 				
@@ -201,7 +201,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	public String selectAllReviewManage(Model model, HttpSession session) {
 		System.out.println("reviewManagePage.do 진입");
 		String role = (String) session.getAttribute("memberRole");
-		if (role == null || !(role.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+		if (role == null || !(role.equals("ADMIN"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			model.addAttribute("location", "main.do");
 			
@@ -216,7 +216,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	public String boardManageView(HttpSession session, Model model) {
 		System.out.println("boardManageView.do 진입");
 		String role = (String) session.getAttribute("memberRole");
-		if (role == null || !(role.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+		if (role == null || !(role.equals("ADMIN"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			model.addAttribute("location", "main.do");
 			
@@ -230,7 +230,7 @@ public class AdminController { // 관리자 페이지 단순 이동(View, Detail
 	@RequestMapping(value = "/reportManageView.do")
 	public String reportManageView(HttpSession session, Model model) {
 		String role = (String) session.getAttribute("memberRole");
-		if (role == null || !(role.equals("admin"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
+		if (role == null || !(role.equals("ADMIN"))) { // 로그인을 안 하거나 admin이 아니면 접근 권한 없음.
 			model.addAttribute("msg", "접근 권한이 없습니다.");
 			model.addAttribute("location", "main.do");
 			
