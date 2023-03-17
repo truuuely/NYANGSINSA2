@@ -84,6 +84,7 @@
 		FROM BOARD b 
 			INNER JOIN `MEMBER` m ON b.M_NO = m.M_NO 
 			INNER JOIN BLIKE bl ON b.B_NO = bl.B_NO AND bl.M_NO = (SELECT M_NO FROM MEMBER WHERE M_ID = #{userId}) 
+		WHERE b.STATUS != 3 
 		GROUP BY b.B_NO ORDER BY B_NO DESC
 		</if>
 		
