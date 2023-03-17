@@ -13,7 +13,7 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>냥신사 | 마이페이지</title>
+<title>냥신사 | 내가 쓴 후기</title>
 
 <!-- google Font -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
@@ -230,7 +230,7 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<div class="breadcrumb__text">
-						<h2>마이페이지</h2>
+						<h2>내가 쓴 후기</h2>
 						<!-- <div class="breadcrumb__option">
                      <a href="./index.html">홈</a>
                   </div> -->
@@ -252,7 +252,7 @@
 								<li><a href="mypage.do">내정보</a></li>
 								<li><a href="orderList.do">주문내역</a></li>
 								<li><a href="checkPassword.do">회원정보변경</a></li>
-								<li><a href="myReviewView.do">내 리뷰 모아보기</a></li>
+								<li><a href="myReviewView.do">내가 쓴 후기</a></li>
 								<li><a href="selectAllMyLike.do">내가 좋아요 한 글 </a></li>
 							</ul>
 						</div>
