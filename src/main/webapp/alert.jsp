@@ -14,20 +14,25 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", function(){
+	var location = '${location}';
 	swal({
-        text : '${msg}',
+        text : '${lang} / ${location} / ${msg}',
         button : "확인"
      })
 	.then(function(){
-		if(${lang != null}){
-		       location.href = '${location}?lang=${lang}';
-		    }
+		if(location.indexOf('main.do') !== -1 || location.indexOf('login.do') !== -1 || location.indexOf('register.do') !== -1){
+		    console.log('1');
+		    location.href = '${location}?lang=${lang}';
+		}
 		else if(${vo != null}){
+			console.log('2');
 			location.href = '${location}?'+vo+'=${'+vo+'}';
 		}
-		    else{
-		       location.href = '${location}';
-		    }
+	    else{
+	    	console.log('3');
+	        location.href = "${location}";
+	        console.log('4');
+	    }
 	})
 });
 
