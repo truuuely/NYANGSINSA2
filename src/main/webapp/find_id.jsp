@@ -52,11 +52,11 @@
 						</div>
 						<br><br>
 						<div class="col-md-12 form-group">
-							<button type="submit" value="submit" class="button button-login w-100" onclick="sms()">핸드폰 번호로 아이디 찾기</button>
+							<button class="button button-login w-100" onclick="sms()">핸드폰 번호로 아이디 찾기</button>
 							<br><br>
 							<input type="text" style="width: 100%;" placeholder="인증번호를 입력하세요" id="userCheck">
 							<br><br>
-							<button type="submit" value="submit" class="button button-login w-100" onclick="smsCheck()">인증번호 확인</button>
+							<button class="button button-login w-100" onclick="smsCheck()">인증번호 확인</button>
 						</div>
 						<br>
 						<br>
@@ -67,17 +67,6 @@
 			</div>
 		</div>
 	</section>
-	<!-- 인증번호 -->
-	<!-- <p class="checkre" id="outputName">전화번호를 입력해주세요</p>
-							<div>
-								<input type="tel" placeholder="전화번호 입력" id="userPhoneNum"
-									onkeyup="validationCertiNum()"
-								> <input type="button" value="인증번호 받기" onclick="sms()">
-							</div>
-							<div id="phoneNumCheckMent"></div>
-							<input type="text" placeholder="인증번호를 입력하세요" id="userCheck">
-							<input type="button" value="인증번호 확인" onclick="smsCheck()"> -->
-	<!--                   -->
 	<!--================End Login Box Area =================-->
 
 	<!-- Footer Section Begin -->
