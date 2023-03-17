@@ -60,20 +60,20 @@ public class BoardController {
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입(글작성 직후) : 조회수 증가 xxx
 	@RequestMapping(value = "/boardPostViewFirst.do")
 	public String boardPostViewFirst(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
-		
+
 		System.out.println("boardPostViewFirst.do 진입");
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
 		ReplyVO rvo = new ReplyVO();
 		rvo.setBoardNum(bvo.getBoardNum());
-		
+
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
 		mvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setUserId((String) session.getAttribute("memberId"));
 		MemberVO loginMvo = memberService.selectOne(mvo);
-		     
-		System.out.println("replyset 길이 :"+replyService.selectAll(rvo).size());
+
+		System.out.println("replyset 길이 :" + replyService.selectAll(rvo).size());
 		// 게시글 상세 데이터
-		model.addAttribute("replyset",replyService.selectAll(rvo));
+		model.addAttribute("replyset", replyService.selectAll(rvo));
 		BoardVO preBvo = boardService.selectOne(bvo);
 		System.out.println("preBvo: " + preBvo);
 		model.addAttribute("board", preBvo);
@@ -82,40 +82,41 @@ public class BoardController {
 		return "board_detail.jsp";
 
 	}
-	
+
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
-	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpServletRequest request, HttpSession session) {
-		
+	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpServletRequest request,
+			HttpSession session) {
+
 		System.out.println("boardPostView.do 진입");
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
 		System.out.println("status: " + boardService.selectOne(bvo).getBoardStatus());
-		if(boardService.selectOne(bvo).getBoardStatus()==3) {
+		if (boardService.selectOne(bvo).getBoardStatus() == 3) {
 			model.addAttribute("lang", request.getParameter("lang"));
 			model.addAttribute("msg", "삭제된 게시글입니다.");
 			model.addAttribute("location", "report_manage.jsp");
-			
+
 			return "alert.jsp";
 		}
-		
+
 		ReplyVO rvo = new ReplyVO();
 		rvo.setBoardNum(bvo.getBoardNum());
-		
+
 		// 조회수 증가 로직
 		System.out.println("updateViewCnt: " + request.getParameter("updateViewCnt"));
 		if (request.getParameter("updateViewCnt") == null) { // 진입할때 조회수 증가할지 안할지 결정하는 파라미터
 			bvo.setSearchCondition("viewCnt");
 			boardService.update(bvo);
 		}
-		
+
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
 		mvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setUserId((String) session.getAttribute("memberId"));
 		MemberVO loginMvo = memberService.selectOne(mvo);
 
-		System.out.println("replyset 길이 :"+replyService.selectAll(rvo).size());
+		System.out.println("replyset 길이 :" + replyService.selectAll(rvo).size());
 		// 게시글 상세 데이터
-		model.addAttribute("replyset",replyService.selectAll(rvo));
+		model.addAttribute("replyset", replyService.selectAll(rvo));
 		model.addAttribute("board", boardService.selectOne(bvo));
 		model.addAttribute("member", loginMvo);
 
@@ -168,175 +169,149 @@ public class BoardController {
 	// 게시글 작성(insert) 수행 및 해당 글 상세 보기(작성 결과 보기) 페이지로 이동
 	@RequestMapping(value = "/insertBoard.do")
 	public String insertBoard(BoardVO bvo, Model model) {
-
 		System.out.println("insertBoard.do 진입");
 		// 이미지 객체 생성
 		ImageVO ivo = new ImageVO();
-		
 		System.out.println("bvo: " + bvo);
 		// 게시글 추가
 		boardService.insert(bvo);
-
 		// 가장 최근 게시글 찾아내서 B_NO 가져오기 -> targetNum으로 저장
 		bvo.setSearchCondition("newest");
 		BoardVO preBvo = boardService.selectOne(bvo);
 		System.out.println("preBvo: " + preBvo);
 		int targetNum = preBvo.getBoardNum();
-
 		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
 		String tag = bvo.getBoardContent();
 		int typeNum = 201;
 		while (true) {
-			
 			System.out.println("tag: " + tag);
 			
 			// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
 			if (tag.indexOf("img/") >= 0) {
-				
 				// 이미지 번호 세팅
 				ivo.setTargetNum(targetNum);
-				
 				// 이미지 구분 번호 세팅
 				ivo.setTypeNum(typeNum);
-				
 				// 이미지 이름 세팅
 				// 이미지 태그 값 잘라내기
 				String imageUrl = (String) tag.subSequence(tag.indexOf("img/"), tag.indexOf("\" style="));
 				System.out.println(imageUrl);
-				
 				ivo.setImageName(imageUrl);
-				
 				// 이미지 추가
 				imageService.insert(ivo);
-				
 				// 찾은 부분까지 잘라내고 다시 찾기위해 저장
 				tag = tag.substring(tag.indexOf("\" style=") + 9);
-				
 				// typeNum ++
-				typeNum ++;
-				
-			// "img/" 문자열이 없으면 종료
-			} else { // 
+				typeNum++;
+				// "img/" 문자열이 없으면 종료
+			} else { //
 				break;
 			}
-
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
-		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
-
+		model.addAttribute("boardNum", targetNum);
+		
+		return "result_insert_board.jsp";
+	}
+	
+	@RequestMapping(value = "/insertBoardResult.do") // 게시글 입력, 수정 후 거치는 페이지(새로고침으로 중복 insert, update 방지)
+	public String insertBoardResult(HttpServletRequest request) {
+		System.out.println("insertBoardResult.do 진입");
+		System.out.println("boardNum: " + request.getParameter("boardNum"));
+		return "boardPostView.do?boardNum=" + request.getParameter("boardNum") + "&updateViewCnt=false";
 	}
 
 	// 고양이 자랑 게시판 게시글 수정하기 페이지 진입
 	@RequestMapping(value = "/updateBoardView.do")
 	public String updateBoardView(BoardVO bvo, Model model) {
-
 		System.out.println("updateBoardView.do 진입");
 		System.out.println("bvo: " + bvo);
-		
 		model.addAttribute("board", boardService.selectOne(bvo));
+		
 		// 몇번 글 수정인지 설정하여 보내기
 		return "update_board.jsp";
-
 	}
 
 	// 고양이 자랑 게시판 게시글 수정하기 페이지에서
 	// 게시글 수정(update) 및 해당 글 상세 보기(수정 결과 보기) 페이지로 이동
 	@RequestMapping(value = "/updateBoard.do")
 	public String updateBoard(BoardVO bvo, Model model) {
-
 		System.out.println("updateBoard.do 진입");
 		ImageVO ivo = new ImageVO();
-		
 		// 게시글 번호 설정
 		int targetNum = bvo.getBoardNum();
-		
 		// 게시글 수정
 		boardService.update(bvo);
-		
 		// IMAGE 테이블에서 기존 이미지 행 삭제
 		ivo.setTargetNum(targetNum); // 게시글 번호
 		ivo.setTypeNum(200); // 200: 게시글
-		
 		imageService.delete(ivo);
-		
 		// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
 		String tag = bvo.getBoardContent();
 		int typeNum = 201;
+		
 		while (true) {
-			
 			System.out.println("tag: " + tag);
-			
+
 			// "img/" 문자열이 있는 동안 반복해서 ivo 저장하기
 			if (tag.indexOf("img/") >= 0) {
-				
 //				// 이미지 번호 세팅
 //				ivo.setTargetNum(bvo.getBoardNum());
-				
 				// 이미지 구분 번호 세팅
 				ivo.setTypeNum(typeNum);
-				
 				// 이미지 이름 세팅
 				// 이미지 태그 값 잘라내기
 				String imageUrl = (String) tag.subSequence(tag.indexOf("img/"), tag.indexOf("\" style="));
 				System.out.println(imageUrl);
-				
 				ivo.setImageName(imageUrl);
-				
 				// 이미지 추가
 				imageService.insert(ivo);
-				
 				// 찾은 부분까지 잘라내고 다시 찾기위해 저장
 				tag = tag.substring(tag.indexOf("\" style=") + 9);
-				
 				// typeNum ++
-				typeNum ++;
-				
-			// "img/" 문자열이 없으면 종료
-			} else { // 
+				typeNum++;
+				// "img/" 문자열이 없으면 종료
+			} else { //
 				break;
 			}
-
 		}
 		System.out.println("targetNum: " + targetNum);
-		return "boardPostView.do?boardNum=" + targetNum + "&updateViewCnt=false";
-		// AJAX를 사용하는 페이지로 이동해서 리다이렉트?
+		model.addAttribute("boardNum", targetNum);
 		
+		return "result_insert_board.jsp";
 	}
 
 	// 고양이 자랑 게시판 게시글 삭제 수행 및 전체 목록으로 이동
 	@ResponseBody
 	@RequestMapping(value = "/deleteBoard.do")
 	public String deleteBoard(BoardVO bvo, Model model) {
-
 		System.out.println("deleteBoard.do 진입");
-		ImageVO ivo = new ImageVO();
+//		// IMAGE 테이블에서 게시글 이미지 행 삭제(자료 보존을 위해 주석 처리)
+//		ImageVO ivo = new ImageVO();
+//		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
+//		ivo.setTypeNum(200); // 200: 게시글
+//		imageService.delete(ivo);
+		boardService.delete(bvo); // 게시글 상태를 3: 삭제로 변경
 		
-		boardService.delete(bvo);
-		
-		// IMAGE 테이블에서 게시글 이미지 행 삭제
-		ivo.setTargetNum(bvo.getBoardNum()); // 게시글 번호
-		ivo.setTypeNum(200); // 200: 게시글
-		
-		imageService.delete(ivo);
-		
-		return "board";
-
+		if (bvo.getSearchCondition().equals("admin")) { // 게시글 관리에서 삭제로 변경할 때
+			return "boardManageView.do";
+		}
+		else { // 자기 게시글 삭제할 때
+			return "board";
+		}
 	}
 
 	// 고양이 자랑 게시글 공유하기
 	@RequestMapping(value = "/shareBoard.do")
 	public String shareBoard(BoardVO bvo, Model model) {
-
 		System.out.println("shareBoard.do 진입");
-
+		
 		return "board_detail.jsp";
-
 	}
 
 	// 고양이 자랑 게시글 좋아요/취소 수행
 	@ResponseBody
-	@RequestMapping(value = "/updateBlike.do", method=RequestMethod.POST)
+	@RequestMapping(value = "/updateBlike.do", method = RequestMethod.POST)
 	public String updateLike(BlikeVO blvo, BoardVO bvo, Model model, HttpSession session) {
 		blvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setUserId((String) session.getAttribute("memberId"));
@@ -351,9 +326,8 @@ public class BoardController {
 			blikeService.delete(blvo);
 		}
 		bvo = boardService.selectOne(bvo);
-		
-		return Integer.toString(bvo.getLikeCnt());
 
+		return Integer.toString(bvo.getLikeCnt());
 	}
 
 	// 내가 좋아요 한 글 모아보기
@@ -361,21 +335,21 @@ public class BoardController {
 	public String selectAllMyLike(BoardVO bvo, Model model, HttpSession session) {
 		System.out.println("selectAllMyLike.do 진입");
 		System.out.println("bvo: " + bvo);
-
-		bvo.setUserId((String)session.getAttribute("memberId"));
+		bvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setSearchCondition("myLike");
 		model.addAttribute("board", boardService.selectAll(bvo));
+		
 		return "myfavboard.jsp";
 	}
-	
-	// 내가 먹은 글 모아보기
+
+	// 내가 쓴 글 모아보기
 	@RequestMapping(value = "/selectAllMyBoard.do")
 	public String selectAllMyBoardLike(BoardVO bvo, Model model) {
 		System.out.println("selectAllMyBoardLike 진입");
 		System.out.println("bvo: " + bvo);
-
 		bvo.setSearchCondition("myLike");
 		model.addAttribute("board", boardService.selectAll(bvo));
+		
 		return "myfavboard.jsp";
 	}
 
