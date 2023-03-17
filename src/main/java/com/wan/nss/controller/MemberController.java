@@ -227,7 +227,6 @@ public class MemberController {
 			// 받아서 회원 정보가 있으면 로그인
 			session.setAttribute("memberId", loginMvo.getUserId()); // 세션에 로그인한 회원의 아이디, 이름 저장
 			session.setAttribute("memberName", loginMvo.getUserName());
-			model.addAttribute("lang", session.getAttribute("lang"));
 			
 			return "main.do";
 		} else { // 가입정보가 없으면 카카오 회원가입
