@@ -81,9 +81,7 @@ public class MemberController {
 			return "alert.jsp";
 		}
 		else {
-			model.addAttribute("lang", session.getAttribute("lang"));
-			
-			return "login.jsp";
+			return "login.do";
 		}
 	}
 

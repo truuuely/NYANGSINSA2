@@ -14,24 +14,23 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", function(){
-	var location = '${location}';
+	console.log('${location}');
 	swal({
-        text : '${lang} / ${location} / ${msg}',
+        text : '${msg}',
         button : "확인"
      })
 	.then(function(){
-		if(location.indexOf('main.do') !== -1 || location.indexOf('login.do') !== -1 || location.indexOf('register.do') !== -1){
+		if('${location}'.indexOf('main.do') !== -1 || '${location}'.indexOf('login.do') !== -1 || '${location}'.indexOf('register.do') !== -1){
 		    console.log('1');
 		    location.href = '${location}?lang=${lang}';
 		}
 		else if(${vo != null}){
 			console.log('2');
-			location.href = '${location}?'+vo+'=${'+vo+'}';
+			location.href = '${location}?lang=${lang}';
 		}
 	    else{
 	    	console.log('3');
-	        location.href = "${location}";
-	        console.log('4');
+	        location.href = '${location}';
 	    }
 	})
 });
