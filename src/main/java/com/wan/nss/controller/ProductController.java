@@ -1,13 +1,11 @@
 package com.wan.nss.controller;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +42,7 @@ public class ProductController {
 
 	// 멤버, 상품
 	@RequestMapping(value = "/main.do")
-	public String mainView(ProductVO pvo, ProductVO pvo2, Model model, HttpServletRequest request) {
+	public String mainView(ProductVO pvo, ProductVO pvo2, Model model, HttpServletRequest request, HttpSession session) {
 		// 신상품 데이터. pvo : category == all, sort == regiDesc
 		System.out.println("   로그: main.do");
 
@@ -76,7 +74,7 @@ public class ProductController {
 		// 전체 인기순(판매량순): category == all, sort == sellDesc
 		pvo.setSort("sellDesc");
 		model.addAttribute("popPList", productService.selectAll(pvo)); //주문데이터가 있어야 가능 (지금 사료밖에 없음)
-		model.addAttribute("lang",request.getParameter("lang"));
+		session.setAttribute("lang",request.getParameter("lang"));
 		
 		return "main.jsp";
 	}

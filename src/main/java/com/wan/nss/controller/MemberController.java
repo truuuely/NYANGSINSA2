@@ -245,7 +245,7 @@ public class MemberController {
 		
 		if (loginMvo == null) { // 가입정보가 없는 경우
 			model.addAttribute("msg", "회원정보가 존재하지 않습니다. Please check your information.");
-			model.addAttribute("location", "find_id.jsp");
+			model.addAttribute("location", "findIdView.do");
 			
 			return "alert.jsp";
 		} else { // 가입정보가 있는 경우
@@ -267,7 +267,7 @@ public class MemberController {
 		
 		if (loginMvo == null) { // 없는 회원인 경우\
 			model.addAttribute("msg", "존재하지 않는 회원입니다. Please check your information.");
-			model.addAttribute("location", "find_pw.jsp");
+			model.addAttribute("location", "findIdView.do");
 			
 			return "alert.jsp";
 		} else {
@@ -285,7 +285,7 @@ public class MemberController {
 
 		if (loginMvo == null) { // 비밀번호가 일치하지 않으면, 알림창 뜨고 뒤로 돌아가야 함
 			model.addAttribute("msg", "비밀번호가 일치하지 않습니다.");
-			model.addAttribute("location", "find_pw.jsp");
+			model.addAttribute("location", "findPwView.do");
 			
 			return "alert.jsp";
 		} else {
@@ -302,7 +302,7 @@ public class MemberController {
 		String id = (String) session.getAttribute("memberId"); // 세션에 저장된 '로그인한 회원의 아이디'
 		if (id == null) { // 로그인한 회원이 없다면 로그인 페이지로 이동
 			model.addAttribute("msg", "로그인을 해주세요.");
-			model.addAttribute("location", "find_pw.jsp");
+			model.addAttribute("location", "login.do");
 			
 			return "alert.jsp";
 		} else {
