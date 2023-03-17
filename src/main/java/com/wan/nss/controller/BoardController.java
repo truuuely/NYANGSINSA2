@@ -92,12 +92,15 @@ public class BoardController {
 		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
 		System.out.println("status: " + boardService.selectOne(bvo).getBoardStatus());
 		
-		if(!boardService.selectOne(bvo).getSearchCondition().equals("admin")) { // 신고, 게시글 관리에서 개별 상세 보기 들어올 때가 아닐 때
-			if (boardService.selectOne(bvo).getBoardStatus() == 3) { // 직접 주소쳐서 들어오는것 방지
-				model.addAttribute("msg", "삭제된 게시글입니다.");
-				model.addAttribute("location", "boardView.do");
 		
-				return "alert.jsp";
+		if(boardService.selectOne(bvo).getSearchCondition()!=null) { // 신고, 게시글 관리에서 개별 상세 보기 들어올 때가 아닐 때
+			if(!boardService.selectOne(bvo).getSearchCondition().equals("admin")) { // 신고, 게시글 관리에서 개별 상세 보기 들어올 때가 아닐 때
+				if (boardService.selectOne(bvo).getBoardStatus() == 3) { // 직접 주소쳐서 들어오는것 방지
+					model.addAttribute("msg", "삭제된 게시글입니다.");
+					model.addAttribute("location", "boardView.do");
+					
+					return "alert.jsp";
+				}
 			}
 		}
 
