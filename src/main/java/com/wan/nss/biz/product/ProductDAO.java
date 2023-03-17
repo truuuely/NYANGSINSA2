@@ -100,7 +100,7 @@ public class ProductDAO {
 			return true;
 		}
 		if (pvo.getpSearchCondition().equals("buy")) { // 구매시 재고 빼기
-			int res = jdbcTemplate.update(SQL_UPDATE_AMOUNT, pvo.getpAmt(), pvo.getpNum());
+			int res = jdbcTemplate.update(SQL_UPDATE_AMOUNT, pvo.getpCnt(), pvo.getpNum());
 			if (res < 1) {
 				return false;
 			}
