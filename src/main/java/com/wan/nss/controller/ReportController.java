@@ -61,7 +61,7 @@ public class ReportController {
 		}
 		reportService.insert(rpvo);
 
-		return "boardPostView.do?boardNum=" + boardNum + "&updateViewCnt=false";
+		return "redirect:boardPostView.do?boardNum=" + boardNum + "&updateViewCnt=false";
 	}
 
 	// (관리자) Report 게시글 신고 처리

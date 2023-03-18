@@ -233,7 +233,7 @@
 								<div style="font-size: 15px;" id="replyContent">${r.replyContent}</div>
 								<ul style="font-size: 13px; float: left; display: flex;" id="replyInfo">
 									<li style="margin-right: 4px;"><i class="fa fa-calendar-o"></i> ${r.replyDate}</li>
-									<li><img class="reportBtn" onclick="javascript:report(3,${r.replyNum});" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
+									<li><img class="reportBtn" onclick="javascript:report(3,${r.replyNum}, `${r.userId}`);" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 									<c:if test="${r.userId==memberId}">
 										<li style="margin-left: 8px; cursor: pointer;"><a style="color: #49505787; border-bottom: 1px solid #49505787;" onclick="deleteCheck(${r.replyNum}, 'deleteReply')">삭제</a></li>
 									</c:if>
