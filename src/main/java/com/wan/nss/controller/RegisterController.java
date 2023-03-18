@@ -68,7 +68,7 @@ public class RegisterController {
 		System.out.println("sms.do 진입");
 		System.out.println(svo.getPhoneNum()); //사용자 전화번호 가져오기
 		int randNum = smsService.sms(svo);  //sns메서드 통해 randNum값 리턴받아옴.
-		System.out.println(randNum);
+		System.out.println("randNum: " + randNum);
 
 		//받아온 randNum값을 다시 ajax으로 보낸다 ->  success: function(randNum)  
 		return Integer.toString(randNum);
