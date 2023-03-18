@@ -158,10 +158,11 @@
 						swal({
 							text : "인증번호가 일치합니다!",
 							button : "확인"
-						});
+						}).then(function(){
 						console.log('폰번호 :' + userPhoneNum);
 						var link = 'findId.do?phoneNum=' + userPhoneNum;
 						location.href = link;
+						})
 					} else {
 						console.log('후후  : userPhoneNum ' + userPhoneNum);
 						swal({
