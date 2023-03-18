@@ -46,6 +46,7 @@
 				<div class="login_form_inner">
 					<h3>비밀번호 찾기</h3>
 					<form class="row login_form" action="findPw.do" id="contactForm" method="post">
+					<input type="hidden" id="urlBack" name="urlBack" value=""/>
 						<div class="col-md-12 form-group">
 							<input type="text" class="form-control" id="userId" name="userId" placeholder="아이디 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
 						</div>
@@ -85,6 +86,12 @@
 	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<script type="text/javascript">
+	
+		$(document).ready(function getURL() {
+			var urlBack = document.referrer;
+			$('#urlBack').attr('value', urlBack);
+		});
+	
 		var number = 0; //랜덤문자인증번호 저장할 변수	
 		//  var phoneCheck=0;  //인증번호 일치, 불일치 변수
 		var userPhoneNum = 0; // 유저 폰번호 스코프때문에 위로 뺐음 

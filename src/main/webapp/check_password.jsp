@@ -84,7 +84,7 @@
 								<button type="submit" value="submit" class="site-btn">입력</button>
 							</form>
 							
-							<a href="findPwView.do" style="text-align:left;color:#615C61;"><u>비밀번호 찾기</u></a>
+							<a id="urlBackFindPw" href="" style="text-align:left;color:#615C61;"><u>비밀번호 찾기</u></a>
 						</div>
 					</div>
 				</div>
@@ -107,6 +107,15 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+
+	<script type="text/javascript">
+	
+		$(document).ready(function getURL() {
+			var urlBack = document.referrer;
+			$('#urlBackFindPw').attr('href', 'findPwView.do?urlBack=' + urlBack);
+		});
+	
+	</script>
 
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">

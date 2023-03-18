@@ -56,8 +56,8 @@
 				<div class="col-lg-6">
 					<div class="login_form_inner">
 						<h3><spring:message code="message.login.login" /></h3>
-						<form class="row login_form" action="login.do" id="contactForm" method="POST">
-							<input type="hidden" id="urlBack" name="urlBack" value=""/>
+						<form class="row login_form" action="selectOneMemberLogin.do" id="contactForm" method="POST">
+							<input type="hidden" id="urlBackLogin" name="urlBack" value=""/>
 							<div class="col-md-12 form-group">
 								<input type="text" class="form-control" id="id" name="userId" placeholder="<spring:message code="message.login.id" />" onfocus="this.placeholder = ''" onblur="this.placeholder = '아이디 입력'" required>
 							</div>
@@ -70,16 +70,9 @@
 									<img src="img/kakao_login.png" alt="카카오 로그인 버튼" style="border-radius: 30px;" />
 								</a>
 								<br>
-								<a href="findIdView.do"><spring:message code="message.login.findid" /></a>
+								<a id="urlBackFindId" href=""><spring:message code="message.login.findid" /></a>
 								&nbsp; / &nbsp;
-								<a href="findPwView.do"><spring:message code="message.login.findpw" /></a>
-								<!-- &nbsp; / &nbsp;<a href="javascript:void(0)"
-                           onclick="kakaoLogout();"
-                        > <span>카카오 로그아웃</span>
-                        </a> &nbsp; / &nbsp;<a href="javascript:void(0)"
-                           onclick="kakaoDelete();"
-                        > <span>카카오 회원탈퇴</span>
-                        </a> -->
+								<a id="urlBackFindPw" href=""><spring:message code="message.login.findpw" /></a>
 								<br>
 								<br>
 							</div>
@@ -112,7 +105,9 @@
 	<script>
 		$(document).ready(function getURL() {
 			var urlBack = document.referrer;
-			$('#urlBack').attr('value', urlBack);
+			$('#urlBackLogin').attr('value', urlBack);
+			$('#urlBackFindId').attr('href', 'findIdView.do?urlBack=' + urlBack);
+			$('#urlBackFindPw').attr('href', 'findPwView.do?urlBack=' + urlBack);
 		});
 		
 		Kakao.init('a4736b83f633d7309942ec1e31da7d0f'); // SDK를 초기화함 / 발급 받은 키 중 javascript키를 사용해준다.

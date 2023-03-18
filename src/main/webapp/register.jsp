@@ -134,7 +134,7 @@
 						</h3>
 
 						<form class="row login_form" action="signUp.do" id="register_form" onsubmit="return registerCheck()" method="POST">
-
+							<input type="hidden" id="urlBack" name="urlBack" value=""/>
 							<!-- 아이디 -->
 							<div class="col-md-12 form-group">
 								<input type="text" style="width: 60%;" id="id" name="userId" placeholder="&nbsp;<spring:message code="message.register.enterid"/>" onfocus="this.placeholder = ''" onblur="this.placeholder = '<spring:message code="message.register.enterid"/>'" required>
@@ -280,18 +280,27 @@
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
 	<%--ajax 쓰기 위해 JQ연결 --%>
-	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js"
+		integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU="
+		crossorigin="anonymous">
    </script>
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+	<script type="text/javascript">
+		$(document).ready(function getURL() {
+			var urlBack = document.referrer;
+			$('#urlBack').attr('value', urlBack);
+		});
+	</script>
+
 	<!-- 아이디 중복확인 -->
 	<script type="text/javascript">
-      var smsTrue = false;
-      var smsCheckTrue = false;
-      var registerTrue = false;
-      var idTrue = false;
+	var smsTrue = false;
+	var smsCheckTrue = false;
+	var registerTrue = false;
+	var idTrue = false;
       
-      function checkId(){
+	function checkId(){
          console.log('로그 1 : check()라는 JS 함수가 연결되었음');
          var id=$('#id').val(); // $('id 속성이 id인 요소')의 값을 불러올래!
          $.ajax({
