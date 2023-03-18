@@ -78,6 +78,7 @@
 								<div class="field-body">
 									<div class="field">
 										<div class="control">
+											<input type="hidden" id="urlBack" name="urlBack" value="" />
 											<input type="text" autocomplete="on" name="userName" value="${data.userName}" class="input" required>
 										</div>
 										<p class="help">* 이름을 입력하세요.</p>
