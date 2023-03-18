@@ -41,21 +41,21 @@
 
 			<div class="col-lg-6">
 				<div class="login_form_inner">
-					<h3>${memberName}님이 가입한 아이디는</h3>
+					<h3>${findName}님이 가입한 아이디는</h3>
 					<div class="row login_form" action="?" id="contactForm">
 						<div class="col-md-12 form-group">
-							<p>[ ${memberId} ] 입니다 .</p>
+							<p>[ ${findId} ] 입니다 .</p>
 						</div>
 						<br>
 						<br>
 						<br>
 						<br>
 						<div class="col-md-12 form-group">
-							<button onClick="location.href='login.do'" class="button button-login w-100">로그인하러 가기</button>
+							<button id="urlBackLogin" onclick="" class="button button-login w-100">로그인하기</button>
 							<div>
 								<br>
 							</div>
-							<button onClick="location.href='findPwView.do'" class="button button-login w-100">비밀번호 찾기</button>
+							<button id="urlBackFindPw" onclick="" class="button button-login w-100">비밀번호 찾기</button>
 
 						</div>
 						<br>
@@ -82,6 +82,13 @@
 	<script src="js/mixitup.min.js"></script>
 	<script src="js/owl.carousel.min.js"></script>
 	<script src="js/main.js"></script>
+	<script>
+		$(document).ready(function getURL() {
+			var urlBack = document.referrer;
+			$("#urlBackLogin").attr("onclick", "location.href = 'login.do?urlBack=" + urlBack + "'");
+			$("#urlBackFindPw").attr("onclick", "location.href = 'findPwView.do?urlBack=" + urlBack + "'");
+		});
+	</script>
 
 	<!-- TOP 버튼 -->
 	<div style="width: 120px; position: fixed; bottom: 80px; right: 100px; z-index: 1;">

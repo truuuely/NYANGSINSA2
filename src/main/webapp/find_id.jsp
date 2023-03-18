@@ -53,11 +53,11 @@
 						</div>
 						<br><br>
 						<div class="col-md-12 form-group">
-							<button type="submit" value="submit" class="button button-login w-100" onclick="sms()">핸드폰 번호로 아이디 찾기</button>
+							<input type="button" value="핸드폰 번호로 아이디 찾기" class="button button-login w-100" style="border-radius:30px;" onclick="sms()">
 							<br><br>
 							<input type="text" style="width: 100%;" placeholder="인증번호를 입력하세요" id="userCheck">
 							<br><br>
-							<button type="submit" value="submit" class="button button-login w-100" onclick="smsCheck()">인증번호 확인</button>
+							<input type="button" value="인증번호 확인" class="button button-login w-100" style="border-radius:30px;" onclick="smsCheck()">
 						</div>
 						<br>
 						<br>

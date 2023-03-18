@@ -264,8 +264,8 @@ public class MemberController {
 			
 			return "alert.jsp";
 		} else { // 가입정보가 있는 경우
-			model.addAttribute("changeId", loginMvo.getUserId());
-			model.addAttribute("memberName", loginMvo.getUserName());
+			model.addAttribute("findId", loginMvo.getUserId());
+			model.addAttribute("findName", loginMvo.getUserName());
 			
 			return "result_find_id.jsp";
 		}
