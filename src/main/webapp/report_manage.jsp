@@ -493,8 +493,8 @@
 					</select>
 				</p>
 				<div>
-					<input type="submit" value="처리" class="report-closeBtn">
-					<button class="report-closeBtn">닫기</button>
+					<input type="submit" value="처리" id="report-submit" class="report-closeBtn">
+					<button id="report-close" class="report-closeBtn">닫기</button>
 				</div>
 			</form>
 		</div>
@@ -556,11 +556,12 @@
 
  
 
-	function close{
+	function close(event){
+		event.preventDefault(); 
    document.querySelector(".report-modal").classList.add("report-modal-hidden");
  }
 
- document.querySelector(".report-closeBtn").addEventListener("click", close);
+ document.querySelector("#report-close").addEventListener("click", close);
  document.querySelector(".report-modal-bg").addEventListener("click", close);
 </script>
 </html>
