@@ -462,15 +462,15 @@ width: 100px;
 		<div class="report-modalBox">
 			 <!-- <h2 style="font-size: 30px; padding: 20px;">회원 등급 변경</h2>  -->
 			<img src="img/role.png" style="width: 40px; margin-bottom: 20px;">
-			<form id="updateMemberForm" action="updateMemberRole.do" method="post">
-			<input type="hidden" id="userNum" name="userNum" value="">
+<form id="updateMemberForm" action="updateMemberRole.do" method="post">
+<input type="hidden" id="userNum" name="userNum" value="">
 				
-				<p style="font-size: 15px; margin-left: 15px; justify-content: space-around; display: flex;">
-					<select name="role" style="width: 90px; height: 30px; border: 1px solid #6667ab52; margin-right: 13px; text-align: center;">
-						<option value="ADMIN">관리자</option>
-						<option value="MEMBER">일반 회원</option>
-						<option value="BLOCKED">차단 회원</option>
-						<option value="DELETED">회원 삭제</option>
+<p style="font-size: 15px; margin-left: 15px; justify-content: space-around; display: flex;">
+	<select name="role" style="width: 90px; height: 30px; border: 1px solid #6667ab52; margin-right: 13px; text-align: center;">
+		<option value="ADMIN">관리자</option>
+		<option value="MEMBER">일반 회원</option>
+		<option value="BLOCKED">차단 회원</option>
+		<option value="DELETED">회원 삭제</option>
 					</select>
 				</p>
 				<div>
