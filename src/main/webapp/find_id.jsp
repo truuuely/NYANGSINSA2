@@ -49,7 +49,7 @@
 					<form class="row login_form" id="contactForm">
 						<input type="hidden" id="urlBack" name="urlBack" value=""/>
 						<div class="col-md-12 form-group">
-							<input type="tel" style="width: 100%;" id="userPhoneNum" name="tel" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+							<input type="tel" style="width: 100%;" id="userPhoneNum" name="phoneNum" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						</div>
 						<br><br>
 						<div class="col-md-12 form-group">

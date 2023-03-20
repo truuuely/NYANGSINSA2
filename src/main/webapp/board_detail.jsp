@@ -235,7 +235,7 @@
 					</c:choose></li>
 				<li><img class="reportBtn" onclick="javascript:report(1,${board.boardNum},`${board.userId}`);" style="width: 20px; cursor: pointer;" src="img/siren.png"></li>
 			</ul>
-			<div id="content" style="width: 90%;">
+			<div style="width: 90%;">
 				<div style="font-size: 120%; font-weight: bold; letter-spacing: 1px;">${board.boardContent}</div>
 			</div>
 		</div>

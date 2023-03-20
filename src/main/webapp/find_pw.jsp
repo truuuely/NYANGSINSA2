@@ -55,7 +55,7 @@
 							<input type="text" class="form-control" id="userName" name="userName" placeholder="이름 입력" onfocus="this.placeholder = ''" onblur="this.placeholder = '이름 입력'" required>
 						</div>
 						<div class="col-md-12 form-group">
-							<input type="tel" style="width: 100%;" id="userPhoneNum" name="userPhoneNum" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
+							<input type="tel" style="width: 100%;" id="userPhoneNum" name="phoneNum" placeholder="전화번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" required>
 						</div>
 						<br><br><br>
 						<div class="col-md-12 form-group">
