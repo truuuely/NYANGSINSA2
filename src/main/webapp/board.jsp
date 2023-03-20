@@ -355,22 +355,6 @@
 					},
 					success : function(data) {
 						$(infoId).load(location.href + ' ' + infoId);
-						console.log("좋아유 수 " + data)
-						console.log("넘버 " + '#' + bNum)
-						console.log("업다운 " + upOrDown)
-						console.log("이미지 아이디 " + '#' + bNum + 'heartImg')
-						console.log($(imgId).attr('src'));
-						$(cntId).text(data);
-						if (upOrDown == 'down') {
-							$(imgId).attr({
-								src : 'img/heart.png'
-							});
-							/* $(this).children('img').attr("src", "img/heart.png"); */
-						} else {
-							$(imgId).attr({
-								src : 'img/fullheart.png'
-							});
-						}
 					},
 					error : function() {
 						alert('error');
