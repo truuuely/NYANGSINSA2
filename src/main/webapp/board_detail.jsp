@@ -386,9 +386,6 @@
 	<!-- 댓글 추가 -->
 	<script type="text/javascript">
    function insertReply(parentNum){
-	   var userId = '${memberId}';
-	   var boardNum = '${board.boardNum}';
-	   var replyContent = $('input[id='+parentNum+'replyContent]').val();
 	   if(loginCheck()){
 		   if(replyContent==''){
 			   swal({
@@ -401,9 +398,9 @@
          type : 'POST',
          url : 'insertReply.do',
          data : {
-            boardNum: boardNum,
-            userId : userId,
-            replyContent : replyContent,
+            boardNum: '${board.boardNum}',
+            userId : '${memberId}',
+            replyContent : $('input[id='+parentNum+'replyContent]').val(),
             parentNum : parentNum
          },
          success : function() {
@@ -535,8 +532,6 @@
 	<script type="text/javascript">
       function updateLike(bNum, upOrDown) {
          if (loginCheck()) {
-         var imgClass = '.'+bNum+'heartImg';
-         var cntClass = '.'+bNum+'';
          var infoClass1 = '.'+bNum+'info1';
          var infoClass2 = '.'+bNum+'info2';
          console.log('들어옴');
@@ -550,17 +545,6 @@
             success : function(data) {
                $(infoClass1).load(location.href + ' ' + infoClass1);
                $(infoClass2).load(location.href + ' ' + infoClass2);
-               console.log("좋아유 수 " + data)
-               console.log("넘버 " +'#'+bNum)
-               console.log("업다운 " +upOrDown)
-               console.log("이미지 아이디 " +'.'+bNum+'heartImg')
-               console.log($(imgClass).attr('src'));
-               $(cntClass).text(data);
-               if (upOrDown == 'down') {
-                  $(imgClass).attr({src:'img/heart.png'});
-               } else {
-                  $(imgClass).attr({src:'img/fullheart.png'});
-               }
             },
             error : function() {
                alert('error');
