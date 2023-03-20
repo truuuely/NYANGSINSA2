@@ -57,32 +57,6 @@ public class BoardController {
 		return "board.jsp";
 	}
 
-	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입(글작성 직후) : 조회수 증가 xxx
-	@RequestMapping(value = "/boardPostViewFirst.do")
-	public String boardPostViewFirst(MemberVO mvo, BoardVO bvo, Model model, HttpSession session) {
-
-		System.out.println("boardPostViewFirst.do 진입");
-		System.out.println("bvo.boardNum: " + bvo.getBoardNum());
-		ReplyVO rvo = new ReplyVO();
-		rvo.setBoardNum(bvo.getBoardNum());
-
-		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
-		mvo.setUserId((String) session.getAttribute("memberId"));
-		bvo.setUserId((String) session.getAttribute("memberId"));
-		MemberVO loginMvo = memberService.selectOne(mvo);
-
-		System.out.println("replyset 길이 :" + replyService.selectAll(rvo).size());
-		// 게시글 상세 데이터
-		model.addAttribute("replyset", replyService.selectAll(rvo));
-		BoardVO preBvo = boardService.selectOne(bvo);
-		System.out.println("preBvo: " + preBvo);
-		model.addAttribute("board", preBvo);
-		model.addAttribute("member", loginMvo);
-
-		return "board_detail.jsp";
-
-	}
-
 	// 고양이 자랑 게시판 게시글 상세보기 페이지 진입
 	@RequestMapping(value = "/boardPostView.do")
 	public String boardPostView(MemberVO mvo, BoardVO bvo, Model model, HttpServletRequest request,
@@ -109,7 +83,8 @@ public class BoardController {
 
 		// 조회수 증가 로직
 		System.out.println("updateViewCnt: " + request.getParameter("updateViewCnt"));
-		if (request.getParameter("updateViewCnt") == null) { // 진입할때 조회수 증가할지 안할지 결정하는 파라미터
+		if (request.getParameter("updateViewCnt") == null && session.getAttribute("memberRole").equals("ADMIN")) {
+			// 진입할때 조회수 증가할지 안할지 결정하는 파라미터, 관리자
 			bvo.setSearchCondition("viewCnt");
 			boardService.update(bvo);
 		}
@@ -287,7 +262,6 @@ public class BoardController {
 	}
 
 	// 고양이 자랑 게시판 게시글 삭제 수행 및 전체 목록으로 이동
-	@ResponseBody
 	@RequestMapping(value = "/deleteBoard.do")
 	public String deleteBoard(BoardVO bvo, Model model) {
 		System.out.println("deleteBoard.do 진입");
@@ -302,7 +276,7 @@ public class BoardController {
 			return "boardManageView.do";
 		}
 		else { // 자기 게시글 삭제할 때
-			return "board";
+			return "boardView.do";
 		}
 	}
 
