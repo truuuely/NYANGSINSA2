@@ -71,28 +71,38 @@ public class ReportController {
 		// 넘겨받는 것
 		// : targetNum, reportNum, userId(vo), reporterId(vo), reportStep, proStatus
 		// warnCnt+1
-
-		if (rpvo.getProcStatus().equals("cancel")) { // 신고 취소, 신고한 사람에게 경고 +1
+		
+		BoardVO bvo=new BoardVO();
+		ReplyVO rvo=new ReplyVO();
+		
+		//status
+		if (rpvo.getProcStatus().equals("cancel")) { // 신고 취소, 신고한 사람에게 경고 +1, 신고 글상태로 변경
 			mvo.setUserId(rpvo.getReporterId());
 			memberService.update(mvo);
-		} else if (rpvo.getProcStatus().equals("ok")) { // 신고 처리, 신고당한 사람에게 경고 +1
-			mvo.setUserId(rpvo.getUserId());
-			memberService.update(mvo);
-
-			if (rpvo.getReportStep() == 1) { // 글일 경우
-				BoardVO bvo = new BoardVO();
-				bvo.setBoardNum(rpvo.getTargetNum());
+			bvo.setBoardStatus(1);
+			rvo.setReplyStatus(1);
+			
+		}
+		else if (rpvo.getProcStatus().equals("ok")) { // 신고 처리, 신고당한 사람에게 경고 +1
+				mvo.setUserId(rpvo.getUserId());
+				memberService.update(mvo);
 				bvo.setBoardStatus(3);
+				rvo.setReplyStatus(3);
+		}
+		
+		//step	
+		if(rpvo.getReportStep()==1) { //글인 경우
+				bvo.setBoardNum(rpvo.getTargetNum());
 				bvo.setSearchCondition("changeStatus");
 				boardService.update(bvo);
-			} else if (rpvo.getReportStep() == 2 || rpvo.getReportStep() == 3) { // 댓글일 경우
-				ReplyVO rvo = new ReplyVO();
-				rvo.setReplyStatus(3);
+		}
+		else if (rpvo.getReportStep() == 2 || rpvo.getReportStep() == 3) { // 댓글일 경우
 				rvo.setReplyNum(rpvo.getTargetNum());
 				replyService.update(rvo);
-			}
-			// 신고 완료
-		}
+		}			
+
+		// 신고 완료
+		
 		rpvo.setReportStat(2);
 		reportService.update(rpvo);
 		return "report_manage.jsp";
