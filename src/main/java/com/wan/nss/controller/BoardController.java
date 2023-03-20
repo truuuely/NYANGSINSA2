@@ -83,10 +83,13 @@ public class BoardController {
 
 		// 조회수 증가 로직
 		System.out.println("updateViewCnt: " + request.getParameter("updateViewCnt"));
-		if (request.getParameter("updateViewCnt") == null && session.getAttribute("memberRole").equals("ADMIN")) {
-			// 진입할때 조회수 증가할지 안할지 결정하는 파라미터, 관리자
-			bvo.setSearchCondition("viewCnt");
-			boardService.update(bvo);
+		if (request.getParameter("updateViewCnt") == null) { // updateViewCnt 가 비어있으면(조회수 증가)
+			if(session.getAttribute("memberRole") != null) { // 로그인한 상태면
+				if (!session.getAttribute("memberRole").equals("ADMIN")) { // 로그인한 사람의 역할이 관리자가 아니면
+					bvo.setSearchCondition("viewCnt");
+					boardService.update(bvo); // 조회수 증가
+				}
+			}
 		}
 
 		// 게시글 상세페이지에서 수정 버튼 활성화를 위한 memberId
