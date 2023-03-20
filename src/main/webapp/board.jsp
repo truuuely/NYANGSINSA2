@@ -322,7 +322,7 @@
 					button : "확인"
 				});
 				return false;
-			} else if ('${memberRole}' == 'MEMBER') {
+			} else if ('${memberRole}' == 'MEMBER' || '${memberRole}' == 'ADMIN') {
 				return true;
 			}
 		}

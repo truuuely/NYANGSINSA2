@@ -386,6 +386,7 @@
 	<!-- 댓글 추가 -->
 	<script type="text/javascript">
    function insertReply(parentNum){
+	   var replyContent = $('input[id='+parentNum+'replyContent]').val();
 	   if(loginCheck()){
 		   if(replyContent==''){
 			   swal({
@@ -400,7 +401,7 @@
          data : {
             boardNum: '${board.boardNum}',
             userId : '${memberId}',
-            replyContent : $('input[id='+parentNum+'replyContent]').val(),
+            replyContent : replyContent,
             parentNum : parentNum
          },
          success : function() {
@@ -511,7 +512,7 @@
                button : "확인"
             });
             return false;
-         }else if('${memberRole}' == 'MEMBER'){
+         }else if('${memberRole}' == 'MEMBER' || '${memberRole}' == 'ADMIN'){
             return true;
          }
       }
