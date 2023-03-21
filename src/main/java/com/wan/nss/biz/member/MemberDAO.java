@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Repository;
 
 @Repository("memberDAO")
@@ -18,15 +17,14 @@ public class MemberDAO {
 	private JdbcTemplate jdbcTemplate;
 
 	// 회원가입
-	// !!
-	private final String SQL_INSERT = "INSERT INTO MEMBER (M_ID, M_PW, SALT, M_NM, CAT_NM, PHONE_NO, POST_NO, ADDRESS1, ADDRESS2) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private final String SQL_INSERT = "INSERT INTO MEMBER (M_ID, M_PW, M_NM, CAT_NM, PHONE_NO, POST_NO, ADDRESS1, ADDRESS2) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
 	// 회원정보 업데이트
 	private final String SQL_UPDATE = "UPDATE MEMBER SET CAT_NM = ?, POST_NO = ?, ADDRESS1 = ?, ADDRESS2 = ? WHERE M_ID = ?";
 
 	// 회원 비밀번호 수정
 	// !!
-	private final String SQL_UPDATE_PW = "UPDATE MEMBER SET M_PW = ?, SALT = ? WHERE M_ID = ?";
+	private final String UPDATE_PW = "UPDATE MEMBER SET M_PW = ? WHERE M_ID = ?";
 
 	// 신고 당한 회원 등급 변경
 	private final String SQL_UPDATE_ROLE = "UPDATE MEMBER m SET m.WARN_CNT =(m.WARN_CNT+1), m.`ROLE` =CASE WHEN m.WARN_CNT=3 THEN 'BLOCKED' ELSE ROLE END WHERE M_ID = ?";
@@ -38,11 +36,10 @@ public class MemberDAO {
 	private final String SQL_UPDATE_CHANGE_ROLE = "UPDATE MEMBER SET ROLE = ? ,WARN_CNT = IF( ? ='MEMBER',0,WARN_CNT ) WHERE M_NO = ?; ";
 
 	// 로그인
-	// !!
-	private final String SQL_SELECTONE = "SELECT M_NO, M_NM, M_ID, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_PW = ? AND ROLE != 'DELETED'";
+	private final String SELECTONE = "SELECT M_NO, M_NM, M_ID, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_PW = ? AND ROLE != 'DELETED'";
 
-	// salt 가져오기
-	private final String SELECT_ONE_SALT = "SELECT SALT FROM `MEMBER` WHERE M_ID = ?";
+	// 암호화된 비밀번호 조회
+	private final String SELECT_ONE_PW = "SELECT M_PW FROM `MEMBER` m WHERE M_ID = ?";
 
 	// 아이디 중복 검사, 마이페이지 이동
 	private final String SQL_SELECTONE_ID = "SELECT M_NO, M_NM, M_ID, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? ";
@@ -54,14 +51,11 @@ public class MemberDAO {
 	private final String SQL_SELECTALL = "SELECT M_NO, M_NM, M_ID, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER ORDER BY M_NO DESC";
 
 	// 비밀번호 찾기 할 때 필요
-	// !!
 	private final String SQL_SELECTONE_FIND_PW = "SELECT M_NO, M_NM, M_ID, CAT_NM, PHONE_NO, ROLE, WARN_CNT, POST_NO, ADDRESS1, ADDRESS2 FROM MEMBER WHERE M_ID = ? AND M_NM = ? AND PHONE_NO = ?  AND ROLE != 'DELETED'";
 
 	// 회원가입
 	public boolean insert(MemberVO vo) {
-		String salt = BCrypt.gensalt(); // 솔트
-		String encryptedPw = BCrypt.hashpw(vo.getUserPw(), salt);
-		int res = jdbcTemplate.update(SQL_INSERT, vo.getUserId(), encryptedPw, salt, vo.getUserName(), vo.getCatName(),
+		int res = jdbcTemplate.update(SQL_INSERT, vo.getUserId(), vo.getUserPw(), vo.getUserName(), vo.getCatName(),
 				vo.getPhoneNum(), vo.getPostNum(), vo.getAddress1(), vo.getAddress2());
 		if (res < 1) {
 			return false;
@@ -73,9 +67,7 @@ public class MemberDAO {
 	public boolean update(MemberVO vo) {
 		if (vo.getUserPw() != null) {
 			// 비밀번호 변경
-			String salt = BCrypt.gensalt();
-			String encryptedPw = BCrypt.hashpw(vo.getUserPw(), salt);
-			int res = jdbcTemplate.update(SQL_UPDATE_PW, encryptedPw, salt, vo.getUserId());
+			int res = jdbcTemplate.update(UPDATE_PW, vo.getUserPw(), vo.getUserId());
 			if (res < 1) {
 				return false;
 			}
@@ -118,19 +110,16 @@ public class MemberDAO {
 	public MemberVO selectOne(MemberVO vo) {
 		System.out.println("멤버 인자 : " + vo);
 		try {
-			if (vo.getUserId() != null && vo.getUserPw() != null && vo.getPhoneNum() != null) {
+			if (vo.getUserId() != null && vo.getUserName() != null && vo.getPhoneNum() != null) {
 				// 비밀번호 찾기. id, 이름, phoneNum 입력
 				return jdbcTemplate.queryForObject(SQL_SELECTONE_FIND_PW, new MemberRowMapper(), vo.getUserId(),
 						vo.getUserName(), vo.getPhoneNum());
 			}
 			if (vo.getUserPw() != null) {
 				// 로그인시
-				System.out.println("로그인시");
-				String encryptedPw = getEncryptedPw(vo);
-				return jdbcTemplate.queryForObject(SQL_SELECTONE, new MemberRowMapper(), vo.getUserId(), encryptedPw);
+				return jdbcTemplate.queryForObject(SELECTONE, new MemberRowMapper(), vo.getUserId(), vo.getUserPw());
 			} else if (vo.getUserId() != null) {
 				// 회원가입시 아이디 중복 확인 & 마이페이지 회원 정보
-				System.out.println("여기!!!!!");
 				return jdbcTemplate.queryForObject(SQL_SELECTONE_ID, new MemberRowMapper(), vo.getUserId());
 			} else if (vo.getPhoneNum() != null) {
 				// 휴대폰 번호 중복확인, 휴대폰 번호로 id 찾기
@@ -149,23 +138,28 @@ public class MemberDAO {
 		}
 		return null;
 	}
+	
+	public MemberVO selectOnePw(MemberVO vo) {
+		// 해당 아이디의 암호화된 비밀번호 조회
+		try {
+			return jdbcTemplate.queryForObject(SELECT_ONE_PW, (rs, rowNum) -> {
+				MemberVO data = new MemberVO();
+				data.setUserPw(rs.getString("M_PW"));
+				return data;
+			}, vo.getUserId());
+		} catch(EmptyResultDataAccessException e) {
+			System.out.println("MemberDAO : selectOne 결과 없음");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	// 회원 아이디 검색, 회원 전체 출력
 	public ArrayList<MemberVO> selectAll(MemberVO vo) {
 		return (ArrayList<MemberVO>) jdbcTemplate.query(SQL_SELECTALL, new MemberRowMapper());
 	}
 
-	private String getEncryptedPw(MemberVO vo) {
-		// 로그인시
-		// 실제 비밀번호 받아서 암호화 된 비밀번호 주기
-		
-		System.out.println("실제 비번 : " + vo.getUserPw());
-
-		String salt = jdbcTemplate.queryForObject(SELECT_ONE_SALT, new SaltRowMapper(), vo.getUserId()).getSalt(); // 기존 솔트
-		String encryptedPw = BCrypt.hashpw(vo.getUserPw(), salt);
-		System.out.println("암호화된 비번 : " + encryptedPw);
-		return encryptedPw;
-	}
 }
 
 class MemberRowMapper implements RowMapper<MemberVO> {
@@ -184,14 +178,5 @@ class MemberRowMapper implements RowMapper<MemberVO> {
 		vo.setRole(rs.getNString("ROLE"));
 
 		return vo;
-	}
-}
-
-class SaltRowMapper implements RowMapper<MemberVO> {
-	@Override
-	public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-		MemberVO data = new MemberVO();
-		data.setSalt(rs.getString("SALT"));
-		return data;
 	}
 }
