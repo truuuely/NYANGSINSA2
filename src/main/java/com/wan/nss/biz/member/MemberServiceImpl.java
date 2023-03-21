@@ -25,6 +25,12 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public boolean update(MemberVO vo) {
 		// 비밀번호 암호화
+		System.out.println("서비스 업데이트 ");
+		
+		if(vo.getUserPw() == null) {
+			// 일반 업데이트
+			return memberDAO.update(vo);
+		}
 		String encodedPw = bcryptPasswordEncoder.encode(vo.getUserPw());
 		vo.setUserPw(encodedPw);
 		return memberDAO.update(vo);
@@ -39,6 +45,11 @@ public class MemberServiceImpl implements MemberService {
 	public MemberVO selectOne(MemberVO vo) {
 		if (vo.getUserPw() != null) {
 			// 로그인. 비밀번호 암호화
+			MemberVO data = selectOnePw(vo);
+			if(data == null) {
+				// 아이디가 없으면
+				return null;
+			}
 			String encodedPw = selectOnePw(vo).getUserPw();
 			if(bcryptPasswordEncoder.matches(vo.getUserPw(), encodedPw)) {
 				// 사용자가 입력한 비밀번호와 암호화된 비밀번호가 같다면
