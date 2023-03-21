@@ -294,7 +294,7 @@ public class BoardController {
 	// 고양이 자랑 게시글 좋아요/취소 수행
 	@ResponseBody
 	@RequestMapping(value = "/updateBlike.do", method = RequestMethod.POST)
-	public String updateLike(BlikeVO blvo, BoardVO bvo, Model model, HttpSession session) {
+	public void updateLike(BlikeVO blvo, BoardVO bvo, Model model, HttpSession session) {
 		blvo.setUserId((String) session.getAttribute("memberId"));
 		bvo.setUserId((String) session.getAttribute("memberId"));
 		System.out.println("updateBlike.do 진입");
@@ -307,9 +307,6 @@ public class BoardController {
 			System.out.println("좋아요 다운");
 			blikeService.delete(blvo);
 		}
-		bvo = boardService.selectOne(bvo);
-
-		return Integer.toString(bvo.getLikeCnt());
 	}
 
 	// 내가 좋아요 한 글 모아보기
