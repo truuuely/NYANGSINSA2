@@ -32,11 +32,16 @@ public class MemberController {
 		System.out.println("findIdView.do 진입");
 		String urlBack = request.getParameter("urlBack"); // 페이지 진입 전전 주소
 		System.out.println("request.urlBack: " + urlBack);
-
-		if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
-				&& !urlBack.contains("register")
-				&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
-			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+		
+		if(urlBack == null) {
+			session.setAttribute("urlBack", "main.do");
+		}
+		else {
+			if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
+					&& !urlBack.contains("register")
+					&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
+				session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+			}
 		}
 		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
 		
@@ -50,10 +55,15 @@ public class MemberController {
 		String urlBack = request.getParameter("urlBack"); // 페이지 진입 전전 주소
 		System.out.println("request.urlBack: " + urlBack);
 
-		if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
+		if(urlBack == null) {
+			session.setAttribute("urlBack", "main.do");
+		}
+		else {
+			if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
 				&& !urlBack.contains("register")
 				&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
 			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+			}
 		}
 		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
 		
@@ -206,10 +216,15 @@ public class MemberController {
 		String urlBack = request.getParameter("urlBack"); // 페이지 진입 전전 주소
 		System.out.println("request.urlBack: " + urlBack);
 
-		if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
-				&& !urlBack.contains("register")
-				&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
-			session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+		if(urlBack == null) {
+			session.setAttribute("urlBack", "main.do");
+		}
+		else {
+			if(!urlBack.contains("login") && !urlBack.contains("Login") && !urlBack.contains("findId") && !urlBack.contains("findPw") 
+					&& !urlBack.contains("register")
+					&& !urlBack.contains("signUp")) { // urlBack에 저장하지 않고 건너뛸 페이지들
+				session.setAttribute("urlBack", urlBack); // 세션의 urlBack 갱신
+			}
 		}
 		System.out.println("session.urlBack: " + session.getAttribute("urlBack"));
 		
