@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Repository;
 
 @Repository("boardDAO")
@@ -35,12 +36,13 @@ public class BoardDAO2 {
 		return true;
 	}
 
-//	selectAllBoard
 	public BoardVO selectOne(BoardVO vo) {
 		try {
 			return myBatis.selectOne("BoardDAO.selectOneBoard", vo);
-		} catch (Exception e) {
+		} catch (EmptyResultDataAccessException e) {
 			System.out.println("BoardDAO2 selectOne 결과 없음");
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -49,3 +51,4 @@ public class BoardDAO2 {
 		return myBatis.selectList("BoardDAO.selectAllBoard", vo);
 	}
 }
+
