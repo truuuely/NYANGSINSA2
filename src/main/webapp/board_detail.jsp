@@ -543,7 +543,7 @@
                upOrDown : upOrDown,
                boardNum : bNum
             },
-            success : function(data) {
+            success : function() {
                $(infoClass1).load(location.href + ' ' + infoClass1);
                $(infoClass2).load(location.href + ' ' + infoClass2);
             },

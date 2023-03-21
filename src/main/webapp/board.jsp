@@ -353,7 +353,7 @@
 						upOrDown : upOrDown,
 						boardNum : bNum
 					},
-					success : function(data) {
+					success : function() {
 						$(infoId).load(location.href + ' ' + infoId);
 					},
 					error : function() {
