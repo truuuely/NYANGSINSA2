@@ -274,13 +274,15 @@ public class BoardController {
 //		ivo.setTypeNum(200); // 200: 게시글
 //		imageService.delete(ivo);
 		boardService.delete(bvo); // 게시글 상태를 3: 삭제로 변경
-		
-		if (bvo.getSearchCondition().equals("admin")) { // 게시글 관리에서 삭제로 변경할 때
-			return "boardManageView.do";
+		if(bvo.getSearchCondition() != null) {
+			if (bvo.getSearchCondition().equals("admin")) { // 게시글 관리에서 삭제로 변경할 때
+				return "boardManageView.do";
+			}
+			else { // 자기 게시글 삭제할 때
+				return "boardView.do";
+			}
 		}
-		else { // 자기 게시글 삭제할 때
-			return "boardView.do";
-		}
+		return "boardView.do";
 	}
 
 	// 고양이 자랑 게시글 공유하기
